@@ -136,7 +136,6 @@ class spell_warl_create_healthstone : public SpellScriptLoader
                     // Improved Healthstone
                     if (AuraEffect const * aurEff = unitTarget->GetDummyAuraEffect(SPELLFAMILY_WARLOCK, 284, 0))
                     {
-
                         switch (aurEff->GetId())
                         {
                             case WARLOCK_IMPROVED_HEALTHSTONE_R1: rank = 1; break;
@@ -150,7 +149,6 @@ class spell_warl_create_healthstone : public SpellScriptLoader
                     if (spellRank > 0 && spellRank <= 8)
                         CreateItem(effIndex, iTypes[spellRank - 1][rank]);
                 }
-
             }
 
             void Register()
@@ -161,7 +159,7 @@ class spell_warl_create_healthstone : public SpellScriptLoader
 
         SpellScript* GetSpellScript() const
         {
-             return new spell_warl_create_healthstone_SpellScript();
+            return new spell_warl_create_healthstone_SpellScript();
         }
 };
 

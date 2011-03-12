@@ -33,7 +33,7 @@ enum DruidSpells
 // 54846 Glyph of Starfire
 class spell_dru_glyph_of_starfire : public SpellScriptLoader
 {
-    public:	
+    public:
         spell_dru_glyph_of_starfire() : SpellScriptLoader("spell_dru_glyph_of_starfire") { }
 
         class spell_dru_glyph_of_starfire_SpellScript : public SpellScript
@@ -175,7 +175,7 @@ class spell_dru_primal_tenacity : public SpellScriptLoader
 // 62606 - Savage Defense
 class spell_dru_savage_defense : public SpellScriptLoader
 {
-    public:	
+    public:
         spell_dru_savage_defense() : SpellScriptLoader("spell_dru_savage_defense") { }
 
         class spell_dru_savage_defense_AuraScript : public AuraScript
@@ -222,7 +222,6 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
 
         class spell_dru_t10_restoration_4p_bonus_SpellScript : public SpellScript
         {
-
             PrepareSpellScript(spell_dru_t10_restoration_4p_bonus_SpellScript);
 
             void FilterTargets(std::list<Unit*>& unitList)

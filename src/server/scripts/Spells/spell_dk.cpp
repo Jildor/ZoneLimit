@@ -42,7 +42,6 @@ class spell_dk_anti_magic_shell_raid : public SpellScriptLoader
     public:
         spell_dk_anti_magic_shell_raid() : SpellScriptLoader("spell_dk_anti_magic_shell_raid") { }
 
-
         class spell_dk_anti_magic_shell_raid_AuraScript : public AuraScript
         {
             PrepareAuraScript(spell_dk_anti_magic_shell_raid_AuraScript);
@@ -54,7 +53,6 @@ class spell_dk_anti_magic_shell_raid : public SpellScriptLoader
                 absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
                 return true;
             }
-
 
             void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & /*canBeRecalculated*/)
             {
@@ -114,7 +112,6 @@ class spell_dk_anti_magic_shell_self : public SpellScriptLoader
                 absorbAmount = std::min(CalculatePctN(dmgInfo.GetDamage(), absorbPct), GetTarget()->CountPctFromMaxHealth(hpPct));
             }
 
-
             void Trigger(AuraEffect * aurEff, DamageInfo & /*dmgInfo*/, uint32 & absorbAmount)
             {
                 Unit * target = GetTarget();
@@ -156,7 +153,6 @@ class spell_dk_anti_magic_zone : public SpellScriptLoader
                 return true;
             }
 
-        
             bool Validate(SpellEntry const * /*spellEntry*/)
             {
                 return sSpellStore.LookupEntry(DK_SPELL_ANTI_MAGIC_SHELL_TALENT);
@@ -170,7 +166,6 @@ class spell_dk_anti_magic_zone : public SpellScriptLoader
                 if (Unit * caster = GetCaster())
                      amount += int32(2 * caster->ToPlayer()->GetTotalAttackPowerValue(BASE_ATTACK));
             }
-
 
             void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
             {
@@ -193,13 +188,11 @@ class spell_dk_anti_magic_zone : public SpellScriptLoader
 // 49158 Corpse Explosion (51325, 51326, 51327, 51328)
 class spell_dk_corpse_explosion : public SpellScriptLoader
 {
-
     public:
         spell_dk_corpse_explosion() : SpellScriptLoader("spell_dk_corpse_explosion") { }
 
         class spell_dk_corpse_explosion_SpellScript : public SpellScript
         {
-
             PrepareSpellScript(spell_dk_corpse_explosion_SpellScript);
 
             bool Validate(SpellEntry const * /*spellEntry*/)
@@ -292,7 +285,6 @@ class spell_dk_death_pact : public SpellScriptLoader
 
             void FilterTargets(std::list<Unit*>& unitList)
             {
-
                 Unit* unit_to_add = NULL;
                 for (std::list<Unit*>::iterator itr = unitList.begin() ; itr != unitList.end(); ++itr)
                 {
@@ -380,7 +372,6 @@ class spell_dk_scourge_strike : public SpellScriptLoader
         {
             PrepareSpellScript(spell_dk_scourge_strike_SpellScript);
 
-
             bool Validate(SpellEntry const * /*spellEntry*/)
             {
                 if (!sSpellStore.LookupEntry(DK_SPELL_SCOURGE_STRIKE_TRIGGERED))
@@ -403,6 +394,7 @@ class spell_dk_scourge_strike : public SpellScriptLoader
                 OnEffect += SpellEffectFn(spell_dk_scourge_strike_SpellScript::HandleDummy, EFFECT_2, SPELL_EFFECT_DUMMY);
             }
         };
+
         SpellScript* GetSpellScript() const
         {
             return new spell_dk_scourge_strike_SpellScript();
@@ -498,7 +490,7 @@ class spell_dk_will_of_the_necropolis : public SpellScriptLoader
 
                 int32 remainingHp = int32(GetTarget()->GetHealth() - dmgInfo.GetDamage());
                 int32 minHp = int32(GetTarget()->CountPctFromMaxHealth(SpellMgr::CalculateSpellEffectAmount(talentProto, EFFECT_0, GetCaster())));
-            
+
                 // Damage that would take you below [effect0] health or taken while you are at [effect0]
                 if (remainingHp < minHp)
                     absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
