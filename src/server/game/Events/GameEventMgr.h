@@ -104,7 +104,8 @@ class GameEventMgr
         void LoadFromDB();
         uint32 Update();
         bool IsActiveEvent(uint16 event_id) { return (m_ActiveEvents.find(event_id) != m_ActiveEvents.end()); }
-        uint32 Initialize();
+        uint32 StartSystem();
+        void Initialize();
         void StartArenaSeason();
         void StartInternalEvent(uint16 event_id);
         bool StartEvent(uint16 event_id, bool overwrite = false);
@@ -133,7 +134,7 @@ class GameEventMgr
         bool hasGameObjectQuestActiveEventExcept(uint32 quest_id, uint16 event_id);
         bool hasCreatureActiveEventExcept(uint32 creature_guid, uint16 event_id);
         bool hasGameObjectActiveEventExcept(uint32 go_guid, uint16 event_id);
-    protected:
+protected:
         typedef std::list<uint32> GuidList;
         typedef std::list<uint32> IdList;
         typedef std::vector<GuidList> GameEventGuidMap;
@@ -150,8 +151,6 @@ class GameEventMgr
         typedef std::pair<uint32 /*guid*/, uint32 /*npcflag*/> GuidNPCFlagPair;
         typedef std::list<GuidNPCFlagPair> NPCFlagList;
         typedef std::vector<NPCFlagList> GameEventNPCFlagMap;
-        typedef std::pair<uint16 /*event id*/, uint32 /*gossip id*/> EventNPCGossipIdPair;
-        typedef std::map<uint32 /*guid*/, EventNPCGossipIdPair> GuidEventNpcGossipIdMap;
         typedef std::vector<uint32> GameEventBitmask;
         GameEventQuestMap mGameEventCreatureQuests;
         GameEventQuestMap mGameEventGameObjectQuests;
@@ -164,7 +163,6 @@ class GameEventMgr
         GameEventBitmask  mGameEventBattlegroundHolidays;
         QuestIdToEventConditionMap mQuestToEventConditions;
         GameEventNPCFlagMap mGameEventNPCFlags;
-        GuidEventNpcGossipIdMap mNPCGossipIds;
         ActiveEvents m_ActiveEvents;
         bool isSystemInit;
     public:
@@ -178,4 +176,3 @@ bool IsHolidayActive(HolidayIds id);
 bool IsEventActive(uint16 event_id);
 
 #endif
-
