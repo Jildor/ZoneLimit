@@ -3890,6 +3890,12 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Targets |= TARGET_FLAG_UNIT_CASTER;
             count++;
             break;
+        case 71880:
+        case 71892:
+            spellInfo->SpellFamilyName = SPELLFAMILY_GENERIC;
+            spellInfo->procChance = 20;
+            count++;
+            break;
         case 16834: // Natural shapeshifter
         case 16835:
             spellInfo->DurationIndex = 21;
