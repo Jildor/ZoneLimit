@@ -361,7 +361,7 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId)
                 me->ToCreature()->AI()->PassengerBoarded(unit, seat->first, true);
 
             // update all passenger's positions
-            RelocatePassengers(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0);
+            RelocatePassengers(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
         }
     }
 

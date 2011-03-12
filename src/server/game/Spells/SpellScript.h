@@ -126,7 +126,6 @@ enum SpellScriptHookType
 #define HOOK_SPELL_HIT_START SPELL_SCRIPT_HOOK_EFFECT
 #define HOOK_SPELL_HIT_END SPELL_SCRIPT_HOOK_AFTER_HIT + 1
 #define HOOK_SPELL_START SPELL_SCRIPT_HOOK_EFFECT
-#define HOOK_SPELL_END SPELL_SCRIPT_HOOK_AFTER_HIT + 1
 #define HOOK_SPELL_END SPELL_SCRIPT_HOOK_CHECK_CAST + 1
 #define HOOK_SPELL_COUNT HOOK_SPELL_END - HOOK_SPELL_START
 
@@ -237,7 +236,6 @@ class SpellScript : public _SpellScript
         #define SpellUnitTargetFn(F, I, N) UnitTargetHandlerFunction(&F, I, N)
 
         // hooks are executed in following order, at specified event of spell:
-
         // 1. OnUnitTargetSelect - executed just before adding selected targets to final target list
         // 2. BeforeHit - executed just before spell hits a target
         // 3. OnEffect - executed just before specified effect handler call
