@@ -1865,7 +1865,7 @@ void Player::TeleportOutOfMap(Map *oldMap)
 
 bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientation, uint32 options)
 {
-    sAnticheatMgr->DisableAnticheatDetection(this,true);
+    //sAnticheatMgr->DisableAnticheatDetection(this,true);
 
     if (!MapManager::IsValidMapCoord(mapid, x, y, z, orientation))
     {
