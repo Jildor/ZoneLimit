@@ -398,19 +398,6 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
 #pragma warning(default:4355)
 #endif
 
-    /*anticheatData.disableACCheck = false;
-    anticheatData.disableACCheckTimer = 0;
-    GetPosition(&anticheatData.lastMovementInfo.pos);
-    anticheatData.lastOpcode = 0;
-
-    anticheatData.total_reports = 0;
-
-    for (uint8 i = 0; i < 5; i++)
-        anticheatData.type_reports[i] = 0;
-
-    anticheatData.average = 0;
-    anticheatData.creation_time = 0;*/
-
     m_speakTime = 0;
     m_speakCount = 0;
 
@@ -633,15 +620,11 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
 
     isDebugAreaTriggers = false;
 
-//    sAnticheatMgr->DeletePlayerReport(this);
-
     SetPendingBind(NULL, 0);
 }
 
 Player::~Player ()
 {
-//    sAnticheatMgr->DeletePlayerReport(this);
-
     // it must be unloaded already in PlayerLogout and accessed only for loggined player
     //m_social = NULL;
 
