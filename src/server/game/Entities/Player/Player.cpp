@@ -398,7 +398,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
 #pragma warning(default:4355)
 #endif
 
-    anticheatData.disableACCheck = false;
+    /*anticheatData.disableACCheck = false;
     anticheatData.disableACCheckTimer = 0;
     GetPosition(&anticheatData.lastMovementInfo.pos);
     anticheatData.lastOpcode = 0;
@@ -409,7 +409,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
         anticheatData.type_reports[i] = 0;
 
     anticheatData.average = 0;
-    anticheatData.creation_time = 0;
+    anticheatData.creation_time = 0;*/
 
     m_speakTime = 0;
     m_speakCount = 0;
@@ -1269,7 +1269,7 @@ void Player::Update(uint32 p_time)
     if (!IsInWorld())
         return;
 
-    sAnticheatMgr->HandleHackDetectionTimer(this, p_time);
+    //sAnticheatMgr->HandleHackDetectionTimer(this, p_time);
 
     // undelivered mail
     if (m_nextMailDelivereTime && m_nextMailDelivereTime <= time(NULL))
