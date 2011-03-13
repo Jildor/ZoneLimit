@@ -38,6 +38,11 @@ public:
     uint32 GetCreationTime() const;
     void SetCreationTime(uint32 creationTime);
 
+    void SetTempReports(uint32 amount, uint8 type);
+    uint32 GetTempReports(uint8 type);
+
+    void SetTempReportsTimer(uint32 time, uint8 type);
+    uint32 GetTempReportsTimer(uint8 type);
 private:
     uint32 lastOpcode;
     MovementInfo lastMovementInfo;
@@ -47,6 +52,8 @@ private:
     uint32 typeReports[MAX_REPORT_TYPES];
     float average;
     uint32 creationTime;
+    uint32 tempReports[MAX_REPORT_TYPES];
+    uint32 tempReportsTimer[MAX_REPORT_TYPES];
 };
 
 #endif

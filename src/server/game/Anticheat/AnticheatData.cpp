@@ -1,19 +1,21 @@
 #include "AnticheatData.h"
 
-
 AnticheatData::AnticheatData()
 {
     lastOpcode = 0;
     totalReports = 0;
     for (uint8 i = 0; i < MAX_REPORT_TYPES; i++)
+    {
         typeReports[i] = 0;
+        tempReports[i] = 0;
+        tempReportsTimer[i] = 0;
+    }
     average = 0;
     creationTime = 0;
 }
 
 AnticheatData::~AnticheatData()
 {
-
 }
 
 void AnticheatData::SetLastOpcode(uint32 opcode)
@@ -82,4 +84,24 @@ uint32 AnticheatData::GetCreationTime() const
 void AnticheatData::SetCreationTime(uint32 _creationTime)
 {
     creationTime = _creationTime;
+}
+
+void AnticheatData::SetTempReports(uint32 amount, uint8 type)
+{
+    tempReports[type] = amount;
+}
+
+uint32 AnticheatData::GetTempReports(uint8 type)
+{
+    return tempReports[type];
+}
+
+void AnticheatData::SetTempReportsTimer(uint32 time, uint8 type)
+{
+    tempReportsTimer[type] = time;
+}
+
+uint32 AnticheatData::GetTempReportsTimer(uint8 type)
+{
+    return tempReportsTimer[type];
 }

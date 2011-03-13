@@ -30,7 +30,6 @@ AnticheatMgr::~AnticheatMgr()
 
 void AnticheatMgr::JumpHackDetection(Player* player, MovementInfo movementInfo,uint32 opcode)
 {
-    //AnticheatData& anticheatData = playersData[player->GetGUID()];
     uint32 key = player->GetGUIDLow();
 
     if (m_Players[key].GetLastOpcode() == MSG_MOVE_JUMP && opcode == MSG_MOVE_JUMP)
@@ -62,7 +61,6 @@ void AnticheatMgr::WalkOnWaterHackDetection(Player* player, MovementInfo movemen
 
 void AnticheatMgr::FlyHackDetection(Player* player, MovementInfo movementInfo)
 {
-     //AnticheatData& anticheatData = playersData[player->GetGUID()];
     uint32 key = player->GetGUIDLow();
     if (!m_Players[key].GetLastMovementInfo().HasMovementFlag(MOVEMENTFLAG_FLYING))
         return;
@@ -243,14 +241,45 @@ uint32 AnticheatMgr::GetTypeReports(uint32 lowGUID, uint8 type)
     return m_Players[lowGUID].GetTypeReports(type);
 }
 
+bool AnticheatMgr::MustCheckTempReports(uint8 type)
+{
+    if (type == SPEED_HACK_REPORT ||
+        type == FLY_HACK_REPORT || 
+        type == WALK_WATER_HACK_REPORT)
+        return true;
+
+    return false;
+}
+
 void AnticheatMgr::BuildReport(Player* player,uint8 reportType)
 {
     uint32 key = player->GetGUIDLow();
+   
+    if (MustCheckTempReports(reportType))
+    {
+        uint32 actualTime = getMSTime();
+
+        if (!m_Players[key].GetTempReportsTimer(reportType))
+            m_Players[key].SetTempReportsTimer(actualTime,reportType);
+
+        if (getMSTimeDiff(m_Players[key].GetTempReportsTimer(reportType),actualTime) < 3000)
+        {
+            m_Players[key].SetTempReports(m_Players[key].GetTempReports(reportType)+1,reportType);
+
+            if (m_Players[key].GetTempReports(reportType) < 3)
+                return;
+        } else
+        {
+            m_Players[key].SetTempReportsTimer(actualTime,reportType);
+            m_Players[key].SetTempReports(1,reportType);
+            return;
+        }
+    }
 
     // generating creationTime for average calculation
-    if (m_Players[key].GetTotalReports() == 0)
+    if (!m_Players[key].GetTotalReports())
         m_Players[key].SetCreationTime(getMSTime());
-
+    
     // increasing total_reports
     m_Players[key].SetTotalReports(m_Players[key].GetTotalReports()+1);
     // increasing specific cheat report
@@ -289,20 +318,20 @@ void AnticheatMgr::AnticheatGlobalCommand(ChatHandler* handler)
         return;
     } else
     {
-            handler->SendSysMessage("=============================");
-            handler->PSendSysMessage("Players with the lowest averages:");
-            do
-            {
-                Field *fieldsDB = resultDB->Fetch();
+        handler->SendSysMessage("=============================");
+        handler->PSendSysMessage("Players with the lowest averages:");
+        do
+        {
+            Field *fieldsDB = resultDB->Fetch();
      
-                uint32 guid = fieldsDB[0].GetUInt32();
-                float average = fieldsDB[1].GetFloat();
-                uint32 total_reports = fieldsDB[2].GetUInt32();
+            uint32 guid = fieldsDB[0].GetUInt32();
+            float average = fieldsDB[1].GetFloat();
+            uint32 total_reports = fieldsDB[2].GetUInt32();
 
-                    if (Player* player = sObjectMgr->GetPlayerByLowGUID(guid))
-                        handler->PSendSysMessage("Player: %s Average: %f Total Reports: %u",player->GetName(),average,total_reports);
+            if (Player* player = sObjectMgr->GetPlayerByLowGUID(guid))
+                handler->PSendSysMessage("Player: %s Average: %f Total Reports: %u",player->GetName(),average,total_reports);
 
-            } while (resultDB->NextRow());
+        } while (resultDB->NextRow());
     }
 
     resultDB = CharacterDatabase.Query("SELECT guid,average,total_reports FROM players_reports_status WHERE total_reports != 0 ORDER BY total_reports DESC LIMIT 3;");

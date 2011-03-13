@@ -78,6 +78,9 @@ class AnticheatMgr
 
         void BuildReport(Player* player,uint8 reportType);
 
+        //bool CanGenerateRealReport(uint8 type);
+        bool MustCheckTempReports(uint8 type);
+
         AnticheatPlayersDataMap m_Players;                        ///< Player data
 };
 
