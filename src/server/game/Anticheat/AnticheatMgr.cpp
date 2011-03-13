@@ -122,7 +122,7 @@ void AnticheatMgr::StartHackDetection(Player* player, MovementInfo movementInfo,
     WalkOnWaterHackDetection(player,movementInfo);
     JumpHackDetection(player,movementInfo,opcode);
     TeleportPlaneHackDetection(player, movementInfo);
-    ClimbHackDetection(player,movementInfo,opcode);
+    //ClimbHackDetection(player,movementInfo,opcode);
 
     m_Players[key].SetLastMovementInfo(movementInfo);
     m_Players[key].SetLastOpcode(opcode);
@@ -133,10 +133,11 @@ void AnticheatMgr::ClimbHackDetection(Player *player, MovementInfo movementInfo,
 {
     uint32 key = player->GetGUIDLow();
 
-    if (opcode != MSG_MOVE_HEARTBEAT ||
-        m_Players[key].GetLastOpcode() != MSG_MOVE_HEARTBEAT)
-        return;
+    //if (opcode != MSG_MOVE_HEARTBEAT ||
+    //    m_Players[key].GetLastOpcode() != MSG_MOVE_HEARTBEAT)
+    //    return;
 
+    // in this case we don't care if they are "legal" flags, they are handled in another parts of the Anticheat Manager.
     if (player->IsInWater() || 
         player->IsFlying() || 
         player->IsFalling())
@@ -154,8 +155,7 @@ void AnticheatMgr::ClimbHackDetection(Player *player, MovementInfo movementInfo,
     {
         sLog->outError("AnticheatMgr:: Climb-Hack detected player GUID (low) %u", player->GetGUIDLow());
         BuildReport(player,CLIMB_HACK_REPORT);
-    } //else
-      //  sLog->outError("Angle %f || Opcode %u",angle,opcode);
+    }
 }
 
 void AnticheatMgr::SpeedHackDetection(Player* player,MovementInfo movementInfo)
@@ -188,8 +188,6 @@ void AnticheatMgr::SpeedHackDetection(Player* player,MovementInfo movementInfo)
     // this is the distance doable by the player in 1 sec, using the time done to move to this point.
     uint32 clientSpeedRate = distance2D * 1000 / timeDiff;
 
-    //sLog->outError("fallxy %f fallz %f Distance2D %u clientSpeedRate %u speedRate %u timeDiff %u ",movementInfo.j_xyspeed, movementInfo.j_zspeed,distance2D,clientSpeedRate,speedRate,timeDiff);
-    
     // we did the (uint32) cast to accept a margin of tolerance
     if (clientSpeedRate > speedRate)
     {
@@ -243,12 +241,10 @@ uint32 AnticheatMgr::GetTypeReports(uint32 lowGUID, uint8 type)
 
 bool AnticheatMgr::MustCheckTempReports(uint8 type)
 {
-    if (type == SPEED_HACK_REPORT ||
-        type == FLY_HACK_REPORT || 
-        type == WALK_WATER_HACK_REPORT)
-        return true;
+    if (type == JUMP_HACK_REPORT)
+        return false;
 
-    return false;
+    return true;
 }
 
 void AnticheatMgr::BuildReport(Player* player,uint8 reportType)
