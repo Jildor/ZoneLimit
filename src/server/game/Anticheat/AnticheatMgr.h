@@ -38,7 +38,15 @@ enum ReportTypes
    // MAX_REPORT_TYPES
 };
 
-//const std::string report_types[MAX_REPORT_TYPES] = {"speed_reports", "fly_reports", "waterwalk_reports", "jump_reports", "teleportplane_reports", "climb_reports" };
+enum DetectionTypes
+{
+    SPEED_HACK_DETECTION            = 1,
+    FLY_HACK_DETECTION              = 2,
+    WALK_WATER_HACK_DETECTION       = 4,
+    JUMP_HACK_DETECTION             = 8,
+    TELEPORT_PLANE_HACK_DETECTION   = 16,
+    CLIMB_HACK_DETECTION            = 32
+};
 
 // GUIDLow is the key.
 typedef std::map<uint32, AnticheatData> AnticheatPlayersDataMap;

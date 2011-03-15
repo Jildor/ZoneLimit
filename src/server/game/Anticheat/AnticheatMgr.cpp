@@ -30,6 +30,9 @@ AnticheatMgr::~AnticheatMgr()
 
 void AnticheatMgr::JumpHackDetection(Player* player, MovementInfo movementInfo,uint32 opcode)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & JUMP_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
 
     if (m_Players[key].GetLastOpcode() == MSG_MOVE_JUMP && opcode == MSG_MOVE_JUMP)
@@ -41,6 +44,9 @@ void AnticheatMgr::JumpHackDetection(Player* player, MovementInfo movementInfo,u
 
 void AnticheatMgr::WalkOnWaterHackDetection(Player* player, MovementInfo movementInfo)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & WALK_WATER_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
     if (!m_Players[key].GetLastMovementInfo().HasMovementFlag(MOVEMENTFLAG_WATERWALKING))
         return;
@@ -61,6 +67,9 @@ void AnticheatMgr::WalkOnWaterHackDetection(Player* player, MovementInfo movemen
 
 void AnticheatMgr::FlyHackDetection(Player* player, MovementInfo movementInfo)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & FLY_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
     if (!m_Players[key].GetLastMovementInfo().HasMovementFlag(MOVEMENTFLAG_FLYING))
         return;
@@ -76,6 +85,9 @@ void AnticheatMgr::FlyHackDetection(Player* player, MovementInfo movementInfo)
 
 void AnticheatMgr::TeleportPlaneHackDetection(Player* player, MovementInfo movementInfo)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & TELEPORT_PLANE_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
 
     if (m_Players[key].GetLastMovementInfo().pos.GetPositionZ() != 0 ||
@@ -122,7 +134,7 @@ void AnticheatMgr::StartHackDetection(Player* player, MovementInfo movementInfo,
     WalkOnWaterHackDetection(player,movementInfo);
     JumpHackDetection(player,movementInfo,opcode);
     TeleportPlaneHackDetection(player, movementInfo);
-    //ClimbHackDetection(player,movementInfo,opcode);
+    ClimbHackDetection(player,movementInfo,opcode);
 
     m_Players[key].SetLastMovementInfo(movementInfo);
     m_Players[key].SetLastOpcode(opcode);
@@ -131,11 +143,14 @@ void AnticheatMgr::StartHackDetection(Player* player, MovementInfo movementInfo,
 // basic detection
 void AnticheatMgr::ClimbHackDetection(Player *player, MovementInfo movementInfo, uint32 opcode)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & CLIMB_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
 
-    //if (opcode != MSG_MOVE_HEARTBEAT ||
-    //    m_Players[key].GetLastOpcode() != MSG_MOVE_HEARTBEAT)
-    //    return;
+    if (opcode != MSG_MOVE_HEARTBEAT ||
+        m_Players[key].GetLastOpcode() != MSG_MOVE_HEARTBEAT)
+        return;
 
     // in this case we don't care if they are "legal" flags, they are handled in another parts of the Anticheat Manager.
     if (player->IsInWater() || 
@@ -160,6 +175,9 @@ void AnticheatMgr::ClimbHackDetection(Player *player, MovementInfo movementInfo,
 
 void AnticheatMgr::SpeedHackDetection(Player* player,MovementInfo movementInfo)
 {
+    if ((sWorld->getIntConfig(CONFIG_ANTICHEAT_DETECTIONS_ENABLED) & SPEED_HACK_DETECTION) == 0)
+        return;
+
     uint32 key = player->GetGUIDLow();
 
     // We also must check the map because the movementFlag can be modified by the client.
