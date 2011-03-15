@@ -383,7 +383,32 @@ void AnticheatMgr::AnticheatGlobalCommand(ChatHandler* handler)
 void AnticheatMgr::AnticheatDeleteCommand(uint32 guid)
 {
     if (!guid)
+    {
+        for (AnticheatPlayersDataMap::iterator it = m_Players.begin(); it != m_Players.end(); ++it)
+        {
+            (*it).second.SetTotalReports(0);
+            (*it).second.SetAverage(0);
+            (*it).second.SetCreationTime(0);
+            for (uint8 i = 0; i < MAX_REPORT_TYPES; i++)
+            {
+                (*it).second.SetTempReports(0,i);
+                (*it).second.SetTempReportsTimer(0,i);
+                (*it).second.SetTypeReports(i,0);
+            }
+        }
         CharacterDatabase.PExecute("DELETE FROM players_reports_status;");
+    }
     else
+    {
+        m_Players[guid].SetTotalReports(0);
+        m_Players[guid].SetAverage(0);
+        m_Players[guid].SetCreationTime(0);
+        for (uint8 i = 0; i < MAX_REPORT_TYPES; i++)
+        {
+            m_Players[guid].SetTempReports(0,i);
+            m_Players[guid].SetTempReportsTimer(0,i);
+            m_Players[guid].SetTypeReports(i,0);
+        }
         CharacterDatabase.PExecute("DELETE FROM players_reports_status WHERE guid=%u;",guid);
+    }
 }
