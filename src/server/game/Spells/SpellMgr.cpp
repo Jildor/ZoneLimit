@@ -3643,46 +3643,33 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             count++;
             break;
-        case 61407: // Energize Cores
-        case 62136: // Energize Cores
-        case 54069: // Energize Cores 
-        case 56251: // Energize Cores
+        case 61407: case 62136: // Energize Cores  
+        case 54069: case 56251: // Energize Cores
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ENTRY_SRC;
             count++;
             break;
-        case 50785: // Energize Cores
-        case 59372: // Energize Cores
+        case 50785: case 59372: // Energize Cores
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ENEMY_SRC;
             count++;
             break;
-        // Bind
-        case 3286:
+        case 3286: // Bind
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             count++;
             break;
-        // Heroism
-        case 32182:
+        case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             count++;
             break;
-        // Blazing Harpoon
-        case 61588:
-            spellInfo->MaxAffectedTargets = 1;
-            count++;
-            break;
-        // Bloodlust
-        case 2825:
+        case 2825: // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             count++;
             break;
-        // Heart of the Crusader
-        case 20335:
-        case 20336:
-        case 20337:
-        // Glyph of Life Tap
-        case 63320:
-        // Entries were not updated after spell effect change, we have to do that manually :/
+        case 20335: // Heart of the Crusader (Rank 1)
+        case 20336: // Heart of the Crusader (Rank 2)
+        case 20337: // Heart of the Crusader (Rank 3)
+        case 63320: // Glyph of Life Tap
+            // Entries were not updated after spell effect change, we have to do that manually :/
             spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_TRIGGERED;
             count++;
             break;
@@ -3751,6 +3738,9 @@ void SpellMgr::LoadSpellCustomAttr()
         case 45761: // Shoot
         case 42611: // Shoot
         case 62374: // Pursued
+        case 51590: // Toss Ice Boulder
+        case 61588: // Blazing Harpoon
+        case 63342: // Focused Eyebeam Summon Trigger (Kologarn)
             spellInfo->MaxAffectedTargets = 1;
             count++;
             break;
@@ -3821,7 +3811,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 57761:    // Fireball!
         case 39805:    // Lightning Overload
         case 64823:    // Item - Druid T8 Balance 4P Bonus
-        case 44401:
+        case 44401:    // Missile Barrage
             spellInfo->procCharges = 1;
             count++;
             break;
@@ -3859,10 +3849,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectDieSides[1] = 1;
             count++;
             break;
-        case 51904:     // Summon Ghouls On Scarlet Crusade (core does not know the triggered spell is summon spell)
-            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
-            count++;
-            break;
         case 29809:     // Desecration Arm - 36 instead of 37 - typo? :/
             spellInfo->EffectRadiusIndex[0] = 37;
             count++;
@@ -3896,28 +3882,21 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->procChance = 20;
             count++;
             break;
-        case 16834: // Natural shapeshifter
-        case 16835:
-            spellInfo->DurationIndex = 21;
-            count++;
-            break;
-        case 51735: // Ebon Plague
-        case 51734:
-        case 51726:
+        case 51735: case 51734: case 51726:// Ebon Plague
             spellInfo->AttributesEx3 |= SPELL_ATTR3_STACK_FOR_DIFF_CASTERS;
             spellInfo->SpellFamilyFlags[2] = 0x10;
             count++;
             break;
-        case 41013:     // Parasitic Shadowfiend Passive
+        case 41013: // Parasitic Shadowfiend Passive
             spellInfo->EffectApplyAuraName[0] = 4; // proc debuff, and summon infinite fiends
             count++;
             break;
-        case 27892:     // To Anchor 1
-        case 27928:     // To Anchor 1
-        case 27935:     // To Anchor 1
-        case 27915:     // Anchor to Skulls
-        case 27931:     // Anchor to Skulls
-        case 27937:     // Anchor to Skulls
+        case 27892: // To Anchor 1
+        case 27928: // To Anchor 1
+        case 27935: // To Anchor 1
+        case 27915: // Anchor to Skulls
+        case 27931: // Anchor to Skulls
+        case 27937: // Anchor to Skulls
             spellInfo->rangeIndex = 13;
             count++;
             break;
@@ -3933,6 +3912,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[1] = TARGET_UNIT_AREA_ALLY_SRC;
             count++;
             break;
+        case 51904: // Summon Ghouls On Scarlet Crusade (core does not know the triggered spell is summon spell)
         case 31687: // Summon Water Elemental
             // 322-330 switch - effect changed to dummy, target entry not changed in client:(
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
@@ -3967,13 +3947,8 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
             count++;
             break;
-        // Strength of the Pack
-        case 64381:
+        case 64381: // Strength of the Pack
             spellInfo->StackAmount = 4;
-            count++;
-            break;
-        case 63675: // Improved Devouring Plague
-            spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
         case 19970: // Entangling Roots (Rank 6)
@@ -4014,14 +3989,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectMiscValue[0] = 0;
             count++;
             break;
-        // ULDUAR SPELLS
-        //
-        case 63342: // Focused Eyebeam Summon Trigger
-            spellInfo->MaxAffectedTargets = 1;
-            count++;
-            break;
-        // ENDOF ULDUAR SPELLS
-        //
         // ICECROWN CITADEL SPELLS
 
         // THESE SPELLS ARE WORKING CORRECTLY EVEN WITHOUT THIS HACK
@@ -4112,10 +4079,13 @@ void SpellMgr::LoadSpellCustomAttr()
         case 72785: // Empowered Flare (Blood Prince Council)
         case 72786: // Empowered Flare (Blood Prince Council)
         case 72787: // Empowered Flare (Blood Prince Council)
+        case 63675: // Improved Devouring Plague
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
         case 71340: // Pact of the Darkfallen (Blood-Queen Lana'thel)
+        case 16834: // Natural shapeshifter (Rank 2)
+        case 16835: // Natural shapeshifter (Rank 3)
             spellInfo->DurationIndex = 21;
             count++;
             break;
@@ -4136,10 +4106,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_DEST_TARGET_ANY;
             spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ANY;
             spellInfo->Effect[1] = 0;
-            count++;
-            break;
-        case 51590: // Toss Ice Boulder
-            spellInfo->MaxAffectedTargets = 1;
             count++;
             break;
         default:
