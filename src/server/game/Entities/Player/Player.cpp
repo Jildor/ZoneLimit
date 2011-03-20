@@ -1732,7 +1732,9 @@ void Player::Update(uint32 p_time)
     {
         if (_pendingBindTimer <= p_time)
         {
-            BindToInstance();
+            // Player left the instance
+            if (_pendingBind->GetInstanceId() == GetInstanceId())
+                BindToInstance();
             SetPendingBind(NULL, 0);
         }
         else
@@ -17927,10 +17929,6 @@ InstancePlayerBind* Player::BindToInstance(InstanceSave *save, bool permanent, b
 
 void Player::BindToInstance()
 {
-    // Player left the instance
-    if (_pendingBind->GetInstanceId() != GetInstanceId())
-        return;
-
     WorldPacket data(SMSG_INSTANCE_SAVE_CREATED, 4);
     data << uint32(0);
     GetSession()->SendPacket(&data);
