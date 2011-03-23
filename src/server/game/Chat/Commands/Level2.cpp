@@ -39,10 +39,10 @@
 #include <fstream>
 #include <map>
 #include "OutdoorPvPMgr.h"
-#include "OutdoorPvPWG.h"
 #include "Transport.h"
 #include "TargetedMovementGenerator.h"                      // for HandleNpcUnFollowCommand
 #include "CreatureGroups.h"
+#include "OutdoorPvPWG.h"
 
 //mute player for some times
 bool ChatHandler::HandleMuteCommand(const char* args)
@@ -922,7 +922,7 @@ bool ChatHandler::HandleWintergraspStatusCommand(const char* /*args*/)
 {
     OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
 
-    if (!pvpWG || !sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
+   if (!pvpWG || !sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
     {
         SendSysMessage(LANG_BG_WG_DISABLE);
         SetSentErrorMessage(true);

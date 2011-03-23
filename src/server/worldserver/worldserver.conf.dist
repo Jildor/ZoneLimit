@@ -2796,9 +2796,10 @@ Anticheat.ReportsForIngameWarnings = 70
 
 Anticheat.DetectionsEnabled = 31
 
-###################################################################################################
+#
+######################################################################
 
-#######################################################################
+######################################################################
 #   OutdoorPvP.Wintergrasp.Enabled
 #       Determines whether the Wintergrasp battle is enabled or not.
 #        Default: 0 = Disable
@@ -2890,6 +2891,6 @@ OutdoorPvP.Wintergrasp.CustomHonorDamageTower = 750
 OutdoorPvP.Wintergrasp.CustomHonorDestroyedTower = 750
 OutdoorPvP.Wintergrasp.CustomHonorDamagedBuilding = 750
 OutdoorPvP.Wintergrasp.CustomHonorIntactBuilding = 1500
-OutdoorPvP.Wintergrasp.Antifarm.Enable = 1
-OutdoorPvP.Wintergrasp.Antifarm.Atk = 1
-OutdoorPvP.Wintergrasp.Antifarm.Def = 1
+OutdoorPvP.Wintergrasp.Antifarm.Enable = 0
+OutdoorPvP.Wintergrasp.Antifarm.Atk = 5
+OutdoorPvP.Wintergrasp.Antifarm.Def = 5

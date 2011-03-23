@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2008 - 2010 Trinity <http://www.trinitycore.org/>
  *
- * Copyright (C) 2010 Myth Project <http://bitbucket.org/sun/myth-core/>
+ * Patch supported by ChaosUA & TCRU community http://trinity-core.ru/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,8 +61,6 @@ enum OutdoorPvPWGSpell
 
     SPELL_TELEPORT_DALARAN                       = 53360,
     SPELL_VICTORY_AURA                           = 60044,
-
-    SPELL_PARACHUTE_WG                           = 61360,
 };
 
 const uint16 GameEventWintergraspDefender[2] = {50, 51};
@@ -102,7 +100,10 @@ enum OutdoorPvP_WG_KeepStatus
 
 enum OutdoorPVPWGStatus
 {
-    WORLDSTATE_WINTERGRASP_CONTROLING_FACTION,
+    WORLDSTATE_WINTERGRASP_WARTIME            = 31001,
+    WORLDSTATE_WINTERGRASP_TIMER              = 31002,
+    WORLDSTATE_WINTERGRASP_DEFENDERS          = 31003,
+    WORLDSTATE_WINTERGRASP_CONTROLING_FACTION = 31004,
     WORLDSTATE_VALUE_COUNT,
 };
 
@@ -176,13 +177,13 @@ struct BuildingState
 {
     explicit BuildingState(uint32 _worldState, TeamId _team, bool asDefault)
          : worldState(_worldState), health(0)
-         , defaultTeam(asDefault ? _team : OTHER_TEAM(_team)), team(_team), damageState(DAMAGE_INTACT)
-         , building(NULL), type(BUILDING_WALL), graveTeam(NULL)
-    { }
+         , defaultTeam(asDefault ? _team : OTHER_TEAM(_team)), damageState(DAMAGE_INTACT), team(_team)
+         , building(NULL), graveTeam(NULL), type(BUILDING_WALL) {}
     uint32 worldState;
     uint32 health;
     TeamId defaultTeam;
     OutdoorPvPWGDamageState damageState;
+    TeamId team;
     GameObject *building;
     uint32 *graveTeam;
     OutdoorPvPWGBuildingType type;
@@ -205,9 +206,6 @@ struct BuildingState
             if (uint32 newTeam = TeamId2Team[t])
                 *graveTeam = newTeam;
     }
-
-    private:
-        TeamId team;
 };
 
 typedef std::map<uint32, uint32> TeamPairMap;
@@ -240,7 +238,6 @@ class OutdoorPvPWG : public OutdoorPvP
         bool Update(uint32 diff);
         void BroadcastStateChange(BuildingState *state) const;
         uint32 GetData(uint32 id);
-        void SetData(uint32 id, uint32 value) { };
         void ModifyWorkshopCount(TeamId team, bool add);
         uint32 GetTimer() const { return m_timer / 1000; };
         bool isWarTime() const { return m_wartime; };
@@ -261,6 +258,8 @@ class OutdoorPvPWG : public OutdoorPvP
         // BG end
         void SendInitWorldStatesTo(Player *player = NULL) const;
         uint32 m_timer;
+        bool m_changeAlly;
+        bool m_changeHorde;
 
     protected:
         // Temporal BG specific till 3.2
@@ -305,7 +304,6 @@ class OutdoorPvPWG : public OutdoorPvP
         void UpdateClockDigit(uint32 &timer, uint32 digit, uint32 mod);
         void PromotePlayer(Player *player) const;
         void UpdateTenacityStack();
-		void UpdateCreatureObject();
         void UpdateAllWorldObject();
         bool UpdateCreatureInfo(Creature *creature);
         bool UpdateGameObjectInfo(GameObject *go) const;
