@@ -1012,7 +1012,6 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
         case CREATURE_SPIRIT_GUIDE:
             if (isWarTime())
             {
-                /* Uncomment if want to disable ressurect for both factions at the same time at fortress graveyard
                 if (creature->GetAreaId() == 4575) // Select Fortress Spirit
                 {
                     FortressSpirit = creature;
@@ -1020,7 +1019,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
                             FortressSpirit->UpdateEntry(CRE_SPI_A);
                     if (getDefenderTeam() == TEAM_HORDE) // Fortress Spirit Horde
                         FortressSpirit->UpdateEntry(CRE_SPI_H);
-                }*/
+                }
                 creature->SetVisible(true);
             }
             else
