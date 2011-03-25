@@ -183,7 +183,6 @@ public:
 
 };
 
-
 /*###
 # mob_enslaved_netherwing_drake
 ####*/
@@ -326,7 +325,6 @@ public:
 
 };
 
-
 /*#####
 # mob_dragonmaw_peon
 #####*/
@@ -407,7 +405,6 @@ public:
 
 };
 
-
 /*######
 ## npc_drake_dealer_hurlunk
 ######*/
@@ -437,7 +434,6 @@ public:
     }
 
 };
-
 
 /*######
 ## npc_flanis_swiftwing_and_kagrosh
@@ -490,7 +486,6 @@ public:
     }
 
 };
-
 
 /*######
 ## npc_murkblood_overseer
@@ -616,7 +611,6 @@ public:
 
 };
 
-
 /*######
 ## npc_oronok
 ######*/
@@ -692,7 +686,6 @@ public:
     }
 
 };
-
 
 /*####
 # npc_karynaku
@@ -945,8 +938,6 @@ public:
 
 };
 
-
-
 /*####
 # npc_earthmender_wilda
 ####*/
@@ -1124,8 +1115,6 @@ public:
     };
 
 };
-
-
 
 /*#####
 # Quest: Battle of the crimson watch
@@ -1745,9 +1734,6 @@ public:
     }
 
 };
-
-
-
 
 /*####
 # npc_enraged_spirits

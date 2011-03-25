@@ -1487,5 +1487,5 @@ void BattlegroundAV::ResetBGSubclass()
     for (uint16 i = 0; i < AV_CPLACE_MAX+AV_STATICCPLACE_MAX; i++)
         if (m_BgCreatures[i])
             DelCreature(i);
-
+			
 }

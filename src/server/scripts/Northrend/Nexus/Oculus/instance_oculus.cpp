@@ -52,7 +52,6 @@ public:
             platformUrom = 0;
             centrifugueConstructCounter = 0;
 
-
             azureDragonsList.clear();
             gameObjectList.clear();
         }
@@ -232,7 +231,6 @@ public:
 
             char dataHead1, dataHead2;
 
-
             std::istringstream loadStream(in);
             loadStream >> dataHead1 >> dataHead2;
 
@@ -266,7 +264,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_oculus()
 {

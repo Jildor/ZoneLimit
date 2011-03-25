@@ -138,7 +138,6 @@ void GuardAI::UpdateAI(const uint32 /*diff*/)
     }
 }
 
-
 void GuardAI::JustDied(Unit* killer)
 {
     if (Player* pkiller = killer->GetCharmerOrOwnerPlayerOrPlayerItself())
