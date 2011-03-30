@@ -426,7 +426,6 @@ bool OutdoorPvPWG::SetupOutdoorPvP()
         uint32 m_WSTimer = m_timer;
         StartBattle();
         m_timer = m_WSTimer;
-	
     }
 	else RemoveOfflinePlayerWGAuras();
 
