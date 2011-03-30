@@ -419,8 +419,6 @@ bool OutdoorPvPWG::SetupOutdoorPvP()
     m_towerDamagedCount[TEAM_HORDE] = 0;
     m_towerDestroyedCount[TEAM_HORDE] = 0;
 
-    RemoveOfflinePlayerWGAuras();
-
     RegisterZone(ZONE_WINTERGRASP);
 
     if (m_wartime)
@@ -428,7 +426,9 @@ bool OutdoorPvPWG::SetupOutdoorPvP()
         uint32 m_WSTimer = m_timer;
         StartBattle();
         m_timer = m_WSTimer;
+	
     }
+	else RemoveOfflinePlayerWGAuras();
 
     return true;
 }
