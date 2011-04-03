@@ -6852,7 +6852,12 @@ void Spell::EffectDiscoverTaxi(SpellEffIndex effIndex)
 void Spell::EffectTitanGrip(SpellEffIndex /*effIndex*/)
 {
     if (unitTarget && unitTarget->GetTypeId() == TYPEID_PLAYER)
-        unitTarget->ToPlayer()->SetCanTitanGrip(true);
+    {
+        Player *plr = unitTarget->ToPlayer();
+        plr->SetCanTitanGrip(true);
+        if (plr->HasTwoHandWeaponInOneHand() && !plr->HasAura(49152))
+            plr->CastSpell(plr, 49152, true);
+    }
 }
 
 void Spell::EffectRedirectThreat(SpellEffIndex /*effIndex*/)
