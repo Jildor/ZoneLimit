@@ -1287,6 +1287,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     default:
                        break;
                 }
+                break;
             case SPELLFAMILY_PRIEST:
                 if (!caster)
                     break;
