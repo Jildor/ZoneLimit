@@ -1,8 +1,9 @@
+-- Editado por Someone
 -- Quest "The Denouncement" (12273) (Converted&tweaked to SAI by Nay)
 SET @Goodman := 27234; -- Blacksmith Goodman
 SET @Zierhut := 27235; -- Lead Cannoneer Zierhut (npc)
-SET @Mercer := 27236; -- Stable Master Mercer (npc)
-SET @Jordan := 27237; -- Commander Jordan (npc)
+SET @Mercer := 27236; -- Stable Master Mercer (npc) --- (dos entradas 28555 y 27236)
+SET @Jordan := 27237; -- Commander Jordan (npc) --- (dos entradas 28556 y  27237)
 SET @Rod := 37438; -- Rod of Compulsion (item)
 SET @Compelled := 48714; -- Compelled (spell)
 SET @DeathJordan := 48724; -- The Denouncement: Commander Jordan On Death
@@ -58,18 +59,16 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 (@Jordan,0,3,0,25,0,100,0,0,0,0,0,22,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 'The Denouncement/Jordan: On reset set phase 0'),
 (@Jordan,0,4,0,6,2,100,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 'The Denouncement/Jordan: On death in phase 2 yell');
 
--- Kill a unrelated console DB error 
-DELETE FROM `creature_addon` WHERE `guid`=88103;
-
+-- Guids editadas para ZLDB
 -- Valiance Keep Footman SAI (by Malcrom)
 UPDATE `creature_template` SET `AIName`= 'SmartAI' WHERE `entry`=25253;
-DELETE FROM `smart_scripts` WHERE `entryorguid` IN (-111383,-111377,-111378,-111382,-111379,-111380);
+DELETE FROM `smart_scripts` WHERE `entryorguid` IN (-98012,-98011,-98088,-98005,-98007,-98010);
 INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES
-(-111383,0,0,0,1,0,100,0,1000,2000,4000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 4-5 sec'),
-(-111377,0,0,0,1,0,100,0,3000,4000,4000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 4-5 sec'),
-(-111378,0,0,0,1,0,100,0,8000,8000,16000,16000,10,4,5,21,0,0,0,1,0,0,0,0,0,0,0,'Random cheer emote every 16 sec'),
-(-111382,0,0,0,1,0,100,0,16000,16000,16000,16000,10,4,5,21,0,0,0,1,0,0,0,0,0,0,0,'Random cheer emote every 16 sec'),
-(-111379,0,0,0,1,0,100,0,2000,2000,5000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 5 sec'),
-(-111379,0,1,0,1,0,100,0,4000,4000,7000,7000,5,36,0,0,0,0,0,10,111376,25253,0,0,0,0,0,'Attack emote dueler 2 sec later sec'),
-(-111380,0,0,0,1,0,100,0,5000,5000,5000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 5 sec'),
-(-111380,0,1,0,1,0,100,0,7000,7000,7000,7000,5,36,0,0,0,0,0,10,111381,25253,0,0,0,0,0,'Attack emote dueler 2 sec later sec');
+(-98012,0,0,0,1,0,100,0,1000,2000,4000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 4-5 sec'),
+(-98011,0,0,0,1,0,100,0,3000,4000,4000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 4-5 sec'),
+(-98088,0,0,0,1,0,100,0,8000,8000,16000,16000,10,4,5,21,0,0,0,1,0,0,0,0,0,0,0,'Random cheer emote every 16 sec'),
+(-98005,0,0,0,1,0,100,0,16000,16000,16000,16000,10,4,5,21,0,0,0,1,0,0,0,0,0,0,0,'Random cheer emote every 16 sec'),
+(-98007,0,0,0,1,0,100,0,2000,2000,5000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 5 sec'),
+(-98007,0,1,0,1,0,100,0,4000,4000,7000,7000,5,36,0,0,0,0,0,10,98008,25253,0,0,0,0,0,'Attack emote dueler 2 sec later sec'),
+(-98010,0,0,0,1,0,100,0,5000,5000,5000,5000,5,36,0,0,0,0,0,1,0,0,0,0,0,0,0,'Attack emote every 5 sec'),
+(-98010,0,1,0,1,0,100,0,7000,7000,7000,7000,5,36,0,0,0,0,0,10,98009,25253,0,0,0,0,0,'Attack emote dueler 2 sec later sec');
