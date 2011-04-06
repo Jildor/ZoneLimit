@@ -26,5 +26,6 @@ CREATE TABLE `daily_players_reports` (
   `jump_reports` bigint(20) unsigned NOT NULL DEFAULT '0',
   `waterwalk_reports` bigint(20) unsigned NOT NULL DEFAULT '0',
   `teleportplane_reports` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `climb_reports` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='';
