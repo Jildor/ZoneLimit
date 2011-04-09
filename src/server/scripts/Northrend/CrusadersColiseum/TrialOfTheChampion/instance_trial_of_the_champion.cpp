@@ -127,27 +127,56 @@ public:
 
             switch(creature->GetEntry())
             {
-                // Champions
+                // Gran Champions
                 case VEHICLE_MOKRA_SKILLCRUSHER_MOUNT:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_MARSHAL_JACOB_ALERIUS_MOUNT, ALLIANCE);
+                    break;
+                case NPC_MOKRA:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_JACOB, ALLIANCE);
                     break;
                 case VEHICLE_ERESSEA_DAWNSINGER_MOUNT:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_AMBROSE_BOLTSPARK_MOUNT, ALLIANCE);
                     break;
+                case NPC_ERESSEA:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_AMBROSE, ALLIANCE);
+                    break;
                 case VEHICLE_RUNOK_WILDMANE_MOUNT:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_COLOSOS_MOUNT, ALLIANCE);
+                    break;
+                case NPC_RUNOK:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_COLOSOS, ALLIANCE);
                     break;
                 case VEHICLE_ZUL_TORE_MOUNT:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_EVENSONG_MOUNT, ALLIANCE);
                     break;
+                case NPC_ZULTORE:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_JAELYNE, ALLIANCE);
+                    break;
                 case VEHICLE_DEATHSTALKER_VESCERI_MOUNT:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_LANA_STOUTHAMMER_MOUNT, ALLIANCE);
                     break;
+                case NPC_VISCERI:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_LANA, ALLIANCE);
+                    break;
+                // Faction champions vehicles
+                case VEHICLE_FORSAKE_WARHORSE:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(VEHICLE_IRONFORGE_RAM, ALLIANCE);
+                    break;
+                case VEHICLE_THUNDER_BLUFF_KODO:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(VEHICLE_EXODAR_ELEKK, ALLIANCE);
+                    break;  
                 case VEHICLE_ORGRIMMAR_WOLF:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_STORMWIND_STEED, ALLIANCE);
@@ -156,17 +185,30 @@ public:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_GNOMEREGAN_MECHANOSTRIDER, ALLIANCE);
                     break;
-                case VEHICLE_THUNDER_BLUFF_KODO:
-                    if (TeamInInstance == HORDE)
-                        creature->UpdateEntry(VEHICLE_EXODAR_ELEKK, ALLIANCE);
-                    break;
                 case VEHICLE_DARKSPEAR_RAPTOR:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_DARNASSIA_NIGHTSABER, ALLIANCE);
                     break;
-                case VEHICLE_FORSAKE_WARHORSE:
+                // Faction champios
+                case NPC_ORGRIMAR_CHAMPION:
                     if (TeamInInstance == HORDE)
-                        creature->UpdateEntry(VEHICLE_IRONFORGE_RAM, ALLIANCE);
+                        creature->UpdateEntry(NPC_STORMWIND_CHAMPION, ALLIANCE);
+                    break;
+                case NPC_SILVERMOON_CHAMPION:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_GNOMERAGN_CHAMPION, ALLIANCE);
+                    break;
+                case NPC_THUNDER_CHAMPION:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_EXODAR_CHAMPION, ALLIANCE);
+                    break;
+                case NPC_TROLL_CHAMPION:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_DRNASSUS_CHAMPION, ALLIANCE);
+                    break;
+                case NPC_UNDERCITY_CHAMPION:
+                    if (TeamInInstance == HORDE)
+                        creature->UpdateEntry(NPC_IRONFORGE_CHAMPION, ALLIANCE);
                     break;
                 case NPC_RISEN_JAEREN:
                     if (TeamInInstance == ALLIANCE)

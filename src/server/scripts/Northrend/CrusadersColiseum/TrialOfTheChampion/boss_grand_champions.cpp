@@ -427,19 +427,19 @@ public:
                         }
                     }
                 }
-                uiInterceptTimer = 25000;
+                uiInterceptTimer = 7000;
             } else uiInterceptTimer -= uiDiff;
 
             if (uiBladeStormTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_BLADESTORM);
-                uiBladeStormTimer = urand(25000,35000);
+                uiBladeStormTimer = urand(15000,20000);
             } else uiBladeStormTimer -= uiDiff;
 
             if (uiMortalStrikeTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_MORTAL_STRIKE);
-                uiMortalStrikeTimer = urand(22000,26000);
+                uiMortalStrikeTimer = urand(8000,12000);
             } else uiMortalStrikeTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
@@ -551,20 +551,20 @@ public:
             if (uiFireBallTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_FIREBALL);
-                uiFireBallTimer = 17000;
+                uiFireBallTimer = 5000;
             } else uiFireBallTimer -= uiDiff;
 
             if (uiPolymorphTimer <= uiDiff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget, SPELL_POLYMORPH);
-                uiPolymorphTimer = 22000;
+                uiPolymorphTimer = 8000;
             } else uiPolymorphTimer -= uiDiff;
 
             if (uiBlastWaveTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_BLAST_WAVE,false);
-                uiBlastWaveTimer = 30000;
+                uiBlastWaveTimer = 13000;
             } else uiBlastWaveTimer -= uiDiff;
 
             if (uiHasteTimer <= uiDiff)
@@ -572,7 +572,7 @@ public:
                 me->InterruptNonMeleeSpells(true);
 
                 DoCast(me,SPELL_HASTE);
-                uiHasteTimer = 40000;
+                uiHasteTimer = 22000;
             } else uiHasteTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
@@ -692,7 +692,7 @@ public:
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget,SPELL_CHAIN_LIGHTNING);
 
-                uiChainLightningTimer = 23000;
+                uiChainLightningTimer = 16000;
             } else uiChainLightningTimer -= uiDiff;
 
             if (uiHealingWaveTimer <= uiDiff)
@@ -706,21 +706,21 @@ public:
                 } else
                     DoCast(me,SPELL_HEALING_WAVE);
 
-                uiHealingWaveTimer = 19000;
+                uiHealingWaveTimer = 12000;
             } else uiHealingWaveTimer -= uiDiff;
 
             if (uiEartShieldTimer <= uiDiff)
             {
                 DoCast(me,SPELL_EARTH_SHIELD);
 
-                uiEartShieldTimer = urand(40000,45000);
+                uiEartShieldTimer = urand(30000,35000);
             } else uiEartShieldTimer -= uiDiff;
 
             if (uiHexMendingTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_HEX_OF_MENDING,true);
 
-                uiHexMendingTimer = urand(30000,35000);
+                uiHexMendingTimer = urand(20000,25000);
             } else uiHexMendingTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
@@ -851,7 +851,7 @@ public:
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget,SPELL_LIGHTNING_ARROWS);
 
-                uiLightningArrowsTimer = 15000;
+                uiLightningArrowsTimer = 7000;
 
             } else uiLightningArrowsTimer -= uiDiff;
 
@@ -862,8 +862,8 @@ public:
                     uiTargetGUID = pTarget->GetGUID();
                     DoCast(pTarget, SPELL_SHOOT);
                 }
-                uiShootTimer = 19000;
-                uiMultiShotTimer = 8000;
+                uiShootTimer = 12000;
+                uiMultiShotTimer = 3000;
                 bShoot = true;
             } else uiShootTimer -= uiDiff;
 
@@ -1002,13 +1002,13 @@ public:
             if (uiEviscerateTimer <= uiDiff)
             {
                 DoCast(me->getVictim(),SPELL_EVISCERATE);
-                uiEviscerateTimer = 22000;
+                uiEviscerateTimer = 8000;
             } else uiEviscerateTimer -= uiDiff;
 
             if (uiFanKivesTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_FAN_OF_KNIVES,false);
-                uiFanKivesTimer = 20000;
+                uiFanKivesTimer = 14000;
             } else uiFanKivesTimer -= uiDiff;
 
             if (uiPosionBottleTimer <= uiDiff)

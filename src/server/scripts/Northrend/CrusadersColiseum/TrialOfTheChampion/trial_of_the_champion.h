@@ -67,6 +67,20 @@ enum eNpcs
     NPC_JAELYNE                 = 34657,
     NPC_LANA                    = 34703,
 
+    // Faction champions horde
+    NPC_ORGRIMAR_CHAMPION       = 35314,
+    NPC_SILVERMOON_CHAMPION     = 35326,
+    NPC_THUNDER_CHAMPION        = 35325,
+    NPC_TROLL_CHAMPION          = 35323,
+    NPC_UNDERCITY_CHAMPION      = 35327,
+
+    // Faction champions alliance
+    NPC_STORMWIND_CHAMPION      = 35328,
+    NPC_GNOMERAGN_CHAMPION      = 35331,
+    NPC_EXODAR_CHAMPION         = 35330,
+    NPC_DRNASSUS_CHAMPION       = 35332,
+    NPC_IRONFORGE_CHAMPION      = 35329, 
+
     // Crusader Champions
     NPC_EADRIC                  = 35119,
     NPC_PALETRESS               = 34928,
