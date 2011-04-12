@@ -4204,7 +4204,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Monstrous Bite target fix
                 // seems we incorrectly handle spell with "no target"
                 if (spellInfo->SpellIconID == 599)
-                    spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
+                    spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 else
                     break;
                 count++;
