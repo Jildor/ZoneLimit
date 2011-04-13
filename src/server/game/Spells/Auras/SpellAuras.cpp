@@ -1468,27 +1468,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     break;
             }
             break;
-        case SPELLFAMILY_DRUID:
-            // Enrage - armor reduction implemented here
-            if (GetSpellProto()->SpellFamilyFlags[0] & 0x80000)
-            {
-                if (AuraEffect * auraEff = target->GetAuraEffectOfRankedSpell(1178, 0))
-                {
-                    uint32 armorMod;
-                    switch (auraEff->GetId())
-                    {
-                        case 1178: armorMod = 27; break;
-                        case 9635: armorMod = 16; break;
-                    }
-                    armorMod = auraEff->GetAmount() / 100 * armorMod;
-                    if (apply)
-                        auraEff->ChangeAmount(auraEff->GetAmount() - armorMod);
-                    else
-                        auraEff->ChangeAmount(auraEff->GetAmount() + armorMod);
-                }
-                break;
-            }
-            break;
         case SPELLFAMILY_ROGUE:
             // Stealth
             if (GetSpellProto()->SpellFamilyFlags[0] & 0x00400000)
