@@ -1032,6 +1032,11 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         break;
                 }
                 break;
+            case SPELLFAMILY_DRUID:
+                // Cat Form, Bear Form, Dire Bear Form - exploit fix
+                if (GetSpellProto()->SpellFamilyFlags[0] & 0xC0000000)
+                    target->RemoveAurasDueToSpell(64904); // Hymn of Hope
+                break;
             case SPELLFAMILY_PRIEST:
                 if (!caster)
                     break;
