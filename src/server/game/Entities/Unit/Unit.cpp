@@ -3711,15 +3711,11 @@ void Unit::RemoveAurasDueToSpellByDispel(uint32 spellId, uint64 casterGUID, Unit
             // Unstable Affliction (crash if before removeaura?)
             if (aura->GetSpellProto()->SpellFamilyName == SPELLFAMILY_WARLOCK && (aura->GetSpellProto()->SpellFamilyFlags[1] & 0x0100))
             {
-                Unit * caster = aura->GetCaster();
-                if (caster)
+                if (AuraEffect const * aurEff = aura->GetEffect(0))
                 {
-                    if (AuraEffect const * aurEff = aura->GetEffect(0))
-                    {
-                        int32 damage = aurEff->GetAmount()*9;
-                        // backfire damage and silence
-                        caster->CastCustomSpell(dispeller, 31117, &damage, NULL, NULL, true, NULL, NULL, aura->GetCasterGUID());
-                    }
+                    int32 damage = aurEff->GetAmount()*9;
+                    // backfire damage and silence
+                    dispeller->CastCustomSpell(dispeller, 31117, &damage, NULL, NULL, true, NULL, NULL, aura->GetCasterGUID());
                 }
             }
             // Flame Shock
