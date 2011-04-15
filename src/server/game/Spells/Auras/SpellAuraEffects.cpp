@@ -5328,6 +5328,10 @@ void AuraEffect::HandleModMeleeSpeedPct(AuraApplication const * aurApp, uint8 mo
 
     Unit * target = aurApp->GetTarget();
 
+    // Dirty hack to fix Improved Icy Talons
+    if (GetId() == 55610 && GetCasterGUID() == target->GetGUID())
+        return;
+
     target->ApplyAttackTimePercentMod(BASE_ATTACK,   (float)GetAmount(), apply);
     target->ApplyAttackTimePercentMod(OFF_ATTACK,    (float)GetAmount(), apply);
 }
