@@ -5958,6 +5958,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
                             caster->CastSpell(target, GetAmount(), true);
                     }
                     break;
+                case SPELLFAMILY_ROGUE:
+                {
+                    // Tricks of the Trade
+                    if (GetId() == 59628)
+                    {
+                        if (caster)
+                            caster->SetReducedThreatPercent(0, 0);
+                    }
+                    break;
+                }
                 case SPELLFAMILY_WARLOCK:
                     // Haunt
                     if (m_spellProto->SpellFamilyFlags[1] & 0x40000)

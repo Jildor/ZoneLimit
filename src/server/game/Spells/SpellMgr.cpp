@@ -3844,6 +3844,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 54741:    // Firestarter
         case 57761:    // Fireball!
         case 39805:    // Lightning Overload
+        case 57934:    // Tricks of the trade
         case 64823:    // Item - Druid T8 Balance 4P Bonus
         case 44401:
             spellInfo->procCharges = 1;
