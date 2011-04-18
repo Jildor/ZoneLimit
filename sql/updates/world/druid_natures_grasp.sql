@@ -1,0 +1,5 @@
+DELETE FROM `spell_proc_event` WHERE `entry` IN
+(16689,16810,16811,16812,16813,17329,27009,53312);
+INSERT INTO `spell_proc_event` (`entry`,`cooldown`) VALUES
+(16689,2),(16810,2),(16811,2),(16812,2),
+(16813,2),(17329,2),(27009,2),(53312,2);
