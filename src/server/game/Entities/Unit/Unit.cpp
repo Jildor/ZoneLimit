@@ -8575,7 +8575,6 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 return false;
             break;
         }
-
         // Cheat Death
         case 28845:
         {
@@ -8809,6 +8808,23 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             // Remove cooldown on Shield Slam
             if (GetTypeId() == TYPEID_PLAYER)
                 this->ToPlayer()->RemoveSpellCategoryCooldown(1209, true);
+            break;
+        }
+        // Slam! and Sudden Death
+        case 46916:
+        case 52437:
+        {
+            // Item - Warrior T10 Melee 4P Bonus
+            if (AuraEffect const * aurEff = GetAuraEffect(70847, EFFECT_0))
+                if (roll_chance_i(aurEff->GetAmount()))
+                {
+                    CastSpell(this, 70849, true, castItem, triggeredByAura); // Extra Charge!
+
+                    if (trigger_spell_id == 46916)
+                        CastSpell(this, 71072, true, castItem, triggeredByAura); // Slam GCD Reduced
+                    else
+                        CastSpell(this, 71069, true, castItem, triggeredByAura); // Execute GCD Reduced
+                }
             break;
         }
         // Maelstrom Weapon
