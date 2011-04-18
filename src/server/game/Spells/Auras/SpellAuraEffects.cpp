@@ -5843,10 +5843,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
                             GetBase()->SetDuration(GetBase()->GetDuration() + aurEff->GetAmount());
                     break;
                 case 52916: // Honor Among Thieves
-                    if (target->GetTypeId() == TYPEID_PLAYER)
-                        if (Unit * spellTarget = ObjectAccessor::GetUnit(*target,target->ToPlayer()->GetComboTarget()))
-                            target->CastSpell(spellTarget, 51699, true);
-                   break;
+                    if (target == caster)
+                        if (Player * pTarget = caster->ToPlayer())
+                        {
+                            Unit * spellTarget = ObjectAccessor::GetUnit(*pTarget, pTarget->GetComboTarget());
+                            if (!spellTarget)
+                                spellTarget = pTarget->GetSelectedUnit();
+                            if (spellTarget && pTarget->canAttack(spellTarget))
+                                pTarget->CastSpell(spellTarget, 51699, true);
+                        }
+                    break;
                 case 28832: // Mark of Korth'azz
                 case 28833: // Mark of Blaumeux
                 case 28834: // Mark of Rivendare

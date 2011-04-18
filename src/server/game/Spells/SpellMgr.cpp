@@ -3631,6 +3631,7 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 49838: // Stop Time
+        case 52916: // Honor Among Thieves
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             count++;
             break;
