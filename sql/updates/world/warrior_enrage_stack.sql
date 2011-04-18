@@ -1,0 +1,24 @@
+DELETE FROM `spell_ranks` WHERE `first_spell_id` IN (12880,57518,57514);
+INSERT INTO `spell_ranks` VALUES
+(12880,12880,1),
+(12880,14201,2),
+(12880,14202,3),
+(12880,14203,4),
+(12880,14204,5),
+(57514,57514,1),
+(57514,57516,2),
+(57518,57518,1),
+(57518,57519,2),
+(57518,57520,3),
+(57518,57521,4),
+(57518,57522,5);
+
+DELETE FROM `spell_group` WHERE `id` = 2004;
+INSERT INTO `spell_group` VALUES
+(2004,12880),
+(2004,57514),
+(2004,57518);
+
+DELETE FROM `spell_group_stack_rules` WHERE `group_id` = 2004;
+INSERT INTO `spell_group_stack_rules` VALUES
+(2004,1);
