@@ -1276,14 +1276,21 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 }
                 switch(GetId())
                 {
-                   case 48018: // Demonic Circle
+                    case 6358: // Seduction
+                        // Interrupt cast if aura removed from target
+                        // maybe should be used SpellChannelInterruptFlags instead
+                        caster->InterruptNonMeleeSpells(false, 6358, false);
+                        break;
+                    case 48018: // Demonic Circle
                         // Do not remove GO when aura is removed by stack
                         // to prevent remove GO added by new spell
                         // old one is already removed
                         if (removeMode != AURA_REMOVE_BY_STACK)
                             target->RemoveGameObject(GetId(), true);
                         target->RemoveAura(62388);
-                    break;
+                        break;
+                    default:
+                        break;
                 }
                 break;
             case SPELLFAMILY_PRIEST:

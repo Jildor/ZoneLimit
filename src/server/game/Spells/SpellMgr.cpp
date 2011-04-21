@@ -3647,6 +3647,14 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ENEMY_SRC;
             count++;
             break;
+        // Improved Succubus
+        case 18754:
+        case 18755:
+        case 18756:
+            // now aura will be applied correctly
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
+            count++;
+            break;
         // Bind
         case 3286:
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
