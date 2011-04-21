@@ -5972,15 +5972,17 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
                     }
                     break;
                 case SPELLFAMILY_ROGUE:
-                {
-                    // Tricks of the Trade
-                    if (GetId() == 59628)
+                    switch (GetId())
                     {
-                        if (caster)
+                        case 59628: // Tricks of the Trade
                             caster->SetReducedThreatPercent(0, 0);
+                            break;
+                        case 57934: // Tricks of the Trade
+                            if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
+                                caster->SetReducedThreatPercent(0, 0);
+                            break;
                     }
                     break;
-                }
                 case SPELLFAMILY_WARLOCK:
                     // Haunt
                     if (m_spellProto->SpellFamilyFlags[1] & 0x40000)
