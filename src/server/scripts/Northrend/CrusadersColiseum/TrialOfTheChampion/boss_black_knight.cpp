@@ -469,19 +469,12 @@ public:
 
     struct npc_black_knight_skeletal_gryphonAI : public npc_escortAI
     {
-        npc_black_knight_skeletal_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature), vehicle(me->GetVehicleKit())
+        npc_black_knight_skeletal_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
             Start(false,true,0,NULL);
             pInstance = (InstanceScript*)pCreature->GetInstanceScript();
         }
         InstanceScript* pInstance;
-		
-        Vehicle *vehicle;
-
-        void Reset()
-        {
-            vehicle->Reset();
-        }
 
         void WaypointReached(uint32 uiPointId)
         {
