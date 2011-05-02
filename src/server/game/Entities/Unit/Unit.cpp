@@ -8280,6 +8280,8 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                     }
                     basepoints0 = CalculatePctN(int32(damage), triggerAmount) / 3;
                     target = this;
+                    if (AuraEffect * aurEff = target->GetAuraEffect(trigger_spell_id, 0))
+                        basepoints0 += aurEff->GetAmount();
                 }
                 break;
             }
