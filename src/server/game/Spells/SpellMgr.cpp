@@ -3921,7 +3921,7 @@ void SpellMgr::LoadSpellCustomAttr()
             ++count;
             break;
         case 55689: // Glyph of Shadow (to prevent glyph aura loss)
-            spellInfo->Stances = 0;
+            spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
             ++count;
             break;
         case 30421:     // Nether Portal - Perseverence
