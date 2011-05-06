@@ -6308,22 +6308,37 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
         {
             if (!(mode & AURA_EFFECT_HANDLE_REAL))
                 break;
-            // Sentry Totem
-            if (GetId() == 6495 && caster->GetTypeId() == TYPEID_PLAYER)
+            switch(GetId())
             {
-                if (apply)
+                // Sentry Totem (Serverside)
+                case 6494:
                 {
-                    uint64 guid = caster->m_SummonSlot[3];
-                    if (guid)
+                    if (Player * pCaster = caster->ToPlayer())
                     {
-                        Creature *totem = caster->GetMap()->GetCreature(guid);
-                        if (totem && totem->isTotem())
-                            caster->ToPlayer()->CastSpell(totem, 6277, true);
+                        pCaster->StopCastingBindSight();
+                        if (apply)
+                        {
+                            uint64 guid = pCaster->m_SummonSlot[4];
+                            if (guid)
+                            {
+                                Creature * totem = pCaster->GetMap()->GetCreature(guid);
+                                if (totem && totem->isTotem())
+                                    pCaster->CastSpell(totem, 6496, true);
+                            }
+                        }
+                        else
+                            pCaster->RemoveAurasDueToSpell(6495);
                     }
+                    break;
                 }
-                else
-                    caster->ToPlayer()->StopCastingBindSight();
-                return;
+                // Sentry Totem (hack for login case)
+                case 6495:
+                {
+                    if (caster->GetTypeId() == TYPEID_PLAYER && apply)
+                        if (!caster->m_SummonSlot[4])
+                            caster->RemoveAurasDueToSpell(6495);
+                    break;
+                }
             }
             break;
         }
