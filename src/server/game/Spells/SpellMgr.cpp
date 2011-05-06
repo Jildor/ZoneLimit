@@ -3864,6 +3864,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->procCharges = 1;
             ++count;
             break;
+        case 53257:    // Cobra Strikes
+            spellInfo->procCharges = 2;
+            spellInfo->StackAmount = 0;
+            ++count;
+            break;
         case 44544:    // Fingers of Frost
             spellInfo->EffectSpellClassMask[0] = flag96(685904631, 1151048, 0);
             ++count;
