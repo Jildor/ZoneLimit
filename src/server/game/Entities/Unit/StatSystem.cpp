@@ -346,7 +346,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                                     if (m_items[EQUIPMENT_SLOT_MAINHAND])
                                     {
                                         // also gains % attack power from equipped weapon
-                                        ItemTemplate const *proto = m_items[EQUIPMENT_SLOT_MAINHAND]->GetTemplate();
+                                        ItemPrototype const *proto = m_items[EQUIPMENT_SLOT_MAINHAND]->GetProto();
                                         if (!proto)
                                             continue;
 
