@@ -7843,6 +7843,13 @@ bool Unit::HandleObsModEnergyAuraProc(Unit *pVictim, uint32 /*damage*/, AuraEffe
             }
             break;
         }
+        case SPELLFAMILY_WARRIOR:
+        {
+            // Recklessness - prevent double proc
+            if (dummySpell->Id == 1719)
+                return false;
+            break;
+        }
     }
     // processed charge only counting case
     if (!triggered_spell_id)
