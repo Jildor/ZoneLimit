@@ -3664,36 +3664,30 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             ++count;
             break;
-        // Bind
-        case 3286:
+        case 3286:  // Bind
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
-            break;
-        // Chains of Ice
-        case 45524:
+            break;        
+        case 45524:  // Chains of Ice
             // this will fix self-damage caused by Glyph of Chains of Ice
             spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
-            break;
-        // Heroism
-        case 32182:
+            break;        
+        case 32182:  // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             ++count;
-            break;
-        // Frost Fever
-        case 59921:
+            break;        
+        case 59921:  // Frost Fever
             // Icy Clutch shouldn't be applied at caster when login
             spellInfo->AttributesEx4 |= SPELL_ATTR4_CANT_PROC_FROM_SELFCAST;
             ++count;
-            break;
-        // Blazing Harpoon
-        case 61588:
+            break;        
+        case 61588:  // Blazing Harpoon
             spellInfo->MaxAffectedTargets = 1;
             ++count;
-            break;
-        // Bloodlust
-        case 2825:
+            break;        
+        case 2825:  // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             count++;
             break;
@@ -3702,13 +3696,11 @@ void SpellMgr::LoadSpellCustomAttr()
         case 44441:
             spellInfo->CasterAuraStateNot = AURA_STATE_NONE;
             ++count;
-            break;
-        // Heart of the Crusader
-        case 20335:
+            break;        
+        case 20335: // Heart of the Crusader
         case 20336:
-        case 20337:
-        // Glyph of Life Tap
-        case 63320:
+        case 20337:        
+        case 63320: // Glyph of Life Tap
         // Entries were not updated after spell effect change, we have to do that manually :/
             spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_TRIGGERED;
             ++count;
@@ -3726,51 +3718,51 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_NEGATIVE_EFF0;
             ++count;
             break;
-        case 26029: // dark glare
-        case 37433: // spout
-        case 43140: case 43215: // flame breath
+        case 26029: // Dark Glare
+        case 37433: // Spout
+        case 43140: case 43215: // Flame Breath
         case 70461: // Coldflame Trap
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_CONE_LINE;
             ++count;
             break;
-        case 24340: case 26558: case 28884:     // Meteor
-        case 36837: case 38903: case 41276:     // Meteor
-        case 57467:                             // Meteor
-        case 26789:                             // Shard of the Fallen Star
-        case 31436:                             // Malevolent Cleave
-        case 35181:                             // Dive Bomb
-        case 40810: case 43267: case 43268:     // Saber Lash
-        case 42384:                             // Brutal Swipe
-        case 45150:                             // Meteor Slash
-        case 64422: case 64688:                 // Sonic Screech
-        case 72373:                             // Shared Suffering
-        case 71904:                             // Chaos Bane
-        case 70492: case 72505:                 // Ooze Eruption
-        case 72624: case 72625:                 // Ooze Eruption
+        case 24340: case 26558: case 28884: // Meteor
+        case 36837: case 38903: case 41276: // Meteor
+        case 57467:                         // Meteor
+        case 26789:                         // Shard of the Fallen Star
+        case 31436:                         // Malevolent Cleave
+        case 35181:                         // Dive Bomb
+        case 40810: case 43267: case 43268: // Saber Lash
+        case 42384:                         // Brutal Swipe
+        case 45150:                         // Meteor Slash
+        case 64422: case 64688:             // Sonic Screech
+        case 72373:                         // Shared Suffering
+        case 71904:                         // Chaos Bane
+        case 70492: case 72505:             // Ooze Eruption
+        case 72624: case 72625:             // Ooze Eruption
             // ONLY SPELLS WITH SPELLFAMILY_GENERIC and EFFECT_SCHOOL_DAMAGE
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
             ++count;
             break;
-        case 59725:                             // Improved Spell Reflection - aoe aura
+        case 59725:                         // Improved Spell Reflection - aoe aura
             // Target entry seems to be wrong for this spell :/
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_PARTY_CASTER;
             spellInfo->EffectRadiusIndex[0] = 45;
             ++count;
             break;
-        case 63944:                             // Renewed Hope hack
+        case 63944:                         // Renewed Hope hack
             spellInfo->EffectApplyAuraName[0] = 87;
             spellInfo->EffectMiscValue[0] = 127;
             ++count;
             break;
-        case 27820:                             // Mana Detonation
-        //case 28062: case 39090:                 // Positive/Negative Charge
+        case 27820:                         // Mana Detonation
+        //case 28062: case 39090:             // Positive/Negative Charge
         //case 28085: case 39093:
-        case 69782: case 69796:                 // Ooze Flood
-        case 69798: case 69801:                 // Ooze Flood
-        case 69538: case 69553: case 69610:     // Ooze Combine
-        case 71447: case 71481:                 // Bloodbolt Splash
-        case 71482: case 71483:                 // Bloodbolt Splash
-        case 71390:                             // Pact of the Darkfallen
+        case 69782: case 69796:             // Ooze Flood
+        case 69798: case 69801:             // Ooze Flood
+        case 69538: case 69553: case 69610: // Ooze Combine
+        case 71447: case 71481:             // Bloodbolt Splash
+        case 71482: case 71483:             // Bloodbolt Splash
+        case 71390:                         // Pact of the Darkfallen
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             ++count;
             break;
@@ -3779,8 +3771,8 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
             ++count;
             break;
-        case 44978: case 45001: case 45002:     // Wild Magic
-        case 45004: case 45006: case 45010:     // Wild Magic
+        case 44978: case 45001: case 45002: // Wild Magic
+        case 45004: case 45006: case 45010: // Wild Magic
         case 31347: // Doom
         case 41635: // Prayer of Mending
         case 44869: // Spectral Blast
@@ -3854,17 +3846,17 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectTriggerSpell[0] = 33760;
             ++count;
             break;
-        case 17941:    // Shadow Trance
-        case 22008:    // Netherwind Focus
-        case 31834:    // Light's Grace
-        case 34754:    // Clearcasting
-        case 34936:    // Backlash
-        case 48108:    // Hot Streak
-        case 51124:    // Killing Machine
-        case 54741:    // Firestarter
-        case 57761:    // Fireball!
-        case 39805:    // Lightning Overload
-        case 64823:    // Item - Druid T8 Balance 4P Bonus
+        case 17941: // Shadow Trance
+        case 22008: // Netherwind Focus
+        case 31834: // Light's Grace
+        case 34754: // Clearcasting
+        case 34936: // Backlash
+        case 48108: // Hot Streak
+        case 51124: // Killing Machine
+        case 54741: // Firestarter
+        case 57761: // Fireball!
+        case 39805: // Lightning Overload
+        case 64823: // Item - Druid T8 Balance 4P Bonus
         case 44401:
             spellInfo->procCharges = 1;
             ++count;
@@ -3874,20 +3866,20 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->StackAmount = 0;
             ++count;
             break;
-        case 44544:    // Fingers of Frost
+        case 44544: // Fingers of Frost
             spellInfo->EffectSpellClassMask[0] = flag96(685904631, 1151048, 0);
             ++count;
             break;
-        case 74396:    // Fingers of Frost visual buff
+        case 74396: // Fingers of Frost visual buff
             spellInfo->procCharges = 2;
             spellInfo->StackAmount = 0;
             ++count;
             break;
-        case 28200:    // Ascendance (Talisman of Ascendance trinket)
+        case 28200: // Ascendance (Talisman of Ascendance trinket)
             spellInfo->procCharges = 6;
             ++count;
             break;
-        case 47201:    // Everlasting Affliction
+        case 47201: // Everlasting Affliction
         case 47202:
         case 47203:
         case 47204:
@@ -3896,23 +3888,24 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectSpellClassMask[1][0] |= 2;
             ++count;
             break;
-        case 49305:
-            spellInfo->EffectImplicitTargetB[0] = 1;
+        case 49305: // Teleport to Boss 1 DND
+        case 64981: // Summon Random Vanquished Tentacle
+            spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_CASTER;
             ++count;
             break;
-        case 51852:    // The Eye of Acherus (no spawn in phase 2 in db)
+        case 51852: // The Eye of Acherus (no spawn in phase 2 in db)
             spellInfo->EffectMiscValue[0] |= 1;
             ++count;
             break;
-        case 52025:    // Cleansing Totem Effect
+        case 52025: // Cleansing Totem Effect
             spellInfo->EffectDieSides[1] = 1;
             ++count;
             break;
-        case 51904:     // Summon Ghouls On Scarlet Crusade (core does not know the triggered spell is summon spell)
+        case 51904: // Summon Ghouls On Scarlet Crusade (core does not know the triggered spell is summon spell)
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             ++count;
             break;
-        case 29809:     // Desecration Arm - 36 instead of 37 - typo? :/
+        case 29809:  // Desecration Arm - 36 instead of 37 - typo? :/
             spellInfo->EffectRadiusIndex[0] = 37;
             ++count;
             break;
@@ -3934,7 +3927,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
             ++count;
             break;
-        case 30421:     // Nether Portal - Perseverence
+        case 30421: // Nether Portal - Perseverence
             spellInfo->EffectBasePoints[2] += 30000;
             ++count;
             break;
@@ -3959,16 +3952,16 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->SpellFamilyFlags[2] = 0x10;
             ++count;
             break;
-        case 41013:     // Parasitic Shadowfiend Passive
+        case 41013: // Parasitic Shadowfiend Passive
             spellInfo->EffectApplyAuraName[0] = 4; // proc debuff, and summon infinite fiends
             ++count;
             break;
-        case 27892:     // To Anchor 1
-        case 27928:     // To Anchor 1
-        case 27935:     // To Anchor 1
-        case 27915:     // Anchor to Skulls
-        case 27931:     // Anchor to Skulls
-        case 27937:     // Anchor to Skulls
+        case 27892: // To Anchor 1
+        case 27928: // To Anchor 1
+        case 27935: // To Anchor 1
+        case 27915: // Anchor to Skulls
+        case 27931: // Anchor to Skulls
+        case 27937: // Anchor to Skulls
             spellInfo->rangeIndex = 13;
             ++count;
             break;
