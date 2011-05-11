@@ -765,7 +765,7 @@ class World
     protected:
         void _UpdateGameTime();
         // callback for UpdateRealmCharacters
-        void _UpdateRealmCharCount(QueryResult resultCharCount, uint32 accountId);
+        void _UpdateRealmCharCount(PreparedQueryResult resultCharCount);
 
         void InitDailyQuestResetTime();
         void InitWeeklyQuestResetTime();
@@ -849,7 +849,7 @@ class World
 
     private:
         void ProcessQueryCallbacks();
-        QueryCallback<QueryResult, uint32> m_realmCharCallback;
+        ACE_Future_Set<PreparedQueryResult> m_realmCharCallbacks;
 };
 
 extern uint32 realmID;
