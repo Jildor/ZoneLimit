@@ -1364,6 +1364,9 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Creature templates...");
     sObjectMgr->LoadCreatureTemplates();
 
+    sLog->outString("Loading Creature template addons...");
+    sObjectMgr->LoadCreatureTemplateAddons();
+
     sLog->outString("Loading Vehicle scaling information...");
     sObjectMgr->LoadVehicleScaling();
 
