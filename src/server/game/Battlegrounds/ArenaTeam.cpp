@@ -589,7 +589,29 @@ uint32 ArenaTeam::GetAverageMMR(Group *group) const
     if (!group) //should never happen
         return 0;
 
-       return m_stats.rating; // by LihO
+        uint32 matchmakerrating = 0;
+        uint32 player_divider = 0;
+        for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
+        {
+        // If player not online
+        if (!ObjectAccessor::FindPlayer(itr->guid))
+                continue;
+ 
+        // If not in group
+        if (!group->IsMember(itr->guid))
+                continue;
+ 
+        matchmakerrating += itr->matchmaker_rating;
+        ++player_divider;
+        }
+ 
+        //- x/0 = crash
+        if (player_divider == 0)
+        player_divider = 1;
+ 
+        matchmakerrating /= player_divider;
+ 
+        return matchmakerrating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 own_rating, uint32 enemy_rating)
@@ -613,8 +635,19 @@ int32 ArenaTeam::GetRatingMod(uint32 own_rating, uint32 enemy_rating, bool won, 
     // simulation on how it works. Not much info on how it really works
     float mod;
 
-    mod = (int)(32.0f * (won_mod - chance)); // by LihO
-    return mod;
+    if (won && !calculating_mmr)
+    {
+    if (own_rating < 1000)
+            mod = 48.0f * (won_mod - chance);
+    else if (own_rating < 1300)
+            mod = (24.0f + (24.0f * (1300.0f - int32(own_rating)) / 300.0f)) * (won_mod - chance);
+    else
+            mod = 24.0f * (won_mod - chance);
+    }
+    else
+    mod = 24.0f * (won_mod - chance);
+	
+    return (int32)ceil(mod);
 }
 
 int32 ArenaTeam::GetPersonalRatingMod(int32 base_rating, uint32 own_rating, uint32 enemy_rating)
