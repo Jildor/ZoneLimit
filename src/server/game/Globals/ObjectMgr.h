@@ -46,7 +46,6 @@
 extern SQLStorage sCreatureStorage;
 extern SQLStorage sCreatureDataAddonStorage;
 extern SQLStorage sCreatureInfoAddonStorage;
-extern SQLStorage sEquipmentStorage;
 extern SQLStorage sGOStorage;
 extern SQLStorage sItemStorage;
 
@@ -1410,6 +1409,7 @@ class ObjectMgr
         MapObjectGuids mMapObjectGuids;
         CreatureDataMap mCreatureDataMap;
         CreatureModelContainer CreatureModelStore;
+        EquipmentInfoContainer EquipmentInfoStore;
         LinkedRespawnMap mLinkedRespawnMap;
         CreatureLocaleMap mCreatureLocaleMap;
         GameObjectDataMap mGameObjectDataMap;
