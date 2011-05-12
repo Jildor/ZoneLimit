@@ -3551,7 +3551,7 @@ void Spell::EffectEnchantItemPerm(SpellEffIndex effIndex)
         {
             sLog->outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for player: %s (Account: %u)",
                 p_caster->GetName(),p_caster->GetSession()->GetAccountId(),
-                itemTarget->GetTemplate()->Name1,itemTarget->GetEntry(),
+                itemTarget->GetTemplate()->Name1.c_str(), itemTarget->GetEntry(),
                 item_owner->GetName(),item_owner->GetSession()->GetAccountId());
         }
 
@@ -3612,7 +3612,7 @@ void Spell::EffectEnchantItemPrismatic(SpellEffIndex effIndex)
     {
         sLog->outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for player: %s (Account: %u)",
             p_caster->GetName(),p_caster->GetSession()->GetAccountId(),
-            itemTarget->GetTemplate()->Name1,itemTarget->GetEntry(),
+            itemTarget->GetTemplate()->Name1.c_str(), itemTarget->GetEntry(),
             item_owner->GetName(),item_owner->GetSession()->GetAccountId());
     }
 
@@ -3742,7 +3742,7 @@ void Spell::EffectEnchantItemTmp(SpellEffIndex effIndex)
     {
         sLog->outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(temp): %s (Entry: %d) for player: %s (Account: %u)",
             p_caster->GetName(), p_caster->GetSession()->GetAccountId(),
-            itemTarget->GetTemplate()->Name1, itemTarget->GetEntry(),
+            itemTarget->GetTemplate()->Name1.c_str(), itemTarget->GetEntry(),
             item_owner->GetName(), item_owner->GetSession()->GetAccountId());
     }
 
