@@ -18117,6 +18117,8 @@ INSERT INTO `spell_linked_spell` (`spell_trigger`,`spell_effect`,`type`,`comment
 ( 20066,-61840, 0, 'Repentance'),
 ( 66235, 66233, 0, 'Ardent Defender Visuals'),
 ( 58875, 58876, 1, 'Spirit Walk'),
+(-47960,-63311, 0, 'Glyph of Shadowflame Rank 1'),
+(-61291,-63311, 0, 'Glyph of Shadowflame Rank 2'),
 ( 61716, 61719, 2, 'Rabbit Costume: Lay Egg periodic'),
 ( 61734, 61719, 2, 'Noblegarden Bunny: Lay Egg periodic'),
 -- Quest
