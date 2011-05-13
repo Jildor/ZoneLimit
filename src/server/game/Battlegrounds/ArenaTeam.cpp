@@ -612,19 +612,16 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won,
 
     // Calculate the rating modification
     // Simulation on how it works. Not much info on how it really works	
-    float mod;
-	
-    if (won && !calculateMatchMakerRating)
-    {
-        if (ownRating < 1000)
-            mod = 48.0f * (won_mod - chance);
-        else if (ownRating < 1300)
-            mod = (24.0f + (24.0f * (1300.0f - int32(ownRating)) / 300.0f)) * (won_mod - chance);			
-    else
-            mod = 24.0f * (won_mod - chance);
+    float mod = 32.0f * (won_mod - chance); // correct value of K is 32 says wowwiki
+    
+    // if it's loss and it's not calculation of MMR
+    if(!won && !calculateMatchMakerRating){
+        if(ownRating < 1000){ // team rating shouldn't decrease if it's already bellow 1000
+            mod = 0;    
+        }else if(ownRating <= 1300){
+            mod /= 2;
+        }
     }
-    else
-    mod = 24.0f * (won_mod - chance);
 	
     return (int32)ceil(mod);
 }
