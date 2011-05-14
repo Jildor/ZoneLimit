@@ -6123,10 +6123,6 @@ void Spell::EffectKnockBack(SpellEffIndex effIndex)
     if (!unitTarget || unitTarget->HasAura(46924))
         return;
 
-    // Instantly interrupt non melee spells being casted
-    if (unitTarget->IsNonMeleeSpellCasted(true))
-        unitTarget->InterruptNonMeleeSpells(true);
-
     // Typhoon
     if (m_spellInfo->SpellFamilyName == SPELLFAMILY_DRUID && m_spellInfo->SpellFamilyFlags[1] & 0x01000000)
     {
@@ -6142,6 +6138,10 @@ void Spell::EffectKnockBack(SpellEffIndex effIndex)
         if (m_caster->HasAura(62132))
             return;
     }
+
+    // Instantly interrupt non melee spells being casted
+    if (unitTarget->IsNonMeleeSpellCasted(true))
+        unitTarget->InterruptNonMeleeSpells(true);
 
     float ratio = m_caster->GetCombatReach() / std::max(unitTarget->GetCombatReach(), 1.0f);
     if (ratio < 1.0f)
