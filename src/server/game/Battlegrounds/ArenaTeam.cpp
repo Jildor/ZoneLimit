@@ -595,7 +595,7 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
 
     matchMakerRating /= playerDivider;
 
-    return Stats.rating; // by LihO 
+    return Stats.Rating; // by LihO 
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
