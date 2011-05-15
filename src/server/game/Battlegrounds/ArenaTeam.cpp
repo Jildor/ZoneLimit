@@ -573,10 +573,6 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
    if (!group)
         return 0;
 
-   uint32 matchMakerRating = 0;
-   uint32 playerDivider = 0;
-   for (MemberList::const_iterator itr = Members.begin(); itr != Members.end(); ++itr)		
-   {
         // Skip if player is not online
         if (!ObjectAccessor::FindPlayer(itr->Guid))
                 continue;
@@ -585,17 +581,12 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
         if (!group->IsMember(itr->Guid))				 
                 continue;
 				
-        matchMakerRating += itr->MatchMakerRating;
-        ++playerDivider;
-    }
-	
     // x/0 = crash
     if (playerDivider == 0)
         playerDivider = 1;
 
-    matchMakerRating /= playerDivider;
 
-    return Stats.Rating; // by LihO 
+    return Stats.Rating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
