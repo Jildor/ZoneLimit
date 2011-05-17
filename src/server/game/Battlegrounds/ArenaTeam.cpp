@@ -668,7 +668,7 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
 {
     // Called when the team has won
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetRatingMod(Stats.Rating, againstRating, true);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, true, false);
 
     // Modify the team stats accordingly
     FinishGame(mod);
@@ -685,7 +685,7 @@ int32 ArenaTeam::LostAgainst(uint32 againstRating)
 {
     // Called when the team has lost
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetRatingMod(Stats.Rating, againstRating, false);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, false, false);
 
     // Modify the team stats accordingly
     FinishGame(mod);
