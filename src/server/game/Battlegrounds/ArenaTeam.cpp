@@ -584,14 +584,19 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
         // Skip if player is not member of group
         if (!group->IsMember(itr->Guid))				 
                 continue;
-				
+
+        matchMakerRating += itr->MatchMakerRating;
+        ++playerDivider;
+
     }
 	
     // x/0 = crash
     if (playerDivider == 0)
         playerDivider = 1;
 
-    return Stats.Rating;
+    matchMakerRating /= playerDivider;
+
+    return matchMakerRating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
@@ -668,7 +673,7 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
 {
     // Called when the team has won
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetPersonalRatingMod(Stats.Rating, againstRating, true, false);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, true, false);
 
     // Modify the team stats accordingly
     FinishGame(mod);
@@ -685,7 +690,7 @@ int32 ArenaTeam::LostAgainst(uint32 againstRating)
 {
     // Called when the team has lost
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetPersonalRatingMod(Stats.Rating, againstRating, false, false);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, false, false);
 
     // Modify the team stats accordingly
     FinishGame(mod);
