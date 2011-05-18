@@ -585,18 +585,13 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
         if (!group->IsMember(itr->Guid))				 
                 continue;
 
-        matchMakerRating += itr->MatchMakerRating;
-        ++playerDivider;
-
     }
 	
     // x/0 = crash
     if (playerDivider == 0)
         playerDivider = 1;
 
-    matchMakerRating /= playerDivider;
-
-    return matchMakerRating;
+    return Stats.Rating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
