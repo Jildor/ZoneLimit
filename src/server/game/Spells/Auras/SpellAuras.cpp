@@ -1682,11 +1682,11 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
             }
             break;
         case SPELLFAMILY_WARLOCK:
+            if (!caster)
+                break;
             // Drain Soul - If the target is at or below 25% health, Drain Soul causes four times the normal damage
             if (GetSpellProto()->SpellFamilyFlags[0] & 0x00004000)
             {
-                if (!caster)
-                    break;
                 if (apply)
                 {
                     if (target != caster && !target->HealthAbovePct(25))
@@ -1698,6 +1698,22 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         caster->RemoveAurasDueToSpell(GetId());
                     else
                         caster->RemoveAurasDueToSpell(200000);
+                }
+            }
+            // Health Funnel
+            else if (GetSpellProto()->SpellFamilyFlags[0] & 0x01000000 && target != caster)
+            {
+                // Improved Health Funnel
+                AuraEffect * aurEff = caster->GetAuraEffectOfRankedSpell(18703, 0);
+                if (apply && aurEff)
+                {
+                    uint32 spell = sSpellMgr->GetSpellWithRank(60955, sSpellMgr->GetSpellRank(aurEff->GetId()));
+                    target->CastSpell(target, spell, true, 0, 0, caster->GetGUID());
+                }
+                else
+                {
+                    target->RemoveAurasDueToSpell(60955);
+                    target->RemoveAurasDueToSpell(60956);
                 }
             }
             break;
