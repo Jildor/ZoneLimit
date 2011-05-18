@@ -12291,6 +12291,9 @@ bool Unit::canAttack(Unit const* target, bool force) const
         if (IsOnVehicle(target) || m_vehicle->GetBase()->IsOnVehicle(target))
             return false;
 
+    if (!canSeeOrDetect(target))
+        return false;
+
     return true;
 }
 
