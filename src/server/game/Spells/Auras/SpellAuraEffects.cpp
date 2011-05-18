@@ -1421,6 +1421,10 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
             caster->ProcDamageAndSpell(target, procAttacker, procVictim, procEx, damage, BASE_ATTACK, GetSpellProto());
 
+            // Hack for Consecration to enter in combat and PvP mode
+            if (GetSpellProto()->Effect[GetEffIndex()] == SPELL_EFFECT_PERSISTENT_AREA_AURA && caster->isAlive())
+                caster->CombatStart(target);
+
             caster->DealDamage(target, damage, &cleanDamage, DOT, GetSpellSchoolMask(GetSpellProto()), GetSpellProto(), true);
             break;
         }
