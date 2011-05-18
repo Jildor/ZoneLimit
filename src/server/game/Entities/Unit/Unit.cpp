@@ -8205,7 +8205,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                     }
                     case 64568:             // Blood Reserve
                     {
-                        if (GetHealth() - damage < GetMaxHealth() * 0.35)
+                        if (HealthBelowPctDamaged(35, damage))
                         {
                             basepoints0 = triggerAmount;
                             trigger_spell_id = 64569;
