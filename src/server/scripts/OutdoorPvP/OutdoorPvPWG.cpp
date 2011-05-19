@@ -1098,7 +1098,8 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
         case CREATURE_GUARD:
         case CREATURE_SPECIAL:
         {
-            if ((creature->GetAreaId()==4575) && (creature->GetEntry()==30740 || creature->GetEntry()==30739))
+            //TDB users comment this block if your guards doesn't spawn by pairs A+H at fortress
+            if (creature->GetAreaId()==4575)
             {
                 switch (entry)
                 {
@@ -1124,7 +1125,9 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
                 _RespawnCreatureIfNeeded(creature, entry);
                 creature->AI()->EnterEvadeMode();
                 return false;
-            } else {
+            }
+            else //End of block to comment  */
+            {
                 TeamPairMap::const_iterator itr = m_creEntryPair.find(creature->GetCreatureData()->id);
                 if (itr != m_creEntryPair.end())
                 {
