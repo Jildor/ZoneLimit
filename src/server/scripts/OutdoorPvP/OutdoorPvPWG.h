@@ -227,7 +227,6 @@ class OutdoorPvPWG : public OutdoorPvP
         OutdoorPvPWG();
         bool SetupOutdoorPvP();
         int TeamIDsound;
-        bool MaingateDestroyed;
         uint32 GetCreatureEntry(uint32 guidlow, const CreatureData *data);
         void OnCreatureCreate(Creature *creature);
         void OnGameObjectCreate(GameObject *go);

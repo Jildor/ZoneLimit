@@ -7079,19 +7079,6 @@ void Spell::EffectPlayerNotification(SpellEffIndex effIndex)
     switch(m_spellInfo->Id)
     {
         case 58730: // Restricted Flight Area
-        {
-             if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
-             {
-                OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
-                if (pvpWG->isWarTime()==true)
-                {
-                   unitTarget->ToPlayer()->GetSession()->SendNotification(LANG_ZONE_NOFLYZONE);
-                   unitTarget->PlayDirectSound(9417); // Fel Reaver sound
-                   unitTarget->MonsterTextEmote("The air is too thin in Wintergrasp for normal flight. You will be ejected in 9 sec.",unitTarget->GetGUID(),true);
-                } else unitTarget->RemoveAura(58730);
-              }
-            break;
-        }
         case 58600: // Restricted Flight Area
             unitTarget->ToPlayer()->GetSession()->SendNotification(LANG_ZONE_NOFLYZONE);
             break;
