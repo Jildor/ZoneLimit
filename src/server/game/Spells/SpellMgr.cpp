@@ -3544,7 +3544,7 @@ void SpellMgr::LoadSpellCustomAttr()
                     break;
                 case SPELL_EFFECT_TRIGGER_SPELL:
                     if (IsPositionTarget(spellInfo->EffectImplicitTargetA[j]) ||
-                        spellInfo->Targets & (TARGET_FLAG_SOURCE_LOCATION|TARGET_FLAG_DEST_LOCATION))
+                        spellInfo->Targets & (TARGET_FLAG_SOURCE_LOCATION | TARGET_FLAG_DEST_LOCATION))
                         spellInfo->Effect[j] = SPELL_EFFECT_TRIGGER_MISSILE;
                     ++count;
                     break;
@@ -3578,6 +3578,12 @@ void SpellMgr::LoadSpellCustomAttr()
                     }
                     break;
                 }
+                case SPELL_EFFECT_KNOCK_BACK:
+                case SPELL_EFFECT_KNOCK_BACK_DEST:
+                    if (spellInfo->EffectMechanic[i] == MECHANIC_NONE)
+                        spellInfo->EffectMechanic[i] = MECHANIC_KNOCKOUT;
+                    ++count;
+                    break;
             }
 
             switch (SpellTargetType[spellInfo->EffectImplicitTargetA[j]])
