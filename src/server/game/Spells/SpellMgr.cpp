@@ -3689,10 +3689,15 @@ void SpellMgr::LoadSpellCustomAttr()
         case 61588:  // Blazing Harpoon
             spellInfo->MaxAffectedTargets = 1;
             ++count;
-            break;        
-        case 2825:  // Bloodlust
+            break;
+        case 57994: // Wind Shear
+            // this required because with 0 bp it isn't handled in SpellEffects
+            spellInfo->EffectBasePoints[1] = 1;
+            ++count;
+            break;
+			case 2825:  // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
-            count++;
+            ++count;
             break;
         // Fiery Payback hack
         case 44440:
