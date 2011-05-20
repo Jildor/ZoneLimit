@@ -12317,7 +12317,7 @@ bool Unit::canAttack(Unit const* target, bool force) const
     if (!target->isAttackableByAOE())
         return false;
 
-    if (target->HasUnitState(UNIT_STAT_DIED))
+    if (target->HasUnitState(UNIT_STAT_DIED) && GetTypeId() != TYPEID_PLAYER)
     {
         if (!ToCreature() || !ToCreature()->isGuard())
             return false;
