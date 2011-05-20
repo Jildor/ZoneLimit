@@ -2118,6 +2118,7 @@ INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
 ( 63981, 'spell_ulduar_stone_grip_cast_target'),
 ( 64702, 'spell_ulduar_squeezed_lifeless'),
 ( 63027, 'spell_ulduar_proximity_mines'),
+( 63276, 'spell_mark_of_the_faceless'),
 -- quest
 (  8913, 'spell_q55_sacred_cleansing'),
 ( 17271, 'spell_q5206_test_fetid_skull'),
