@@ -3694,10 +3694,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx4 |= SPELL_ATTR4_CANT_PROC_FROM_SELFCAST;
             ++count;
             break;        
-        case 61588:  // Blazing Harpoon
-            spellInfo->MaxAffectedTargets = 1;
-            ++count;
-            break;
         case 57994: // Wind Shear
             // this required because with 0 bp it isn't handled in SpellEffects
             spellInfo->EffectBasePoints[1] = 1;
@@ -3807,6 +3803,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 45761: // Shoot
         case 42611: // Shoot
         case 62374: // Pursued
+        case 61588: // Blazing Harpoon
             spellInfo->MaxAffectedTargets = 1;
             ++count;
             break;
@@ -3845,6 +3842,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 45641: // Fire Bloom
         case 55665: // Life Drain - Sapphiron (H)
         case 28796: // Poison Bolt Volly - Faerlina
+        case 5484:  // Howl Of Terror (Warlock)
             spellInfo->MaxAffectedTargets = 5;
             ++count;
             break;
