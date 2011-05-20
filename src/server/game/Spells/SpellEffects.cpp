@@ -6122,6 +6122,10 @@ void Spell::EffectKnockBack(SpellEffIndex effIndex)
     if (!unitTarget || unitTarget->HasAura(46924))
         return;
 
+    if (Creature* creatureTarget = unitTarget->ToCreature())
+        if (creatureTarget->isWorldBoss() || creatureTarget->IsDungeonBoss())
+            return;
+
     // Typhoon
     if (m_spellInfo->SpellFamilyName == SPELLFAMILY_DRUID && m_spellInfo->SpellFamilyFlags[1] & 0x01000000)
     {
