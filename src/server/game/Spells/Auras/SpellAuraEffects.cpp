@@ -6022,31 +6022,22 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
                     break;
                 case SPELLFAMILY_DRUID:
                     // Lifebloom
-                    if (GetSpellProto()->SpellFamilyFlags[EFFECT_1] & 0x10)
+                    if (GetSpellProto()->SpellFamilyFlags[1] & 0x10)
                     {
-                        // Final heal only on dispelled or duration end
-                        if ((aurApp->GetRemoveMode() != AURA_REMOVE_BY_EXPIRE) && 
-                            (aurApp->GetRemoveMode() != AURA_REMOVE_BY_ENEMY_SPELL))
-                            return;
-
-                        Unit * caster = aurApp->GetBase()->GetCaster();
-                        if (!caster)
+                        // Final heal only on duration end
+                        if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_EXPIRE)
                             return;
 
                         // final heal
-                        int32 stack = 0;
-                        if (aurApp->GetRemoveMode() == AURA_REMOVE_BY_ENEMY_SPELL)
-                            stack = 1;
-                        else
-                            stack = GetBase()->GetStackAmount();
-                        target->CastCustomSpell(target, 33778, &m_amount, &stack, NULL, true, NULL, this, caster->GetGUID());
+                        int32 stack = GetBase()->GetStackAmount();
+                        target->CastCustomSpell(target, 33778, &m_amount, &stack, NULL, true, NULL, this, GetCasterGUID());
 
                         // restore mana
-                        Unit * source = caster;
-                        if (!target->IsFriendlyTo(source))
-                            source = target;
-                        int32 returnmana = (aurApp->GetBase()->GetSpellProto()->ManaCostPercentage * caster->GetCreateMana() / 100) * stack / 2;
-                        source->CastCustomSpell(source, 64372, &returnmana, NULL, NULL, true, NULL, this, caster->GetGUID());
+                        if (caster)
+                        {
+                            int32 returnmana = (GetSpellProto()->ManaCostPercentage * caster->GetCreateMana() / 100) * stack / 2;
+                            caster->CastCustomSpell(caster, 64372, &returnmana, NULL, NULL, true, NULL, this, GetCasterGUID());
+                        }
                     }
                     break;
                 case SPELLFAMILY_PRIEST:
