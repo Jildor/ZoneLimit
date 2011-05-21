@@ -11104,6 +11104,22 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
                             break;
                         }
                     break;
+                    case SPELLFAMILY_WARRIOR:
+                       // Victory Rush
+                       if (spellProto->SpellFamilyFlags[1] & 0x100)
+                       {
+                           // Glyph of Victory Rush
+                           if (AuraEffect const* aurEff = GetAuraEffect(58382, 0))
+                               crit_chance += aurEff->GetAmount();
+                           break;
+                       }
+                    break;
+                    case SPELLFAMILY_PALADIN:
+                        // Judgement of Command proc always crits on stunned target
+                        if (spellProto->SpellFamilyName == SPELLFAMILY_PALADIN)
+                            if (spellProto->SpellFamilyFlags[0] & 0x0000000000800000LL && spellProto->SpellIconID == 561)
+                                if (pVictim->HasUnitState(UNIT_STAT_STUNNED))
+                                    return true;
                 }
             }
         case SPELL_DAMAGE_CLASS_RANGED:
