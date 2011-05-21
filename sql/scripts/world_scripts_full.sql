@@ -593,14 +593,15 @@ UPDATE `creature_template` SET `ScriptName`='npc_aged_dying_ancient_kodo' WHERE 
 UPDATE `gameobject_template` SET `ScriptName`='go_iruxos' WHERE `entry`=176581;
 UPDATE `creature_template` SET `ScriptName`='npc_dalinda' WHERE `entry`=5644;
 
-
 /* DIRE MAUL */
 
 /* DUN MOROGH */
-UPDATE `creature_template` SET `ScriptName`='npc_narm_faulk' WHERE `entry`=6177;
 
 /* DUROTAR */
 UPDATE `creature_template` SET `ScriptName`='npc_lazy_peon' WHERE `entry`=10556;
+UPDATE `creature_template` SET `ScriptName`= 'npc_tiger_matriarch_credit' WHERE `entry`=40301;
+UPDATE `creature_template` SET `ScriptName`= 'npc_tiger_matriarch' WHERE `entry`=40312;
+UPDATE `creature_template` SET `ScriptName`= 'npc_troll_volunteer' WHERE `entry` IN (40260,40264);
 
 /* DUSKWOOD */
 DELETE FROM `areatrigger_scripts` WHERE `entry`=4017;
@@ -612,11 +613,11 @@ UPDATE `creature_template` SET `ScriptName`='mobs_risen_husk_spirit' WHERE `entr
 UPDATE `creature_template` SET `ScriptName`='npc_deserter_agitator' WHERE `entry`=23602;
 UPDATE `creature_template` SET `ScriptName`='npc_lady_jaina_proudmoore' WHERE `entry`=4968;
 UPDATE `creature_template` SET `ScriptName`='npc_nat_pagle' WHERE `entry`=12919;
-UPDATE `creature_template` SET `ScriptName`='npc_restless_apparition' WHERE `entry`=23861;
 UPDATE `creature_template` SET `ScriptName`='npc_private_hendel' WHERE `entry`=4966;
 UPDATE `creature_template` SET `ScriptName`='npc_zelfrax' WHERE `entry`=23864;
 UPDATE `creature_template` SET `ScriptName`='npc_stinky' WHERE `entry`=4880;
 UPDATE `creature_template` SET `ScriptName`='npc_theramore_guard' WHERE `entry`=4979;
+
 /* EASTERN PLAGUELANDS */
 UPDATE `creature_template` SET `ScriptName`='mobs_ghoul_flayer' WHERE `entry` IN (8530,8531,8532);
 UPDATE `creature_template` SET `ScriptName`='npc_augustus_the_touched' WHERE `entry`=12384;
@@ -624,7 +625,6 @@ UPDATE `creature_template` SET `ScriptName`='npc_darrowshire_spirit' WHERE `entr
 UPDATE `creature_template` SET `ScriptName`='npc_tirion_fordring' WHERE `entry`=1855;
 
 /* ELWYNN FOREST */
-UPDATE `creature_template` SET `ScriptName`='npc_henze_faulk' WHERE `entry`=6172;
 
 /* EVERSONG WOODS */
 UPDATE `creature_template` SET `ScriptName`='npc_prospector_anvilward' WHERE `entry`=15420;
@@ -633,6 +633,16 @@ UPDATE `creature_template` SET `ScriptName`='npc_second_trial_controller' WHERE 
 UPDATE `creature_template` SET `ScriptName`='npc_apprentice_mirveda' WHERE `entry`=15402;
 UPDATE `creature_template` SET `ScriptName`='npc_infused_crystal' WHERE `entry`=16364;
 UPDATE `gameobject_template` SET `ScriptName`='go_second_trial' WHERE `entry` IN (182052);
+
+/* EYE OF ETERNITY */
+UPDATE `instance_template` SET `script`='instance_eye_of_eternity' WHERE `map`=616;
+UPDATE `creature_template` SET `ScriptName`='boss_malygos' WHERE `entry`=28859;
+UPDATE `creature_template` SET `ScriptName`='npc_power_spark' WHERE `entry`=30084;
+UPDATE `creature_template` SET `ScriptName`='npc_portal_eoe' WHERE `entry`=30118;
+UPDATE `creature_template` SET `ScriptName`='npc_hover_disk' WHERE `entry` IN (30234,30248);
+UPDATE `creature_template` SET `ScriptName`='npc_arcane_overload' WHERE `entry`=30282;
+UPDATE `creature_template` SET `ScriptName`='npc_wyrmrest_skytalon' WHERE `entry`=30161;
+UPDATE `creature_template` SET `ScriptName`='npc_alexstrasza_eoe' WHERE `entry`=32295;
 
 /* FELWOOD */
 UPDATE `creature_template` SET `ScriptName`='npcs_riverbreeze_and_silversky' WHERE `entry` IN (9528,9529);
@@ -2121,6 +2131,16 @@ INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
 ( 63276, 'spell_mark_of_the_faceless'),
 ( 63489, 'spell_shield_of_runes'),
 ( 62274, 'spell_shield_of_runes'),
+-- Eye Of Eternity
+( 56105, 'spell_malygos_vortex_dummy'),
+( 55873, 'spell_malygos_vortex_visual'),
+-- Zalazane's Fall
+( 75420, 'spell_mount_check'),
+( 75102, 'spell_voljin_war_drums'),
+-- Dustwallow Marsh
+( 42489, 'spell_ooze_zap'),
+( 42485, 'spell_ooze_zap_channel_end'),
+( 42492, 'spell_energize_aoe'),
 -- quest
 (  8913, 'spell_q55_sacred_cleansing'),
 ( 17271, 'spell_q5206_test_fetid_skull'),
