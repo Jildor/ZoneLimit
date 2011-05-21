@@ -2846,11 +2846,13 @@ void AuraEffect::HandleModInvisibility(AuraApplication const * aurApp, uint8 mod
             bool found = false;
             Unit::AuraEffectList const& invisAuras = target->GetAuraEffectsByType(SPELL_AURA_MOD_INVISIBILITY);
             for (Unit::AuraEffectList::const_iterator i = invisAuras.begin(); i != invisAuras.end(); ++i)
+            {
                 if (GetMiscValue() == (*i)->GetMiscValue())
                 {
                     found = true;
                     break;
                 }
+            }
             if (!found)
                 target->m_invisibility.DelFlag(type);
         }
