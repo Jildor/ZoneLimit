@@ -8150,9 +8150,9 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
                     *handled = true;
                     if (cooldown && GetTypeId() == TYPEID_PLAYER)
                     {
-                        if (ToPlayer()->HasSpellCooldown(49221))
+                        if (ToPlayer()->HasSpellCooldown(100000))
                             return false;
-                        ToPlayer()->AddSpellCooldown(49221, 0, time(NULL) + cooldown);
+                        ToPlayer()->AddSpellCooldown(100000, 0, time(NULL) + cooldown);
                     }
                     return true;
                 }
