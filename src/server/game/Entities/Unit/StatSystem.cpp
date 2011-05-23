@@ -335,12 +335,14 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                     Unit::AuraEffectList const& mDummy = GetAuraEffectsByType(SPELL_AURA_DUMMY);
                     for (Unit::AuraEffectList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
                     {
-                        if ((*itr)->GetSpellProto()->SpellIconID == 1563)
+                        AuraEffect* aurEff = *itr;
+                        if (aurEff->GetSpellProto()->SpellIconID == 1563)
                         {
-                            switch ((*itr)->GetEffIndex())
+                            switch (aurEff->GetEffIndex())
                             {
+
                                 case 0: // Predatory Strikes (effect 0)
-                                    mLevelMult = CalculatePctN(1.0f, (*itr)->GetAmount());
+                                    mLevelMult = CalculatePctN(1.0f, aurEff->GetAmount());
                                     break;
                                 case 1: // Predatory Strikes (effect 1)
                                     if (m_items[EQUIPMENT_SLOT_MAINHAND])
@@ -350,7 +352,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                                         if (!proto)
                                             continue;
 
-                                        weapon_bonus = CalculatePctN(proto->getFeralBonus(), (*itr)->GetAmount());
+                                        weapon_bonus = CalculatePctN(proto->getFeralBonus(), aurEff->GetAmount());
                                     }
                                     break;
                                 default:
