@@ -607,7 +607,7 @@ int32 AuraEffect::CalculateAmount(Unit * caster)
 
             if (caster->GetTypeId() == TYPEID_PLAYER)
             {
-                DoneActualBenefit += caster->SpellHealingBonus(GetBase()->GetUnitOwner(), GetSpellProto(), 0, SPELL_DIRECT_DAMAGE);
+                DoneActualBenefit += caster->SpellDamageBonus(GetBase()->GetUnitOwner(), GetSpellProto(), 0, SPELL_DIRECT_DAMAGE);
                 DoneActualBenefit *= caster->CalculateLevelPenalty(GetSpellProto());
                 amount += (int32)DoneActualBenefit;
 
