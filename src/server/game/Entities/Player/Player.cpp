@@ -8816,6 +8816,8 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             permission = NONE_PERMISSION;
         else
             permission = OWNER_PERMISSION;
+
+        RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_USE);
     }
     else
     {
