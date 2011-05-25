@@ -3680,21 +3680,26 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             ++count;
             break;
-        case 3286:  // Bind
+        case 3286: // Bind
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
             break;        
-        case 45524:  // Chains of Ice
+        case 45524: // Chains of Ice
             // this will fix self-damage caused by Glyph of Chains of Ice
             spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
-            break;        
-        case 32182:  // Heroism
+            break;
+        case 8494: // Mana Shield (rank 2)
+            // because of bug in dbc
+            spellInfo->procChance = 0;
+            ++count;
+            break;			
+        case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             ++count;
             break;        
-        case 59921:  // Frost Fever
+        case 59921: // Frost Fever
             // Icy Clutch shouldn't be applied at caster when login
             spellInfo->AttributesEx4 |= SPELL_ATTR4_CANT_PROC_FROM_SELFCAST;
             ++count;
@@ -3704,7 +3709,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectBasePoints[1] = 1;
             ++count;
             break;
-			case 2825:  // Bloodlust
+			case 2825: // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             ++count;
             break;
