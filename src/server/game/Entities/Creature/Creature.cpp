@@ -1129,6 +1129,10 @@ void Creature::SelectLevel(const CreatureTemplate *cinfo)
 {
     uint32 rank = isPet()? 0 : cinfo->rank;
 
+    // fix for bugged stats of pets summoned by NPCs
+    if (HasUnitTypeMask(UNIT_MASK_MINION))
+        return;
+
     // level
     uint8 minlevel = std::min(cinfo->maxlevel, cinfo->minlevel);
     uint8 maxlevel = std::max(cinfo->maxlevel, cinfo->minlevel);
