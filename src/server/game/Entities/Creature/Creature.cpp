@@ -1130,7 +1130,7 @@ void Creature::SelectLevel(const CreatureTemplate *cinfo)
     uint32 rank = isPet()? 0 : cinfo->rank;
 
     // fix for bugged stats of pets summoned by NPCs
-    if (HasUnitTypeMask(UNIT_MASK_MINION))
+    if (HasUnitTypeMask(UNIT_MASK_GUARDIAN))
         return;
 
     // level
