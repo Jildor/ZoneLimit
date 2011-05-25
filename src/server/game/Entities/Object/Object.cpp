@@ -2082,7 +2082,7 @@ void WorldObject::AddObjectToRemoveList()
     map->AddObjectToRemoveList(this);
 }
 
-TempSummon *Map::SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties, uint32 duration, Unit *summoner, uint32 vehId)
+TempSummon* Map::SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties /*= NULL*/, uint32 duration /*= 0*/, Unit *summoner /*= NULL*/, uint32 vehId /*= 0*/, bool addToWorld /*= false*/)
 {
     uint32 mask = UNIT_MASK_SUMMON;
     if (properties)
@@ -2143,7 +2143,8 @@ TempSummon *Map::SummonCreature(uint32 entry, const Position &pos, SummonPropert
     summon->SetHomePosition(pos);
 
     summon->InitStats(duration);
-    Add(summon->ToCreature());
+    if (addToWorld)
+        Add(summon->ToCreature());
     summon->InitSummon();
 
     //ObjectAccessor::UpdateObjectVisibility(summon);
