@@ -6768,8 +6768,7 @@ void Player::SendMessageToSet(WorldPacket *data, Player const* skipped_rcvr)
 
 void Player::SendDirectMessage(WorldPacket *data)
 {
-    if (m_session)
-        m_session->SendPacket(data);
+    m_session->SendPacket(data);
 }
 
 void Player::SendCinematicStart(uint32 CinematicSequenceId)
