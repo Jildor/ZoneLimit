@@ -6,7 +6,6 @@ DELETE FROM `creature_addon` WHERE `guid`=77655;
 INSERT INTO `creature_addon` (`guid`, `path_id`, `mount`, `bytes1`, `bytes2`, `emote`, `auras`) VALUES
 ('77655','0','0','50331648','1','0','70203 71465');
 
-
 DELETE FROM `creature_text` WHERE `entry` IN (37126,37129,37122,37123,37124,37125);
 INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`probability`,`emote`,`duration`,`sound`,`comment`) VALUES
 (37126,0,0, 'You may have once fought beside me, Crok, but now you are nothing more than a traitor. Come, your second death approaches!',1,0,0,0,0,17017, 'Sister Svalna - SAY_EVENT_START'),
@@ -80,6 +79,10 @@ UPDATE `creature_template` SET `minlevel`=81,`maxlevel`=81,`exp`=2,`faction_A`=2
 UPDATE `creature_template` SET `difficulty_entry_1`=38352,`minlevel`=81,`maxlevel`=81,`exp`=2,`faction_A`=2209,`faction_H`=2209,`mindmg`=464,`maxdmg`=604,`attackpower`=708,`baseattacktime`=1500,`minrangedmg`=353,`maxrangedmg`=512,`rangedattackpower`=112,`equipment_id`=4145 WHERE `entry`=37495; -- Captain Rupert (Undead)
 UPDATE `creature_template` SET `minlevel`=81,`maxlevel`=81,`exp`=2,`faction_A`=2209,`faction_H`=2209,`mindmg`=464,`maxdmg`=604,`attackpower`=708,`baseattacktime`=1500,`minrangedmg`=353,`maxrangedmg`=512,`dmg_multiplier`=13,`rangedattackpower`=112,`dynamicflags`=8,`equipment_id`=4145 WHERE `entry`=38352; -- Captain Rupert (Undead)
 UPDATE `creature_template` SET `minlevel`=80,`maxlevel`=80,`exp`=2,`faction_A`=2209,`faction_H`=2209,`npcflag`=`npcflag`|16777216,`dynamicflags`=0,`equipment_id`=3849 WHERE `entry`=38248; -- Impaling Spear
+UPDATE `creature_template` SET `unit_flags` = 0 WHERE `entry` IN (37129,38000);
+UPDATE `creature_template` SET `faction_A` = 2209, `faction_H` = 2209, `unit_flags` = 32768 WHERE `entry` IN (38125,38130);
+UPDATE `creature_template` SET `faction_A` = 2209, `faction_H` = 2209, `unit_flags` = 32832 WHERE `entry` IN (37127,38126);
+UPDATE `creature_template` SET `faction_A` = 2209, `faction_H` = 2209, `npcflag`= 16777216, `unit_flags` = 0, `dynamicflags` = 0 WHERE `entry` IN (38248);
 
 DELETE FROM `npc_spellclick_spells` WHERE `npc_entry`=38248;
 INSERT INTO `npc_spellclick_spells` (`npc_entry`,`spell_id`,`quest_start`,`quest_start_active`,`quest_end`,`cast_flags`,`aura_required`,`aura_forbidden`,`user_type`) VALUES
