@@ -4053,11 +4053,6 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
             ++count;
             break;
-        // Strength of the Pack
-        case 64381:
-            spellInfo->StackAmount = 4;
-            ++count;
-            break;
         case 50526: // Wandering Plague
         case 63675: // Improved Devouring Plague
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
@@ -4117,6 +4112,15 @@ void SpellMgr::LoadSpellCustomAttr()
         //
         case 63342: // Focused Eyebeam Summon Trigger
             spellInfo->MaxAffectedTargets = 1;
+            ++count;
+            break;
+        case 62716: // Growth of Nature
+        case 65584: // Growth of Nature
+            spellInfo->AttributesEx3 |= SPELL_ATTR3_STACK_FOR_DIFF_CASTERS;
+            ++count;
+            break;
+        case 64381: // Strength of the Pack
+            spellInfo->StackAmount = 4;
             ++count;
             break;
         // ENDOF ULDUAR SPELLS
