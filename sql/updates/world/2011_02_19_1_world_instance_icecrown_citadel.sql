@@ -50,8 +50,8 @@ DELETE FROM `creature_template_addon` WHERE `entry` IN (37132,37133,37134,38229)
 -- Guids de YTDB
 DELETE FROM `creature_addon` WHERE `guid` IN (77655,47618,78004,78111,92818);
 INSERT INTO `creature_addon` (`guid`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES
-(77655,0x3000000,0x0000001,0, '70203 0'), -- Sister Svalna
-(47618,0x0000000,0x0000001,0, '71244 0'), -- Ymirjar Warlord
-(78004,0x0000000,0x0000001,0, '71244 0'), -- Ymirjar Warlord
-(78111,0x0000000,0x0000001,0, '71244 0'), -- Ymirjar Warlord
-(92818,0x0000000,0x0000001,0, '71244 0'); -- Ymirjar Warlord
+(77655,0x3000000,0x0000001,0, '70203 71465'), -- Sister Svalna
+(47618,0x0000000,0x0000001,0, '71244'), -- Ymirjar Warlord
+(78004,0x0000000,0x0000001,0, '71244'), -- Ymirjar Warlord
+(78111,0x0000000,0x0000001,0, '71244'), -- Ymirjar Warlord
+(92818,0x0000000,0x0000001,0, '71244'); -- Ymirjar Warlord
