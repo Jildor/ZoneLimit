@@ -14158,16 +14158,13 @@ void Player::SendPreparedGossip(WorldObject* source)
 
 void Player::OnGossipSelect(WorldObject* source, uint32 gossipListId, uint32 menuId)
 {
-    GossipMenu& gossipmenu = PlayerTalkClass->GetGossipMenu();
-
-    if (gossipListId >= gossipmenu.GetMenuItemCount())
-        return;
+    GossipMenu& gossipMenu = PlayerTalkClass->GetGossipMenu();
 
     // if not same, then something funky is going on
-    if (menuId != gossipmenu.GetMenuId())
+    if (menuId != gossipMenu.GetMenuId())
         return;
 
-    GossipMenuItem const* item = gossipmenu.GetItem(gossipListId);
+    GossipMenuItem const* item = gossipMenu.GetItem(gossipListId);
     if (!item)
         return;
 
@@ -14183,7 +14180,7 @@ void Player::OnGossipSelect(WorldObject* source, uint32 gossipListId, uint32 men
         }
     }
 
-    GossipMenuItemData const* menuItemData = gossipmenu.GetItemData(gossipListId);
+    GossipMenuItemData const* menuItemData = gossipMenu.GetItemData(gossipListId);
     if (!menuItemData)
         return;
 
