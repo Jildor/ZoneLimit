@@ -1819,10 +1819,6 @@ void Player::setDeathState(DeathState s)
 
         clearResurrectRequestData();
 
-        // remove form before other mods to prevent incorrect stats calculation
-        //if (IsInDisallowedMountForm)
-        //    RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
-
         //FIXME: is pet dismissed at dying or releasing spirit? if second, add setDeathState(DEAD) to HandleRepopRequestOpcode and define pet unsummon here with (s == DEAD)
         RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);
 
