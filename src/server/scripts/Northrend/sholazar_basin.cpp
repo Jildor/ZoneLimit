@@ -101,7 +101,7 @@ public:
                 if (Player* pPlayer = GetPlayerForEscort())
                     pPlayer->GroupEventHappens(QUEST_FORTUNATE_MISUNDERSTANDINGS, me);
               //  me->RestoreFaction();
-                DoScriptText(SAY_END_IRO,me);
+                DoScriptText(SAY_END_IRO, me);
                 SetRun(false);
                 break;
             }
@@ -299,15 +299,19 @@ public:
     {
         npc_bushwhackerAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            MoveToSummoner();
         }
 
-        void MoveToSummoner()
+        void InitializeAI()
         {
+            if (me->isDead())
+                return;
+
             if (me->isSummon())
-                if (Unit* pSummoner = CAST_SUM(me)->GetSummoner())
-                    if (pSummoner)
-                        me->GetMotionMaster()->MovePoint(0,pSummoner->GetPositionX(),pSummoner->GetPositionY(),pSummoner->GetPositionZ());
+                if (Unit* summoner = me->ToTempSummon()->GetSummoner())
+                    if (summoner)
+                        me->GetMotionMaster()->MovePoint(0, summoner->GetPositionX(), summoner->GetPositionY(), summoner->GetPositionZ());
+
+            Reset();
         }
 
         void UpdateAI(const uint32 /*uiDiff*/)
