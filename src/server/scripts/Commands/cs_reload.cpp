@@ -116,7 +116,6 @@ public:
             { "mail_level_reward",            SEC_ADMINISTRATOR, true,  &HandleReloadMailLevelRewardCommand,            "", NULL },
             { "mail_loot_template",           SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesMailCommand,          "", NULL },
             { "milling_loot_template",        SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesMillingCommand,       "", NULL },
-            { "npc_gossip",                   SEC_ADMINISTRATOR, true,  &HandleReloadNpcGossipCommand,                  "", NULL },
             { "npc_spellclick_spells",        SEC_ADMINISTRATOR, true,  &HandleReloadSpellClickSpellsCommand,           "",NULL},
             { "npc_trainer",                  SEC_ADMINISTRATOR, true,  &HandleReloadNpcTrainerCommand,                 "", NULL },
             { "npc_vendor",                   SEC_ADMINISTRATOR, true,  &HandleReloadNpcVendorCommand,                  "", NULL },
@@ -228,7 +227,6 @@ public:
     static bool HandleReloadAllNpcCommand(ChatHandler* handler, const char* args)
     {
         if(*args != 'a')                                          // will be reloaded from all_gossips
-            HandleReloadNpcGossipCommand(handler,"a");
         HandleReloadNpcTrainerCommand(handler,"a");
         HandleReloadNpcVendorCommand(handler,"a");
         HandleReloadPointsOfInterestCommand(handler,"a");
@@ -301,8 +299,7 @@ public:
         HandleReloadGossipMenuCommand(handler,"a");
         HandleReloadGossipMenuOptionCommand(handler,"a");
         if(*args != 'a')                                          // already reload from all_scripts
-            HandleReloadGossipScriptsCommand(handler,"a");
-        HandleReloadNpcGossipCommand(handler,"a");
+        HandleReloadGossipScriptsCommand(handler,"a");
         HandleReloadPointsOfInterestCommand(handler,"a");
         return true;
     }
@@ -719,14 +716,6 @@ public:
         sLog->outString("Re-Loading trinity_string Table!");
         sObjectMgr->LoadTrinityStrings();
         handler->SendGlobalGMSysMessage("DB table `trinity_string` reloaded.");
-        return true;
-    }
-
-    static bool HandleReloadNpcGossipCommand(ChatHandler* handler, const char* /*args*/)
-    {
-        sLog->outString("Re-Loading `npc_gossip` Table!");
-        sObjectMgr->LoadNpcTextId();
-        handler->SendGlobalGMSysMessage("DB table `npc_gossip` reloaded.");
         return true;
     }
 

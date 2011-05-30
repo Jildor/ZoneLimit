@@ -936,8 +936,6 @@ class ObjectMgr
 
         void LoadGameTele();
 
-        void LoadNpcTextId();
-
         void LoadGossipMenu();
         void LoadGossipMenuItems();
 
