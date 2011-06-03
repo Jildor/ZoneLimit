@@ -13,6 +13,7 @@ INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,
 (15,10667,0,0,7,202,350,0,0, '', 'Jeeves: Bank requires Engineering 350');
 
 -- Borro los que tenia y pongo los de TDB
+DELETE FROM `gossip_menu` WHERE `entry`=35642;
 DELETE FROM `gossip_menu_option` WHERE `menu_id`=35642;
 DELETE FROM `gossip_menu_option` WHERE `menu_id`=10667 AND `id` IN (0,1);
 INSERT INTO `gossip_menu_option` (`menu_id`,`id`,`option_icon`,`option_text`,`option_id`,`npc_option_npcflag`) VALUES
