@@ -6,7 +6,7 @@ UPDATE `creature_template` SET `faction_A`=35,`faction_H`=35,`npcflag`=`npcflag`
 UPDATE `creature_model_info` SET `bounding_radius`=0.31,`combat_reach`=0,`gender`=2 WHERE `modelid`=30076; -- addon data
 DELETE FROM `creature_template_addon` WHERE `entry`=@Jeeves;
 INSERT INTO `creature_template_addon` (`entry`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES
-(@Jeeves,0,33554432,1,0, '68054 0'); -- Aura: Pressing Engagement, bytes1: hover mode
+(@Jeeves,0,33554432,1,0, '68054'); -- Aura: Pressing Engagement, bytes1: hover mode
 
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=15 AND `SourceGroup`=10667 AND `SourceEntry`=0;
 INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,`ElseGroup`,`ConditionTypeOrReference`,`ConditionValue1`,`ConditionValue2`,`ConditionValue3`,`ErrorTextId`,`ScriptName`,`Comment`) VALUES
