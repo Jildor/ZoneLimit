@@ -8,6 +8,8 @@ DELETE FROM `creature_template_addon` WHERE `entry`=@Jeeves;
 INSERT INTO `creature_template_addon` (`entry`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES
 (@Jeeves,0,33554432,1,0, '68054'); -- Aura: Pressing Engagement, bytes1: hover mode
 
+-- Borro los que tenia y pongo los de TDB
+DELETE FROM `conditions` WHERE `SourceGroup`=35642
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=15 AND `SourceGroup`=10667 AND `SourceEntry`=0;
 INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,`ElseGroup`,`ConditionTypeOrReference`,`ConditionValue1`,`ConditionValue2`,`ConditionValue3`,`ErrorTextId`,`ScriptName`,`Comment`) VALUES
 (15,10667,0,0,7,202,350,0,0, '', 'Jeeves: Bank requires Engineering 350');
