@@ -965,7 +965,7 @@ void AuraEffect::ChangeAmount(int32 newAmount, bool mark, bool onStackOrReapply)
         if ((*apptItr)->HasEffect(GetEffIndex()))
             HandleEffect(*apptItr, handleMask, false);
 
-    if (handleMask & AURA_EFFECT_HANDLE_REAPPLY)
+    if (handleMask & AURA_EFFECT_HANDLE_CHANGE_AMOUNT)
     {
         if (!mark)
             m_amount = newAmount;
