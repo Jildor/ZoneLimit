@@ -624,7 +624,7 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won,
         }
     }
 	
-    return mod;
+    return (int32)ceil(mod);
 }
 
 int32 ArenaTeam::GetPersonalRatingMod(int32 baseRating, uint32 ownRating, uint32 opponentRating)
