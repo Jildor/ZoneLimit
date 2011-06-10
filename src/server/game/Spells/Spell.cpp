@@ -5176,7 +5176,7 @@ SpellCastResult Spell::CheckCast(bool strict)
             case SPELL_EFFECT_DISPEL:
             {
                 Unit* target = m_targets.getUnitTarget();
-                if (!target || i != 0 || m_IsTriggeredSpell)
+                if (!target || i != 0 || m_spellInfo->DmgClass != SPELL_DAMAGE_CLASS_MAGIC)
                     break;;
 
                 // Create dispel mask by dispel type
