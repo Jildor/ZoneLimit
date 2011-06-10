@@ -5173,6 +5173,49 @@ SpellCastResult Spell::CheckCast(bool strict)
 
                 break;
             }
+            case SPELL_EFFECT_DISPEL:
+            {
+                Unit* target = m_targets.getUnitTarget();
+                if (!target || i != 0 || m_spellInfo->DmgClass != SPELL_DAMAGE_CLASS_MAGIC)
+                    break;
+
+                bool dispelAura = false;
+
+                // Create dispel mask by dispel type
+                uint32 dispelMask;
+                for (uint8 j = 0; j < MAX_SPELL_EFFECTS; ++j)
+                    if (m_spellInfo->Effect[j] == SPELL_EFFECT_DISPEL)
+                        dispelMask |= GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[j]));
+
+                // we should not be able to dispel diseases if the target is affected by unholy blight
+                if (dispelMask & (1 << DISPEL_DISEASE) && target->HasAura(50536))
+                    dispelMask &= ~(1 << DISPEL_DISEASE);
+
+                Unit::AuraMap const& auras = target->GetOwnedAuras();
+                for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                {
+                    Aura* aura = itr->second;
+
+                    // don't try to remove passive auras
+                    if (aura->IsPassive())
+                        continue;
+
+                    if ((1<<aura->GetSpellProto()->Dispel) & dispelMask)
+                    {
+                        // do not remove positive auras if friendly target
+                        //               negative auras if non-friendly target
+                        if (IsPositiveSpell(aura->GetId()) == target->IsFriendlyTo(m_caster))
+                            continue;
+
+                        dispelAura = true;
+                        break;
+                    }
+                }
+
+                if (!dispelAura)
+                    return SPELL_FAILED_NOTHING_TO_DISPEL;
+                break;
+            }
             case SPELL_EFFECT_POWER_BURN:
             case SPELL_EFFECT_POWER_DRAIN:
             {
