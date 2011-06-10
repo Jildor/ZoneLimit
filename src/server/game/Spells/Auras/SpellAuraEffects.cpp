@@ -41,8 +41,8 @@ class Aura;
 // EFFECT HANDLER NOTES
 //
 // in aura handler there should be check for modes:
-// AURA_EFFECT_HANDLE_REAL set
-// AURA_EFFECT_HANDLE_SEND_FOR_CLIENT_MASK set 
+// AURA_EFFECT_HANDLE_REAL set -  aura mod is just applied/removed on the target
+// AURA_EFFECT_HANDLE_SEND_FOR_CLIENT_MASK set - aura is just applied/removed, or aura packet request is made
 // AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK set - aura is recalculated or is just applied/removed - need to redo all things related to m_amount
 // AURA_EFFECT_HANDLE_CHANGE_AMOUNT_SEND_FOR_CLIENT_MASK - logical or of above conditions
 // AURA_EFFECT_HANDLE_STAT - set when stats are reapplied
@@ -400,7 +400,7 @@ void AuraEffect::GetTargetList(std::list<Unit *> & targetList) const
     }
 }
 
-void AuraEffect::GetApplicationList(std::list<AuraApplication*> & applicationList) const
+void AuraEffect::GetApplicationList(std::list<AuraApplication *> & applicationList) const
 {
     Aura::ApplicationMap const & targetMap = GetBase()->GetApplicationMap();
     // remove all targets which were not added to new list - they no longer deserve area aura
@@ -947,48 +947,38 @@ void AuraEffect::CalculateSpellMod()
     GetBase()->CallScriptEffectCalcSpellModHandlers(const_cast<AuraEffect const *>(this), m_spellmod);
 }
 
-void AuraEffect::ChangeAmount(int32 newAmount, bool mark, bool onStackOrReapply)
+void AuraEffect::ChangeAmount(int32 newAmount, bool mark)
 {
+    //Unit * caster = GetCaster();
     // Reapply if amount change
-    uint8 handleMask = 0;
     if (newAmount != GetAmount())
-        handleMask |= AURA_EFFECT_HANDLE_CHANGE_AMOUNT;
-    if (onStackOrReapply)
-        handleMask |= AURA_EFFECT_HANDLE_REAPPLY;
-    if (!handleMask)
-        return;
-
-    std::list<AuraApplication*> effectApplications;
-    GetApplicationList(effectApplications);
-
-    for (std::list<AuraApplication*>::const_iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
-        if ((*apptItr)->HasEffect(GetEffIndex()))
-            HandleEffect(*apptItr, handleMask, false);
-
-    if (handleMask & AURA_EFFECT_HANDLE_CHANGE_AMOUNT)
     {
+        UnitList targetList;
+        GetTargetList(targetList);
+        for (UnitList::iterator aurEffTarget = targetList.begin(); aurEffTarget != targetList.end(); ++aurEffTarget)
+        {
+            HandleEffect(*aurEffTarget, AURA_EFFECT_HANDLE_CHANGE_AMOUNT, false);
+        }
         if (!mark)
             m_amount = newAmount;
         else
             SetAmount(newAmount);
         CalculateSpellMod();
+        for (UnitList::iterator aurEffTarget = targetList.begin(); aurEffTarget != targetList.end(); ++aurEffTarget)
+        {
+            HandleEffect(*aurEffTarget, AURA_EFFECT_HANDLE_CHANGE_AMOUNT, true);
+        }
     }
-
-    for (std::list<AuraApplication*>::const_iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
-        if ((*apptItr)->HasEffect(GetEffIndex()))
-            HandleEffect(*apptItr, handleMask, true);
 }
 
-void AuraEffect::HandleEffect(AuraApplication * aurApp, uint8 mode, bool apply)
+void AuraEffect::HandleEffect(AuraApplication const * aurApp, uint8 mode, bool apply)
 {
-    // check if call is correct, we really don't want using bitmasks here (with 1 exception)
+    // check if call is correct
     ASSERT(!mode
         || mode == AURA_EFFECT_HANDLE_REAL
         || mode == AURA_EFFECT_HANDLE_SEND_FOR_CLIENT
         || mode == AURA_EFFECT_HANDLE_CHANGE_AMOUNT
-        || mode == AURA_EFFECT_HANDLE_STAT
-        || mode == AURA_EFFECT_HANDLE_REAPPLY
-        || mode == (AURA_EFFECT_HANDLE_CHANGE_AMOUNT | AURA_EFFECT_HANDLE_REAPPLY));
+        || mode == AURA_EFFECT_HANDLE_STAT);
 
     // register/unregister effect in lists in case of real AuraEffect apply/remove
     // registration/unregistration is done always before real effect handling (some effect handlers code is depending on this)
@@ -1002,15 +992,15 @@ void AuraEffect::HandleEffect(AuraApplication * aurApp, uint8 mode, bool apply)
     // call scripts helping/replacing effect handlers
     bool prevented = false;
     if (apply)
-        prevented = GetBase()->CallScriptEffectApplyHandlers(const_cast<AuraEffect const *>(this), const_cast<AuraApplication const *>(aurApp), (AuraEffectHandleModes)mode);
+        prevented = GetBase()->CallScriptEffectApplyHandlers(const_cast<AuraEffect const *>(this), aurApp, (AuraEffectHandleModes)mode);
     else
-        prevented = GetBase()->CallScriptEffectRemoveHandlers(const_cast<AuraEffect const *>(this), const_cast<AuraApplication const *>(aurApp), (AuraEffectHandleModes)mode);
+        prevented = GetBase()->CallScriptEffectRemoveHandlers(const_cast<AuraEffect const *>(this), aurApp, (AuraEffectHandleModes)mode);
 
     // check if script events have removed the aura or if default effect prevention was requested
     if ((apply && aurApp->GetRemoveMode()) || prevented)
         return;
 
-    (*this.*AuraEffectHandler [GetAuraType()])(const_cast<AuraApplication const *>(aurApp), mode, apply);
+    (*this.*AuraEffectHandler [GetAuraType()])(aurApp, mode, apply);
 
     // check if script events have removed the aura or if default effect prevention was requested
     if (apply && aurApp->GetRemoveMode())
@@ -1018,14 +1008,14 @@ void AuraEffect::HandleEffect(AuraApplication * aurApp, uint8 mode, bool apply)
 
     // call scripts triggering additional events after apply/remove
     if (apply)
-        GetBase()->CallScriptAfterEffectApplyHandlers(const_cast<AuraEffect const *>(this), const_cast<AuraApplication const *>(aurApp), (AuraEffectHandleModes)mode);
+        GetBase()->CallScriptAfterEffectApplyHandlers(const_cast<AuraEffect const *>(this), aurApp, (AuraEffectHandleModes)mode);
     else
-        GetBase()->CallScriptAfterEffectRemoveHandlers(const_cast<AuraEffect const *>(this), const_cast<AuraApplication const *>(aurApp), (AuraEffectHandleModes)mode);
+        GetBase()->CallScriptAfterEffectRemoveHandlers(const_cast<AuraEffect const *>(this), aurApp, (AuraEffectHandleModes)mode);
 }
 
 void AuraEffect::HandleEffect(Unit * target, uint8 mode, bool apply)
 {
-    AuraApplication * aurApp = GetBase()->GetApplicationOfTarget(target->GetGUID());
+    AuraApplication const * aurApp = GetBase()->GetApplicationOfTarget(target->GetGUID());
     ASSERT(aurApp);
     HandleEffect(aurApp, mode, apply);
 }
@@ -1106,9 +1096,8 @@ void AuraEffect::Update(uint32 diff, Unit * caster)
             std::list<AuraApplication*> effectApplications;
             GetApplicationList(effectApplications);
             // tick on targets of effects
-            for (std::list<AuraApplication*>::const_iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
-                if ((*apptItr)->HasEffect(GetEffIndex()))
-                    PeriodicTick(*apptItr, caster);
+            for (std::list<AuraApplication*>::iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
+                PeriodicTick(*apptItr, caster);
         }
     }
 }
@@ -5783,7 +5772,7 @@ void AuraEffect::HandleAuraRetainComboPoints(AuraApplication const * aurApp, uin
 
 void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, bool apply) const
 {
-    if (!(mode & (AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK | AURA_EFFECT_HANDLE_REAPPLY)))
+    if (!(mode & AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK))
         return;
 
     Unit * target = aurApp->GetTarget();
@@ -5802,7 +5791,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const * aurApp, uint8 mode, boo
         }
     }
 
-    if (mode & (AURA_EFFECT_HANDLE_REAL | AURA_EFFECT_HANDLE_REAPPLY))
+    if (mode & AURA_EFFECT_HANDLE_REAL)
     {
         // AT APPLY
         if (apply)
@@ -6622,38 +6611,25 @@ void AuraEffect::HandleAuraConvertRune(AuraApplication const * aurApp, uint8 mod
 
 void AuraEffect::HandleAuraLinked(AuraApplication const * aurApp, uint8 mode, bool apply) const
 {
+    if (!(mode & AURA_EFFECT_HANDLE_REAL))
+        return;
+
     Unit * target = aurApp->GetTarget();
 
-    uint32 triggeredSpellId = m_spellProto->EffectTriggerSpell[m_effIndex];
-
-    if (mode & AURA_EFFECT_HANDLE_REAL)
+    if (apply)
     {
-        if (apply)
-        {
-            Unit * caster = GetTriggeredSpellCaster(m_spellProto, GetCaster(), target);
+        Unit * caster = GetTriggeredSpellCaster(m_spellProto, GetCaster(), target);
 
-            if (!caster)
-                return;
-            // If amount avalible cast with basepoints (Crypt Fever for example)
-            if (GetAmount())
-                caster->CastCustomSpell(target, triggeredSpellId, &m_amount, NULL, NULL, true, NULL, this);
-            else
-                caster->CastSpell(target, triggeredSpellId, true, NULL, this);
-        }
+        if (!caster)
+            return;
+        // If amount avalible cast with basepoints (Crypt Fever for example)
+        if (GetAmount())
+            caster->CastCustomSpell(target, m_spellProto->EffectTriggerSpell[m_effIndex], &m_amount, NULL, NULL, true, NULL, this);
         else
-        {
-            uint64 casterGUID = IsSpellRequiringFocusedTarget(GetSpellProto()) ? GetCasterGUID() : target->GetGUID();
-            target->RemoveAura(triggeredSpellId, casterGUID, 0, aurApp->GetRemoveMode());
-        }
+            caster->CastSpell(target, m_spellProto->EffectTriggerSpell[m_effIndex], true, NULL, this);
     }
-    else if (mode & AURA_EFFECT_HANDLE_REAPPLY && apply)
-    {
-        uint64 casterGUID = IsSpellRequiringFocusedTarget(GetSpellProto()) ? GetCasterGUID() : target->GetGUID();
-        
-        // change the stack amount to be equal to stack amount of our aura
-        if (Aura* triggeredAura = target->GetAura(triggeredSpellId, casterGUID))
-            triggeredAura->ModStackAmount(GetBase()->GetStackAmount() - triggeredAura->GetStackAmount());
-    }
+    else
+        target->RemoveAura(m_spellProto->EffectTriggerSpell[m_effIndex], GetCasterGUID(), 0, AuraRemoveMode(aurApp->GetRemoveMode()));
 }
 
 void AuraEffect::HandleAuraOpenStable(AuraApplication const * aurApp, uint8 mode, bool apply) const
