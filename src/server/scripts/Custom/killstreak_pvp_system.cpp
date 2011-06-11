@@ -146,7 +146,7 @@ void OnPVPKill(Player *killer, Player *pVictim)
 }
 };
 
-void AddSC_OnPvPKill()
+void AddSC_System_OnPvPKill()
 {
     new System_OnPvPKill;
 }
