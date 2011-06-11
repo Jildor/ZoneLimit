@@ -120,25 +120,25 @@ void OnPVPKill(Player *killer, Player *pVictim)
         case KillerStreak2:
         sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[2]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        killer->CastSpell(killer,24190,true);
+        killer->SetDisplayId(25463);
         break;
 
         case KillerStreak3:
         sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[3]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        killer->CastSpell(killer,73501,true);
+        killer->SetDisplayId(21456);
         break;
 
         case KillerStreak4:
         sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[4]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        killer->CastSpell(killer,22538,true);
+        killer->SetDisplayId(24536);
         break;
 
         case KillerStreak5:
         sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[5]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        killer->CastSpell(killer,42796,true);
+        killer->SetDisplayId(23451);
         KillingStreak[kGUID].KillStreak = 0;
         break;
      }
