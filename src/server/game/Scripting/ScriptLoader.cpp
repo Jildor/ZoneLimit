@@ -1240,9 +1240,10 @@ void AddBattlegroundScripts()
 
 void AddCustomScripts()
 {
-#ifdef SCRIPTS
-    /* This is where custom scripts should be added. */
 	// Killstreak PvP System
 	AddSC_System_OnPVPKill();
+#ifdef SCRIPTS
+    /* This is where custom scripts should be added. */
+
 #endif
 }
