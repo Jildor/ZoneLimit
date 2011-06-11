@@ -114,7 +114,7 @@ void OnPVPKill(Player *killer, Player *pVictim)
         case KillerStreak1:
         sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[1]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        killer->CastSpell(killer,14888,true);
+        killer->SetDisplayId(14253);
         break;
 
         case KillerStreak2:
