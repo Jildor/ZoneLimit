@@ -88,9 +88,9 @@ void OnPVPKill(Player *killer, Player *pVictim)
       }
 
       // if(KillingStreak[kGUID].KillCount == HowManyTimesYouWantTheKillerToGetAwardedForKillingTheSameVictim)
-      {
-          return;
-      }
+      // {
+      //     return;
+      // }
 
       if(OnlyInBattlegrounds)
 
