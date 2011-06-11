@@ -44,7 +44,7 @@ class System_OnPvPKill : public PlayerScript
         System_OnPvPKill() : PlayerScript("System_OnPvPKill") {}
 
         
-void OnPVPKill(Player *pKiller, Player *pVictim)
+void OnPVPKill(Player *killer, Player *pVictim)
 {
     if(!PvPSystemEnabled)
     {
@@ -57,7 +57,7 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
         uint64 kGUID; 
         uint64 vGUID;
         char msg[500];
-        kGUID = pKiller->GetGUID();
+        kGUID = killer->GetGUID();
         vGUID = pVictim->GetGUID();                 
         if(kGUID == vGUID)
         {
@@ -74,7 +74,7 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
       {
           KillingStreak[kGUID].KillCount++;
           KillingStreak[vGUID].KillCount = 1;
-          // pKiller->AddItem(ItemReward, 1);
+          // killer->AddItem(ItemReward, 1);
           // if(LooseTokenOnPvPDeath == true)
 
 
@@ -87,7 +87,7 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
           KillingStreak[vGUID].KillCount = 1;
       }
 
-      if(KillingStreak[kGUID].KillCount == HowManyTimesYouWantTheKillerToGetAwardedForKillingTheSameVictim)
+      // if(KillingStreak[kGUID].KillCount == HowManyTimesYouWantTheKillerToGetAwardedForKillingTheSameVictim)
       {
           return;
       }
@@ -95,7 +95,7 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
       if(OnlyInBattlegrounds)
 
       {
-          if(!pKiller->GetMap()->IsBattleground())
+          if(!killer->GetMap()->IsBattleground())
               return;
       }
 
@@ -104,7 +104,7 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
       KillingStreak[kGUID].LastGUIDKill = vGUID;
       KillingStreak[vGUID].LastGUIDKill = 0;
       // if(AddTokenOnPvPKill == true)
-          // pKiller->AddItem(ItemReward, 1);
+          // killer->AddItem(ItemReward, 1);
       // if(LooseTokenOnPvPDeath == true)
 
           // pVictim->DestroyItemCount(ItemReward, AmountOfItemsYouWantTheVictimToLoose, true, false);
@@ -112,33 +112,33 @@ void OnPVPKill(Player *pKiller, Player *pVictim)
         switch(KillingStreak[kGUID].KillStreak)
         {
         case KillerStreak1:
-        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", pKiller->GetName(), pVictim->GetName(), KillStreaks[1]);
+        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[1]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        pKiller->CastSpell(pkiller,spell1,true);
+        killer->CastSpell(killer,spell1,true);
         break;
 
         case KillerStreak2:
-        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", pKiller->GetName(), pVictim->GetName(), KillStreaks[2]);
+        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[2]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        pKiller->CastSpell(pkiller,spell2,true);
+        killer->CastSpell(killer,spell2,true);
         break;
 
         case KillerStreak3:
-        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", pKiller->GetName(), pVictim->GetName(), KillStreaks[3]);
+        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[3]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        pKiller->CastSpell(pkiller,spell3,true);
+        killer->CastSpell(killer,spell3,true);
         break;
 
         case KillerStreak4:
-        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", pKiller->GetName(), pVictim->GetName(), KillStreaks[4]);
+        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[4]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        pKiller->CastSpell(pkiller,spell4,true);
+        killer->CastSpell(killer,spell4,true);
         break;
 
         case KillerStreak5:
-        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", pKiller->GetName(), pVictim->GetName(), KillStreaks[5]);
+        sprintf(msg, "[PvP System]: %s killed %s and is on a %u kill streak. ", killer->GetName(), pVictim->GetName(), KillStreaks[5]);
         sWorld->SendWorldText(LANG_SYSTEMMESSAGE, msg);
-        pKiller->CastSpell(pkiller,Spell5,true);
+        killer->CastSpell(killer,Spell5,true);
         KillingStreak[kGUID].KillStreak = 0;
         break;
      }
