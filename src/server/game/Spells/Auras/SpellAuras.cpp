@@ -276,7 +276,7 @@ Aura * Aura::TryCreate(SpellEntry const* spellproto, WorldObject * owner, Unit *
     return NULL;
 }
 
-Aura * Aura::Create(SpellEntry const* spellproto, uint8 effMask, WorldObject * owner, Unit * caster, int32 *baseAmount, Item * castItem, uint64 casterGUID)
+Aura* Aura::Create(SpellEntry const* spellproto, uint8 effMask, WorldObject* owner, Unit* caster, int32* baseAmount /*= NULL*/, Item* castItem /*= NULL*/, uint64 casterGUID /*= 0*/)
 {
     ASSERT(effMask);
     ASSERT(spellproto);
@@ -287,31 +287,29 @@ Aura * Aura::Create(SpellEntry const* spellproto, uint8 effMask, WorldObject * o
     if (casterGUID)
     {
         if (owner->GetGUID() == casterGUID)
-            caster = (Unit *)owner;
+            caster = owner->ToUnit();
         else
             caster = ObjectAccessor::GetUnit(*owner, casterGUID);
     }
     else
-    {
         casterGUID = caster->GetGUID();
-    }
+
     // check if aura can be owned by owner
     if (owner->isType(TYPEMASK_UNIT))
-    {
         if (!owner->IsInWorld() || ((Unit*)owner)->IsDuringRemoveFromWorld())
-        {
-            // owner not in world so
-            // don't allow to own not self casted single target auras
+            // owner not in world so don't allow to own not self casted single target auras
             if (casterGUID != owner->GetGUID() && IsSingleTargetSpell(spellproto))
                 return NULL;
-        }
-    }
-    Aura * aura = NULL;
-    switch(owner->GetTypeId())
+
+    Aura* aura = NULL;
+    switch (owner->GetTypeId())
     {
         case TYPEID_UNIT:
         case TYPEID_PLAYER:
-            aura = new UnitAura(spellproto, effMask, owner, caster, baseAmount, castItem, casterGUID);
+            if (Aura* foundAura = owner->ToUnit()->_TryStackingOrRefreshingExistingAura(spellproto, effMask, caster, baseAmount, castItem, casterGUID))
+                aura = foundAura;
+            else
+                aura = new UnitAura(spellproto, effMask, owner, caster, baseAmount, castItem, casterGUID);
             break;
         case TYPEID_DYNAMICOBJECT:
             aura = new DynObjAura(spellproto, effMask, owner, caster, baseAmount, castItem, casterGUID);
@@ -717,9 +715,6 @@ void Aura::SetDuration(int32 duration, bool withMods)
 void Aura::RefreshDuration()
 {
     SetDuration(GetMaxDuration());
-    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
-        if (m_effects[i])
-            m_effects[i]->ResetPeriodic();
 
     if (m_spellProto->manaPerSecond || m_spellProto->manaPerSecondPerLevel)
         m_timeCla = 1 * IN_MILLISECONDS;
@@ -748,31 +743,36 @@ bool Aura::DropCharge()
     return false;
 }
 
-void Aura::SetStackAmount(uint8 stackAmount, bool /*applied*/)
+void Aura::SetStackAmount(uint8 stackAmount)
 {
-    if (stackAmount != m_stackAmount)
-    {
-        m_stackAmount = stackAmount;
-        RecalculateAmountOfEffects();
-    }
+    m_stackAmount = stackAmount;
+    Unit * caster = GetCaster();
+    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+        if (HasEffect(i))
+            m_effects[i]->ChangeAmount(m_effects[i]->CalculateAmount(caster), false, true);
     SetNeedClientUpdateForTargets();
 }
 
-bool Aura::ModStackAmount(int32 num)
+void Aura::ModStackAmount(int32 num, AuraRemoveMode removeMode)
 {
-    // Can`t mod
-    if (!m_spellProto->StackAmount || !GetStackAmount())
-        return true;
-
-    // Modify stack but limit it
     int32 stackAmount = m_stackAmount + num;
+
+    // limit the stack amount
     if (stackAmount > int32(m_spellProto->StackAmount))
-        stackAmount = m_spellProto->StackAmount;
-    else if (stackAmount <= 0) // Last aura from stack removed
     {
-        m_stackAmount = 0;
-        return true; // need remove aura
+        // not stackable aura - set stack amount to 1
+        if(!m_spellProto->StackAmount)
+            stackAmount = 1;
+        else
+            stackAmount = m_spellProto->StackAmount;
     }
+    // we're out of stacks, remove
+    else if (stackAmount <= 0)
+    {
+        Remove(removeMode);
+        return;
+    }
+
     bool refresh = stackAmount >= GetStackAmount();
 
     // Update stack amount
@@ -781,8 +781,6 @@ bool Aura::ModStackAmount(int32 num)
     if (refresh)
         RefreshDuration();
     SetNeedClientUpdateForTargets();
-
-    return false;
 }
 
 bool Aura::IsPassive() const
@@ -859,7 +857,7 @@ bool Aura::HasEffectType(AuraType type) const
 {
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-        if (m_effects[i] && m_effects[i]->GetAuraType() == type)
+        if (HasEffect(i) && m_effects[i]->GetAuraType() == type)
             return true;
     }
     return false;
@@ -870,11 +868,11 @@ void Aura::RecalculateAmountOfEffects()
     ASSERT (!IsRemoved());
     Unit * caster = GetCaster();
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
-        if (m_effects[i])
+        if (HasEffect(i))
             m_effects[i]->RecalculateAmount(caster);
 }
 
-void Aura::HandleAllEffects(AuraApplication const * aurApp, uint8 mode, bool apply)
+void Aura::HandleAllEffects(AuraApplication * aurApp, uint8 mode, bool apply)
 {
     ASSERT (!IsRemoved());
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
@@ -1146,7 +1144,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
     else
     {
         // Remove Linked Auras
-        if (removeMode != AURA_REMOVE_BY_STACK && removeMode != AURA_REMOVE_BY_DEATH)
+        if (removeMode != AURA_REMOVE_BY_DEATH)
         {
             if (uint32 customAttr = sSpellMgr->GetSpellCustomAttr(GetId()))
             {
@@ -1300,11 +1298,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         caster->InterruptNonMeleeSpells(false, 6358, false);
                         break;
                     case 48018: // Demonic Circle
-                        // Do not remove GO when aura is removed by stack
-                        // to prevent remove GO added by new spell
-                        // old one is already removed
-                        if (removeMode != AURA_REMOVE_BY_STACK)
-                            target->RemoveGameObject(GetId(), true);
+                        target->RemoveGameObject(GetId(), true);
                         target->RemoveAura(62388);
                         break;
                     default:
