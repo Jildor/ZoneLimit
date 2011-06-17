@@ -43,8 +43,6 @@ void AddSC_example_spell_scripts();
 
 void AddSC_SmartSCripts();
 
-// Killstreak PvP System
-void AddSC_System_OnPvPKill();
 
 //Commands
 void AddSC_anticheat_commandscript();
@@ -1242,7 +1240,5 @@ void AddCustomScripts()
 {
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
-		// Killstreak PvP System
-	AddSC_System_OnPvPKill();
 #endif
 }
