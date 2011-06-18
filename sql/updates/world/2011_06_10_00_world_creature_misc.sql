@@ -10,7 +10,7 @@ INSERT INTO `creature_template_addon` (`entry`,`mount`,`bytes1`,`bytes2`,`emote`
 -- Template updates for creature 33344 (XM-024 Pummeller)
 -- Addon data for creature 33344 (XM-024 Pummeller)
 -- Le quito el AIScript
-UPDATE `creature_template` SET `AIName`='' WHERE `entry`=33346; -- XM-024 Pummeller
+UPDATE `creature_template` SET `AIName`='' WHERE `entry`=33344; -- XM-024 Pummeller
 DELETE FROM `creature_template_addon` WHERE `entry`=33344;
 INSERT INTO `creature_template_addon` (`entry`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES
 (33344,0,0,1,0, NULL); -- XM-024 Pummeller
