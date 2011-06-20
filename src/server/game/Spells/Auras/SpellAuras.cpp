@@ -727,6 +727,16 @@ void Aura::RefreshDuration()
         m_timeCla = 1 * IN_MILLISECONDS;
 }
 
+void Aura::RefreshTimers()
+{
+    m_maxDuration = CalcMaxDuration();
+    RefreshDuration();
+    Unit * caster = GetCaster();
+    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+        if (HasEffect(i))
+            GetEffect(i)->CalculatePeriodic(caster, false, false);
+}
+
 void Aura::SetCharges(uint8 charges)
 {
     if (m_procCharges == charges)
@@ -803,7 +813,12 @@ bool Aura::ModStackAmount(int32 num, AuraRemoveMode removeMode)
     SetStackAmount(stackAmount);
 
     if (refresh)
-        RefreshDuration();
+    {
+        RefreshTimers();
+
+        // reset charges
+        SetCharges(CalcMaxCharges());
+    }
     SetNeedClientUpdateForTargets();
     return false;
 }
@@ -872,7 +887,7 @@ void Aura::SetLoadedState(int32 maxduration, int32 duration, int32 charges, uint
         {
             m_effects[i]->SetAmount(amount[i]);
             m_effects[i]->SetCanBeRecalculated(recalculateMask & (1<<i));
-            m_effects[i]->CalculatePeriodic(caster);
+            m_effects[i]->CalculatePeriodic(caster, false, true);
             m_effects[i]->CalculateSpellMod();
             m_effects[i]->RecalculateAmount(caster);
         }
