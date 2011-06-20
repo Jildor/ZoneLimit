@@ -94,9 +94,9 @@ public:
             ShadowBolt_Timer = 10000;
             Link_Timer = 1000;
         }
-        void JustDied(Unit * /*victim*/)
+        void JustDied(Unit* /*victim*/)
         {
-            Unit* pUnit = Unit::GetUnit((*me),victimGUID);
+            Unit* pUnit = Unit::GetUnit((*me), victimGUID);
             if (pUnit && pUnit->HasAura(SPELL_INSIDIOUS_WHISPER))
                 pUnit->RemoveAurasDueToSpell(SPELL_INSIDIOUS_WHISPER);
         }
@@ -110,7 +110,7 @@ public:
             }
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             if (!victimGUID) return;
         }
@@ -124,10 +124,10 @@ public:
             if (me->getVictim()->GetGUID() != victimGUID)
             {
                 DoModifyThreatPercent(me->getVictim(), -100);
-                Unit* owner = Unit::GetUnit((*me),victimGUID);
+                Unit* owner = Unit::GetUnit((*me), victimGUID);
                 if (owner && owner->isAlive())
                 {
-                    me->AddThreat(owner,999999);
+                    me->AddThreat(owner, 999999);
                     AttackStart(owner);
                 } else if (owner && owner->isDead())
                 {
@@ -172,7 +172,7 @@ public:
     {
         boss_leotheras_the_blindAI(Creature *c) : ScriptedAI(c)
         {
-            c->GetPosition(x,y,z);
+            c->GetPosition(x, y, z);
             pInstance = c->GetInstanceScript();
             Demon = 0;
 
@@ -195,7 +195,7 @@ public:
         bool DemonForm;
         bool IsFinalForm;
         bool EnrageUsed;
-        float x,y,z;
+        float x, y, z;
 
         uint64 InnderDemon[5];
         uint32 InnerDemon_Count;
@@ -233,7 +233,7 @@ public:
         {
             for (uint8 i = 0; i < 3; ++i)
             {
-                if (Creature *add = Unit::GetCreature(*me,SpellBinderGUID[i]))
+                if (Creature *add = Unit::GetCreature(*me, SpellBinderGUID[i]))
                     add->DisappearAndDie();
 
                 float nx = x;
@@ -242,7 +242,7 @@ public:
                 if (i == 0) {nx += 10; ny -= 5; o=2.5f;}
                 if (i == 1) {nx -= 8; ny -= 7; o=0.9f;}
                 if (i == 2) {nx -= 3; ny += 9; o=5.0f;}
-                Creature* binder = me->SummonCreature(MOB_SPELLBINDER,nx,ny,z,o,TEMPSUMMON_DEAD_DESPAWN,0);
+                Creature* binder = me->SummonCreature(MOB_SPELLBINDER, nx, ny, z, o, TEMPSUMMON_DEAD_DESPAWN, 0);
                 if (binder)
                     SpellBinderGUID[i] = binder->GetGUID();
 
@@ -282,7 +282,7 @@ public:
             uint8 AliveChannelers = 0;
             for (uint8 i = 0; i < 3; ++i)
             {
-                Unit *add = Unit::GetUnit(*me,SpellBinderGUID[i]);
+                Unit *add = Unit::GetUnit(*me, SpellBinderGUID[i]);
                 if (add && add->isAlive())
                     ++AliveChannelers;
             }
@@ -367,22 +367,22 @@ public:
             }
         }
 
-        void KilledUnit(Unit * victim)
+        void KilledUnit(Unit* victim)
         {
             if (victim->GetTypeId() != TYPEID_PLAYER)
                 return;
 
             if (DemonForm)
             {
-                DoScriptText(RAND(SAY_DEMON_SLAY1,SAY_DEMON_SLAY2,SAY_DEMON_SLAY3), me);
+                DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
             }
             else
             {
-                DoScriptText(RAND(SAY_NIGHTELF_SLAY1,SAY_NIGHTELF_SLAY2,SAY_NIGHTELF_SLAY3), me);
+                DoScriptText(RAND(SAY_NIGHTELF_SLAY1, SAY_NIGHTELF_SLAY2, SAY_NIGHTELF_SLAY3), me);
             }
         }
 
-        void JustDied(Unit * /*victim*/)
+        void JustDied(Unit* /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
 
@@ -396,7 +396,7 @@ public:
                 pInstance->SetData(DATA_LEOTHERASTHEBLINDEVENT, DONE);
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             if (me->HasAura(AURA_BANISH))
             return;
@@ -425,7 +425,7 @@ public:
                     {
                         DoResetThreat();
                         me->GetMotionMaster()->Clear();
-                        me->GetMotionMaster()->MovePoint(0,newTarget->GetPositionX(),newTarget->GetPositionY(),newTarget->GetPositionZ());
+                        me->GetMotionMaster()->MovePoint(0, newTarget->GetPositionX(), newTarget->GetPositionY(), newTarget->GetPositionZ());
                     }
                     Whirlwind_Timer = 2000;
                 } else Whirlwind_Timer -= diff;
@@ -474,7 +474,7 @@ public:
                     if (SwitchToDemon_Timer <= diff)
                     {
                         //switch to demon form
-                        me->RemoveAurasDueToSpell(SPELL_WHIRLWIND,0);
+                        me->RemoveAurasDueToSpell(SPELL_WHIRLWIND, 0);
                         me->SetDisplayId(MODEL_DEMON);
                         DoScriptText(SAY_SWITCH_TO_DEMON, me);
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
@@ -520,7 +520,7 @@ public:
                     {
                         if ((*itr) && (*itr)->isAlive())
                         {
-                            Creature * demon = me->SummonCreature(INNER_DEMON_ID, (*itr)->GetPositionX()+10, (*itr)->GetPositionY()+10, (*itr)->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                            Creature* demon = me->SummonCreature(INNER_DEMON_ID, (*itr)->GetPositionX()+10, (*itr)->GetPositionY()+10, (*itr)->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                             if (demon)
                             {
                                 demon->AI()->AttackStart((*itr));
@@ -616,21 +616,21 @@ public:
             DoScriptText(SAY_FREE, me);
         }
 
-        void KilledUnit(Unit * victim)
+        void KilledUnit(Unit* victim)
         {
             if (victim->GetTypeId() != TYPEID_PLAYER)
                 return;
 
-            DoScriptText(RAND(SAY_DEMON_SLAY1,SAY_DEMON_SLAY2,SAY_DEMON_SLAY3), me);
+            DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
         }
 
-        void JustDied(Unit * /*victim*/)
+        void JustDied(Unit* /*victim*/)
         {
             //invisibility (blizzlike, at the end of the fight he doesn't die, he disappears)
             DoCast(me, 8149, true);
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             StartEvent();
         }
@@ -703,7 +703,7 @@ public:
             }
         }
 
-        void EnterCombat(Unit * who)
+        void EnterCombat(Unit* who)
         {
             me->InterruptNonMeleeSpells(false);
             if (pInstance)
@@ -760,7 +760,7 @@ public:
             if (Mindblast_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectTarget(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
                 if (pTarget)DoCast(pTarget, SPELL_MINDBLAST);
 
@@ -792,7 +792,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit * /*killer*/) {}
+        void JustDied(Unit* /*killer*/) {}
     };
 
 };

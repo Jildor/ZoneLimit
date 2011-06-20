@@ -180,16 +180,16 @@ public:
             }
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
             events.ScheduleEvent(EVENT_SHIFT, 30000);
-            events.ScheduleEvent(EVENT_CHAIN, urand(10000,20000));
+            events.ScheduleEvent(EVENT_CHAIN, urand(10000, 20000));
             events.ScheduleEvent(EVENT_BERSERK, 360000);
         }
 
-        void DamageTaken(Unit * /*pDoneBy*/, uint32 & /*uiDamage*/)
+        void DamageTaken(Unit* /*pDoneBy*/, uint32 & /*uiDamage*/)
         {
             me->SetReactState(REACT_AGGRESSIVE);
         }
@@ -237,7 +237,7 @@ public:
                         return;
                     case EVENT_CHAIN:
                         DoCast(me->getVictim(), RAID_MODE(SPELL_CHAIN_LIGHTNING, H_SPELL_CHAIN_LIGHTNING));
-                        events.ScheduleEvent(EVENT_CHAIN, urand(10000,20000));
+                        events.ScheduleEvent(EVENT_CHAIN, urand(10000, 20000));
                         return;
                     case EVENT_BERSERK:
                         DoCast(me, SPELL_BERSERK);
@@ -282,16 +282,16 @@ public:
                 if (Creature *pThaddius = me->GetCreature(*me, pInstance->GetData64(DATA_THADDIUS)))
                     if (pThaddius->AI())
                         pThaddius->AI()->DoAction(ACTION_STALAGG_RESET);
-            powerSurgeTimer = urand(20000,25000);
+            powerSurgeTimer = urand(20000, 25000);
             magneticPullTimer = 20000;
         }
 
-        void EnterCombat(Unit * /*pWho*/)
+        void EnterCombat(Unit* /*pWho*/)
         {
             DoCast(SPELL_STALAGG_TESLA);
         }
 
-        void JustDied(Unit * /*killer*/)
+        void JustDied(Unit* /*killer*/)
         {
             if (pInstance)
                 if (Creature *pThaddius = me->GetCreature(*me, pInstance->GetData64(DATA_THADDIUS)))
@@ -331,7 +331,7 @@ public:
             if (powerSurgeTimer <= uiDiff)
             {
                 DoCast(me, RAID_MODE(SPELL_POWERSURGE, H_SPELL_POWERSURGE));
-                powerSurgeTimer = urand(15000,20000);
+                powerSurgeTimer = urand(15000, 20000);
             } else powerSurgeTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
@@ -370,12 +370,12 @@ public:
             staticFieldTimer = 5000;
         }
 
-        void EnterCombat(Unit * /*pWho*/)
+        void EnterCombat(Unit* /*pWho*/)
         {
             DoCast(SPELL_FEUGEN_TESLA);
         }
 
-        void JustDied(Unit * /*killer*/)
+        void JustDied(Unit* /*killer*/)
         {
             if (pInstance)
                 if (Creature *pThaddius = me->GetCreature(*me, pInstance->GetData64(DATA_THADDIUS)))

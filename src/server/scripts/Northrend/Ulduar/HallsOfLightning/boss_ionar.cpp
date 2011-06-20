@@ -109,7 +109,7 @@ public:
             uiStaticOverloadTimer = urand(5*IN_MILLISECONDS, 6*IN_MILLISECONDS);
             uiBallLightningTimer = urand(10*IN_MILLISECONDS, 11*IN_MILLISECONDS);
 
-            uiDisperseHealth = 45 + urand(0,10);
+            uiDisperseHealth = 45 + urand(0, 10);
 
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_DISABLE_MOVE);
 
@@ -138,9 +138,9 @@ public:
                 pInstance->SetData(TYPE_IONAR, DONE);
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void SpellHit(Unit* /*caster*/, const SpellEntry* spell)
@@ -185,7 +185,7 @@ public:
             }
         }
 
-        void DamageTaken(Unit * /*pDoneBy*/, uint32 &uiDamage)
+        void DamageTaken(Unit* /*pDoneBy*/, uint32 &uiDamage)
         {
             if (!me->IsVisible())
                 uiDamage = 0;
@@ -197,7 +197,7 @@ public:
             {
                 lSparkList.Summon(pSummoned);
 
-                pSummoned->CastSpell(pSummoned, DUNGEON_MODE(SPELL_SPARK_VISUAL_TRIGGER,H_SPELL_SPARK_VISUAL_TRIGGER), true);
+                pSummoned->CastSpell(pSummoned, DUNGEON_MODE(SPELL_SPARK_VISUAL_TRIGGER, H_SPELL_SPARK_VISUAL_TRIGGER), true);
 
                 Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
                 if (pTarget)
@@ -278,7 +278,7 @@ public:
             {
                 bHasDispersed = true;
 
-                DoScriptText(RAND(SAY_SPLIT_1,SAY_SPLIT_2), me);
+                DoScriptText(RAND(SAY_SPLIT_1, SAY_SPLIT_2), me);
 
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);
@@ -332,7 +332,7 @@ public:
                 me->DespawnOrUnsummon();
         }
 
-        void DamageTaken(Unit * /*pDoneBy*/, uint32 &uiDamage)
+        void DamageTaken(Unit* /*pDoneBy*/, uint32 &uiDamage)
         {
             uiDamage = 0;
         }

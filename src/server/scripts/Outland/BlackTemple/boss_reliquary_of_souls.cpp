@@ -88,7 +88,7 @@ EndScriptData */
 
 struct Position2d
 {
-    float x,y;
+    float x, y;
 };
 
 static Position2d Coords[]=
@@ -125,7 +125,7 @@ public:
             DoZoneInCombat();
         }
 
-        void JustDied(Unit * /*killer*/);
+        void JustDied(Unit* /*killer*/);
     };
 
 };
@@ -294,7 +294,7 @@ public:
                             MergeThreatList(Essence);
                             Essence->RemoveAllAuras();
                             Essence->DeleteThreatList();
-                            Essence->GetMotionMaster()->MoveFollow(me,0.0f,0.0f);
+                            Essence->GetMotionMaster()->MoveFollow(me, 0.0f, 0.0f);
                         } else return;
                     }
                     break;
@@ -302,7 +302,7 @@ public:
                     Timer = 1500;
                     if (Essence->IsWithinDistInMap(me, 10))
                     {
-                        Essence->SetUInt32Value(UNIT_NPC_EMOTESTATE,374); //rotate and disappear
+                        Essence->SetUInt32Value(UNIT_NPC_EMOTESTATE, 374); //rotate and disappear
                         Timer = 2000;
                         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
                     }
@@ -325,7 +325,7 @@ public:
                         DoScriptText(DESI_SAY_AFTER, Essence);
                     }
                     Essence->DespawnOrUnsummon();
-                    me->SetUInt32Value(UNIT_NPC_EMOTESTATE,0);
+                    me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
                     EssenceGUID = 0;
                     SoulCount = 0;
                     SoulDeathCount = 0;
@@ -358,7 +358,7 @@ public:
 
 };
 
-void npc_enslaved_soul::npc_enslaved_soulAI::JustDied(Unit * /*killer*/)
+void npc_enslaved_soul::npc_enslaved_soulAI::JustDied(Unit* /*killer*/)
 {
     if (ReliquaryGUID)
         if (Creature *Reliquary = (Unit::GetCreature((*me), ReliquaryGUID)))
@@ -400,18 +400,18 @@ public:
             AuraTimer = 5000;
         }
 
-        void DamageTaken(Unit * /*done_by*/, uint32 &damage)
+        void DamageTaken(Unit* /*done_by*/, uint32 &damage)
         {
             if (damage >= me->GetHealth())
             {
                 damage = 0;
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                me->Yell(SUFF_SAY_RECAP,LANG_UNIVERSAL,0);
+                me->Yell(SUFF_SAY_RECAP, LANG_UNIVERSAL, 0);
                 DoScriptText(SUFF_SAY_RECAP, me);
             }
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             if (!me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
                 {
@@ -424,9 +424,9 @@ public:
             else return;
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SUFF_SAY_SLAY1,SUFF_SAY_SLAY2,SUFF_SAY_SLAY3), me);
+            DoScriptText(RAND(SUFF_SAY_SLAY1, SUFF_SAY_SLAY2, SUFF_SAY_SLAY3), me);
         }
 
         void CastFixate()
@@ -450,7 +450,7 @@ public:
             if (pTarget)
                 pTarget->CastSpell(me, SPELL_FIXATE_TAUNT, true);
             DoResetThreat();
-            me->AddThreat(pTarget,1000000);
+            me->AddThreat(pTarget, 1000000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -536,7 +536,7 @@ public:
             }
         }
 
-        void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
         {
             if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL))
                 for (uint8 i = 0; i < 3; ++i)
@@ -546,16 +546,16 @@ public:
                             me->InterruptSpell(CURRENT_GENERIC_SPELL, false);
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(DESI_SAY_FREED, me);
             DoZoneInCombat();
             DoCast(me, AURA_OF_DESIRE, true);
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(DESI_SAY_SLAY1,DESI_SAY_SLAY2,DESI_SAY_SLAY3), me);
+            DoScriptText(RAND(DESI_SAY_SLAY1, DESI_SAY_SLAY2, DESI_SAY_SLAY3), me);
         }
 
         void UpdateAI(const uint32 diff)
@@ -632,22 +632,22 @@ public:
             CheckedAggro = false;
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(ANGER_SAY_FREED,ANGER_SAY_FREED2), me);
+            DoScriptText(RAND(ANGER_SAY_FREED, ANGER_SAY_FREED2), me);
 
             DoZoneInCombat();
             DoCast(me, AURA_OF_ANGER, true);
         }
 
-        void JustDied(Unit * /*victim*/)
+        void JustDied(Unit* /*victim*/)
         {
             DoScriptText(ANGER_SAY_DEATH, me);
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(ANGER_SAY_SLAY1,ANGER_SAY_SLAY2), me);
+            DoScriptText(RAND(ANGER_SAY_SLAY1, ANGER_SAY_SLAY2), me);
         }
 
         void UpdateAI(const uint32 diff)

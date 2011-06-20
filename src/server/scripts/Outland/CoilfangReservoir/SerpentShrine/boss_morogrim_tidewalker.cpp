@@ -135,12 +135,12 @@ public:
                 pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS);
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2,SAY_SLAY3), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
         }
 
-        void JustDied(Unit * /*victim*/)
+        void JustDied(Unit* /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
 
@@ -148,7 +148,7 @@ public:
                 pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, DONE);
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             PlayerList = &me->GetMap()->GetPlayers();
             Playercount = PlayerList->getSize();
@@ -183,7 +183,7 @@ public:
                 }
                 else
                 {
-                    DoScriptText(RAND(SAY_SUMMON1,SAY_SUMMON2), me);
+                    DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
 
                     for (uint8 i = 0; i < 10; ++i)
                     {
@@ -234,7 +234,7 @@ public:
                         }
                     }
 
-                    DoScriptText(RAND(SAY_SUMMON_BUBL1,SAY_SUMMON_BUBL2), me);
+                    DoScriptText(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2), me);
 
                     DoScriptText(EMOTE_WATERY_GRAVE, me);
                     WateryGrave_Timer = 30000;
@@ -309,7 +309,7 @@ public:
             me->setFaction(14);
         }
 
-        void EnterCombat(Unit * /*who*/) {}
+        void EnterCombat(Unit* /*who*/) {}
 
         void MoveInLineOfSight(Unit *who)
         {

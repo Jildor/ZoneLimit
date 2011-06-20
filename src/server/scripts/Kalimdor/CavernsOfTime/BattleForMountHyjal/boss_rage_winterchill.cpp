@@ -84,7 +84,7 @@ public:
                 pInstance->SetData(DATA_RAGEWINTERCHILLEVENT, NOT_STARTED);
         }
 
-        void EnterCombat(Unit * /*who*/)
+        void EnterCombat(Unit* /*who*/)
         {
             if (pInstance && IsEvent)
                 pInstance->SetData(DATA_RAGEWINTERCHILLEVENT, IN_PROGRESS);
@@ -92,9 +92,9 @@ public:
             me->MonsterYell(SAY_ONAGGRO, LANG_UNIVERSAL, 0);
         }
 
-        void KilledUnit(Unit * /*victim*/)
+        void KilledUnit(Unit* /*victim*/)
         {
-            switch (urand(0,1))
+            switch (urand(0, 1))
             {
                 case 0:
                     DoPlaySoundToSet(me, SOUND_ONSLAY1);
@@ -114,7 +114,7 @@ public:
             {
                 Unit *pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_JAINAPROUDMOORE));
                 if (pTarget && pTarget->isAlive())
-                    me->AddThreat(pTarget,0.0f);
+                    me->AddThreat(pTarget, 0.0f);
             }
         }
 
@@ -165,7 +165,7 @@ public:
             {
                 DoCast(me->getVictim(), SPELL_DEATH_AND_DECAY);
                 DecayTimer = 60000+rand()%20000;
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         DoPlaySoundToSet(me, SOUND_DECAY1);
@@ -181,7 +181,7 @@ public:
             {
                 DoCast(me->getVictim(), SPELL_FROST_NOVA);
                 NovaTimer = 30000+rand()%15000;
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         DoPlaySoundToSet(me, SOUND_NOVA1);
@@ -195,7 +195,7 @@ public:
             } else NovaTimer -= diff;
             if (IceboltTimer <= diff)
             {
-                DoCast(SelectTarget(SELECT_TARGET_RANDOM,0,40,true), SPELL_ICEBOLT);
+                DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 40, true), SPELL_ICEBOLT);
                 IceboltTimer = 11000+rand()%20000;
             } else IceboltTimer -= diff;
 
