@@ -1444,7 +1444,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                         if (caster->GetTypeId() != TYPEID_PLAYER)
                             break;
 
-                        Player *player = caster->ToPlayer();
+                        Player* player = caster->ToPlayer();
                         // Glyph of Guardian Spirit
                         if (AuraEffect * aurEff = player->GetAuraEffect(63231, 0))
                         {
@@ -1799,7 +1799,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
     }
 }
 
-bool Aura::CanBeAppliedOn(Unit *target)
+bool Aura::CanBeAppliedOn(Unit* target)
 {
     // unit not in world or during remove from world
     if (!target->IsInWorld() || target->IsDuringRemoveFromWorld())
