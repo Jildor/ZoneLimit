@@ -4900,7 +4900,8 @@ SpellCastResult Spell::CheckCast(bool strict)
         }
         */
 
-        if (target)
+        // used to prevent healing of target that under Cyclone effect - is it blizzlike?
+        if (strict && target != m_caster)
             if (IsPositiveSpell(m_spellInfo->Id))
                 if (target->IsImmunedToSpell(m_spellInfo))
                     return SPELL_FAILED_TARGET_AURASTATE;
