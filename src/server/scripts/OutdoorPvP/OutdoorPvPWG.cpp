@@ -1098,7 +1098,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
         case CREATURE_GUARD:
         case CREATURE_SPECIAL:
         {
-            //TDB users comment this block if your guards doesn't spawn by pairs A+H at fortress
+           /* //TDB users comment this block if your guards doesn't spawn by pairs A+H at fortress
             if (creature->GetAreaId()==4575)
             {
                 switch (entry)
