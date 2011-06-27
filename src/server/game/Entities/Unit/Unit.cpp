@@ -10937,16 +10937,16 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                 coeff = DotFactor;
         }
 
-        float coeff2 = CalculateLevelPenalty(spellProto) * stack;
-        if (spellProto->SpellFamilyName) // TODO: fix this
-            TakenTotal+= int32(TakenAdvertisedBenefit * coeff * coeff2);
+        float factorMod = CalculateLevelPenalty(spellProto) * stack;
+        // level penalty still applied on Taken bonus - is it blizzlike?
+        TakenTotal+= int32(TakenAdvertisedBenefit * factorMod);
         if (Player* modOwner = GetSpellModOwner())
         {
             coeff *= 100.0f;
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_BONUS_MULTIPLIER, coeff);
             coeff /= 100.0f;
         }
-        DoneTotal += int32(DoneAdvertisedBenefit * coeff * coeff2);
+        DoneTotal += int32(DoneAdvertisedBenefit * coeff * factorMod);
     }
 
     // Some spells don't benefit from done mods
@@ -11490,7 +11490,8 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
         }
 
         factorMod *= CalculateLevelPenalty(spellProto) * stack;
-        TakenTotal += int32(TakenAdvertisedBenefit * coeff * factorMod);
+        // level penalty still applied on Taken bonus - is it blizzlike?
+        TakenTotal += int32(TakenAdvertisedBenefit * factorMod);
         if (Player* modOwner = GetSpellModOwner())
         {
             coeff *= 100.0f;
