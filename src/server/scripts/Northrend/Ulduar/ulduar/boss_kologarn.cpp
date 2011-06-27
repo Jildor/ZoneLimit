@@ -28,13 +28,13 @@ SDComment: TODO: Achievements
 SDCategory: Ulduar
 EndScriptData */
 
-#define SPELL_ARM_DEAD_DAMAGE   RAID_MODE(63629,63979)
-#define SPELL_TWO_ARM_SMASH     RAID_MODE(63356,64003)
-#define SPELL_ONE_ARM_SMASH     RAID_MODE(63573,64006)
-#define SPELL_ARM_SWEEP         RAID_MODE(63766,63983)
-#define SPELL_STONE_SHOUT       RAID_MODE(63716,64005)
-#define SPELL_PETRIFY_BREATH    RAID_MODE(62030,63980)
-#define SPELL_STONE_GRIP        RAID_MODE(62166,63981)
+#define SPELL_ARM_DEAD_DAMAGE   RAID_MODE(63629, 63979)
+#define SPELL_TWO_ARM_SMASH     RAID_MODE(63356, 64003)
+#define SPELL_ONE_ARM_SMASH     RAID_MODE(63573, 64006)
+#define SPELL_ARM_SWEEP         RAID_MODE(63766, 63983)
+#define SPELL_STONE_SHOUT       RAID_MODE(63716, 64005)
+#define SPELL_PETRIFY_BREATH    RAID_MODE(62030, 63980)
+#define SPELL_STONE_GRIP        RAID_MODE(62166, 63981)
 #define SPELL_STONE_GRIP_CANCEL 65594
 #define SPELL_SUMMON_RUBBLE     63633
 #define SPELL_FALLING_RUBBLE    63821
@@ -42,7 +42,7 @@ EndScriptData */
 #define SPELL_ARM_ENTER_VISUAL  64753
 
 #define SPELL_SUMMON_FOCUSED_EYEBEAM        63342
-#define SPELL_FOCUSED_EYEBEAM_PERIODIC      RAID_MODE(63347,63977)
+#define SPELL_FOCUSED_EYEBEAM_PERIODIC      RAID_MODE(63347, 63977)
 #define SPELL_FOCUSED_EYEBEAM_VISUAL        63369
 #define SPELL_FOCUSED_EYEBEAM_VISUAL_LEFT   63676
 #define SPELL_FOCUSED_EYEBEAM_VISUAL_RIGHT  63702
@@ -155,7 +155,7 @@ class boss_kologarn : public CreatureScript
 
             void KilledUnit(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
             }
 
             void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply)
@@ -330,8 +330,6 @@ class boss_kologarn : public CreatureScript
                 if (!arm->isAlive())
                     arm->Respawn();
 
-                // HACK: We should send spell SPELL_ARM_ENTER_VEHICLE here, but this will not work, because
-                // the aura system will not allow it to stack from two different casters
                 int32 seatId = arm->GetEntry() == NPC_LEFT_ARM ? 0 : 1;
                 arm->CastCustomSpell(SPELL_ARM_ENTER_VEHICLE, SPELLVALUE_BASE_POINT0, seatId+1, me, true);
                 arm->CastSpell(arm, SPELL_ARM_ENTER_VISUAL, true);
@@ -625,13 +623,41 @@ class spell_ulduar_stone_grip : public SpellScriptLoader
         }
 };
 
+class spell_kologarn_stone_shout : public SpellScriptLoader
+{
+    public:
+        spell_kologarn_stone_shout() : SpellScriptLoader("spell_kologarn_stone_shout") { }
+
+        class spell_kologarn_stone_shout_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_kologarn_stone_shout_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove_if(PlayerOrPetCheck());
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_kologarn_stone_shout_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENEMY_SRC);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_kologarn_stone_shout_SpellScript();
+        }
+};
+
 void AddSC_boss_kologarn()
 {
     new boss_kologarn();
+
     new spell_ulduar_rubble_summon();
     new spell_ulduar_squeezed_lifeless();
     new spell_ulduar_cancel_stone_grip();
     new spell_ulduar_stone_grip_cast_target();
     new spell_ulduar_stone_grip_absorb();
     new spell_ulduar_stone_grip();
+    new spell_kologarn_stone_shout();
 }
