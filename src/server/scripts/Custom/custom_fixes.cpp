@@ -487,13 +487,12 @@ class go_ice_stone_midsummer : public GameObjectScript
 public:
     go_ice_stone_midsummer() : GameObjectScript("go_ice_stone_midsummer") { }
 
-    bool OnGossipHello(Player* /*player*/, GameObject* go)
+    bool OnGossipHello(Player* player, GameObject* /*go*/)
     {
-        go->SummonCreature(BOSS_AHUNE,-97.165665f,-208.148758f,-1.216157f,1.601278f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,150000);
+        player->SummonCreature(BOSS_AHUNE,-97.165665f,-208.148758f,-1.216157f,1.601278f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,150000);
         return true;
     }
 };
-
 
 void AddSC_custom_fixes()
 {
