@@ -173,7 +173,7 @@ class npc_torch_tossing_bunny : public CreatureScript
 
 enum AhuneData
 {
-    BOSS_AHUNE = 25740
+    BOSS_AHUNE = 25740,
     NPC_AHUNITE_HAILSTONE = 25755,
     NPC_AHUNITE_COLDWAVE = 25756,
     NPC_AHUNITE_FROSTWIND = 25757,
