@@ -3994,6 +3994,14 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             ++count;
             break;
+        case 45671: // Midsummer - Juggle Torch (Catch, Quest)
+            spellInfo->AttributesEx3 &= ~SPELL_ATTR3_PLAYERS_ONLY;
+            ++count;
+            break;
+        case 45907: // Midsummer - Torch Target Picker
+            spellInfo->AttributesEx &= ~SPELL_ATTR1_CANT_TARGET_SELF;
+            ++count;
+            break;
         case 29809:  // Desecration Arm - 36 instead of 37 - typo? :/
             spellInfo->EffectRadiusIndex[0] = 37;
             ++count;

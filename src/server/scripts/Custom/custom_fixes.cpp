@@ -26,7 +26,7 @@ enum RibbonPoleData
     SPELL_HAS_FULL_MIDSUMMER_SET        = 58933,
     SPELL_BURNING_HOT_POLE_DANCE        = 58934,
     SPELL_RIBBON_DANCE                  = 29175,
-    GO_RIBBON_POLE                      = 181605,
+    GO_RIBBON_POLE                      = 181605
 };
 
 class spell_gen_ribbon_pole_dancer_check : public SpellScriptLoader
@@ -173,6 +173,7 @@ class npc_torch_tossing_bunny : public CreatureScript
 
 enum AhuneData
 {
+    BOSS_AHUNE = 25740
     NPC_AHUNITE_HAILSTONE = 25755,
     NPC_AHUNITE_COLDWAVE = 25756,
     NPC_AHUNITE_FROSTWIND = 25757,
@@ -304,9 +305,202 @@ public:
     }
 };
 
+enum TorchCatchingData
+{
+    SPELL_FLING_TORCH_MISSILE     = 45669,
+    SPELL_TOSS_TORCH_SHADOW       = 46105,
+    SPELL_TORCH_TARGET_PICKER     = 45907,
+    SPELL_TORCHES_COUGHT          = 45693,
+    SPELL_JUGGLE_TORCH_MISSED     = 45676,
+    SPELL_TORCH_CATCHING_SUCCESS  = 46081,
+    SPELL_TORCH_DAILY_SUCCESS     = 46654,
+    NPC_JUGGLE_TARGET             = 25515,
+    QUEST_TORCH_CATCHING_A        = 11657,
+    QUEST_TORCH_CATCHING_H        = 11923,
+    QUEST_MORE_TORCH_CATCHING_A   = 11924,
+    QUEST_MORE_TORCH_CATCHING_H   = 11925
+};
+
+class spell_gen_torch_target_picker : public SpellScriptLoader
+{
+    public:
+        spell_gen_torch_target_picker() : SpellScriptLoader("spell_gen_torch_target_picker") {}
+
+        class spell_gen_torch_target_picker_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_torch_target_picker_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_FLING_TORCH_MISSILE))
+                    return false;
+                if (!sSpellStore.LookupEntry(SPELL_TOSS_TORCH_SHADOW))
+                    return false;
+                return true;
+            }
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                Unit* caster = GetCaster();
+
+                if (!caster)
+                    return;
+
+                std::list<Creature*> juggleList;
+                caster->GetCreatureListWithEntryInGrid(juggleList, NPC_JUGGLE_TARGET, 10.0f);
+
+                if (!juggleList.empty())
+                    for (std::list<Creature*>::iterator iter = juggleList.begin(); iter != juggleList.end(); ++iter)
+                        unitList.remove(*iter);
+
+                if (unitList.empty())
+                    return;
+
+                std::list<Unit*>::iterator itr = unitList.begin();
+                std::advance(itr, urand(0, unitList.size() - 1));
+
+                Unit* target = *itr;
+                unitList.clear();
+                unitList.push_back(target);
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                Unit* target = GetHitUnit();
+
+                if (!caster || !target)
+                    return;
+
+                caster->CastSpell(target, SPELL_FLING_TORCH_MISSILE, true);
+                caster->CastSpell(target, SPELL_TOSS_TORCH_SHADOW, true);
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_gen_torch_target_picker_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENTRY_SRC);
+                OnEffect += SpellEffectFn(spell_gen_torch_target_picker_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_torch_target_picker_SpellScript();
+        }
+};
+
+class spell_gen_juggle_torch_catch : public SpellScriptLoader
+{
+    public:
+        spell_gen_juggle_torch_catch() : SpellScriptLoader("spell_gen_juggle_torch_catch") {}
+
+        class spell_gen_juggle_torch_catch_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_juggle_torch_catch_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_TORCH_TARGET_PICKER))
+                    return false;
+                if (!sSpellStore.LookupEntry(SPELL_TORCHES_COUGHT))
+                    return false;
+                if (!sSpellStore.LookupEntry(SPELL_JUGGLE_TORCH_MISSED))
+                    return false;
+                return true;
+            }
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                Unit* caster = GetCaster();
+                Unit* juggleTarget = NULL;
+                bool missed = true;
+
+                if (unitList.empty() || !caster || !caster->ToPlayer())
+                     return;
+
+                for (std::list<Unit*>::iterator iter = unitList.begin(); iter != unitList.end(); ++iter)
+                {
+                    if (*iter == caster)
+                        missed = false;
+
+                    if ((*iter)->ToCreature())
+                        juggleTarget = *iter;
+                }
+
+                if (missed)
+                {
+                    if (juggleTarget)
+                        juggleTarget->CastSpell(juggleTarget, SPELL_JUGGLE_TORCH_MISSED, true);
+                    caster->RemoveAurasDueToSpell(SPELL_TORCHES_COUGHT);
+                }
+                else
+                {
+                    uint8 neededCatches;
+
+                    if (caster->ToPlayer()->GetQuestStatus(QUEST_TORCH_CATCHING_A) == QUEST_STATUS_INCOMPLETE
+                        || caster->ToPlayer()->GetQuestStatus(QUEST_TORCH_CATCHING_H) == QUEST_STATUS_INCOMPLETE)
+                    {
+                        neededCatches = 4;
+                    }
+                    else if (caster->ToPlayer()->GetQuestStatus(QUEST_MORE_TORCH_CATCHING_A) == QUEST_STATUS_INCOMPLETE
+                        || caster->ToPlayer()->GetQuestStatus(QUEST_MORE_TORCH_CATCHING_H) == QUEST_STATUS_INCOMPLETE)
+                    {
+                        neededCatches = 10;
+                    }
+                    else
+                    {
+                        caster->RemoveAurasDueToSpell(SPELL_TORCHES_COUGHT);
+                        return;
+                    }
+
+                    caster->CastSpell(caster, SPELL_TORCH_TARGET_PICKER, true);
+                    caster->CastSpell(caster, SPELL_TORCHES_COUGHT, true);
+
+                    // reward quest
+                    if (caster->GetAuraCount(SPELL_TORCHES_COUGHT) >= neededCatches)
+                    {
+                        caster->CastSpell(caster, SPELL_TORCH_CATCHING_SUCCESS, true);
+                        caster->CastSpell(caster, SPELL_TORCH_DAILY_SUCCESS, true);
+                        caster->RemoveAurasDueToSpell(SPELL_TORCHES_COUGHT);
+                    }
+                }
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_gen_juggle_torch_catch_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENTRY_DST);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_juggle_torch_catch_SpellScript();
+        }
+};
+
+/*######################
+# go_ice_stone_midsummer
+########################*/
+
+class go_ice_stone_midsummer : public GameObjectScript
+{
+public:
+    go_ice_stone_midsummer() : GameObjectScript("go_ice_stone_midsummer") { }
+
+    bool OnGossipHello(Player* /*player*/, GameObject* go)
+    {
+        go->SummonCreature(BOSS_AHUNE,-97.165665f,-208.148758f,-1.216157f,1.601278f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,150000);
+        return true;
+    }
+};
+
+
 void AddSC_custom_fixes()
 {
     new spell_gen_ribbon_pole_dancer_check();
     new npc_torch_tossing_bunny();
     new boss_ahune();
+    new spell_gen_torch_target_picker();
+    new spell_gen_juggle_torch_catch();
+    new go_ice_stone_midsummer();
 }

@@ -1,4 +1,9 @@
+-- Editado por Gildor
 SET @GOGUID := 43500;
+-- Gameobject from TDB
+DELETE FROM `gameobject_template` WHERE `entry` = 300068;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `AIName`, `ScriptName`, `WDBVerified`) VALUES
+('300068','8','0','TEMP Midsummer Bonfire','','','','0','0','1','0','0','0','0','0','0','1365','10','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','1');
 DELETE FROM `gameobject` WHERE `id`=188067;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (@GOGUID, 188067, 547, 3, 1, -79.397, -219.702, -4.04289, -2.19912, 0, 0, 0, 1, 180, 255, 1),
@@ -147,3 +152,108 @@ UPDATE creature_template SET faction_A=16, faction_H=16, minlevel=80, maxlevel=8
 UPDATE creature_template SET faction_A=16, faction_H=16, mindmg=400, maxdmg=500, attackpower=450, dmg_multiplier=7.5 WHERE entry IN (25757,26341); -- Frostwind (N/H)
 UPDATE creature_template SET AIName='', ScriptName='boss_ahune' WHERE entry=25740; -- Ahune Script
 -- --------------------------------------------------------------------------------------------------------------------------------
+DELETE FROM `spell_script_names` WHERE `spell_id` IN (45907,45671);
+INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
+(45907, 'spell_gen_torch_target_picker'),
+(45671, 'spell_gen_juggle_torch_catch');
+
+DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry` IN (45907,45671);
+INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceEntry`,`ConditionTypeOrReference`,`ConditionValue1`,`ConditionValue2`) VALUES
+(13,45907,18,1,25515),
+(13,45671,18,1,0),
+(13,45671,18,1,25515);
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger`=46747;
+INSERT INTO `spell_linked_spell` (`spell_trigger`,`spell_effect`,`type`,`comment`) VALUES
+(46747,45907,0, 'Fling Torch - Torch Target Picker');
+
+UPDATE `creature_template` SET `flags_extra`=`flags_extra`|128 WHERE `entry`=25515;
+
+UPDATE `quest_template` SET `RewOrReqMoney`=74000, `RewMoneyMaxLevel`=132300 WHERE `entry`=11923;
+UPDATE `quest_template` SET `PrevQuestId`=11657 WHERE `entry`=11924;
+UPDATE `quest_template` SET `PrevQuestId`=11923, `RewOrReqMoney`=74000, `RewMoneyMaxLevel`=132300 WHERE `entry`=11925;
+
+DELETE FROM creature WHERE guid BETWEEN @CGUID+13 AND @CGUID+44;
+DELETE FROM `creature` WHERE `id`=25515;
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) VALUES
+(@CGUID+13,'25515','1','1','1','0','0','1921.68','-4326.24','21.7631','4.69113','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+14,'25515','0','1','1','0','0','-8820.57','863.37','98.9602','1.09525','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+15,'25515','0','1','1','0','0','-8819.07','881.422','98.6388','4.52744','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+16,'25515','0','1','1','0','0','-8812.03','885.719','98.5385','4.4489','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+17,'25515','0','1','1','0','0','-8814.08','873.969','98.8659','1.10232','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+18,'25515','0','1','1','0','0','-8814.7','864.967','99.0339','1.1141','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+19,'25515','0','1','1','0','0','-8821.88','870.852','98.7882','4.06092','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+20,'25515','0','1','1','0','0','-8807.15','878.687','98.8254','3.52921','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+21,'25515','0','1','1','0','0','-8823.06','855.943','99.045','1.4479','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+22,'25515','1','1','1','0','0','1932.16','-4325.71','20.1871','4.38482','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+23,'25515','1','1','1','0','0','1946.67','-4327.83','22.6344','3.60335','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+24,'25515','1','1','1','0','0','1943','-4339.9','21.5222','3.88609','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+25,'25515','1','1','1','0','0','1934.19','-4334.65','20.0495','3.48554','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+26,'25515','1','1','1','0','0','1930.03','-4346.83','19.7546','3.8429','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+27,'25515','1','1','1','0','0','1940.22','-4353.12','20.1355','4.05967','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+28,'25515','1','1','1','0','0','1932.25','-4361.06','20.9716','2.11973','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+29,'25515','0','1','1','0','0','1833.6','223.202','60.3987','2.25109','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+30,'25515','0','1','1','0','0','1831.21','233.347','60.134','1.62277','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+31,'25515','0','1','1','0','0','1832.31','244.952','59.9711','1.24735','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+32,'25515','0','1','1','0','0','1832.3','256.49','59.6549','2.65793','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+33,'25515','0','1','1','0','0','1822.36','261.071','59.9183','4.76437','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+34,'25515','0','1','1','0','0','1823.9','252.272','60.0337','4.96229','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+35,'25515','0','1','1','0','0','1814.4','247.51','60.5868','5.74847','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+36,'25515','0','1','1','0','0','1821.79','238.343','60.6741','4.77144','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+37,'25515','0','1','1','0','0','-4698.32','-1214.39','501.66','1.4847','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+38,'25515','0','1','1','0','0','-4701.21','-1204.98','501.66','2.14051','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+39,'25515','0','1','1','0','0','-4711.01','-1195.42','501.675','2.40362','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+40,'25515','0','1','1','0','0','-4724.79','-1194.03','501.696','5.31745','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+41,'25515','0','1','1','0','0','-4714.44','-1204.85','501.66','5.40384','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+42,'25515','0','1','1','0','0','-4727.47','-1205.35','501.696','4.54775','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+43,'25515','0','1','1','0','0','-4718.13','-1216.85','501.66','5.08575','30','0','0','42','0','0','0','0','0','0'),
+(@CGUID+44,'25515','0','1','1','0','0','-4692.04','-1200.08','501.66','3.52281','30','0','0','42','0','0','0','0','0','0');
+
+DELETE FROM `game_event_creature` WHERE `guid` BETWEEN @CGUID+13 AND @CGUID+44;
+INSERT INTO `game_event_creature` (`eventEntry`, `guid`) VALUES
+(1,@CGUID+13),
+(1,@CGUID+14),
+(1,@CGUID+15),
+(1,@CGUID+16),
+(1,@CGUID+17),
+(1,@CGUID+18),
+(1,@CGUID+19),
+(1,@CGUID+20),
+(1,@CGUID+21),
+(1,@CGUID+22),
+(1,@CGUID+23),
+(1,@CGUID+24),
+(1,@CGUID+25),
+(1,@CGUID+26),
+(1,@CGUID+27),
+(1,@CGUID+28),
+(1,@CGUID+29),
+(1,@CGUID+30),
+(1,@CGUID+31),
+(1,@CGUID+32),
+(1,@CGUID+33),
+(1,@CGUID+34),
+(1,@CGUID+35),
+(1,@CGUID+36),
+(1,@CGUID+37),
+(1,@CGUID+38),
+(1,@CGUID+39),
+(1,@CGUID+40),
+(1,@CGUID+41),
+(1,@CGUID+42),
+(1,@CGUID+43),
+(1,@CGUID+44);
+
+DELETE FROM `gameobject` WHERE `guid` IN (@GOGUID+15,@GOGUID+16);
+INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
+(@GOGUID+15,'300068','0','1','1','1823.19','221.194','60.9658','4.08421','0','0','0.890974','-0.454055','300','0','1'),
+(@GOGUID+16,'300068','0','1','1','-4702.18','-1221.19','502.491','5.2232','0','0','0.505528','-0.86281','300','0','1');
+
+DELETE FROM `game_event_gameobject` WHERE `guid` IN (@GOGUID+15,@GOGUID+16);
+INSERT INTO `game_event_gameobject` (`eventEntry`, `guid`) VALUES
+(1,@GOGUID+15),
+(1,@GOGUID+16);
+-- ----------------------------------------------------------------------------------------------------------------------------
+-- Ice stone
+UPDATE gameobject_template SET ScriptName='go_ice_stone_midsummer' WHERE entry=187882;
+-- -----------------------------------------------------------------------------------------------------------------------------
