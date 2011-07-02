@@ -481,16 +481,27 @@ class spell_gen_juggle_torch_catch : public SpellScriptLoader
 /*######################
 # go_ice_stone_midsummer
 ########################*/
-
+#define GOSSIP_SENDER_CHECK 547
 class go_ice_stone_midsummer : public GameObjectScript
 {
 public:
     go_ice_stone_midsummer() : GameObjectScript("go_ice_stone_midsummer") { }
 
-    bool OnGossipHello(Player* player, GameObject* /*go*/)
+    bool OnGossipHello(Player* player, GameObject* go)
     {
-        player->SummonCreature(BOSS_AHUNE,-97.165665f,-208.148758f,-1.216157f,1.601278f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,150000);
+        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,"Invocar a Ahune",GOSSIP_SENDER_CHECK,GOSSIP_ACTION_INFO_DEF+1);
+        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,go->GetGUID());
         return true;
+    }
+
+    bool OnGossipSelect(Player* player, GameObject* go, uint32 /*uiSender*/, uint32 uiAction)
+    {
+        if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
+        {
+            go->SummonCreature(BOSS_AHUNE,-97.165665f,-208.148758f,-1.216157f,1.601278f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,120000);
+		    player->CLOSE_GOSSIP_MENU();
+            return true;
+        }
     }
 };
 
