@@ -188,22 +188,6 @@ class achievement_arena_kills : public AchievementCriteriaScript
         uint8 const _arenaType;
 };
 
-#define DALARAN_ZONE_ID 4395
-	
-class achievement_torch_juggler : public AchievementCriteriaScript
-{
-    public:
-        achievement_torch_juggler() : AchievementCriteriaScript("achievement_torch_juggler") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source || source->GetZoneId() != DALARAN_ZONE_ID)
-                return false;
-				
-            return true;
-        }
-};
-
 void AddSC_achievement_scripts()
 {
     new achievement_storm_glory();
@@ -217,5 +201,4 @@ void AddSC_achievement_scripts()
     new achievement_arena_kills("achievement_arena_2v2_kills", ARENA_TYPE_2v2);
     new achievement_arena_kills("achievement_arena_3v3_kills", ARENA_TYPE_3v3);
     new achievement_arena_kills("achievement_arena_5v5_kills", ARENA_TYPE_5v5);
-	new achievement_torch_juggler();
 }
