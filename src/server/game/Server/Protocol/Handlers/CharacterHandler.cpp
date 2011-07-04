@@ -448,7 +448,8 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                 Field *fields = result->Fetch();
                 // SELECT SUM(x) is MYSQL_TYPE_NEWDECIMAL - needs to be read as string
                 const char* ch = fields[0].GetCString();
-                acctCharCount = atoi(ch);
+                if (ch)
+                    acctCharCount = atoi(ch);
             }
 
             if (acctCharCount >= sWorld->getIntConfig(CONFIG_CHARACTERS_PER_ACCOUNT))
@@ -457,6 +458,7 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                 data << uint8(CHAR_CREATE_ACCOUNT_LIMIT);
                 SendPacket(&data);
                 delete createInfo;
+                _charCreateCallback.SetParam(NULL);
                 _charCreateCallback.FreeResult();
                 return;
             }
@@ -486,6 +488,7 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                     data << uint8(CHAR_CREATE_SERVER_LIMIT);
                     SendPacket(&data);
                     delete createInfo;
+                    _charCreateCallback.SetParam(NULL);
                     _charCreateCallback.FreeResult();
                     return;
                 }
@@ -503,6 +506,7 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                 data << uint8(CHAR_CREATE_LEVEL_REQUIREMENT);
                 SendPacket(&data);
                 delete createInfo;
+                _charCreateCallback.SetParam(NULL);
                 _charCreateCallback.FreeResult();
                 return;
             }
@@ -553,6 +557,8 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                             data << uint8(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
                             SendPacket(&data);
                             delete createInfo;
+                            _charCreateCallback.SetParam(NULL);
+                            _charCreateCallback.FreeResult();
                             return;
                         }
                     }
@@ -579,6 +585,8 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                         data << uint8(CHAR_CREATE_PVP_TEAMS_VIOLATION);
                         SendPacket(&data);
                         delete createInfo;
+                        _charCreateCallback.SetParam(NULL);
+                        _charCreateCallback.FreeResult();
                         return;
                     }
                 }
@@ -610,6 +618,8 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                                 data << uint8(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
                                 SendPacket(&data);
                                 delete createInfo;
+                                _charCreateCallback.SetParam(NULL);
+                                _charCreateCallback.FreeResult();
                                 return;
                             }
                         }
@@ -642,6 +652,8 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
                 data << uint8(CHAR_CREATE_ERROR);
                 SendPacket(&data);
                 delete createInfo;
+                _charCreateCallback.SetParam(NULL);
+                _charCreateCallback.FreeResult();
                 return;
             }
 
@@ -682,6 +694,7 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
 
             delete pNewChar;                                        // created only to call SaveToDB()
             delete createInfo;
+            _charCreateCallback.SetParam(NULL);
             _charCreateCallback.FreeResult();
         }
         break;
