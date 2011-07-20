@@ -5241,7 +5241,7 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
             case SPELL_EFFECT_DISPEL:
             {
-                Unit* target = m_targets.getUnitTarget();
+                Unit* target = m_targets.GetUnitTarget();
                 if (!target || i != 0 || m_spellInfo->DmgClass != SPELL_DAMAGE_CLASS_MAGIC)
                     break;
 
@@ -5303,7 +5303,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 if (m_caster->HasUnitState(UNIT_STAT_ROOT))
                     return SPELL_FAILED_ROOTED;
                 if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                    if (Unit* target = m_targets.getUnitTarget())
+                    if (Unit* target = m_targets.GetUnitTarget())
                         if (!target->isAlive())
                             return SPELL_FAILED_BAD_TARGETS;
                 break;
@@ -5514,8 +5514,8 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
             case SPELL_EFFECT_REDIRECT_THREAT:
             {
-                if (m_spellInfo->Id == 57934 && m_targets.getUnitTarget() &&
-                    m_targets.getUnitTarget()->GetTypeId() != TYPEID_PLAYER)
+                if (m_spellInfo->Id == 57934 && m_targets.GetUnitTarget() &&
+                    m_targets.GetUnitTarget()->GetTypeId() != TYPEID_PLAYER)
                     return SPELL_FAILED_BAD_TARGETS;
                 break;
             }
