@@ -4310,8 +4310,9 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[0] = 0;
             ++count;
             break;
+        case 72706: // Achievement Check (Valithria Dreamwalker)
         case 71357: // Order Whelp
-            spellInfo->EffectRadiusIndex[0] = 22;
+            spellInfo->EffectRadiusIndex[0] = 22;   // 200yd
             ++count;
             break;
         case 70598: // Sindragosa's Fury
