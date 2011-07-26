@@ -364,7 +364,7 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
     }
 
     // hide passenger from selection
-    if (seat->second.seatInfo->m_flags & VEHICLE_SEAT_FLAG_PASSENGER_NOT_SELECTABLE)
+    if (seat->second.SeatInfo->m_flags & VEHICLE_SEAT_FLAG_PASSENGER_NOT_SELECTABLE)
         unit->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
     if (_me->IsInWorld())
@@ -419,7 +419,7 @@ void Vehicle::RemovePassenger(Unit* unit)
         _me->RemoveCharmedBy(unit);
 
     // restore passenger selection
-    if (seat->second.seatInfo->m_flags & VEHICLE_SEAT_FLAG_PASSENGER_NOT_SELECTABLE)
+    if (seat->second.SeatInfo->m_flags & VEHICLE_SEAT_FLAG_PASSENGER_NOT_SELECTABLE)
         unit->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
     if (_me->IsInWorld())
@@ -521,7 +521,7 @@ uint8 Vehicle::GetAvailableSeatCount() const
 
 void Vehicle::Relocate(Position pos)
 {
-    sLog->outDebug(LOG_FILTER_VEHICLES, "Vehicle::Relocate %u", me->GetEntry());
+	sLog->outDebug(LOG_FILTER_VEHICLES, "Vehicle::Relocate %u", _me->GetEntry());
 
     std::set<Unit*> vehiclePlayers;
     for (int8 i = 0; i < 8; i++)
