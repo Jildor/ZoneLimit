@@ -3879,12 +3879,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             ++count;
-            break;        
-        case 59921: // Frost Fever
-            // Icy Clutch shouldn't be applied at caster when login
-            spellInfo->AttributesEx4 |= SPELL_ATTR4_CANT_PROC_FROM_SELFCAST;
-            ++count;
-            break;        
+            break;
         case 57994: // Wind Shear
             // this required because with 0 bp it isn't handled in SpellEffects
             spellInfo->EffectBasePoints[1] = 1;
