@@ -7343,13 +7343,21 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 // Item - Shaman T10 Elemental 4P Bonus
                 case 70817:
                 {
-                    if (AuraEffect const * aura = pVictim->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_SHAMAN, 0x10000000, 0, 0))
+                    // try to find spell Flame Shock on the target
+                    if (AuraEffect const* aurEff = target->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_SHAMAN, 0x10000000, 0x0, 0x0, GetGUID()))
                     {
-                        int32 amount = aura->GetBase()->GetDuration() + triggerAmount * IN_MILLISECONDS;
-                        aura->GetBase()->SetDuration(amount);
-                        //aura->SendAuraUpdate(false);
+                        Aura* flameShock  = aurEff->GetBase();
+                        int32 maxDuration = flameShock->GetMaxDuration();
+                        int32 newDuration = flameShock->GetDuration() + 2 * aurEff->GetAmplitude();
+
+                        flameShock->SetDuration(newDuration);
+                        // is it blizzlike to change max duration for FS?
+                        if (newDuration > maxDuration)
+                            flameShock->SetMaxDuration(newDuration);
+
                         return true;
                     }
+                    // if not found Flame Shock
                     return false;
                 }
                 case 63280: // Glyph of Totem of Wrath
