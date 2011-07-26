@@ -3830,8 +3830,6 @@ void SpellMgr::LoadSpellCustomAttr()
             ++count;
             break;
         case 27820: // Mana Detonation
-        //case 28062: case 39090:             // Positive/Negative Charge
-        //case 28085: case 39093:
         case 69782: // Ooze Flood
         case 69796: // Ooze Flood
         case 69798: // Ooze Flood
@@ -4360,14 +4358,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Roar
                 else if (spellInfo->SpellFamilyFlags[0] & 0x8)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_AURA_CC;
-                else
-                    break;
-                ++count;
-                break;
-                // Do not allow Deadly throw and Slice and Dice to proc twice
-            case SPELLFAMILY_ROGUE:
-                if (spellInfo->SpellFamilyFlags[1] & 0x1 || spellInfo->SpellFamilyFlags[0] & 0x40000)
-                    spellInfo->AttributesEx4 |= SPELL_ATTR4_CANT_PROC_FROM_SELFCAST;
                 else
                     break;
                 ++count;
