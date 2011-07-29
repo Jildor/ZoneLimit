@@ -4210,6 +4210,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_INTERRUPT;
             ++count;
             break;
+        case 61851: // Killing Spree - should remove snares from caster
+            spellInfo->AttributesEx |= SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY;
+            ++count;
+            break;
         case 18500: // Wing Buffet
         case 33086: // Wild Bite
         case 49749: // Piercing Blow
