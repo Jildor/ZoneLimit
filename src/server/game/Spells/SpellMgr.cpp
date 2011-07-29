@@ -4244,10 +4244,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->CastingTimeIndex = 1;
             ++count;
             break;
-        case 33206: // Pain Suppression
-            spellInfo->AttributesEx5 &= ~SPELL_ATTR5_USABLE_WHILE_STUNNED;
-            ++count;
-            break;
         case 8145: // Tremor Totem (instant pulse)
         case 6474: // Earthbind Totem (instant pulse)
             spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
