@@ -37,9 +37,9 @@ SpellSelectTargetTypes SpellTargetType[TOTAL_SPELL_TARGETS];
 
 SpellMgr::SpellMgr()
 {
-    for (int i = 0; i < TOTAL_SPELL_EFFECTS; ++i)
+    for (uint8 i = 0; i < TOTAL_SPELL_EFFECTS; ++i)
     {
-        switch(i)
+        switch (i)
         {
             case SPELL_EFFECT_PERSISTENT_AREA_AURA: //27
             case SPELL_EFFECT_SUMMON:               //28
@@ -101,9 +101,9 @@ SpellMgr::SpellMgr()
         }
     }
 
-    for (int i = 0; i < TOTAL_SPELL_TARGETS; ++i)
+    for (uint8 i = 0; i < TOTAL_SPELL_TARGETS; ++i)
     {
-        switch(i)
+        switch (i)
         {
             case TARGET_UNIT_CASTER:
             case TARGET_UNIT_CASTER_FISHING:
@@ -228,7 +228,7 @@ SpellMgr::SpellMgr()
 
     for (int32 i = 0; i < TOTAL_SPELL_TARGETS; ++i)
     {
-        switch(i)
+        switch (i)
         {
             case TARGET_UNIT_AREA_ENEMY_DST:
             case TARGET_UNIT_AREA_ENEMY_SRC:
@@ -324,8 +324,8 @@ uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell* spell)
 
     int32 castTime = spellCastTimeEntry->CastTime;
 
-    if (spell && spell->GetCaster())
-        spell->GetCaster()->ModSpellCastTime(spellInfo, castTime, spell);
+    if (Unit *caster = (spell ? spell->GetCaster() : NULL))
+        caster->ModSpellCastTime(spellInfo, castTime, spell);
 
     if (spellInfo->Attributes & SPELL_ATTR0_REQ_AMMO && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
@@ -494,7 +494,7 @@ AuraState GetSpellAuraState(SpellEntry const* spellInfo)
         return AURA_STATE_BLEEDING;
 
     if (GetSpellSchoolMask(spellInfo) & SPELL_SCHOOL_MASK_FROST)
-        for (uint8 i = 0; i<MAX_SPELL_EFFECTS; ++i)
+        for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             if (spellInfo->EffectApplyAuraName[i] == SPELL_AURA_MOD_STUN
                 || spellInfo->EffectApplyAuraName[i] == SPELL_AURA_MOD_ROOT)
                 return AURA_STATE_FROZEN;
@@ -1198,7 +1198,7 @@ void SpellMgr::LoadSpellTargetPositions()
         }
 
         bool found = false;
-        for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
+        for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
             if (spellInfo->EffectImplicitTargetA[i] == TARGET_DST_DB || spellInfo->EffectImplicitTargetB[i] == TARGET_DST_DB)
             {
@@ -1238,7 +1238,7 @@ void SpellMgr::LoadSpellTargetPositions()
         bool found = false;
         for (int j = 0; j < MAX_SPELL_EFFECTS; ++j)
         {
-            switch(spellInfo->EffectImplicitTargetA[j])
+            switch (spellInfo->EffectImplicitTargetA[j])
             {
                 case TARGET_DST_DB:
                     found = true;
@@ -1246,7 +1246,7 @@ void SpellMgr::LoadSpellTargetPositions()
             }
             if (found)
                 break;
-            switch(spellInfo->EffectImplicitTargetB[j])
+            switch (spellInfo->EffectImplicitTargetB[j])
             {
                 case TARGET_DST_DB:
                     found = true;
@@ -1431,7 +1431,7 @@ bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const* spellPr
             // spellFamilyName is Ok need check for spellFamilyMask if present
             if (spellProcEvent->spellFamilyMask)
             {
-                if ((spellProcEvent->spellFamilyMask & procSpell->SpellFamilyFlags) == 0)
+                if (!(spellProcEvent->spellFamilyMask & procSpell->SpellFamilyFlags))
                     return false;
                 hasFamilyMask = true;
                 // Some spells are not considered as active even with have spellfamilyflags
@@ -1672,8 +1672,6 @@ void SpellMgr::LoadSpellGroups()
     QueryResult result = WorldDatabase.Query("SELECT id, spell_id FROM spell_group");
     if (!result)
     {
-
-
         sLog->outString();
         sLog->outString(">> Loaded %u spell group definitions", count);
         return;
@@ -1757,7 +1755,6 @@ void SpellMgr::LoadSpellGroupStackRules()
     QueryResult result = WorldDatabase.Query("SELECT group_id, stack_rule FROM spell_group_stack_rules");
     if (!result)
     {
-
         sLog->outString(">> Loaded 0 spell group stack rules");
         sLog->outString();
         return;
@@ -1804,8 +1801,6 @@ void SpellMgr::LoadSpellThreats()
     QueryResult result = WorldDatabase.Query("SELECT entry, Threat FROM spell_threat");
     if (!result)
     {
-
-
         sLog->outString(">> Loaded %u aggro generating spells", count);
         sLog->outString();
         return;
@@ -1855,9 +1850,9 @@ bool SpellMgr::canStackSpellRanks(SpellEntry const *spellInfo)
         return false;
 
     // All stance spells. if any better way, change it.
-    for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
+    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-        switch(spellInfo->SpellFamilyName)
+        switch (spellInfo->SpellFamilyName)
         {
             case SPELLFAMILY_PALADIN:
                 // Paladin aura Spell
@@ -1993,7 +1988,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const* spellEntry, uint8 e
     }
 
     // roll in a range <1;EffectDieSides> as of patch 3.3.3
-    switch(randomPoints)
+    switch (randomPoints)
     {
         case 0: break;
         case 1: basePoints += 1; break;                     // range 1..1
@@ -2047,20 +2042,16 @@ int32 SpellMgr::CalculateSpellEffectBaseAmount(int32 value, SpellEntry const* sp
 float SpellMgr::CalculateSpellEffectValueMultiplier(SpellEntry const* spellEntry, uint8 effIndex, Unit* caster, Spell* spell)
 {
     float multiplier = spellEntry->EffectValueMultiplier[effIndex];
-
-    if (caster)
-        if (Player* modOwner = caster->GetSpellModOwner())
-            modOwner->ApplySpellMod(spellEntry->Id, SPELLMOD_VALUE_MULTIPLIER, multiplier, spell);
+    if (Player* modOwner = (caster ? caster->GetSpellModOwner() : NULL))
+        modOwner->ApplySpellMod(spellEntry->Id, SPELLMOD_VALUE_MULTIPLIER, multiplier, spell);
     return multiplier;
 }
 
 float SpellMgr::CalculateSpellEffectDamageMultiplier(SpellEntry const* spellEntry, uint8 effIndex, Unit* caster, Spell* spell)
 {
     float multiplier = spellEntry->EffectDamageMultiplier[effIndex];
-
-    if (caster)
-        if (Player* modOwner = caster->GetSpellModOwner())
-            modOwner->ApplySpellMod(spellEntry->Id, SPELLMOD_DAMAGE_MULTIPLIER, multiplier, spell);
+    if (Player* modOwner = (caster ? caster->GetSpellModOwner() : NULL))
+        modOwner->ApplySpellMod(spellEntry->Id, SPELLMOD_DAMAGE_MULTIPLIER, multiplier, spell);
     return multiplier;
 }
 
@@ -2071,7 +2062,7 @@ SpellEntry const* SpellMgr::SelectAuraRankForPlayerLevel(SpellEntry const* spell
         return spellInfo;
 
     bool needRankSelection = false;
-    for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
+    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
         if (IsPositiveEffect(spellInfo->Id, i) && (
             spellInfo->Effect[i] == SPELL_EFFECT_APPLY_AURA ||
@@ -2153,7 +2144,6 @@ void SpellMgr::LoadSpellLearnSpells()
     QueryResult result = WorldDatabase.Query("SELECT entry, SpellID, Active FROM spell_learn_spell");
     if (!result)
     {
-
         sLog->outString(">> Loaded 0 spell learn spells");
         sLog->outString();
         sLog->outErrorDb("`spell_learn_spell` table is empty!");
@@ -2218,7 +2208,7 @@ void SpellMgr::LoadSpellLearnSpells()
                     continue;
 
                 // talent or passive spells or skill-step spells auto-casted and not need dependent learning,
-                // pet teaching spells don't must be dependent learning (casted)
+                // pet teaching spells must not be dependent learning (casted)
                 // other required explicit dependent learning
                 dbc_node.autoLearned = entry->EffectImplicitTargetA[i] == TARGET_UNIT_PET || GetTalentSpellCost(spell) > 0 || IsPassiveSpell(spell) || IsSpellHaveEffect(entry,SPELL_EFFECT_SKILL_STEP);
 
@@ -2323,7 +2313,6 @@ void SpellMgr::LoadPetLevelupSpellMap()
 
     for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
     {
-
         CreatureFamilyEntry const *creatureFamily = sCreatureFamilyStore.LookupEntry(i);
         if (!creatureFamily)                                     // not exist
             continue;
@@ -2846,7 +2835,7 @@ SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spell
     }
 
     // bg spell checks
-    switch(spellInfo->Id)
+    switch (spellInfo->Id)
     {
         case 23333:                                         // Warsong Flag
         case 23335:                                         // Silverwing Flag
@@ -3286,55 +3275,55 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
             return false;
 
     // Extra conditions -- leaving the possibility add extra conditions...
-    switch(spellId)
+    switch (spellId)
     {
         case 58600: // No fly Zone - Dalaran
-            {
-                if (!player)
-                    return false;
+        {
+            if (!player)
+                return false;
 
-                AreaTableEntry const* pArea = GetAreaEntryByAreaID(player->GetAreaId());
-                if (!(pArea && pArea->flags & AREA_FLAG_NO_FLY_ZONE))
-                    return false;
-                if (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY))
-                    return false;
-                break;
-            }
+            AreaTableEntry const* pArea = GetAreaEntryByAreaID(player->GetAreaId());
+            if (!(pArea && pArea->flags & AREA_FLAG_NO_FLY_ZONE))
+                return false;
+            if (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY))
+                return false;
+            break;
+        }
         case 58730: // No fly Zone - Wintergrasp
-            {
-                if (!player)
-                    return false;
+        {
+            if (!player)
+                return false;
 
-                if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
-                {
-                    OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
-                    if ((pvpWG->isWarTime()==false) || player->isDead() || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)) || player->HasAura(45472) || player->HasAura(44795) || player->GetPositionZ() > 619.2f || player->isInFlight())
-                        return false;
-                }
-                break;
+            if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
+            {
+                OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
+                if ((pvpWG->isWarTime()==false) || player->isDead() || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)) || player->HasAura(45472) || player->HasAura(44795) || player->GetPositionZ() > 619.2f || player->isInFlight())
+                    return false;
             }
+            break;
+        }
         case 58045: // Essence of Wintergrasp - Wintergrasp
         case 57940: // Essence of Wintergrasp - Northrend
-            {
-                if (!player || player->GetTeamId() != sWorld->getWorldState(WORLDSTATE_WINTERGRASP_CONTROLING_FACTION))
-                    return false;
-                break;
-            }
-        case SPELL_OIL_REFINERY: // Oil Refinery - Isle of Conquest.
-        case SPELL_QUARRY: // Quarry - Isle of Conquest.
-            {
-                if (player->GetBattlegroundTypeId() != BATTLEGROUND_IC || !player->GetBattleground())
-                    return false;
-
-                uint8 nodeType = spellId == SPELL_OIL_REFINERY ? NODE_TYPE_REFINERY : NODE_TYPE_QUARRY;
-                uint8 nodeState = player->GetTeamId() == TEAM_ALLIANCE ? NODE_STATE_CONTROLLED_A : NODE_STATE_CONTROLLED_H;
-
-                BattlegroundIC* pIC = static_cast<BattlegroundIC*>(player->GetBattleground());
-                if (pIC->GetNodeState(nodeType) == nodeState)
-                    return true;
-
+        {
+            if (!player || player->GetTeamId() != sWorld->getWorldState(WORLDSTATE_WINTERGRASP_CONTROLING_FACTION))
                 return false;
-            }
+            break;
+        }
+        case 68719: // Oil Refinery - Isle of Conquest.
+        case 68720: // Quarry - Isle of Conquest.
+        {
+            if (player->GetBattlegroundTypeId() != BATTLEGROUND_IC || !player->GetBattleground())
+                return false;
+
+            uint8 nodeType = spellId == 68719 ? NODE_TYPE_REFINERY : NODE_TYPE_QUARRY;
+            uint8 nodeState = player->GetTeamId() == TEAM_ALLIANCE ? NODE_STATE_CONTROLLED_A : NODE_STATE_CONTROLLED_H;
+
+            BattlegroundIC* pIC = static_cast<BattlegroundIC*>(player->GetBattleground());
+            if (pIC->GetNodeState(nodeType) == nodeState)
+                return true;
+
+            return false;
+        }
     }
 
     return true;
@@ -3372,7 +3361,7 @@ bool SpellMgr::CanAurasStack(Aura const *aura1, Aura const *aura2, bool sameCast
         // check same periodic auras
         for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
-            switch(spellInfo_1->EffectApplyAuraName[i])
+            switch (spellInfo_1->EffectApplyAuraName[i])
             {
                 // DOT or HOT from different casters will stack
                 case SPELL_AURA_PERIODIC_DAMAGE:
@@ -3491,7 +3480,6 @@ void SpellMgr::LoadSpellEnchantProcData()
     QueryResult result = WorldDatabase.Query("SELECT entry, customChance, PPMChance, procEx FROM spell_enchant_proc_data");
     if (!result)
     {
-
         sLog->outString(">> Loaded %u spell enchant proc event conditions", count);
         sLog->outString();
         return;
@@ -3536,7 +3524,6 @@ void SpellMgr::LoadSpellRequired()
 
     if (!result)
     {
-
         sLog->outString(">> Loaded 0 spell required records");
         sLog->outString();
         sLog->outErrorDb("`spell_required` table is empty!");
@@ -3593,7 +3580,6 @@ void SpellMgr::LoadSpellRanks()
 
     if (!result)
     {
-
         sLog->outString(">> Loaded 0 spell rank records");
         sLog->outString();
         sLog->outErrorDb("`spell_ranks` table is empty!");
@@ -4557,7 +4543,6 @@ void SpellMgr::LoadEnchantCustomAttr()
 
     for (uint32 i = 0; i < GetSpellStore()->GetNumRows(); ++i)
     {
-
         SpellEntry * spellInfo = (SpellEntry*)GetSpellStore()->LookupEntry(i);
         if (!spellInfo)
             continue;
@@ -4625,7 +4610,7 @@ void SpellMgr::LoadSpellLinked()
 
         if (trigger > 0)
         {
-            switch(type)
+            switch (type)
             {
                 case 0: mSpellCustomAttr[trigger] |= SPELL_ATTR0_CU_LINK_CAST; break;
                 case 1: mSpellCustomAttr[trigger] |= SPELL_ATTR0_CU_LINK_HIT;  break;
