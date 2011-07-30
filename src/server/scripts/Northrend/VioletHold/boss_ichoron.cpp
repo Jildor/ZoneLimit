@@ -117,7 +117,7 @@ public:
             }
         }
 
-        void EnterCombat(Unit* /*pWho*/)
+        void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
@@ -138,17 +138,17 @@ public:
             }
         }
 
-        void AttackStart(Unit* pWho)
+        void AttackStart(Unit* who)
         {
             if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE) || me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
                 return;
 
-            if (me->Attack(pWho, true))
+            if (me->Attack(who, true))
             {
-                me->AddThreat(pWho, 0.0f);
-                me->SetInCombatWith(pWho);
-                pWho->SetInCombatWith(me);
-                DoStartMovement(pWho);
+                me->AddThreat(who, 0.0f);
+                me->SetInCombatWith(who);
+                who->SetInCombatWith(me);
+                DoStartMovement(who);
             }
         }
 
@@ -204,7 +204,7 @@ public:
             return 0;
         }
 
-        void MoveInLineOfSight(Unit* /*pWho*/) {}
+        void MoveInLineOfSight(Unit* /*who*/) {}
 
         void UpdateAI(const uint32 uiDiff)
         {
@@ -308,7 +308,7 @@ public:
                 pSummoned->SetSpeed(MOVE_RUN, 0.3f);
                 pSummoned->GetMotionMaster()->MoveFollow(me, 0, 0);
                 m_waterElements.push_back(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_ADD_TRASH_MOB,pSummoned->GetGUID());
+                pInstance->SetData64(DATA_ADD_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 
@@ -317,7 +317,7 @@ public:
             if (pSummoned)
             {
                 m_waterElements.remove(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_DEL_TRASH_MOB,pSummoned->GetGUID());
+                pInstance->SetData64(DATA_DEL_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 
@@ -325,7 +325,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 
@@ -355,10 +355,10 @@ public:
         void Reset()
         {
             uiRangeCheck_Timer = 1000;
-            DoCast(me,SPELL_WATER_GLOBULE);
+            DoCast(me, SPELL_WATER_GLOBULE);
         }
 
-        void AttackStart(Unit* /*pWho*/)
+        void AttackStart(Unit* /*who*/)
         {
             return;
         }

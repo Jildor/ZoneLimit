@@ -238,7 +238,7 @@ public:
             }
         }
 
-        void EnterCombat(Unit* /*pWho*/)
+        void EnterCombat(Unit* /*who*/)
         {
             DoCastSpellShield();
         }
@@ -633,10 +633,10 @@ public:
             uiHexMendingTimer = urand(20000,25000);
         }
 
-        void EnterCombat(Unit* pWho)
+        void EnterCombat(Unit* who)
         {
             DoCast(me,SPELL_EARTH_SHIELD);
-            DoCast(pWho,SPELL_HEX_OF_MENDING);
+            DoCast(who,SPELL_HEX_OF_MENDING);
         };
 
         void JustReachedHome()
