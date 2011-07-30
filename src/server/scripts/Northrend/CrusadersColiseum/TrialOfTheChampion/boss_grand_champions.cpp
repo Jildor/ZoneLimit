@@ -442,7 +442,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit* /*pKiller*/)
+        void JustDied(Unit* /*killer*/)
         {
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
@@ -575,7 +575,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit* /*pKiller*/)
+        void JustDied(Unit* /*killer*/)
         {
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
@@ -723,7 +723,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit* /*pKiller*/)
+        void JustDied(Unit* /*killer*/)
         {
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
@@ -894,7 +894,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit* /*pKiller*/)
+        void JustDied(Unit* /*killer*/)
         {
              DoScriptText(SAY_START_1, me);
             if (pInstance)
@@ -1018,7 +1018,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void JustDied(Unit* pKiller)
+        void JustDied(Unit* killer)
         {
              DoScriptText(SAY_START_1, me);
             if (pInstance)
