@@ -45,9 +45,9 @@ class boss_kazrogal : public CreatureScript
 public:
     boss_kazrogal() : CreatureScript("boss_kazrogal") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kazrogalAI (creature);
+        return new boss_kazrogalAI (pCreature);
     }
 
     struct boss_kazrogalAI : public hyjal_trashAI
@@ -57,6 +57,12 @@ public:
             pInstance = c->GetInstanceScript();
             pGo = false;
             pos = 0;
+            SpellEntry *TempSpell = GET_SPELL(SPELL_MARK);
+            if (TempSpell && TempSpell->EffectImplicitTargetA[0] != 1)
+            {
+                TempSpell->EffectImplicitTargetA[0] = 1;
+                TempSpell->EffectImplicitTargetB[0] = 0;
+            }
         }
 
         uint32 CleaveTimer;
@@ -110,9 +116,9 @@ public:
             pos = i;
             if (i == 7 && pInstance)
             {
-                Unit* target = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
-                if (target && target->isAlive())
-                    me->AddThreat(target, 0.0f);
+                Unit* pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
+                if (pTarget && pTarget->isAlive())
+                    me->AddThreat(pTarget, 0.0f);
             }
         }
 
@@ -175,10 +181,10 @@ public:
                 std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
                 for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
                 {
-                    Unit* target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
-                    if (target && target->GetTypeId() == TYPEID_PLAYER && target->getPowerType() == POWER_MANA)
+                    Unit* pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+                    if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->getPowerType() == POWER_MANA)
                     {
-                        target->CastSpell(target, SPELL_MARK, true);//only cast on mana users
+                        pTarget->CastSpell(pTarget, SPELL_MARK, true);//only cast on mana users
                     }
                 }
                 MarkTimerBase -= 5000;

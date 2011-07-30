@@ -42,9 +42,9 @@ class boss_sartura : public CreatureScript
 public:
     boss_sartura() : CreatureScript("boss_sartura") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_sarturaAI (creature);
+        return new boss_sarturaAI (pCreature);
     }
 
     struct boss_sarturaAI : public ScriptedAI
@@ -185,9 +185,9 @@ class mob_sartura_royal_guard : public CreatureScript
 public:
     mob_sartura_royal_guard() : CreatureScript("mob_sartura_royal_guard") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_sartura_royal_guardAI (creature);
+        return new mob_sartura_royal_guardAI (pCreature);
     }
 
     struct mob_sartura_royal_guardAI : public ScriptedAI

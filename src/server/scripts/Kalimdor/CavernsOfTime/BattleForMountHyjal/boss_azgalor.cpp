@@ -48,9 +48,9 @@ class boss_azgalor : public CreatureScript
 public:
     boss_azgalor() : CreatureScript("boss_azgalor") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_azgalorAI (creature);
+        return new boss_azgalorAI (pCreature);
     }
 
     struct boss_azgalorAI : public hyjal_trashAI
@@ -60,6 +60,9 @@ public:
             pInstance = c->GetInstanceScript();
             pGo = false;
             pos = 0;
+            SpellEntry *TempSpell = GET_SPELL(SPELL_HOWL_OF_AZGALOR);
+            if (TempSpell)
+                TempSpell->EffectRadiusIndex[0] = 12;//100yards instead of 50000?!
         }
 
         uint32 RainTimer;
@@ -118,9 +121,9 @@ public:
             pos = i;
             if (i == 7 && pInstance)
             {
-                Unit* target = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
-                if (target && target->isAlive())
-                    me->AddThreat(target, 0.0f);
+                Unit* pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
+                if (pTarget && pTarget->isAlive())
+                    me->AddThreat(pTarget, 0.0f);
             }
         }
 
@@ -208,9 +211,9 @@ class mob_lesser_doomguard : public CreatureScript
 public:
     mob_lesser_doomguard() : CreatureScript("mob_lesser_doomguard") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_lesser_doomguardAI (creature);
+        return new mob_lesser_doomguardAI (pCreature);
     }
 
     struct mob_lesser_doomguardAI : public hyjal_trashAI

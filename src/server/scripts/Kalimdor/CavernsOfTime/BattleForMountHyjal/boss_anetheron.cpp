@@ -57,9 +57,9 @@ class boss_anetheron : public CreatureScript
 public:
     boss_anetheron() : CreatureScript("boss_anetheron") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_anetheronAI (creature);
+        return new boss_anetheronAI (pCreature);
     }
 
     struct boss_anetheronAI : public hyjal_trashAI
@@ -69,6 +69,12 @@ public:
             pInstance = c->GetInstanceScript();
             pGo = false;
             pos = 0;
+            SpellEntry *TempSpell = GET_SPELL(SPELL_SLEEP);
+            if (TempSpell && TempSpell->EffectImplicitTargetA[0] != 1)
+            {
+                TempSpell->EffectImplicitTargetA[0] = 1;
+                TempSpell->EffectImplicitTargetB[0] = 0;
+            }
         }
 
         uint32 SwarmTimer;
@@ -122,9 +128,9 @@ public:
             pos = i;
             if (i == 7 && pInstance)
             {
-                Unit* target = Unit::GetUnit((*me), pInstance->GetData64(DATA_JAINAPROUDMOORE));
-                if (target && target->isAlive())
-                    me->AddThreat(target, 0.0f);
+                Unit* pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_JAINAPROUDMOORE));
+                if (pTarget && pTarget->isAlive())
+                    me->AddThreat(pTarget, 0.0f);
             }
         }
 
@@ -168,8 +174,8 @@ public:
 
             if (SwarmTimer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    DoCast(target, SPELL_CARRION_SWARM);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                    DoCast(pTarget, SPELL_CARRION_SWARM);
 
                 SwarmTimer = urand(45000, 60000);
                 switch (urand(0, 1))
@@ -189,8 +195,8 @@ public:
             {
                 for (uint8 i = 0; i < 3; ++i)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        target->CastSpell(target, SPELL_SLEEP, true);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        pTarget->CastSpell(pTarget, SPELL_SLEEP, true);
                 }
                 SleepTimer = 60000;
                 switch (urand(0, 1))
@@ -241,9 +247,9 @@ class mob_towering_infernal : public CreatureScript
 public:
     mob_towering_infernal() : CreatureScript("mob_towering_infernal") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_towering_infernalAI (creature);
+        return new mob_towering_infernalAI (pCreature);
     }
 
     struct mob_towering_infernalAI : public ScriptedAI

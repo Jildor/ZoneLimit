@@ -37,9 +37,9 @@ class boss_kelris : public CreatureScript
 public:
     boss_kelris() : CreatureScript("boss_kelris") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kelrisAI (creature);
+        return new boss_kelrisAI (pCreature);
     }
 
     struct boss_kelrisAI : public ScriptedAI
@@ -89,10 +89,10 @@ public:
 
             if (uiSleepTimer < diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                 {
                     DoScriptText(SAY_SLEEP, me);
-                    DoCast(target, SPELL_SLEEP);
+                    DoCast(pTarget, SPELL_SLEEP);
                 }
                 uiSleepTimer = urand(15000, 20000);
             } else uiSleepTimer -= diff;

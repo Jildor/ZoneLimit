@@ -34,9 +34,9 @@ class celebras_the_cursed : public CreatureScript
 public:
     celebras_the_cursed() : CreatureScript("celebras_the_cursed") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new celebras_the_cursedAI (creature);
+        return new celebras_the_cursedAI (pCreature);
     }
 
     struct celebras_the_cursedAI : public ScriptedAI
@@ -69,10 +69,10 @@ public:
             //Wrath
             if (Wrath_Timer <= diff)
             {
-                Unit* target = NULL;
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                if (target)
-                    DoCast(target, SPELL_WRATH);
+                Unit* pTarget = NULL;
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                if (pTarget)
+                    DoCast(pTarget, SPELL_WRATH);
                 Wrath_Timer = 8000;
             } else Wrath_Timer -= diff;
 

@@ -33,9 +33,9 @@ class boss_noxxion : public CreatureScript
 public:
     boss_noxxion() : CreatureScript("boss_noxxion") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_noxxionAI (creature);
+        return new boss_noxxionAI (pCreature);
     }
 
     struct boss_noxxionAI : public ScriptedAI
@@ -61,10 +61,10 @@ public:
         {
         }
 
-        void SummonAdds(Unit* victim)
+        void SummonAdds(Unit* pVictim)
         {
             if (Creature* Add = DoSpawnCreature(13456, float(irand(-7, 7)), float(irand(-7, 7)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 90000))
-                Add->AI()->AttackStart(victim);
+                Add->AI()->AttackStart(pVictim);
         }
 
         void UpdateAI(const uint32 diff)

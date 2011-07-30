@@ -45,9 +45,9 @@ class boss_captain_skarloc : public CreatureScript
 public:
     boss_captain_skarloc() : CreatureScript("boss_captain_skarloc") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_captain_skarlocAI (creature);
+        return new boss_captain_skarlocAI (pCreature);
     }
 
     struct boss_captain_skarlocAI : public ScriptedAI

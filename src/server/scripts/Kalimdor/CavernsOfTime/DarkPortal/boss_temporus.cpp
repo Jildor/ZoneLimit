@@ -47,9 +47,9 @@ class boss_temporus : public CreatureScript
 public:
     boss_temporus() : CreatureScript("boss_temporus") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_temporusAI (creature);
+        return new boss_temporusAI (pCreature);
     }
 
     struct boss_temporusAI : public ScriptedAI

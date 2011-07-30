@@ -36,9 +36,9 @@ class boss_infinite_corruptor : public CreatureScript
 public:
     boss_infinite_corruptor() : CreatureScript("boss_infinite_corruptor") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_infinite_corruptorAI(creature);
+        return new boss_infinite_corruptorAI(pCreature);
     }
 
     struct boss_infinite_corruptorAI : public ScriptedAI
