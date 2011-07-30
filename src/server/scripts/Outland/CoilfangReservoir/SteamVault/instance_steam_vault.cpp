@@ -43,7 +43,7 @@ class go_main_chambers_access_panel : public GameObjectScript
 public:
     go_main_chambers_access_panel() : GameObjectScript("go_main_chambers_access_panel") { }
 
-    bool OnGossipHello(Player* /*pPlayer*/, GameObject* go)
+    bool OnGossipHello(Player* /*player*/, GameObject* go)
     {
         InstanceScript* pInstance = go->GetInstanceScript();
 
@@ -51,10 +51,10 @@ public:
             return false;
 
         if (go->GetEntry() == ACCESS_PANEL_HYDRO && (pInstance->GetData(TYPE_HYDROMANCER_THESPIA) == DONE || pInstance->GetData(TYPE_HYDROMANCER_THESPIA) == SPECIAL))
-            pInstance->SetData(TYPE_HYDROMANCER_THESPIA,SPECIAL);
+            pInstance->SetData(TYPE_HYDROMANCER_THESPIA, SPECIAL);
 
         if (go->GetEntry() == ACCESS_PANEL_MEK && (pInstance->GetData(TYPE_MEKGINEER_STEAMRIGGER) == DONE || pInstance->GetData(TYPE_MEKGINEER_STEAMRIGGER) == SPECIAL))
-            pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER,SPECIAL);
+            pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER, SPECIAL);
 
         return true;
     }
@@ -200,7 +200,7 @@ public:
         {
             OUT_SAVE_INST_DATA;
             std::ostringstream stream;
-            stream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3];
+            stream << m_auiEncounter[0] << ' ' << m_auiEncounter[1] << ' ' << m_auiEncounter[2] << ' ' << m_auiEncounter[3];
             char* out = new char[stream.str().length() + 1];
             strcpy(out, stream.str().c_str());
             if (out)

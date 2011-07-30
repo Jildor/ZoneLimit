@@ -41,14 +41,14 @@ class boss_loatheb : public CreatureScript
 public:
     boss_loatheb() : CreatureScript("boss_loatheb") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new boss_loathebAI (pCreature);
+        return new boss_loathebAI (creature);
     }
 
     struct boss_loathebAI : public BossAI
     {
-        boss_loathebAI(Creature *c) : BossAI(c, BOSS_LOATHEB) {}
+        boss_loathebAI(Creature* c) : BossAI(c, BOSS_LOATHEB) {}
 
         void EnterCombat(Unit* /*who*/)
         {
@@ -76,11 +76,11 @@ public:
                     case EVENT_BLOOM:
                         // TODO : Add missing text
                         DoCastAOE(SPELL_SUMMON_SPORE, true);
-                        DoCastAOE(RAID_MODE(SPELL_DEATHBLOOM,H_SPELL_DEATHBLOOM));
+                        DoCastAOE(RAID_MODE(SPELL_DEATHBLOOM, H_SPELL_DEATHBLOOM));
                         events.ScheduleEvent(EVENT_BLOOM, 30000);
                         break;
                     case EVENT_DOOM:
-                        DoCastAOE(RAID_MODE(SPELL_INEVITABLE_DOOM,H_SPELL_INEVITABLE_DOOM));
+                        DoCastAOE(RAID_MODE(SPELL_INEVITABLE_DOOM, H_SPELL_INEVITABLE_DOOM));
                         events.ScheduleEvent(EVENT_DOOM, events.GetTimer() < 5*60000 ? 30000 : 15000);
                         break;
                 }

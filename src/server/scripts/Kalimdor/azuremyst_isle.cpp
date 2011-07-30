@@ -70,7 +70,7 @@ public:
 
     struct npc_draenei_survivorAI : public ScriptedAI
     {
-        npc_draenei_survivorAI(Creature *c) : ScriptedAI(c) {}
+        npc_draenei_survivorAI(Creature* c) : ScriptedAI(c) {}
 
         uint64 pCaster;
 
@@ -100,7 +100,7 @@ public:
 
         void EnterCombat(Unit* /*who*/) {}
 
-        void MoveInLineOfSight(Unit *who)
+        void MoveInLineOfSight(Unit* who)
         {
             if (CanSayHelp && who->GetTypeId() == TYPEID_PLAYER && me->IsFriendlyTo(who) && me->IsWithinDistInMap(who, 25.0f))
             {
@@ -112,7 +112,7 @@ public:
             }
         }
 
-        void SpellHit(Unit *Caster, const SpellEntry *Spell)
+        void SpellHit(Unit* Caster, const SpellEntry *Spell)
         {
             if (Spell->SpellFamilyFlags[2] & 0x080000000)
             {
@@ -224,7 +224,7 @@ public:
 
     struct npc_engineer_spark_overgrindAI : public ScriptedAI
     {
-        npc_engineer_spark_overgrindAI(Creature *c) : ScriptedAI(c)
+        npc_engineer_spark_overgrindAI(Creature* c) : ScriptedAI(c)
         {
             NormFaction = c->getFaction();
             NpcFlags = c->GetUInt32Value(UNIT_NPC_FLAGS);
@@ -302,7 +302,7 @@ public:
 
     struct npc_injured_draeneiAI : public ScriptedAI
     {
-        npc_injured_draeneiAI(Creature *c) : ScriptedAI(c) {}
+        npc_injured_draeneiAI(Creature* c) : ScriptedAI(c) {}
 
         void Reset()
         {
@@ -368,7 +368,7 @@ public:
 
     struct npc_magwinAI : public npc_escortAI
     {
-        npc_magwinAI(Creature *c) : npc_escortAI(c) {}
+        npc_magwinAI(Creature* c) : npc_escortAI(c) {}
 
         void WaypointReached(uint32 i)
         {
@@ -444,7 +444,7 @@ public:
 
     struct npc_geezleAI : public ScriptedAI
     {
-        npc_geezleAI(Creature *c) : ScriptedAI(c) {}
+        npc_geezleAI(Creature* c) : ScriptedAI(c) {}
 
         uint64 SparkGUID;
 
@@ -687,7 +687,7 @@ public:
 
     struct npc_death_ravagerAI : public ScriptedAI
     {
-        npc_death_ravagerAI(Creature *c) : ScriptedAI(c){}
+        npc_death_ravagerAI(Creature* c) : ScriptedAI(c){}
 
         uint32 RendTimer;
         uint32 EnragingBiteTimer;

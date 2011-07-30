@@ -52,7 +52,7 @@ public:
 
     struct boss_herodAI : public ScriptedAI
     {
-        boss_herodAI(Creature *c) : ScriptedAI(c) {}
+        boss_herodAI(Creature* c) : ScriptedAI(c) {}
 
         bool Enrage;
 
@@ -130,9 +130,9 @@ public:
 
     struct mob_scarlet_traineeAI : public npc_escortAI
     {
-        mob_scarlet_traineeAI(Creature *c) : npc_escortAI(c)
+        mob_scarlet_traineeAI(Creature* c) : npc_escortAI(c)
         {
-            Start_Timer = urand(1000,6000);
+            Start_Timer = urand(1000, 6000);
         }
 
         uint32 Start_Timer;
@@ -147,7 +147,7 @@ public:
             {
                 if (Start_Timer <= diff)
                 {
-                    Start(true,true);
+                    Start(true, true);
                     Start_Timer = 0;
                 } else Start_Timer -= diff;
             }

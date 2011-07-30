@@ -108,7 +108,7 @@ public:
                     if (creature->isAlive())
                     {
                         ++m_uiFelOverseerCount;
-                        sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Shadow Labyrinth: counting %u Fel Overseers.",m_uiFelOverseerCount);
+                        sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Shadow Labyrinth: counting %u Fel Overseers.", m_uiFelOverseerCount);
                     }
                     break;
             }
@@ -133,7 +133,7 @@ public:
                         --m_uiFelOverseerCount;
 
                         if (m_uiFelOverseerCount)
-                            sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Shadow Labyrinth: %u Fel Overseers left to kill.",m_uiFelOverseerCount);
+                            sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Shadow Labyrinth: %u Fel Overseers left to kill.", m_uiFelOverseerCount);
                         else
                         {
                             m_auiEncounter[1] = DONE;
@@ -167,8 +167,8 @@ public:
                 OUT_SAVE_INST_DATA;
 
                 std::ostringstream saveStream;
-                saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " "
-                    << m_auiEncounter[2] << " " << m_auiEncounter[3] << " " << m_auiEncounter[4];
+                saveStream << m_auiEncounter[0] << ' ' << m_auiEncounter[1] << ' '
+                    << m_auiEncounter[2] << ' ' << m_auiEncounter[3] << ' ' << m_auiEncounter[4];
 
                 str_data = saveStream.str();
 

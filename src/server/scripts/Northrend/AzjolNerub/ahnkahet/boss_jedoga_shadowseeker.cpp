@@ -97,7 +97,7 @@ public:
 
         void Reset()
         {
-            uiOpFerTimer = urand(15*IN_MILLISECONDS,20*IN_MILLISECONDS);
+            uiOpFerTimer = urand(15*IN_MILLISECONDS, 20*IN_MILLISECONDS);
 
             uiCycloneTimer = 3*IN_MILLISECONDS;
             uiBoltTimer = 7*IN_MILLISECONDS;
@@ -227,12 +227,12 @@ public:
             }
             else
             {
-                if (Unit* pTarget = Unit::GetUnit(*me, pInstance->GetData64(DATA_PL_JEDOGA_TARGET)))
+                if (Unit* target = Unit::GetUnit(*me, pInstance->GetData64(DATA_PL_JEDOGA_TARGET)))
                 {
-                    AttackStart(pTarget);
+                    AttackStart(target);
                     pInstance->SetData(DATA_JEDOGA_RESET_INITIANDS, 0);
                     if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS)
-                        EnterCombat(pTarget);
+                        EnterCombat(target);
                 }
                 else if (!me->isInCombat())
                     EnterEvadeMode();
@@ -257,7 +257,7 @@ public:
             if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) == IN_PROGRESS) OpferRufen();
 
             bOnGround = false;
-            uiOpFerTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
+            uiOpFerTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
         }
 
         void OpferRufen()
@@ -313,23 +313,23 @@ public:
                 if (uiCycloneTimer <= diff)
                 {
                     DoCast(me, SPELL_CYCLONE_STRIKE, false);
-                    uiCycloneTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                    uiCycloneTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
                 } else uiCycloneTimer -= diff;
 
                 if (uiBoltTimer <= diff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        me->CastSpell(pTarget, DUNGEON_MODE(SPELL_LIGHTNING_BOLT, SPELL_LIGHTNING_BOLT_H), false);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        me->CastSpell(target, DUNGEON_MODE(SPELL_LIGHTNING_BOLT, SPELL_LIGHTNING_BOLT_H), false);
 
-                    uiBoltTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                    uiBoltTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
                 } else uiBoltTimer -= diff;
 
                 if (uiThunderTimer <= diff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        me->CastSpell(pTarget, DUNGEON_MODE(SPELL_THUNDERSHOCK, SPELL_THUNDERSHOCK_H), false);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        me->CastSpell(target, DUNGEON_MODE(SPELL_THUNDERSHOCK, SPELL_THUNDERSHOCK_H), false);
 
-                    uiThunderTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                    uiThunderTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
                 } else uiThunderTimer -= diff;
 
                 if (uiOpFerTimer <= diff)
@@ -342,7 +342,7 @@ public:
         }
     };
 
-    CreatureAI *GetAI(Creature *creature) const
+    CreatureAI *GetAI(Creature* creature) const
     {
         return new boss_jedoga_shadowseekerAI(creature);
     }
@@ -508,7 +508,7 @@ public:
         }
     };
 
-    CreatureAI *GetAI(Creature *creature) const
+    CreatureAI *GetAI(Creature* creature) const
     {
         return new mob_jedoga_initiandAI(creature);
     }
@@ -591,7 +591,7 @@ public:
         }
     };
 
-    CreatureAI *GetAI(Creature *creature) const
+    CreatureAI *GetAI(Creature* creature) const
     {
         return new npc_jedogas_aufseher_triggerAI(creature);
     }

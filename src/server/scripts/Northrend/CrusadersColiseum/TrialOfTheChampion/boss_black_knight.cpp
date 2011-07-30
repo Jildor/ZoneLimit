@@ -110,7 +110,7 @@ class boss_black_knight : public CreatureScript
 public:
     boss_black_knight() : CreatureScript("boss_black_knight") { }
 
-    CreatureAI* GetAI(Creature *pCreature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
         return new boss_black_knightAI (pCreature);
     }
@@ -289,7 +289,7 @@ public:
 
                         if (uiDesecration1Timer <= uiDiff)
                         {
-                            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             {
                                 if (pTarget && pTarget->isAlive())
                                 DoCast(pTarget,SPELL_DESECRATION);
@@ -323,7 +323,7 @@ public:
 
                             if (uiDeathRespiteTimer <= uiDiff)
                             {
-                                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                                 {
                                     if (pTarget && pTarget->isAlive())
                                         DoCast(pTarget,SPELL_DEATH_RESPITE);
