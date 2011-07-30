@@ -159,12 +159,12 @@ public:
                 pInstance->SetData(DATA_MOORABI_EVENT, DONE);
         }
 
-        void KilledUnit(Unit* pVictim)
+        void KilledUnit(Unit* victim)
         {
-            if (pVictim == me)
+            if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 
