@@ -92,12 +92,12 @@ class boss_renataki : public CreatureScript
                 {
                     if (Ambush_Timer <= diff)
                     {
-                        Unit* target = NULL;
-                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                        if (target)
+                        Unit* pTarget = NULL;
+                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                        if (pTarget)
                         {
-                            DoTeleportTo(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
-                            DoCast(target, SPELL_AMBUSH);
+                            DoTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+                            DoCast(pTarget, SPELL_AMBUSH);
                         }
 
                         Ambushed = true;
@@ -126,14 +126,14 @@ class boss_renataki : public CreatureScript
                 {
                     if (Aggro_Timer <= diff)
                     {
-                        Unit* target = NULL;
-                        target = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                        Unit* pTarget = NULL;
+                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
 
                         if (DoGetThreat(me->getVictim()))
                             DoModifyThreatPercent(me->getVictim(), -50);
 
-                        if (target)
-                            AttackStart(target);
+                        if (pTarget)
+                            AttackStart(pTarget);
 
                         Aggro_Timer = 7000 + rand()%13000;
                     } else Aggro_Timer -= diff;

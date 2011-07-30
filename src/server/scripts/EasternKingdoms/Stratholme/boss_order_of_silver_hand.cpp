@@ -47,9 +47,9 @@ class boss_silver_hand_bosses : public CreatureScript
 public:
     boss_silver_hand_bosses() : CreatureScript("boss_silver_hand_bosses") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_silver_hand_bossesAI (creature);
+        return new boss_silver_hand_bossesAI (pCreature);
     }
 
     struct boss_silver_hand_bossesAI : public ScriptedAI

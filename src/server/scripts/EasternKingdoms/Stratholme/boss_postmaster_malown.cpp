@@ -41,9 +41,9 @@ class boss_postmaster_malown : public CreatureScript
 public:
     boss_postmaster_malown() : CreatureScript("boss_postmaster_malown") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_postmaster_malownAI (creature);
+        return new boss_postmaster_malownAI (pCreature);
     }
 
     struct boss_postmaster_malownAI : public ScriptedAI

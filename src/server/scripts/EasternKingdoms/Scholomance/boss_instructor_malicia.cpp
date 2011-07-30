@@ -37,9 +37,9 @@ class boss_instructor_malicia : public CreatureScript
 public:
     boss_instructor_malicia() : CreatureScript("boss_instructor_malicia") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_instructormaliciaAI (creature);
+        return new boss_instructormaliciaAI (pCreature);
     }
 
     struct boss_instructormaliciaAI : public ScriptedAI
@@ -96,9 +96,9 @@ public:
             //Corruption_Timer
             if (Corruption_Timer <= diff)
             {
-                Unit* target = NULL;
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                if (target) DoCast(target, SPELL_CORRUPTION);
+                Unit* pTarget = NULL;
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                if (pTarget) DoCast(pTarget, SPELL_CORRUPTION);
 
                 Corruption_Timer = 24000;
             } else Corruption_Timer -= diff;

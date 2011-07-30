@@ -59,9 +59,9 @@ class boss_arlokk : public CreatureScript
 
         struct boss_arlokkAI : public ScriptedAI
         {
-            boss_arlokkAI(Creature* creature) : ScriptedAI(creature)
+            boss_arlokkAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
-                m_pInstance = creature->GetInstanceScript();
+                m_pInstance = pCreature->GetInstanceScript();
             }
 
             InstanceScript* m_pInstance;
@@ -103,7 +103,7 @@ class boss_arlokk : public CreatureScript
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             }
 
-            void EnterCombat(Unit* /*who*/)
+            void EnterCombat(Unit* /*pWho*/)
             {
                 DoScriptText(SAY_AGGRO, me);
             }
@@ -117,7 +117,7 @@ class boss_arlokk : public CreatureScript
                 me->DespawnOrUnsummon();
             }
 
-            void JustDied(Unit* /*killer*/)
+            void JustDied(Unit* /*pKiller*/)
             {
                 DoScriptText(SAY_DEATH, me);
 
@@ -137,10 +137,10 @@ class boss_arlokk : public CreatureScript
                 me->SummonCreature(NPC_ZULIAN_PROWLER, -11532.9970f, -1606.4840f, 41.2979f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
             }
 
-            void JustSummoned(Creature* summoned)
+            void JustSummoned(Creature* pSummoned)
             {
                 if (Unit* pMarkedTarget = Unit::GetUnit(*me, MarkedTargetGUID))
-                    summoned->AI()->AttackStart(pMarkedTarget);
+                    pSummoned->AI()->AttackStart(pMarkedTarget);
 
                 ++m_uiSummonCount;
             }
@@ -242,8 +242,8 @@ class boss_arlokk : public CreatureScript
                         me->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 35)));
                         me->UpdateDamagePhysical(BASE_ATTACK);
 
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            AttackStart(target);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            AttackStart(pTarget);
 
                         m_bIsPhaseTwo = true;
                         m_bIsVanished = false;
@@ -269,7 +269,7 @@ class go_gong_of_bethekk : public GameObjectScript
         {
         }
 
-        bool OnGossipHello(Player* /*player*/, GameObject* pGo)
+        bool OnGossipHello(Player* /*pPlayer*/, GameObject* pGo)
         {
             if (InstanceScript* m_pInstance = pGo->GetInstanceScript())
             {

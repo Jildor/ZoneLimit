@@ -108,9 +108,9 @@ class boss_kalecgos : public CreatureScript
 public:
     boss_kalecgos() : CreatureScript("boss_kalecgos") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kalecgosAI (creature);
+        return new boss_kalecgosAI (pCreature);
     }
 
     struct boss_kalecgosAI : public ScriptedAI
@@ -122,6 +122,9 @@ public:
             DoorGUID = 0;
             bJustReset = false;
             me->setActive(true);
+            SpellEntry *TempSpell = GET_SPELL(SPELL_SPECTRAL_BLAST);
+            if (TempSpell)
+                TempSpell->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ENEMY;
         }
 
         InstanceScript *pInstance;
@@ -374,9 +377,9 @@ public:
                 {
                     for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                     {
-                        Player* player = itr->getSource();
-                        if (player)
-                            me->GetMap()->ToInstanceMap()->PermBindAllPlayers(player);
+                        Player* pPlayer = itr->getSource();
+                        if (pPlayer)
+                            me->GetMap()->ToInstanceMap()->PermBindAllPlayers(pPlayer);
                     }
                 }
             }
@@ -438,9 +441,9 @@ class boss_kalec : public CreatureScript
 public:
     boss_kalec() : CreatureScript("boss_kalec") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kalecAI (creature);
+        return new boss_kalecAI (pCreature);
     }
 
     struct boss_kalecAI : public ScriptedAI
@@ -540,7 +543,7 @@ class kalecgos_teleporter : public GameObjectScript
 public:
     kalecgos_teleporter() : GameObjectScript("kalecgos_teleporter") { }
 
-    bool OnGossipHello(Player* player, GameObject* pGo)
+    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
     {
         uint8 SpectralPlayers = 0;
         Map* pMap = pGo->GetMap();
@@ -554,10 +557,10 @@ public:
                 ++SpectralPlayers;
         }
         uint8 MaxSpectralPlayers =  MAX_PLAYERS_IN_SPECTRAL_REALM;
-        if (player->HasAura(AURA_SPECTRAL_EXHAUSTION) || (MaxSpectralPlayers && SpectralPlayers >= MaxSpectralPlayers))
-            player->GetSession()->SendNotification(GO_FAILED);
+        if (pPlayer->HasAura(AURA_SPECTRAL_EXHAUSTION) || (MaxSpectralPlayers && SpectralPlayers >= MaxSpectralPlayers))
+            pPlayer->GetSession()->SendNotification(GO_FAILED);
         else
-            player->CastSpell(player, SPELL_TELEPORT_SPECTRAL, true);
+            pPlayer->CastSpell(pPlayer, SPELL_TELEPORT_SPECTRAL, true);
         return true;
     }
 
@@ -568,9 +571,9 @@ class boss_sathrovarr : public CreatureScript
 public:
     boss_sathrovarr() : CreatureScript("boss_sathrovarr") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_sathrovarrAI (creature);
+        return new boss_sathrovarrAI (pCreature);
     }
 
     struct boss_sathrovarrAI : public ScriptedAI
@@ -642,9 +645,9 @@ public:
                 damage = 0;
         }
 
-        void KilledUnit(Unit* target)
+        void KilledUnit(Unit* pTarget)
         {
-            if (target->GetGUID() == KalecGUID)
+            if (pTarget->GetGUID() == KalecGUID)
             {
                 TeleportAllPlayersBack();
                 if (Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
@@ -780,9 +783,9 @@ public:
 
             if (AgonyCurseTimer <= diff)
             {
-                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                if (!target) target = me->getVictim();
-                DoCast(target, SPELL_AGONY_CURSE);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                if (!pTarget) pTarget = me->getVictim();
+                DoCast(pTarget, SPELL_AGONY_CURSE);
                 AgonyCurseTimer = 20000;
             } else AgonyCurseTimer -= diff;
 

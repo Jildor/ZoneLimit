@@ -210,7 +210,7 @@ float ShieldOrbLocations[4][2]=
 struct Speech
 {
     int32 textid;
-    uint32 creature, timer;
+    uint32 pCreature, timer;
 };
 
 // Timers
@@ -244,9 +244,9 @@ class boss_kalecgos_kj : public CreatureScript
 public:
     boss_kalecgos_kj() : CreatureScript("boss_kalecgos_kj") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kalecgos_kjAI (creature);
+        return new boss_kalecgos_kjAI (pCreature);
     }
 
     struct boss_kalecgos_kjAI : public ScriptedAI
@@ -374,16 +374,16 @@ class go_orb_of_the_blue_flight : public GameObjectScript
 public:
     go_orb_of_the_blue_flight() : GameObjectScript("go_orb_of_the_blue_flight") { }
 
-    bool OnGossipHello(Player* player, GameObject* pGo)
+    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
     {
         if (pGo->GetUInt32Value(GAMEOBJECT_FACTION) == 35)
         {
             InstanceScript* pInstance = pGo->GetInstanceScript();
-            player->SummonCreature(CREATURE_POWER_OF_THE_BLUE_DRAGONFLIGHT, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 121000);
-            player->CastSpell(player, SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, false);
+            pPlayer->SummonCreature(CREATURE_POWER_OF_THE_BLUE_DRAGONFLIGHT, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 121000);
+            pPlayer->CastSpell(pPlayer, SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, false);
             pGo->SetUInt32Value(GAMEOBJECT_FACTION, 0);
 
-            if (Creature* pKalec = Unit::GetCreature(*player, pInstance->GetData64(DATA_KALECGOS_KJ)))
+            if (Creature* pKalec = Unit::GetCreature(*pPlayer, pInstance->GetData64(DATA_KALECGOS_KJ)))
                 CAST_AI(boss_kalecgos_kj::boss_kalecgos_kjAI, pKalec->AI())->SetRingOfBlueFlames();
 
             pGo->Refresh();
@@ -399,9 +399,9 @@ class mob_kiljaeden_controller : public CreatureScript
 public:
     mob_kiljaeden_controller() : CreatureScript("mob_kiljaeden_controller") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_kiljaeden_controllerAI (creature);
+        return new mob_kiljaeden_controllerAI (pCreature);
     }
 
     struct mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
@@ -499,9 +499,9 @@ class boss_kiljaeden : public CreatureScript
 public:
     boss_kiljaeden() : CreatureScript("boss_kiljaeden") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kiljaedenAI (creature);
+        return new boss_kiljaedenAI (pCreature);
     }
 
     struct boss_kiljaedenAI : public Scripted_NoMovementAI
@@ -661,19 +661,19 @@ public:
             for (uint8 i = 0; i < 4; ++i)
             {
                 float x, y, z;
-                Unit* target = NULL;
+                Unit* pTarget = NULL;
                 for (uint8 z = 0; z < 6; ++z)
                 {
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                    if (!target || !target->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0))break;
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                    if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0))break;
                 }
-                if (target)
+                if (pTarget)
                 {
-                    target->GetPosition(x, y, z);
+                    pTarget->GetPosition(x, y, z);
                     if (Creature* pSinisterReflection = me->SummonCreature(CREATURE_SINISTER_REFLECTION, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
                     {
-                        pSinisterReflection->SetDisplayId(target->GetDisplayId());
-                        pSinisterReflection->AI()->AttackStart(target);
+                        pSinisterReflection->SetDisplayId(pTarget->GetDisplayId());
+                        pSinisterReflection->AI()->AttackStart(pTarget);
                     }
                 }
             }
@@ -723,7 +723,7 @@ public:
                             {
                                 SpeechTimer = 0;
                                 if (pInstance)
-                                    if (Creature* pSpeechCreature = Unit::GetCreature(*me, pInstance->GetData64(Speeches[speechCount].creature)))
+                                    if (Creature* pSpeechCreature = Unit::GetCreature(*me, pInstance->GetData64(Speeches[speechCount].pCreature)))
                                         DoScriptText(Speeches[speechCount].textid, pSpeechCreature);
                                 if (speechCount == 12)
                                     if (Creature* pAnveena =  Unit::GetCreature(*me, pInstance->GetData64(DATA_ANVEENA)))
@@ -842,16 +842,16 @@ public:
                             TimerIsDeactivated[TIMER_ORBS_EMPOWER] = true;
                             break;
                         case TIMER_ARMAGEDDON: //Phase 4
-                            Unit* target = NULL;
+                            Unit* pTarget = NULL;
                             for (uint8 z = 0; z < 6; ++z)
                             {
-                                target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                                if (!target || !target->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0)) break;
+                                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                                if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0)) break;
                             }
-                            if (target)
+                            if (pTarget)
                             {
                                 float x, y, z;
-                                target->GetPosition(x, y, z);
+                                pTarget->GetPosition(x, y, z);
                                 me->SummonCreature(CREATURE_ARMAGEDDON_TARGET, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
                             }
                             Timer[TIMER_ARMAGEDDON] = 2000; // No, I'm not kidding
@@ -913,9 +913,9 @@ class mob_hand_of_the_deceiver : public CreatureScript
 public:
     mob_hand_of_the_deceiver() : CreatureScript("mob_hand_of_the_deceiver") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_hand_of_the_deceiverAI (creature);
+        return new mob_hand_of_the_deceiverAI (pCreature);
     }
 
     struct mob_hand_of_the_deceiverAI : public ScriptedAI
@@ -1014,9 +1014,9 @@ class mob_felfire_portal : public CreatureScript
 public:
     mob_felfire_portal() : CreatureScript("mob_felfire_portal") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_felfire_portalAI (creature);
+        return new mob_felfire_portalAI (pCreature);
     }
 
     struct mob_felfire_portalAI : public Scripted_NoMovementAI
@@ -1059,9 +1059,9 @@ class mob_volatile_felfire_fiend : public CreatureScript
 public:
     mob_volatile_felfire_fiend() : CreatureScript("mob_volatile_felfire_fiend") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_volatile_felfire_fiendAI (creature);
+        return new mob_volatile_felfire_fiendAI (pCreature);
     }
 
     struct mob_volatile_felfire_fiendAI : public ScriptedAI
@@ -1117,9 +1117,9 @@ class mob_armageddon : public CreatureScript
 public:
     mob_armageddon() : CreatureScript("mob_armageddon") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_armageddonAI (creature);
+        return new mob_armageddonAI (pCreature);
     }
 
     struct mob_armageddonAI : public Scripted_NoMovementAI
@@ -1172,9 +1172,9 @@ class mob_shield_orb : public CreatureScript
 public:
     mob_shield_orb() : CreatureScript("mob_shield_orb") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_shield_orbAI (creature);
+        return new mob_shield_orbAI (pCreature);
     }
 
     struct mob_shield_orbAI : public ScriptedAI
@@ -1260,9 +1260,9 @@ class mob_sinster_reflection : public CreatureScript
 public:
     mob_sinster_reflection() : CreatureScript("mob_sinster_reflection") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_sinster_reflectionAI (creature);
+        return new mob_sinster_reflectionAI (pCreature);
     }
 
     struct mob_sinster_reflectionAI : public ScriptedAI

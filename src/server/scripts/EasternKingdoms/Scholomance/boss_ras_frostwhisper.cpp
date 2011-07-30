@@ -37,9 +37,9 @@ class boss_boss_ras_frostwhisper : public CreatureScript
 public:
     boss_boss_ras_frostwhisper() : CreatureScript("boss_boss_ras_frostwhisper") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_rasfrostAI (creature);
+        return new boss_rasfrostAI (pCreature);
     }
 
     struct boss_rasfrostAI : public ScriptedAI
@@ -82,8 +82,8 @@ public:
             //Frostbolt_Timer
             if (Frostbolt_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    DoCast(target, SPELL_FROSTBOLT);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                    DoCast(pTarget, SPELL_FROSTBOLT);
 
                 Frostbolt_Timer = 8000;
             } else Frostbolt_Timer -= diff;

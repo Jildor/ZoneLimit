@@ -43,7 +43,7 @@ class go_gauntlet_gate : public GameObjectScript
 public:
     go_gauntlet_gate() : GameObjectScript("go_gauntlet_gate") { }
 
-    bool OnGossipHello(Player* player, GameObject* pGo)
+    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
     {
         InstanceScript* pInstance = pGo->GetInstanceScript();
 
@@ -53,7 +53,7 @@ public:
         if (pInstance->GetData(TYPE_BARON_RUN) != NOT_STARTED)
             return false;
 
-        if (Group *pGroup = player->GetGroup())
+        if (Group *pGroup = pPlayer->GetGroup())
         {
             for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
             {
@@ -66,10 +66,10 @@ public:
                     pGroupie->GetMap() == pGo->GetMap())
                     pGroupie->CastSpell(pGroupie, SPELL_BARON_ULTIMATUM, true);
             }
-        } else if (player->GetQuestStatus(QUEST_DEAD_MAN_PLEA) == QUEST_STATUS_INCOMPLETE &&
-                    !player->HasAura(SPELL_BARON_ULTIMATUM) &&
-                    player->GetMap() == pGo->GetMap())
-                    player->CastSpell(player, SPELL_BARON_ULTIMATUM, true);
+        } else if (pPlayer->GetQuestStatus(QUEST_DEAD_MAN_PLEA) == QUEST_STATUS_INCOMPLETE &&
+                    !pPlayer->HasAura(SPELL_BARON_ULTIMATUM) &&
+                    pPlayer->GetMap() == pGo->GetMap())
+                    pPlayer->CastSpell(pPlayer, SPELL_BARON_ULTIMATUM, true);
 
         pInstance->SetData(TYPE_BARON_RUN, IN_PROGRESS);
         return false;
@@ -92,9 +92,9 @@ class mob_freed_soul : public CreatureScript
 public:
     mob_freed_soul() : CreatureScript("mob_freed_soul") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_freed_soulAI (creature);
+        return new mob_freed_soulAI (pCreature);
     }
 
     struct mob_freed_soulAI : public ScriptedAI
@@ -126,9 +126,9 @@ class mob_restless_soul : public CreatureScript
 public:
     mob_restless_soul() : CreatureScript("mob_restless_soul") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_restless_soulAI (creature);
+        return new mob_restless_soulAI (pCreature);
     }
 
     struct mob_restless_soulAI : public ScriptedAI
@@ -148,7 +148,7 @@ public:
 
         void EnterCombat(Unit* /*who*/) {}
 
-        void SpellHit(Unit* caster, const SpellInfo *spell)
+        void SpellHit(Unit* caster, const SpellEntry *spell)
         {
             if (caster->GetTypeId() == TYPEID_PLAYER)
             {
@@ -204,9 +204,9 @@ class mobs_spectral_ghostly_citizen : public CreatureScript
 public:
     mobs_spectral_ghostly_citizen() : CreatureScript("mobs_spectral_ghostly_citizen") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mobs_spectral_ghostly_citizenAI (creature);
+        return new mobs_spectral_ghostly_citizenAI (pCreature);
     }
 
     struct mobs_spectral_ghostly_citizenAI : public ScriptedAI
@@ -224,7 +224,7 @@ public:
 
         void EnterCombat(Unit* /*who*/) {}
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo *spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
         {
             if (!Tagged && spell->Id == SPELL_EGAN_BLASTER)
                 Tagged = true;
@@ -258,7 +258,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void ReceiveEmote(Player* player, uint32 emote)
+        void ReceiveEmote(Player* pPlayer, uint32 emote)
         {
             switch(emote)
             {
@@ -266,8 +266,8 @@ public:
                     EnterEvadeMode();
                     break;
                 case TEXT_EMOTE_RUDE:
-                    if (me->IsWithinDistInMap(player, 5))
-                        DoCast(player, SPELL_SLAP, false);
+                    if (me->IsWithinDistInMap(pPlayer, 5))
+                        DoCast(pPlayer, SPELL_SLAP, false);
                     else
                         me->HandleEmoteCommand(EMOTE_ONESHOT_RUDE);
                     break;

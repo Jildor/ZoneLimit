@@ -113,10 +113,10 @@ class boss_jeklik : public CreatureScript
                     {
                         if (Charge_Timer <= diff)
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
-                                DoCast(target, SPELL_CHARGE);
-                                AttackStart(target);
+                                DoCast(pTarget, SPELL_CHARGE);
+                                AttackStart(pTarget);
                             }
 
                             Charge_Timer = 15000 + rand()%15000;
@@ -136,25 +136,25 @@ class boss_jeklik : public CreatureScript
 
                         if (SpawnBats_Timer <= diff)
                         {
-                            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                            Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
                             Creature* Bat = NULL;
                             Bat = me->SummonCreature(11368, -12291.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
 
                             Bat = me->SummonCreature(11368, -12289.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
 
                             Bat = me->SummonCreature(11368, -12293.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
 
                             Bat = me->SummonCreature(11368, -12291.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
 
                             Bat = me->SummonCreature(11368, -12289.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
                             Bat = me->SummonCreature(11368, -12293.6220f, -1380.2640f, 144.8304f, 5.483f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                            if (target && Bat) Bat ->AI()->AttackStart(target);
+                            if (pTarget && Bat) Bat ->AI()->AttackStart(pTarget);
 
                             SpawnBats_Timer = 60000;
                         } else SpawnBats_Timer -= diff;
@@ -165,9 +165,9 @@ class boss_jeklik : public CreatureScript
                         {
                             if (PhaseTwo && ShadowWordPain_Timer <= diff)
                             {
-                                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 {
-                                    DoCast(target, SPELL_SHADOW_WORD_PAIN);
+                                    DoCast(pTarget, SPELL_SHADOW_WORD_PAIN);
                                     ShadowWordPain_Timer = 12000 + rand()%6000;
                                 }
                             }ShadowWordPain_Timer -=diff;
@@ -194,13 +194,13 @@ class boss_jeklik : public CreatureScript
 
                             if (SpawnFlyingBats_Timer <= diff)
                             {
-                                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                if (!target)
+                                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                if (!pTarget)
                                     return;
 
-                                Creature* FlyingBat = me->SummonCreature(14965, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ()+15, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                                Creature* FlyingBat = me->SummonCreature(14965, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ()+15, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                                 if (FlyingBat)
-                                    FlyingBat->AI()->AttackStart(target);
+                                    FlyingBat->AI()->AttackStart(pTarget);
 
                                 SpawnFlyingBats_Timer = 10000 + rand()%5000;
                             } else SpawnFlyingBats_Timer -=diff;
@@ -264,9 +264,9 @@ class mob_batrider : public CreatureScript
                 //Bomb_Timer
                 if (Bomb_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
-                        DoCast(target, SPELL_BOMB);
+                        DoCast(pTarget, SPELL_BOMB);
                         Bomb_Timer = 5000;
                     }
                 } else Bomb_Timer -= diff;

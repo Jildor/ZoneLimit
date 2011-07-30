@@ -61,6 +61,7 @@ EndScriptData */
 #define SPELL_SHRED_ARMOR               43243
 
 #define MOB_TOTEM                       24224
+#define SPELL_LIGHTNING                 43301
 
 enum PhaseHalazzi
 {
@@ -86,6 +87,10 @@ class boss_halazzi : public CreatureScript
             boss_halazziAI(Creature* c) : ScriptedAI(c)
             {
                 pInstance = c->GetInstanceScript();
+                // need to find out what controls totem's spell cooldown
+                SpellEntry *TempSpell = GET_SPELL(SPELL_LIGHTNING);
+                if (TempSpell && TempSpell->CastingTimeIndex != 5)
+                    TempSpell->CastingTimeIndex = 5; // 2000 ms casting time
             }
 
             InstanceScript *pInstance;
@@ -142,7 +147,7 @@ class boss_halazzi : public CreatureScript
                     damage = 0;
             }
 
-            void SpellHit(Unit*, const SpellInfo *spell)
+            void SpellHit(Unit*, const SpellEntry *spell)
             {
                 if (spell->Id == SPELL_TRANSFORM_SPLIT2)
                     EnterPhase(PHASE_HUMAN);
@@ -257,12 +262,12 @@ class boss_halazzi : public CreatureScript
 
                     if (ShockTimer <= diff)
                     {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                         {
-                            if (target->IsNonMeleeSpellCasted(false))
-                                DoCast(target, SPELL_EARTHSHOCK);
+                            if (pTarget->IsNonMeleeSpellCasted(false))
+                                DoCast(pTarget, SPELL_EARTHSHOCK);
                             else
-                                DoCast(target, SPELL_FLAMESHOCK);
+                                DoCast(pTarget, SPELL_FLAMESHOCK);
                             ShockTimer = 10000 + rand()%5000;
                         }
                     } else ShockTimer -= diff;

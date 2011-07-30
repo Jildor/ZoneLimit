@@ -219,11 +219,11 @@ class boss_thekal : public CreatureScript
                     {
                         if (Charge_Timer <= diff)
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
-                                DoCast(target, SPELL_CHARGE);
+                                DoCast(pTarget, SPELL_CHARGE);
                                 DoResetThreat();
-                                AttackStart(target);
+                                AttackStart(pTarget);
                             }
 
                             Charge_Timer = 15000 + rand()%7000;

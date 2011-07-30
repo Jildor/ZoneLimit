@@ -106,9 +106,9 @@ class boss_entropius : public CreatureScript
 public:
     boss_entropius() : CreatureScript("boss_entropius") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_entropiusAI (creature);
+        return new boss_entropiusAI (pCreature);
     }
 
     struct boss_entropiusAI : public ScriptedAI
@@ -206,9 +206,9 @@ class boss_muru : public CreatureScript
 public:
     boss_muru() : CreatureScript("boss_muru") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_muruAI (creature);
+        return new boss_muruAI (pCreature);
     }
 
     struct boss_muruAI : public Scripted_NoMovementAI
@@ -371,9 +371,9 @@ class npc_muru_portal : public CreatureScript
 public:
     npc_muru_portal() : CreatureScript("npc_muru_portal") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_muru_portalAI (creature);
+        return new npc_muru_portalAI (pCreature);
     }
 
     struct npc_muru_portalAI : public Scripted_NoMovementAI
@@ -413,7 +413,7 @@ public:
             Summons.Summon(summoned);
         }
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo* Spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry* Spell)
         {
             float x, y, z, o;
             me->GetHomePosition(x, y, z, o);
@@ -455,9 +455,9 @@ class npc_dark_fiend : public CreatureScript
 public:
     npc_dark_fiend() : CreatureScript("npc_dark_fiend") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_dark_fiendAI (creature);
+        return new npc_dark_fiendAI (pCreature);
     }
 
     struct npc_dark_fiendAI : public ScriptedAI
@@ -475,10 +475,10 @@ public:
             me->AddUnitState(UNIT_STAT_STUNNED);
         }
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo* Spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry* Spell)
         {
             for (uint8 i = 0; i < 3; ++i)
-                if (Spell->Effects[i].Effect == 38)
+                if (Spell->Effect[i] == 38)
                     me->DisappearAndDie();
         }
 
@@ -518,9 +518,9 @@ class npc_void_sentinel : public CreatureScript
 public:
     npc_void_sentinel() : CreatureScript("npc_void_sentinel") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_void_sentinelAI (creature);
+        return new npc_void_sentinelAI (pCreature);
     }
 
     struct npc_void_sentinelAI : public ScriptedAI
@@ -574,9 +574,9 @@ class npc_blackhole : public CreatureScript
 public:
     npc_blackhole() : CreatureScript("npc_blackhole") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_blackholeAI (creature);
+        return new npc_blackholeAI (pCreature);
     }
 
     struct npc_blackholeAI : public ScriptedAI

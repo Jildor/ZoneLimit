@@ -36,9 +36,9 @@ class boss_ramstein_the_gorger : public CreatureScript
 public:
     boss_ramstein_the_gorger() : CreatureScript("boss_ramstein_the_gorger") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_ramstein_the_gorgerAI (creature);
+        return new boss_ramstein_the_gorgerAI (pCreature);
     }
 
     struct boss_ramstein_the_gorgerAI : public ScriptedAI

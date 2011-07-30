@@ -296,16 +296,16 @@ class boss_zuljin : public CreatureScript
 
             void SpawnAdds()
             {
-                Creature* creature = NULL;
+                Creature* pCreature = NULL;
                 for (uint8 i = 0; i < 4; ++i)
                 {
-                    creature = me->SummonCreature(SpiritInfo[i].entry, SpiritInfo[i].x, SpiritInfo[i].y, SpiritInfo[i].z, SpiritInfo[i].orient, TEMPSUMMON_DEAD_DESPAWN, 0);
-                    if (creature)
+                    pCreature = me->SummonCreature(SpiritInfo[i].entry, SpiritInfo[i].x, SpiritInfo[i].y, SpiritInfo[i].z, SpiritInfo[i].orient, TEMPSUMMON_DEAD_DESPAWN, 0);
+                    if (pCreature)
                     {
-                        creature->CastSpell(creature, SPELL_SPIRIT_AURA, true);
-                        creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                        creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                        SpiritGUID[i] = creature->GetGUID();
+                        pCreature->CastSpell(pCreature, SPELL_SPIRIT_AURA, true);
+                        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        SpiritGUID[i] = pCreature->GetGUID();
                     }
                 }
             }
@@ -435,8 +435,8 @@ class boss_zuljin : public CreatureScript
 
                     if (Grievous_Throw_Timer <= diff)
                     {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                            DoCast(target, SPELL_GRIEVOUS_THROW, false);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                            DoCast(pTarget, SPELL_GRIEVOUS_THROW, false);
                         Grievous_Throw_Timer = 10000;
                     } else Grievous_Throw_Timer -= diff;
                     break;
@@ -463,11 +463,11 @@ class boss_zuljin : public CreatureScript
                     {
                         if (!TankGUID)
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
                                 TankGUID = me->getVictim()->GetGUID();
                                 me->SetSpeed(MOVE_RUN, 5.0f);
-                                AttackStart(target); // change victim
+                                AttackStart(pTarget); // change victim
                                 Claw_Rage_Timer = 0;
                                 Claw_Loop_Timer = 500;
                                 Claw_Counter = 0;
@@ -477,15 +477,15 @@ class boss_zuljin : public CreatureScript
                         {
                             if (Claw_Loop_Timer <= diff)
                             {
-                                Unit* target = me->getVictim();
-                                if (!target || !target->isTargetableForAttack()) target = Unit::GetUnit(*me, TankGUID);
-                                if (!target || !target->isTargetableForAttack()) target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                if (target)
+                                Unit* pTarget = me->getVictim();
+                                if (!pTarget || !pTarget->isTargetableForAttack()) pTarget = Unit::GetUnit(*me, TankGUID);
+                                if (!pTarget || !pTarget->isTargetableForAttack()) pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                if (pTarget)
                                 {
-                                    AttackStart(target);
-                                    if (me->IsWithinMeleeRange(target))
+                                    AttackStart(pTarget);
+                                    if (me->IsWithinMeleeRange(pTarget))
                                     {
-                                        DoCast(target, SPELL_CLAW_RAGE_DAMAGE, true);
+                                        DoCast(pTarget, SPELL_CLAW_RAGE_DAMAGE, true);
                                         ++Claw_Counter;
                                         if (Claw_Counter == 12)
                                         {
@@ -501,7 +501,7 @@ class boss_zuljin : public CreatureScript
                                 }
                                 else
                                 {
-                                    EnterEvadeMode(); // if (target)
+                                    EnterEvadeMode(); // if (pTarget)
                                     return;
                                 }
                             } else Claw_Loop_Timer -= diff;
@@ -512,28 +512,28 @@ class boss_zuljin : public CreatureScript
                     {
                         if (!TankGUID)
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
                                 TankGUID = me->getVictim()->GetGUID();
                                 me->SetSpeed(MOVE_RUN, 5.0f);
-                                AttackStart(target); // change victim
+                                AttackStart(pTarget); // change victim
                                 Lynx_Rush_Timer = 0;
                                 Claw_Counter = 0;
                             }
                         }
                         else if (!Lynx_Rush_Timer)
                         {
-                            Unit* target = me->getVictim();
-                            if (!target || !target->isTargetableForAttack())
+                            Unit* pTarget = me->getVictim();
+                            if (!pTarget || !pTarget->isTargetableForAttack())
                             {
-                                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                AttackStart(target);
+                                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                AttackStart(pTarget);
                             }
-                            if (target)
+                            if (pTarget)
                             {
-                                if (me->IsWithinMeleeRange(target))
+                                if (me->IsWithinMeleeRange(pTarget))
                                 {
-                                    DoCast(target, SPELL_LYNX_RUSH_DAMAGE, true);
+                                    DoCast(pTarget, SPELL_LYNX_RUSH_DAMAGE, true);
                                     ++Claw_Counter;
                                     if (Claw_Counter == 9)
                                     {
@@ -548,7 +548,7 @@ class boss_zuljin : public CreatureScript
                             }
                             else
                             {
-                                EnterEvadeMode(); // if (target)
+                                EnterEvadeMode(); // if (pTarget)
                                 return;
                             }
                         } //if (TankGUID)
@@ -564,15 +564,15 @@ class boss_zuljin : public CreatureScript
 
                     if (Pillar_Of_Fire_Timer <= diff)
                     {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            DoCast(target, SPELL_SUMMON_PILLAR);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_SUMMON_PILLAR);
                         Pillar_Of_Fire_Timer = 10000;
                     } else Pillar_Of_Fire_Timer -= diff;
 
                     if (Flame_Breath_Timer <= diff)
                     {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            me->SetInFront(target);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            me->SetInFront(pTarget);
                         DoCast(me, SPELL_FLAME_BREATH);
                         Flame_Breath_Timer = 10000;
                     } else Flame_Breath_Timer -= diff;
@@ -610,7 +610,7 @@ class mob_zuljin_vortex : public CreatureScript
 
             void EnterCombat(Unit* /*pTarget*/) {}
 
-            void SpellHit(Unit* caster, const SpellInfo* spell)
+            void SpellHit(Unit* caster, const SpellEntry* spell)
             {
                 if (spell->Id == SPELL_ZAP_INFORM)
                     DoCast(caster, SPELL_ZAP_DAMAGE, true);

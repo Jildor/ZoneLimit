@@ -181,11 +181,11 @@ class boss_janalai : public CreatureScript
         //        DoZoneInCombat();
             }
 
-            void DamageDealt(Unit* target, uint32 &damage, DamageEffectType /*damagetype*/)
+            void DamageDealt(Unit* pTarget, uint32 &damage, DamageEffectType /*damagetype*/)
             {
                 if (isFlameBreathing)
                 {
-                    if (!me->HasInArc(M_PI/6, target))
+                    if (!me->HasInArc(M_PI/6, pTarget))
                         damage = 0;
                 }
             }
@@ -247,7 +247,7 @@ class boss_janalai : public CreatureScript
                 }
 
                 //sLog->outError("Eggs %d at middle", templist.size());
-                if (templist.empty())
+                if (!templist.size())
                     return false;
 
                 for (std::list<Creature*>::const_iterator i = templist.begin(); i != templist.end(); ++i)
@@ -420,11 +420,11 @@ class boss_janalai : public CreatureScript
 
                 if (FireBreathTimer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
                         me->AttackStop();
                         me->GetMotionMaster()->Clear();
-                        DoCast(target, SPELL_FLAME_BREATH, false);
+                        DoCast(pTarget, SPELL_FLAME_BREATH, false);
                         me->StopMoving();
                         isFlameBreathing = true;
                     }
@@ -454,7 +454,7 @@ class mob_janalai_firebomb : public CreatureScript
 
             void Reset() {}
 
-            void SpellHit(Unit* /*caster*/, const SpellInfo *spell)
+            void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
             {
                 if (spell->Id == SPELL_FIRE_BOMB_THROW)
                     DoCast(me, SPELL_FIRE_BOMB_DUMMY, true);
@@ -685,7 +685,7 @@ public:
 
         void UpdateAI(uint32 const /*diff*/) {}
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo* spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry* spell)
         {
             if (spell->Id == SPELL_HATCH_EGG)
             {

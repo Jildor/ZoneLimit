@@ -36,9 +36,9 @@ class boss_jandice_barov : public CreatureScript
 public:
     boss_jandice_barov() : CreatureScript("boss_jandice_barov") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_jandicebarovAI (creature);
+        return new boss_jandicebarovAI (pCreature);
     }
 
     struct boss_jandicebarovAI : public ScriptedAI
@@ -111,12 +111,12 @@ public:
                 DoModifyThreatPercent(me->getVictim(), -99);
 
                 //Summon 10 Illusions attacking random gamers
-                Unit* target = NULL;
+                Unit* pTarget = NULL;
                 for (uint8 i = 0; i < 10; ++i)
                 {
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                    if (target)
-                        SummonIllusions(target);
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    if (pTarget)
+                        SummonIllusions(pTarget);
                 }
                 Invisible = true;
                 Invisible_Timer = 3000;
@@ -158,9 +158,9 @@ class mob_illusionofjandicebarov : public CreatureScript
 public:
     mob_illusionofjandicebarov() : CreatureScript("mob_illusionofjandicebarov") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_illusionofjandicebarovAI (creature);
+        return new mob_illusionofjandicebarovAI (pCreature);
     }
 
     struct mob_illusionofjandicebarovAI : public ScriptedAI

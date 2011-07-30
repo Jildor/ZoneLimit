@@ -37,6 +37,7 @@ enum Spells
     SPELL_GUST_OF_WIND          = 43621,
     SPELL_ELECTRICAL_STORM      = 43648,
     SPELL_BERSERK               = 45078,
+    SPELL_ELECTRICAL_DAMAGE     = 43657,
     SPELL_ELECTRICAL_OVERLOAD   = 43658,
     SPELL_EAGLE_SWOOP           = 44732
 };
@@ -74,6 +75,9 @@ class boss_akilzon : public CreatureScript
         {
             boss_akilzonAI(Creature* c) : ScriptedAI(c)
             {
+                SpellEntry *TempSpell = GET_SPELL(SPELL_ELECTRICAL_DAMAGE);
+                if (TempSpell)
+                    TempSpell->EffectBasePoints[1] = 49;//disable bugged lightning until fixed in core
                 pInstance = c->GetInstanceScript();
             }
             InstanceScript *pInstance;
@@ -254,17 +258,17 @@ class boss_akilzon : public CreatureScript
 
                 if (StormCount)
                 {
-                    Unit* target = Unit::GetUnit(*me, CloudGUID);
-                    if (!target || !target->isAlive())
+                    Unit* pTarget = Unit::GetUnit(*me, CloudGUID);
+                    if (!pTarget || !pTarget->isAlive())
                     {
                         EnterEvadeMode();
                         return;
                     }
                     else if (Unit* Cyclone = Unit::GetUnit(*me, CycloneGUID))
-                        Cyclone->CastSpell(target, 25160, true); // keep casting or...
+                        Cyclone->CastSpell(pTarget, 25160, true); // keep casting or...
 
                     if (StormSequenceTimer <= diff)
-                        HandleStormSequence(target);
+                        HandleStormSequence(pTarget);
                     else
                         StormSequenceTimer -= diff;
 
@@ -281,22 +285,22 @@ class boss_akilzon : public CreatureScript
 
                 if (StaticDisruption_Timer <= diff)
                 {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
-                    if (!target) target = me->getVictim();
-                    TargetGUID = target->GetGUID();
-                    DoCast(target, SPELL_STATIC_DISRUPTION, false);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                    if (!pTarget) pTarget = me->getVictim();
+                    TargetGUID = pTarget->GetGUID();
+                    DoCast(pTarget, SPELL_STATIC_DISRUPTION, false);
                     me->SetInFront(me->getVictim());
                     StaticDisruption_Timer = (10+rand()%8)*1000; // < 20s
 
-                    /*if (float dist = me->IsWithinDist3d(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 5.0f) dist = 5.0f;
+                    /*if (float dist = me->IsWithinDist3d(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 5.0f) dist = 5.0f;
                     SDisruptAOEVisual_Timer = 1000 + floor(dist / 30 * 1000.0f);*/
                 } else StaticDisruption_Timer -= diff;
 
                 if (GustOfWind_Timer <= diff)
                 {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
-                    if (!target) target = me->getVictim();
-                    DoCast(target, SPELL_GUST_OF_WIND);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                    if (!pTarget) pTarget = me->getVictim();
+                    DoCast(pTarget, SPELL_GUST_OF_WIND);
                     GustOfWind_Timer = (20+rand()%10)*1000; //20 to 30 seconds(bosskillers)
                 } else GustOfWind_Timer -= diff;
 
@@ -313,20 +317,20 @@ class boss_akilzon : public CreatureScript
                 }
 
                 if (ElectricalStorm_Timer <= diff) {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true);
-                    if (!target)
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true);
+                    if (!pTarget)
                     {
                         EnterEvadeMode();
                         return;
                     }
-                    target->CastSpell(target, 44007, true);//cloud visual
-                    DoCast(target, SPELL_ELECTRICAL_STORM, false);//storm cyclon + visual
+                    pTarget->CastSpell(pTarget, 44007, true);//cloud visual
+                    DoCast(pTarget, SPELL_ELECTRICAL_STORM, false);//storm cyclon + visual
                     float x, y, z;
-                    target->GetPosition(x, y, z);
-                    if (target)
+                    pTarget->GetPosition(x, y, z);
+                    if (pTarget)
                     {
-                        target->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING);
-                        target->SendMonsterMove(x, y, me->GetPositionZ()+15, 0);
+                        pTarget->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING);
+                        pTarget->SendMonsterMove(x, y, me->GetPositionZ()+15, 0);
                     }
                     Unit* Cloud = me->SummonTrigger(x, y, me->GetPositionZ()+16, 0, 15000);
                     if (Cloud)
@@ -358,20 +362,20 @@ class boss_akilzon : public CreatureScript
                         Unit* bird = Unit::GetUnit(*me, BirdGUIDs[i]);
                         if (!bird) //they despawned on die
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
-                                x = target->GetPositionX() + irand(-10, 10);
-                                y = target->GetPositionY() + irand(-10, 10);
-                                z = target->GetPositionZ() + urand(16, 20);
+                                x = pTarget->GetPositionX() + irand(-10, 10);
+                                y = pTarget->GetPositionY() + irand(-10, 10);
+                                z = pTarget->GetPositionZ() + urand(16, 20);
                                 if (z > 95)
                                     z = 95.0f - urand(0, 5);
                             }
-                            Creature* creature = me->SummonCreature(MOB_SOARING_EAGLE, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
-                            if (creature)
+                            Creature* pCreature = me->SummonCreature(MOB_SOARING_EAGLE, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                            if (pCreature)
                             {
-                                creature->AddThreat(me->getVictim(), 1.0f);
-                                creature->AI()->AttackStart(me->getVictim());
-                                BirdGUIDs[i] = creature->GetGUID();
+                                pCreature->AddThreat(me->getVictim(), 1.0f);
+                                pCreature->AI()->AttackStart(me->getVictim());
+                                BirdGUIDs[i] = pCreature->GetGUID();
                             }
                         }
                     }
@@ -422,8 +426,8 @@ class mob_akilzon_eagle : public CreatureScript
                 arrived = true;
                 if (TargetGUID)
                 {
-                    if (Unit* target = Unit::GetUnit(*me, TargetGUID))
-                        DoCast(target, SPELL_EAGLE_SWOOP, true);
+                    if (Unit* pTarget = Unit::GetUnit(*me, TargetGUID))
+                        DoCast(pTarget, SPELL_EAGLE_SWOOP, true);
                     TargetGUID = 0;
                     me->SetSpeed(MOVE_RUN, 1.2f);
                     EagleSwoop_Timer = 5000 + rand()%5000;
@@ -439,23 +443,23 @@ class mob_akilzon_eagle : public CreatureScript
 
                 if (arrived)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
                         float x, y, z;
                         if (EagleSwoop_Timer)
                         {
-                            x = target->GetPositionX() + irand(-10, 10);
-                            y = target->GetPositionY() + irand(-10, 10);
-                            z = target->GetPositionZ() + urand(10, 15);
+                            x = pTarget->GetPositionX() + irand(-10, 10);
+                            y = pTarget->GetPositionY() + irand(-10, 10);
+                            z = pTarget->GetPositionZ() + urand(10, 15);
                             if (z > 95)
                                 z = 95.0f - urand(0, 5);
                         }
                         else
                         {
-                            target->GetContactPoint(me, x, y, z);
+                            pTarget->GetContactPoint(me, x, y, z);
                             z += 2;
                             me->SetSpeed(MOVE_RUN, 5.0f);
-                            TargetGUID = target->GetGUID();
+                            TargetGUID = pTarget->GetGUID();
                         }
                         me->GetMotionMaster()->MovePoint(0, x, y, z);
                         arrived = false;

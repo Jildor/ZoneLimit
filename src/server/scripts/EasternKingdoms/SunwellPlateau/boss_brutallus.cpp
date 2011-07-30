@@ -71,9 +71,9 @@ class boss_brutallus : public CreatureScript
 public:
     boss_brutallus() : CreatureScript("boss_brutallus") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_brutallusAI (creature);
+        return new boss_brutallusAI (pCreature);
     }
 
     struct boss_brutallusAI : public ScriptedAI
@@ -182,11 +182,11 @@ public:
             IsIntro = false;
         }
 
-        void AttackStart(Unit* who)
+        void AttackStart(Unit* pWho)
         {
-            if (!who || Intro || IsIntro)
+            if (!pWho || Intro || IsIntro)
                 return;
-            ScriptedAI::AttackStart(who);
+            ScriptedAI::AttackStart(pWho);
         }
 
         void DoIntro()
@@ -322,9 +322,9 @@ public:
 
             if (BurnTimer <= diff)
             {
-                std::list<Unit*> targets;
-                SelectTargetList(targets, 10, SELECT_TARGET_RANDOM, 100, true);
-                for (std::list<Unit*>::const_iterator i = targets.begin(); i != targets.end(); ++i)
+                std::list<Unit*> pTargets;
+                SelectTargetList(pTargets, 10, SELECT_TARGET_RANDOM, 100, true);
+                for (std::list<Unit*>::const_iterator i = pTargets.begin(); i != pTargets.end(); ++i)
                     if (!(*i)->HasAura(SPELL_BURN))
                     {
                         (*i)->CastSpell((*i), SPELL_BURN, true);
