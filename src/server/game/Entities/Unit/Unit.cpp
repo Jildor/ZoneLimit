@@ -8973,6 +8973,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
         // Finish movies that add combo
         case 14189: // Seal Fate (Netherblade set)
         case 14157: // Ruthlessness
+        case 70802: // Rogue T10 4P Bonus
         {
             if (!pVictim || pVictim == this)
                 return false;
