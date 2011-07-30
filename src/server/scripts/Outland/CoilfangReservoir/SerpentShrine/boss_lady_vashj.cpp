@@ -138,9 +138,9 @@ class boss_lady_vashj : public CreatureScript
 public:
     boss_lady_vashj() : CreatureScript("boss_lady_vashj") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_lady_vashjAI (creature);
+        return new boss_lady_vashjAI (pCreature);
     }
 
     struct boss_lady_vashjAI : public ScriptedAI
@@ -363,12 +363,12 @@ public:
                 {
                     //Static Charge
                     //Used on random people (only 1 person at any given time) in Phases 1 and 3, it's a debuff doing 2775 to 3225 Nature damage to the target and everybody in about 5 yards around it, every 1 seconds for 30 seconds. It can be removed by Cloak of Shadows, Iceblock, Divine Shield, etc, but not by Cleanse or Dispel Magic.
-                    Unit* target = NULL;
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true);
+                    Unit* pTarget = NULL;
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true);
 
-                    if (target && !target->HasAura(SPELL_STATIC_CHARGE_TRIGGER))
+                    if (pTarget && !pTarget->HasAura(SPELL_STATIC_CHARGE_TRIGGER))
                                                                 //cast Static Charge every 2 seconds for 20 seconds
-                            DoCast(target, SPELL_STATIC_CHARGE_TRIGGER);
+                            DoCast(pTarget, SPELL_STATIC_CHARGE_TRIGGER);
 
                     StaticCharge_Timer = 10000+rand()%20000;    //blizzlike
                 } else StaticCharge_Timer -= diff;
@@ -404,12 +404,12 @@ public:
                         me->GetMotionMaster()->Clear();
                         DoTeleportTo(MIDDLE_X, MIDDLE_Y, MIDDLE_Z);
 
-                        Creature* creature;
+                        Creature* pCreature;
                         for (uint8 i = 0; i < 4; ++i)
                         {
-                            creature = me->SummonCreature(SHIED_GENERATOR_CHANNEL, ShieldGeneratorChannelPos[i][0],  ShieldGeneratorChannelPos[i][1],  ShieldGeneratorChannelPos[i][2],  ShieldGeneratorChannelPos[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
-                            if (creature)
-                                ShieldGeneratorChannel[i] = creature->GetGUID();
+                            pCreature = me->SummonCreature(SHIED_GENERATOR_CHANNEL, ShieldGeneratorChannelPos[i][0],  ShieldGeneratorChannelPos[i][1],  ShieldGeneratorChannelPos[i][2],  ShieldGeneratorChannelPos[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
+                            if (pCreature)
+                                ShieldGeneratorChannel[i] = pCreature->GetGUID();
                         }
                         DoScriptText(SAY_PHASE2, me);
                     }
@@ -425,10 +425,10 @@ public:
 
                         if (Sporebat)
                         {
-                            Unit* target = NULL;
-                            target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                            if (target)
-                                Sporebat->AI()->AttackStart(target);
+                            Unit* pTarget = NULL;
+                            pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                            if (pTarget)
+                                Sporebat->AI()->AttackStart(pTarget);
                         }
 
                         //summon sporebats faster and faster
@@ -450,13 +450,13 @@ public:
                 if (Check_Timer <= diff)
                 {
                     bool InMeleeRange = false;
-                    Unit* target;
+                    Unit* pTarget;
                     std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
                     for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
                     {
-                        target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+                        pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
                                                                 //if in melee range
-                        if (target && target->IsWithinDistInMap(me, 5))
+                        if (pTarget && pTarget->IsWithinDistInMap(me, 5))
                         {
                             InMeleeRange = true;
                             break;
@@ -478,13 +478,13 @@ public:
                 {
                     //Forked Lightning
                     //Used constantly in Phase 2, it shoots out completely randomly targeted bolts of lightning which hit everybody in a roughtly 60 degree cone in front of Vashj for 2313-2687 nature damage.
-                    Unit* target = NULL;
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    Unit* pTarget = NULL;
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
-                    if (!target)
-                        target = me->getVictim();
+                    if (!pTarget)
+                        pTarget = me->getVictim();
 
-                    DoCast(target, SPELL_FORKED_LIGHTNING);
+                    DoCast(pTarget, SPELL_FORKED_LIGHTNING);
 
                     ForkedLightning_Timer = 2000+rand()%6000;   //blizzlike
                 } else ForkedLightning_Timer -= diff;
@@ -519,10 +519,10 @@ public:
                     CoilfangElite = me->SummonCreature(COILFANG_ELITE, CoilfangElitePos[pos][0], CoilfangElitePos[pos][1], CoilfangElitePos[pos][2], CoilfangElitePos[pos][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     if (CoilfangElite)
                     {
-                        Unit* target = NULL;
-                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                        if (target)
-                            CoilfangElite->AI()->AttackStart(target);
+                        Unit* pTarget = NULL;
+                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                        if (pTarget)
+                            CoilfangElite->AI()->AttackStart(pTarget);
                         else if (me->getVictim())
                             CoilfangElite->AI()->AttackStart(me->getVictim());
                     }
@@ -537,10 +537,10 @@ public:
                     CoilfangStrider = me->SummonCreature(COILFANG_STRIDER, CoilfangStriderPos[pos][0], CoilfangStriderPos[pos][1], CoilfangStriderPos[pos][2], CoilfangStriderPos[pos][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                      if (CoilfangStrider)
                     {
-                        Unit* target = NULL;
-                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                        if (target)
-                            CoilfangStrider->AI()->AttackStart(target);
+                        Unit* pTarget = NULL;
+                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                        if (pTarget)
+                            CoilfangStrider->AI()->AttackStart(pTarget);
                         else if (me->getVictim())
                             CoilfangStrider->AI()->AttackStart(me->getVictim());
                     }
@@ -580,9 +580,9 @@ class mob_enchanted_elemental : public CreatureScript
 public:
     mob_enchanted_elemental() : CreatureScript("mob_enchanted_elemental") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_enchanted_elementalAI (creature);
+        return new mob_enchanted_elementalAI (pCreature);
     }
 
     struct mob_enchanted_elementalAI : public ScriptedAI
@@ -682,9 +682,9 @@ class mob_tainted_elemental : public CreatureScript
 public:
     mob_tainted_elemental() : CreatureScript("mob_tainted_elemental") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_tainted_elementalAI (creature);
+        return new mob_tainted_elementalAI (pCreature);
     }
 
     struct mob_tainted_elementalAI : public ScriptedAI
@@ -727,11 +727,11 @@ public:
             //PoisonBolt_Timer
             if (PoisonBolt_Timer <= diff)
             {
-                Unit* target = NULL;
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = NULL;
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
-                if (target && target->IsWithinDistInMap(me, 30))
-                    DoCast(target, SPELL_POISON_BOLT);
+                if (pTarget && pTarget->IsWithinDistInMap(me, 30))
+                    DoCast(pTarget, SPELL_POISON_BOLT);
 
                 PoisonBolt_Timer = 5000+rand()%5000;
             } else PoisonBolt_Timer -= diff;
@@ -757,9 +757,9 @@ class mob_toxic_sporebat : public CreatureScript
 public:
     mob_toxic_sporebat() : CreatureScript("mob_toxic_sporebat") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_toxic_sporebatAI (creature);
+        return new mob_toxic_sporebatAI (pCreature);
     }
 
     struct mob_toxic_sporebatAI : public ScriptedAI
@@ -819,11 +819,11 @@ public:
             //toxic spores
             if (bolt_timer <= diff)
             {
-                Unit* target = NULL;
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                if (target)
+                Unit* pTarget = NULL;
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                if (pTarget)
                 {
-                    Creature* trig = me->SummonCreature(TOXIC_SPORES_TRIGGER, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
+                    Creature* trig = me->SummonCreature(TOXIC_SPORES_TRIGGER, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
                     if (trig)
                     {
                         trig->setFaction(14);
@@ -865,9 +865,9 @@ class mob_coilfang_elite : public CreatureScript
 public:
     mob_coilfang_elite() : CreatureScript("mob_coilfang_elite") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        SimpleAI* ai = new SimpleAI (creature);
+        SimpleAI* ai = new SimpleAI (pCreature);
 
         ai->Spell[0].Enabled = true;
         ai->Spell[0].Spell_Id = 31345;                          //Cleave
@@ -890,9 +890,9 @@ class mob_coilfang_strider : public CreatureScript
 public:
     mob_coilfang_strider() : CreatureScript("mob_coilfang_strider") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        SimpleAI* ai = new SimpleAI (creature);
+        SimpleAI* ai = new SimpleAI (pCreature);
 
         ai->Spell[0].Enabled = true;
         ai->Spell[0].Spell_Id = 41374;                          //Mind Blast
@@ -915,9 +915,9 @@ class mob_shield_generator_channel : public CreatureScript
 public:
     mob_shield_generator_channel() : CreatureScript("mob_shield_generator_channel") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_shield_generator_channelAI (creature);
+        return new mob_shield_generator_channelAI (pCreature);
     }
 
     struct mob_shield_generator_channelAI : public ScriptedAI
@@ -974,18 +974,18 @@ class item_tainted_core : public ItemScript
 public:
     item_tainted_core() : ItemScript("item_tainted_core") { }
 
-    bool OnUse(Player* player, Item* /*_Item*/, SpellCastTargets const& targets)
+    bool OnUse(Player* pPlayer, Item* /*_Item*/, SpellCastTargets const& targets)
     {
-        InstanceScript *pInstance = player->GetInstanceScript();
+        InstanceScript *pInstance = pPlayer->GetInstanceScript();
 
         if (!pInstance)
         {
-            player->GetSession()->SendNotification(TEXT_NOT_INITIALIZED);
+            pPlayer->GetSession()->SendNotification(TEXT_NOT_INITIALIZED);
             return true;
         }
 
         Creature* Vashj = NULL;
-        Vashj = (Unit::GetCreature((*player), pInstance->GetData64(DATA_LADYVASHJ)));
+        Vashj = (Unit::GetCreature((*pPlayer), pInstance->GetData64(DATA_LADYVASHJ)));
         if (Vashj && (CAST_AI(boss_lady_vashj::boss_lady_vashjAI, Vashj->AI())->Phase == 2))
         {
             if (GameObject* gObj = targets.GetGOTarget())
@@ -1016,7 +1016,7 @@ public:
 
                 if (pInstance->GetData(identifier))
                 {
-                    player->GetSession()->SendNotification(TEXT_ALREADY_DEACTIVATED);
+                    pPlayer->GetSession()->SendNotification(TEXT_ALREADY_DEACTIVATED);
                     return true;
                 }
 
@@ -1032,15 +1032,15 @@ public:
                 pInstance->SetData(identifier, 1);
 
                 //remove this item
-                player->DestroyItemCount(31088, 1, true);
+                pPlayer->DestroyItemCount(31088, 1, true);
                 return true;
             }
             else if (targets.GetUnitTarget()->GetTypeId() == TYPEID_UNIT)
                 return false;
             else if (targets.GetUnitTarget()->GetTypeId() == TYPEID_PLAYER)
             {
-                player->DestroyItemCount(31088, 1, true);
-                player->CastSpell(targets.GetUnitTarget(), 38134, true);
+                pPlayer->DestroyItemCount(31088, 1, true);
+                pPlayer->CastSpell(targets.GetUnitTarget(), 38134, true);
                 return true;
             }
         }

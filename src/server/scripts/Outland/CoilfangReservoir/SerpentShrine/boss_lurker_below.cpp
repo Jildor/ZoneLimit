@@ -71,9 +71,9 @@ class boss_the_lurker_below : public CreatureScript
 public:
     boss_the_lurker_below() : CreatureScript("boss_the_lurker_below") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_the_lurker_belowAI (creature);
+        return new boss_the_lurker_belowAI (pCreature);
     }
 
     struct boss_the_lurker_belowAI : public Scripted_NoMovementAI
@@ -81,6 +81,13 @@ public:
         boss_the_lurker_belowAI(Creature* c) : Scripted_NoMovementAI(c), Summons(me)
         {
             pInstance = c->GetInstanceScript();
+            SpellEntry *TempSpell = GET_SPELL(SPELL_SPOUT_ANIM);
+            if (TempSpell)
+            {
+                TempSpell->Effect[0] = 0;//remove all spell effect, only anim is needed
+                TempSpell->Effect[1] = 0;
+                TempSpell->Effect[2] = 0;
+            }
         }
 
         InstanceScript* pInstance;
@@ -292,11 +299,11 @@ public:
 
                 if (GeyserTimer <= diff)
                 {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
-                    if (!target && me->getVictim())
-                        target = me->getVictim();
-                    if (target)
-                        DoCast(target, SPELL_GEYSER, true);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                    if (!pTarget && me->getVictim())
+                        pTarget = me->getVictim();
+                    if (pTarget)
+                        DoCast(pTarget, SPELL_GEYSER, true);
                     GeyserTimer = rand()%5000 + 15000;
                 } else GeyserTimer -= diff;
 
@@ -304,11 +311,11 @@ public:
                 {
                     if (WaterboltTimer <= diff)
                     {
-                        Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                        if (!target && me->getVictim())
-                            target = me->getVictim();
-                        if (target)
-                            DoCast(target, SPELL_WATERBOLT, true);
+                        Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                        if (!pTarget && me->getVictim())
+                            pTarget = me->getVictim();
+                        if (pTarget)
+                            DoCast(pTarget, SPELL_WATERBOLT, true);
                         WaterboltTimer = 3000;
                     } else WaterboltTimer -= diff;
                 }
@@ -368,9 +375,9 @@ class mob_coilfang_guardian : public CreatureScript
 public:
     mob_coilfang_guardian() : CreatureScript("mob_coilfang_guardian") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        SimpleAI* ai = new SimpleAI (creature);
+        SimpleAI* ai = new SimpleAI (pCreature);
 
         ai->Spell[0].Enabled = true;
         ai->Spell[0].Spell_Id = SPELL_ARCINGSMASH;
@@ -394,15 +401,18 @@ class mob_coilfang_ambusher : public CreatureScript
 public:
     mob_coilfang_ambusher() : CreatureScript("mob_coilfang_ambusher") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_coilfang_ambusherAI (creature);
+        return new mob_coilfang_ambusherAI (pCreature);
     }
 
     struct mob_coilfang_ambusherAI : public Scripted_NoMovementAI
     {
         mob_coilfang_ambusherAI(Creature* c) : Scripted_NoMovementAI(c)
         {
+            SpellEntry *TempSpell = GET_SPELL(SPELL_SHOOT);
+            if (TempSpell)
+                TempSpell->Effect[0] = 2;//change spell effect from weapon % dmg to simple phisical dmg
         }
 
         uint32 MultiShotTimer;
@@ -443,11 +453,11 @@ public:
 
             if (ShootBowTimer <= diff)
             {
-                Unit* target = NULL;
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                Unit* pTarget = NULL;
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
                 int bp0 = 1100;
-                if (target)
-                    me->CastCustomSpell(target, SPELL_SHOOT, &bp0, NULL, NULL, true);
+                if (pTarget)
+                    me->CastCustomSpell(pTarget, SPELL_SHOOT, &bp0, NULL, NULL, true);
                 ShootBowTimer = 4000+rand()%5000;
                 MultiShotTimer += 1500;//add global cooldown
             } else ShootBowTimer -= diff;

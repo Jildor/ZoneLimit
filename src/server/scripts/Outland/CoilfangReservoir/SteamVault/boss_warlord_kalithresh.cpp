@@ -47,9 +47,9 @@ class mob_naga_distiller : public CreatureScript
 public:
     mob_naga_distiller() : CreatureScript("mob_naga_distiller") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_naga_distillerAI (creature);
+        return new mob_naga_distillerAI (pCreature);
     }
 
     struct mob_naga_distillerAI : public ScriptedAI
@@ -105,9 +105,9 @@ class boss_warlord_kalithresh : public CreatureScript
 public:
     boss_warlord_kalithresh() : CreatureScript("boss_warlord_kalithresh") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_warlord_kalithreshAI (creature);
+        return new boss_warlord_kalithreshAI (pCreature);
     }
 
     struct boss_warlord_kalithreshAI : public ScriptedAI
@@ -148,7 +148,7 @@ public:
             DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo *spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
         {
             //hack :(
             if (spell->Id == SPELL_WARLORDS_RAGE_PROC)
@@ -191,8 +191,8 @@ public:
             //Impale_Timer
             if (Impale_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_IMPALE);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    DoCast(pTarget, SPELL_IMPALE);
 
                 Impale_Timer = 7500+rand()%5000;
             } else Impale_Timer -= diff;

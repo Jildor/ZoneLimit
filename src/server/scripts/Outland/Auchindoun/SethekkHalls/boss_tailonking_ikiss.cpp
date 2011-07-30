@@ -57,9 +57,9 @@ class boss_talon_king_ikiss : public CreatureScript
 public:
     boss_talon_king_ikiss() : CreatureScript("boss_talon_king_ikiss") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_talon_king_ikissAI (creature);
+        return new boss_talon_king_ikissAI (pCreature);
     }
 
     struct boss_talon_king_ikissAI : public ScriptedAI
@@ -151,16 +151,16 @@ public:
 
             if (Sheep_Timer <= diff)
             {
-                Unit* target;
+                Unit* pTarget;
 
                 //second top aggro target in normal, random target in heroic correct?
                 if (IsHeroic())
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
                 else
-                    target = SelectTarget(SELECT_TARGET_TOPAGGRO, 1);
+                    pTarget = SelectTarget(SELECT_TARGET_TOPAGGRO, 1);
 
-                if (target)
-                    DoCast(target, SPELL_POLYMORPH);
+                if (pTarget)
+                    DoCast(pTarget, SPELL_POLYMORPH);
                 Sheep_Timer = 15000+rand()%2500;
             } else Sheep_Timer -= diff;
 
@@ -184,21 +184,21 @@ public:
             {
                 DoScriptText(EMOTE_ARCANE_EXP, me);
 
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {
                     if (me->IsNonMeleeSpellCasted(false))
                         me->InterruptNonMeleeSpells(false);
 
                     //Spell doesn't work, but we use for visual effect at least
-                    DoCast(target, SPELL_BLINK);
+                    DoCast(pTarget, SPELL_BLINK);
 
-                    float X = target->GetPositionX();
-                    float Y = target->GetPositionY();
-                    float Z = target->GetPositionZ();
+                    float X = pTarget->GetPositionX();
+                    float Y = pTarget->GetPositionY();
+                    float Z = pTarget->GetPositionZ();
 
                     DoTeleportTo(X, Y, Z);
 
-                    DoCast(target, SPELL_BLINK_TELEPORT);
+                    DoCast(pTarget, SPELL_BLINK_TELEPORT);
                     Blink = true;
                 }
                 Blink_Timer = 35000+rand()%5000;

@@ -76,9 +76,9 @@ class npc_millhouse_manastorm : public CreatureScript
         }
         struct npc_millhouse_manastormAI : public ScriptedAI
         {
-            npc_millhouse_manastormAI(Creature* creature) : ScriptedAI(creature)
+            npc_millhouse_manastormAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
-                pInstance = creature->GetInstanceScript();
+                pInstance = pCreature->GetInstanceScript();
             }
 
             InstanceScript* pInstance;
@@ -111,14 +111,14 @@ class npc_millhouse_manastorm : public CreatureScript
                 }
             }
 
-            void AttackStart(Unit* who)
+            void AttackStart(Unit* pWho)
             {
-                if (me->Attack(who, true))
+                if (me->Attack(pWho, true))
                 {
-                    me->AddThreat(who, 0.0f);
-                    me->SetInCombatWith(who);
-                    who->SetInCombatWith(me);
-                    me->GetMotionMaster()->MoveChase(who, 25.0f);
+                    me->AddThreat(pWho, 0.0f);
+                    me->SetInCombatWith(pWho);
+                    pWho->SetInCombatWith(me);
+                    me->GetMotionMaster()->MoveChase(pWho, 25.0f);
                 }
             }
 
@@ -280,9 +280,9 @@ class npc_warden_mellichar : public CreatureScript
         }
         struct npc_warden_mellicharAI : public ScriptedAI
         {
-            npc_warden_mellicharAI(Creature* creature) : ScriptedAI(creature)
+            npc_warden_mellicharAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
-                pInstance = creature->GetInstanceScript();
+                pInstance = pCreature->GetInstanceScript();
             }
 
             InstanceScript* pInstance;
@@ -536,7 +536,7 @@ class mob_zerekethvoidzone : public CreatureScript
         }
         struct mob_zerekethvoidzoneAI : public ScriptedAI
         {
-            mob_zerekethvoidzoneAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_zerekethvoidzoneAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             void Reset()
             {

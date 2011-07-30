@@ -48,9 +48,9 @@ class boss_broggok : public CreatureScript
 
         struct boss_broggokAI : public ScriptedAI
         {
-            boss_broggokAI(Creature* creature) : ScriptedAI(creature)
+            boss_broggokAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
-                pInstance = creature->GetInstanceScript();
+                pInstance = pCreature->GetInstanceScript();
             }
 
             InstanceScript* pInstance;

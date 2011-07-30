@@ -52,7 +52,7 @@ class go_bridge_console : public GameObjectScript
     public:
         go_bridge_console() : GameObjectScript("go_bridge_console") { }
 
-        bool OnGossipHello(Player* /*player*/, GameObject* go)
+        bool OnGossipHello(Player* /*pPlayer*/, GameObject* go)
         {
             InstanceScript* pInstance = go->GetInstanceScript();
 
@@ -134,33 +134,33 @@ class instance_serpent_shrine : public InstanceMapScript
                         return;
                     for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                     {
-                        if (Player* player = i->getSource())
+                        if (Player* pPlayer = i->getSource())
                         {
-                            if (player->isAlive() && /*i->getSource()->GetPositionZ() <= -21.434931f*/player->IsInWater())
+                            if (pPlayer->isAlive() && /*i->getSource()->GetPositionZ() <= -21.434931f*/pPlayer->IsInWater())
                             {
                                 if (Water == WATERSTATE_SCALDING)
                                 {
 
-                                    if (!player->HasAura(SPELL_SCALDINGWATER))
+                                    if (!pPlayer->HasAura(SPELL_SCALDINGWATER))
                                     {
-                                        player->CastSpell(player, SPELL_SCALDINGWATER, true);
+                                        pPlayer->CastSpell(pPlayer, SPELL_SCALDINGWATER, true);
                                     }
                                 } else if (Water == WATERSTATE_FRENZY)
                                 {
                                     //spawn frenzy
                                     if (DoSpawnFrenzy)
                                     {
-                                        if (Creature* frenzy = player->SummonCreature(MOB_COILFANG_FRENZY, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 2000))
+                                        if (Creature* frenzy = pPlayer->SummonCreature(MOB_COILFANG_FRENZY, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 2000))
                                         {
-                                            frenzy->Attack(player, false);
+                                            frenzy->Attack(pPlayer, false);
                                             frenzy->AddUnitMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_LEVITATING);
                                         }
                                         DoSpawnFrenzy = false;
                                     }
                                 }
                             }
-                            if (!player->IsInWater())
-                                player->RemoveAurasDueToSpell(SPELL_SCALDINGWATER);
+                            if (!pPlayer->IsInWater())
+                                pPlayer->RemoveAurasDueToSpell(SPELL_SCALDINGWATER);
                         }
 
                     }
@@ -383,8 +383,8 @@ class instance_serpent_shrine : public InstanceMapScript
             {
                 OUT_SAVE_INST_DATA;
                 std::ostringstream stream;
-                stream << m_auiEncounter[0] << ' ' << m_auiEncounter[1] << ' ' << m_auiEncounter[2] << ' '
-                    << m_auiEncounter[3] << ' ' << m_auiEncounter[4] << ' ' << m_auiEncounter[5] << ' ' << TrashCount;
+                stream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
+                    << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " " << TrashCount;
                 OUT_SAVE_INST_DATA_COMPLETE;
                 return stream.str();
             }

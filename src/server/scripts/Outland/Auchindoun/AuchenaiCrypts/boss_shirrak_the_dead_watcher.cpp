@@ -45,9 +45,9 @@ class boss_shirrak_the_dead_watcher : public CreatureScript
 public:
     boss_shirrak_the_dead_watcher() : CreatureScript("boss_shirrak_the_dead_watcher") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_shirrak_the_dead_watcherAI (creature);
+        return new boss_shirrak_the_dead_watcherAI (pCreature);
     }
 
     struct boss_shirrak_the_dead_watcherAI : public ScriptedAI
@@ -136,18 +136,20 @@ public:
             if (FocusFire_Timer <= diff)
             {
                 // Summon Focus Fire & Emote
-                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
-                if (target && target->GetTypeId() == TYPEID_PLAYER && target->isAlive())
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->isAlive())
                 {
-                    FocusedTargetGUID = target->GetGUID();
-                    me->SummonCreature(ENTRY_FOCUS_FIRE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 5500);
+                    FocusedTargetGUID = pTarget->GetGUID();
+                    me->SummonCreature(ENTRY_FOCUS_FIRE, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 5500);
 
                     // TODO: Find better way to handle emote
                     // Emote
-                    std::string emote(EMOTE_FOCUSES_ON);
-                    emote.append(target->GetName());
-                    emote.push_back('!');
-                    me->MonsterTextEmote(emote.c_str(), 0, true);
+                    std::string *emote = new std::string(EMOTE_FOCUSES_ON);
+                    emote->append(pTarget->GetName());
+                    emote->append("!");
+                    const char* text = emote->c_str();
+                    me->MonsterTextEmote(text, 0, true);
+                    delete emote;
                 }
                 FocusFire_Timer = 15000+(rand()%5000);
             } else FocusFire_Timer -= diff;
@@ -163,9 +165,9 @@ class mob_focus_fire : public CreatureScript
 public:
     mob_focus_fire() : CreatureScript("mob_focus_fire") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_focus_fireAI (creature);
+        return new mob_focus_fireAI (pCreature);
     }
 
     struct mob_focus_fireAI : public ScriptedAI

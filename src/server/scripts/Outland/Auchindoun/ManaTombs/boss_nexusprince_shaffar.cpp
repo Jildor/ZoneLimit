@@ -60,9 +60,9 @@ class boss_nexusprince_shaffar : public CreatureScript
 public:
     boss_nexusprince_shaffar() : CreatureScript("boss_nexusprince_shaffar") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_nexusprince_shaffarAI (creature);
+        return new boss_nexusprince_shaffarAI (pCreature);
     }
 
     struct boss_nexusprince_shaffarAI : public ScriptedAI
@@ -128,8 +128,8 @@ public:
             {
                 summoned->CastSpell(summoned, SPELL_ETHEREAL_BEACON_VISUAL, false);
 
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    summoned->AI()->AttackStart(target);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    summoned->AI()->AttackStart(pTarget);
             }
 
             summons.Summon(summoned);
@@ -226,9 +226,9 @@ class mob_ethereal_beacon : public CreatureScript
 public:
     mob_ethereal_beacon() : CreatureScript("mob_ethereal_beacon") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_ethereal_beaconAI (creature);
+        return new mob_ethereal_beaconAI (pCreature);
     }
 
     struct mob_ethereal_beaconAI : public ScriptedAI
@@ -318,9 +318,9 @@ class mob_ethereal_apprentice : public CreatureScript
 public:
     mob_ethereal_apprentice() : CreatureScript("mob_ethereal_apprentice") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_ethereal_apprenticeAI (creature);
+        return new mob_ethereal_apprenticeAI (pCreature);
     }
 
     struct mob_ethereal_apprenticeAI : public ScriptedAI

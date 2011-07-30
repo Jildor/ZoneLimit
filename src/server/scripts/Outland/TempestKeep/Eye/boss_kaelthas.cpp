@@ -145,9 +145,9 @@ const float afGravityPos[3]             = {795.0f, 0.0f, 70.0f};
 //Base AI for Advisors
 struct advisorbase_ai : public ScriptedAI
 {
-    advisorbase_ai(Creature* creature) : ScriptedAI(creature)
+    advisorbase_ai(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = creature->GetInstanceScript();
+        m_pInstance = pCreature->GetInstanceScript();
         m_bDoubled_Health = false;
     }
 
@@ -208,7 +208,7 @@ struct advisorbase_ai : public ScriptedAI
         DelayRes_Timer = 2000;
     }
 
-    void DamageTaken(Unit* killer, uint32 &damage)
+    void DamageTaken(Unit* pKiller, uint32 &damage)
     {
         if (damage < me->GetHealth())
             return;
@@ -236,11 +236,11 @@ struct advisorbase_ai : public ScriptedAI
             me->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             me->ClearAllReactives();
-            me->SetTarget(0);
+            me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
             me->GetMotionMaster()->Clear();
             me->GetMotionMaster()->MoveIdle();
             me->SetStandState(UNIT_STAND_STATE_DEAD);
-            JustDied(killer);
+            JustDied(pKiller);
         }
     }
 
@@ -278,9 +278,9 @@ class boss_kaelthas : public CreatureScript
         //Kael'thas AI
         struct boss_kaelthasAI : public ScriptedAI
         {
-            boss_kaelthasAI(Creature* creature) : ScriptedAI(creature), summons(me)
+            boss_kaelthasAI(Creature* pCreature) : ScriptedAI(pCreature), summons(me)
             {
-                m_pInstance = creature->GetInstanceScript();
+                m_pInstance = pCreature->GetInstanceScript();
                 memset(&m_auiAdvisorGuid, 0, sizeof(m_auiAdvisorGuid));
             }
 
@@ -343,12 +343,12 @@ class boss_kaelthas : public CreatureScript
             {
                 for (uint8 i = 0; i < MAX_ADVISORS; ++i)
                 {
-                    if (Creature* creature = Unit::GetCreature((*me), m_auiAdvisorGuid[i]))
+                    if (Creature* pCreature = Unit::GetCreature((*me), m_auiAdvisorGuid[i]))
                     {
-                        creature->Respawn();
-                        creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                        creature->setFaction(me->getFaction());
-                        creature->AI()->EnterEvadeMode();
+                        pCreature->Respawn();
+                        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        pCreature->setFaction(me->getFaction());
+                        pCreature->AI()->EnterEvadeMode();
                     }
                 }
             }
@@ -376,8 +376,8 @@ class boss_kaelthas : public CreatureScript
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        AttackStart(target);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        AttackStart(pTarget);
 
                 }
                 else
@@ -434,15 +434,15 @@ class boss_kaelthas : public CreatureScript
                 DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
             }
 
-            void JustSummoned(Creature* summoned)
+            void JustSummoned(Creature* pSummoned)
             {
                 // if not phoenix, then it's one of the 7 weapons
-                if (summoned->GetEntry() != NPC_PHOENIX)
+                if (pSummoned->GetEntry() != NPC_PHOENIX)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        summoned->AI()->AttackStart(target);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        pSummoned->AI()->AttackStart(pTarget);
 
-                    summons.Summon(summoned);
+                    summons.Summon(pSummoned);
                 }
             }
 
@@ -474,7 +474,7 @@ class boss_kaelthas : public CreatureScript
                 {
                     case 1:
                     {
-                        Unit* target = NULL;
+                        Unit* pTarget = NULL;
                         Creature* Advisor = NULL;
 
                         //Subphase switch
@@ -503,9 +503,9 @@ class boss_kaelthas : public CreatureScript
                                         Advisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                         Advisor->setFaction(me->getFaction());
 
-                                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                        if (target)
-                                            Advisor->AI()->AttackStart(target);
+                                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                        if (pTarget)
+                                            Advisor->AI()->AttackStart(pTarget);
                                     }
 
                                     ++PhaseSubphase;
@@ -537,9 +537,9 @@ class boss_kaelthas : public CreatureScript
                                         Advisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                         Advisor->setFaction(me->getFaction());
 
-                                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                        if (target)
-                                            Advisor->AI()->AttackStart(target);
+                                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                        if (pTarget)
+                                            Advisor->AI()->AttackStart(pTarget);
                                     }
 
                                     ++PhaseSubphase;
@@ -571,9 +571,9 @@ class boss_kaelthas : public CreatureScript
                                         Advisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                         Advisor->setFaction(me->getFaction());
 
-                                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                        if (target)
-                                            Advisor->AI()->AttackStart(target);
+                                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                        if (pTarget)
+                                            Advisor->AI()->AttackStart(pTarget);
                                     }
 
                                     ++PhaseSubphase;
@@ -605,9 +605,9 @@ class boss_kaelthas : public CreatureScript
                                         Advisor->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                         Advisor->setFaction(me->getFaction());
 
-                                        target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                                        if (target)
-                                            Advisor->AI()->AttackStart(target);
+                                        pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                                        if (pTarget)
+                                            Advisor->AI()->AttackStart(pTarget);
                                     }
 
                                     Phase_Timer = 3000;
@@ -683,7 +683,7 @@ class boss_kaelthas : public CreatureScript
                         if (PhaseSubphase == 0)
                         {
                             //Respawn advisors
-                            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                            Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
                             Creature* Advisor;
                             for (uint8 i = 0; i < MAX_ADVISORS; ++i)
@@ -693,7 +693,7 @@ class boss_kaelthas : public CreatureScript
                                 if (!Advisor)
                                     sLog->outError("SD2: Kael'Thas Advisor %u does not exist. Possibly despawned? Incorrectly Killed?", i);
                                 else
-                                    CAST_AI(advisorbase_ai, Advisor->AI())->Revive(target);
+                                    CAST_AI(advisorbase_ai, Advisor->AI())->Revive(pTarget);
                             }
 
                             PhaseSubphase = 1;
@@ -714,8 +714,8 @@ class boss_kaelthas : public CreatureScript
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                                AttackStart(target);
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                AttackStart(pTarget);
 
                             Phase_Timer = 30000;
                         }
@@ -1016,7 +1016,7 @@ class boss_thaladred_the_darkener : public CreatureScript
         }
         struct boss_thaladred_the_darkenerAI : public advisorbase_ai
         {
-            boss_thaladred_the_darkenerAI(Creature* creature) : advisorbase_ai(creature) {}
+            boss_thaladred_the_darkenerAI(Creature* pCreature) : advisorbase_ai(pCreature) {}
 
             uint32 Gaze_Timer;
             uint32 Silence_Timer;
@@ -1043,7 +1043,7 @@ class boss_thaladred_the_darkener : public CreatureScript
                 me->AddThreat(who, 5000000.0f);
             }
 
-            void JustDied(Unit* /*killer*/)
+            void JustDied(Unit* /*pKiller*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
                     DoScriptText(SAY_THALADRED_DEATH, me);
@@ -1064,11 +1064,11 @@ class boss_thaladred_the_darkener : public CreatureScript
                 //Gaze_Timer
                 if (Gaze_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
                         DoResetThreat();
-                        me->AddThreat(target, 5000000.0f);
-                        DoScriptText(EMOTE_THALADRED_GAZE, me, target);
+                        me->AddThreat(pTarget, 5000000.0f);
+                        DoScriptText(EMOTE_THALADRED_GAZE, me, pTarget);
                         Gaze_Timer = 8500;
                     }
                 }
@@ -1114,7 +1114,7 @@ class boss_lord_sanguinar : public CreatureScript
         }
         struct boss_lord_sanguinarAI : public advisorbase_ai
         {
-            boss_lord_sanguinarAI(Creature* creature) : advisorbase_ai(creature) {}
+            boss_lord_sanguinarAI(Creature* pCreature) : advisorbase_ai(pCreature) {}
 
             uint32 Fear_Timer;
 
@@ -1181,7 +1181,7 @@ class boss_grand_astromancer_capernian : public CreatureScript
         }
         struct boss_grand_astromancer_capernianAI : public advisorbase_ai
         {
-            boss_grand_astromancer_capernianAI(Creature* creature) : advisorbase_ai(creature) {}
+            boss_grand_astromancer_capernianAI(Creature* pCreature) : advisorbase_ai(pCreature) {}
 
             uint32 Fireball_Timer;
             uint32 Conflagration_Timer;
@@ -1200,7 +1200,7 @@ class boss_grand_astromancer_capernian : public CreatureScript
                 advisorbase_ai::Reset();
             }
 
-            void JustDied(Unit* /*killer*/)
+            void JustDied(Unit* /*pKiller*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
                     DoScriptText(SAY_CAPERNIAN_DEATH, me);
@@ -1266,11 +1266,11 @@ class boss_grand_astromancer_capernian : public CreatureScript
                 //Conflagration_Timer
                 if (Conflagration_Timer <= diff)
                 {
-                    Unit* target = NULL;
-                    target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    Unit* pTarget = NULL;
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
-                    if (target && me->IsWithinDistInMap(target, 30))
-                        DoCast(target, SPELL_CONFLAGRATION);
+                    if (pTarget && me->IsWithinDistInMap(pTarget, 30))
+                        DoCast(pTarget, SPELL_CONFLAGRATION);
                     else
                         DoCast(me->getVictim(), SPELL_CONFLAGRATION);
 
@@ -1283,7 +1283,7 @@ class boss_grand_astromancer_capernian : public CreatureScript
                 if (ArcaneExplosion_Timer <= diff)
                 {
                     bool InMeleeRange = false;
-                    Unit* target = NULL;
+                    Unit* pTarget = NULL;
                     std::list<HostileReference*>& m_threatlist = me->getThreatManager().getThreatList();
                     for (std::list<HostileReference*>::const_iterator i = m_threatlist.begin(); i!= m_threatlist.end(); ++i)
                     {
@@ -1292,13 +1292,13 @@ class boss_grand_astromancer_capernian : public CreatureScript
                         if (pUnit && pUnit->IsWithinDistInMap(me, 5))
                         {
                             InMeleeRange = true;
-                            target = pUnit;
+                            pTarget = pUnit;
                             break;
                         }
                     }
 
                     if (InMeleeRange)
-                        DoCast(target, SPELL_ARCANE_EXPLOSION);
+                        DoCast(pTarget, SPELL_ARCANE_EXPLOSION);
 
                     ArcaneExplosion_Timer = 4000+rand()%2000;
                 }
@@ -1326,7 +1326,7 @@ class boss_master_engineer_telonicus : public CreatureScript
         }
         struct boss_master_engineer_telonicusAI : public advisorbase_ai
         {
-            boss_master_engineer_telonicusAI(Creature* creature) : advisorbase_ai(creature) {}
+            boss_master_engineer_telonicusAI(Creature* pCreature) : advisorbase_ai(pCreature) {}
 
             uint32 Bomb_Timer;
             uint32 RemoteToy_Timer;
@@ -1339,7 +1339,7 @@ class boss_master_engineer_telonicus : public CreatureScript
                 advisorbase_ai::Reset();
             }
 
-            void JustDied(Unit* /*killer*/)
+            void JustDied(Unit* /*pKiller*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
                     DoScriptText(SAY_TELONICUS_DEATH, me);
@@ -1380,8 +1380,8 @@ class boss_master_engineer_telonicus : public CreatureScript
                 //RemoteToy_Timer
                 if (RemoteToy_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        DoCast(target, SPELL_REMOTE_TOY);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(pTarget, SPELL_REMOTE_TOY);
 
                     RemoteToy_Timer = 10000+rand()%5000;
                 }
@@ -1409,7 +1409,7 @@ class mob_kael_flamestrike : public CreatureScript
         }
         struct mob_kael_flamestrikeAI : public Scripted_NoMovementAI
         {
-            mob_kael_flamestrikeAI(Creature* creature) : Scripted_NoMovementAI(creature) {}
+            mob_kael_flamestrikeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {}
 
             uint32 Timer;
             bool Casting;
@@ -1473,7 +1473,7 @@ class mob_phoenix_tk : public CreatureScript
         }
         struct mob_phoenix_tkAI : public ScriptedAI
         {
-            mob_phoenix_tkAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_phoenix_tkAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             uint32 Cycle_Timer;
 
@@ -1527,7 +1527,7 @@ class mob_phoenix_egg_tk : public CreatureScript
         }
         struct mob_phoenix_egg_tkAI : public ScriptedAI
         {
-            mob_phoenix_egg_tkAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_phoenix_egg_tkAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             uint32 Rebirth_Timer;
 
@@ -1571,9 +1571,9 @@ class mob_phoenix_egg_tk : public CreatureScript
             }
         };
 
-        CreatureAI* GetAI(Creature* creature) const
+        CreatureAI* GetAI(Creature* pCreature) const
         {
-            return new mob_phoenix_egg_tkAI(creature);
+            return new mob_phoenix_egg_tkAI(pCreature);
         }
 };
 

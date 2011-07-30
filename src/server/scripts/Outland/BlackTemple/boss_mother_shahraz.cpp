@@ -83,9 +83,9 @@ class boss_mother_shahraz : public CreatureScript
 public:
     boss_mother_shahraz() : CreatureScript("boss_mother_shahraz") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_shahrazAI (creature);
+        return new boss_shahrazAI (pCreature);
     }
 
     struct boss_shahrazAI : public ScriptedAI
@@ -190,8 +190,8 @@ public:
             //Randomly cast one beam.
             if (BeamTimer <= diff)
             {
-                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                if (!target || !target->isAlive())
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                if (!pTarget || !pTarget->isAlive())
                     return;
 
                 BeamTimer = 9000;
@@ -199,16 +199,16 @@ public:
                 switch(CurrentBeam)
                 {
                     case 0:
-                        DoCast(target, SPELL_BEAM_SINISTER);
+                        DoCast(pTarget, SPELL_BEAM_SINISTER);
                         break;
                     case 1:
-                        DoCast(target, SPELL_BEAM_VILE);
+                        DoCast(pTarget, SPELL_BEAM_VILE);
                         break;
                     case 2:
-                        DoCast(target, SPELL_BEAM_WICKED);
+                        DoCast(pTarget, SPELL_BEAM_WICKED);
                         break;
                     case 3:
-                        DoCast(target, SPELL_BEAM_SINFUL);
+                        DoCast(pTarget, SPELL_BEAM_SINFUL);
                         break;
                 }
                 ++BeamCount;

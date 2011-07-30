@@ -81,9 +81,9 @@ class boss_hydross_the_unstable : public CreatureScript
 public:
     boss_hydross_the_unstable() : CreatureScript("boss_hydross_the_unstable") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_hydross_the_unstableAI (creature);
+        return new boss_hydross_the_unstableAI (pCreature);
     }
 
     struct boss_hydross_the_unstableAI : public ScriptedAI
@@ -262,9 +262,9 @@ public:
                 //VileSludge_Timer
                 if (VileSludge_Timer <= diff)
                 {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
-                    if (target)
-                        DoCast(target, SPELL_VILE_SLUDGE);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    if (pTarget)
+                        DoCast(pTarget, SPELL_VILE_SLUDGE);
 
                     VileSludge_Timer = 15000;
                 } else VileSludge_Timer -= diff;
@@ -329,9 +329,9 @@ public:
                 //WaterTomb_Timer
                 if (WaterTomb_Timer <= diff)
                 {
-                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                    if (target)
-                        DoCast(target, SPELL_WATER_TOMB);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                    if (pTarget)
+                        DoCast(pTarget, SPELL_WATER_TOMB);
 
                     WaterTomb_Timer = 7000;
                 } else WaterTomb_Timer -= diff;

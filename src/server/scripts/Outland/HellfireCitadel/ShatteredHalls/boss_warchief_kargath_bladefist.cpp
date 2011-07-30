@@ -70,7 +70,7 @@ class boss_warchief_kargath_bladefist : public CreatureScript
 
         struct boss_warchief_kargath_bladefistAI : public ScriptedAI
         {
-            boss_warchief_kargath_bladefistAI(Creature* creature) : ScriptedAI(creature)
+            boss_warchief_kargath_bladefistAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
             }
 

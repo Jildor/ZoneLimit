@@ -106,9 +106,9 @@ class npc_enslaved_soul : public CreatureScript
 public:
     npc_enslaved_soul() : CreatureScript("npc_enslaved_soul") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_enslaved_soulAI (creature);
+        return new npc_enslaved_soulAI (pCreature);
     }
 
     struct npc_enslaved_soulAI : public ScriptedAI
@@ -135,9 +135,9 @@ class boss_reliquary_of_souls : public CreatureScript
 public:
     boss_reliquary_of_souls() : CreatureScript("boss_reliquary_of_souls") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_reliquary_of_soulsAI (creature);
+        return new boss_reliquary_of_soulsAI (pCreature);
     }
 
     struct boss_reliquary_of_soulsAI : public ScriptedAI
@@ -199,20 +199,20 @@ public:
             float y = Coords[random].y;
             Creature* Soul = me->SummonCreature(CREATURE_ENSLAVED_SOUL, x, y, me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_CORPSE_DESPAWN, 0);
             if (!Soul) return false;
-            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
             {
                 CAST_AI(npc_enslaved_soul::npc_enslaved_soulAI, Soul->AI())->ReliquaryGUID = me->GetGUID();
-                Soul->AI()->AttackStart(target);
+                Soul->AI()->AttackStart(pTarget);
             } else EnterEvadeMode();
             return true;
         }
 
-        void MergeThreatList(Creature* target)
+        void MergeThreatList(Creature* pTarget)
         {
-            if (!target)
+            if (!pTarget)
                 return;
 
-            std::list<HostileReference*>& m_threatlist = target->getThreatManager().getThreatList();
+            std::list<HostileReference*>& m_threatlist = pTarget->getThreatManager().getThreatList();
             std::list<HostileReference*>::const_iterator itr = m_threatlist.begin();
             for (; itr != m_threatlist.end(); ++itr)
             {
@@ -220,7 +220,7 @@ public:
                 if (pUnit)
                 {
                     DoModifyThreatPercent(pUnit, -100);
-                    float threat = target->getThreatManager().getThreat(pUnit);
+                    float threat = pTarget->getThreatManager().getThreat(pUnit);
                     me->AddThreat(pUnit, threat);       // This makes it so that the unit has the same amount of threat in Reliquary's threatlist as in the target creature's (One of the Essences).
                 }
             }
@@ -372,9 +372,9 @@ class boss_essence_of_suffering : public CreatureScript
 public:
     boss_essence_of_suffering() : CreatureScript("boss_essence_of_suffering") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_essence_of_sufferingAI (creature);
+        return new boss_essence_of_sufferingAI (pCreature);
     }
 
     struct boss_essence_of_sufferingAI : public ScriptedAI
@@ -446,11 +446,11 @@ public:
                 return; // No targets added for some reason. No point continuing.
             targets.sort(Trinity::ObjectDistanceOrderPred(me)); // Sort players by distance.
             targets.resize(1); // Only need closest target.
-            Unit* target = targets.front(); // Get the first target.
-            if (target)
-                target->CastSpell(me, SPELL_FIXATE_TAUNT, true);
+            Unit* pTarget = targets.front(); // Get the first target.
+            if (pTarget)
+                pTarget->CastSpell(me, SPELL_FIXATE_TAUNT, true);
             DoResetThreat();
-            me->AddThreat(target, 1000000);
+            me->AddThreat(pTarget, 1000000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -497,9 +497,9 @@ class boss_essence_of_desire : public CreatureScript
 public:
     boss_essence_of_desire() : CreatureScript("boss_essence_of_desire") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_essence_of_desireAI (creature);
+        return new boss_essence_of_desireAI (pCreature);
     }
 
     struct boss_essence_of_desireAI : public ScriptedAI
@@ -536,11 +536,11 @@ public:
             }
         }
 
-        void SpellHit(Unit* /*caster*/, const SpellInfo *spell)
+        void SpellHit(Unit* /*caster*/, const SpellEntry *spell)
         {
             if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL))
                 for (uint8 i = 0; i < 3; ++i)
-                    if (spell->Effects[i].Effect == SPELL_EFFECT_INTERRUPT_CAST)
+                    if (spell->Effect[i] == SPELL_EFFECT_INTERRUPT_CAST)
                         if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_SOUL_SHOCK
                             || me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_DEADEN)
                             me->InterruptSpell(CURRENT_GENERIC_SPELL, false);
@@ -600,9 +600,9 @@ class boss_essence_of_anger : public CreatureScript
 public:
     boss_essence_of_anger() : CreatureScript("boss_essence_of_anger") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_essence_of_angerAI (creature);
+        return new boss_essence_of_angerAI (pCreature);
     }
 
     struct boss_essence_of_angerAI : public ScriptedAI

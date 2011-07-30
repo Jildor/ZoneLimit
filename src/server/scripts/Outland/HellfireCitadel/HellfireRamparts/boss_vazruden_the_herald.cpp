@@ -82,7 +82,7 @@ class boss_nazan : public CreatureScript
 
         struct boss_nazanAI : public ScriptedAI
         {
-            boss_nazanAI(Creature* creature) : ScriptedAI(creature)
+            boss_nazanAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
                 VazrudenGUID = 0;
                 flight = true;
@@ -95,7 +95,7 @@ class boss_nazan : public CreatureScript
             uint32 Turn_Timer;
             bool flight;
             uint64 VazrudenGUID;
-            SpellInfo *liquid_fire;
+            SpellEntry *liquid_fire;
 
             void Reset()
             {
@@ -117,10 +117,10 @@ class boss_nazan : public CreatureScript
                 }
             }
 
-            void SpellHitTarget(Unit* target, const SpellInfo* entry)
+            void SpellHitTarget(Unit* pTarget, const SpellEntry* entry)
             {
-                if (target && entry->Id == uint32(SPELL_FIREBALL))
-                    me->SummonCreature(ENTRY_LIQUID_FIRE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 30000);
+                if (pTarget && entry->Id == uint32(SPELL_FIREBALL))
+                    me->SummonCreature(ENTRY_LIQUID_FIRE, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), pTarget->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 30000);
             }
 
             void UpdateAI(const uint32 diff)
@@ -130,8 +130,8 @@ class boss_nazan : public CreatureScript
 
                 if (Fireball_Timer <= diff)
                 {
-                    if (Unit* victim = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        DoCast(victim, DUNGEON_MODE(SPELL_FIREBALL, SPELL_FIREBALL_H), true);
+                    if (Unit* pVictim = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(pVictim, DUNGEON_MODE(SPELL_FIREBALL, SPELL_FIREBALL_H), true);
                     Fireball_Timer = urand(4000, 7000);
                 }
                 else
@@ -148,8 +148,8 @@ class boss_nazan : public CreatureScript
                         me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                         me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                         me->GetMotionMaster()->Clear();
-                        if (Unit* victim = SelectTarget(SELECT_TARGET_NEAREST, 0))
-                            me->AI()->AttackStart(victim);
+                        if (Unit* pVictim = SelectTarget(SELECT_TARGET_NEAREST, 0))
+                            me->AI()->AttackStart(pVictim);
                         DoStartMovement(me->getVictim());
                         DoScriptText(EMOTE, me);
                         return;
@@ -210,7 +210,7 @@ class boss_vazruden : public CreatureScript
         }
         struct boss_vazrudenAI : public ScriptedAI
         {
-            boss_vazrudenAI(Creature* creature) : ScriptedAI(creature)
+            boss_vazrudenAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
             }
 
@@ -289,7 +289,7 @@ class boss_vazruden_the_herald : public CreatureScript
 
         struct boss_vazruden_the_heraldAI : public ScriptedAI
         {
-            boss_vazruden_the_heraldAI(Creature* creature) : ScriptedAI(creature)
+            boss_vazruden_the_heraldAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
                 summoned = false;
                 sentryDown = false;
@@ -366,29 +366,29 @@ class boss_vazruden_the_herald : public CreatureScript
                 }
             }
 
-            void JustSummoned(Creature* summoned)
+            void JustSummoned(Creature* pSummoned)
             {
-                if (!summoned)
+                if (!pSummoned)
                     return;
-                Unit* victim = me->getVictim();
-                if (summoned->GetEntry() == ENTRY_NAZAN)
+                Unit* pVictim = me->getVictim();
+                if (pSummoned->GetEntry() == ENTRY_NAZAN)
                 {
-                    CAST_AI(boss_nazan::boss_nazanAI, summoned->AI())->VazrudenGUID = VazrudenGUID;
-                    summoned->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-                    summoned->SetSpeed(MOVE_FLIGHT, 2.5f);
-                    if (victim)
-                        AttackStartNoMove(victim);
+                    CAST_AI(boss_nazan::boss_nazanAI, pSummoned->AI())->VazrudenGUID = VazrudenGUID;
+                    pSummoned->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
+                    pSummoned->SetSpeed(MOVE_FLIGHT, 2.5f);
+                    if (pVictim)
+                        AttackStartNoMove(pVictim);
                 }
                 else
-                    if (victim)
-                        summoned->AI()->AttackStart(victim);
+                    if (pVictim)
+                        pSummoned->AI()->AttackStart(pVictim);
             }
 
-            void SentryDownBy(Unit* killer)
+            void SentryDownBy(Unit* pKiller)
             {
                 if (sentryDown)
                 {
-                    AttackStartNoMove(killer);
+                    AttackStartNoMove(pKiller);
                     sentryDown = false;
                 }
                 else
@@ -469,7 +469,7 @@ class mob_hellfire_sentry : public CreatureScript
         }
         struct mob_hellfire_sentryAI : public ScriptedAI
         {
-            mob_hellfire_sentryAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_hellfire_sentryAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             uint32 KidneyShot_Timer;
 

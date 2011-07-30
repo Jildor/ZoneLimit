@@ -114,9 +114,9 @@ class mob_ashtongue_channeler : public CreatureScript
 public:
     mob_ashtongue_channeler() : CreatureScript("mob_ashtongue_channeler") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_ashtongue_channelerAI (creature);
+        return new mob_ashtongue_channelerAI (pCreature);
     }
 
     struct mob_ashtongue_channelerAI : public ScriptedAI
@@ -140,9 +140,9 @@ class mob_ashtongue_sorcerer : public CreatureScript
 public:
     mob_ashtongue_sorcerer() : CreatureScript("mob_ashtongue_sorcerer") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_ashtongue_sorcererAI (creature);
+        return new mob_ashtongue_sorcererAI (pCreature);
     }
 
     struct mob_ashtongue_sorcererAI : public ScriptedAI
@@ -195,9 +195,9 @@ class boss_shade_of_akama : public CreatureScript
 public:
     boss_shade_of_akama() : CreatureScript("boss_shade_of_akama") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_shade_of_akamaAI (creature);
+        return new boss_shade_of_akamaAI (pCreature);
     }
 
     struct boss_shade_of_akamaAI : public ScriptedAI
@@ -356,7 +356,7 @@ public:
                     CAST_AI(mob_ashtongue_sorcerer::mob_ashtongue_sorcererAI, Sorcerer->AI())->ShadeGUID = me->GetGUID();
                     Sorcerer->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
                     Sorcerer->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
-                    Sorcerer->SetTarget(me->GetGUID());
+                    Sorcerer->SetUInt64Value(UNIT_FIELD_TARGET, me->GetGUID());
                     Sorcerers.push_back(Sorcerer->GetGUID());
                     --DeathCount;
                     ++SorcererCount;
@@ -371,8 +371,8 @@ public:
                     {
                         Spawn->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
                         Spawn->GetMotionMaster()->MovePoint(0, AGGRO_X, AGGRO_Y, AGGRO_Z);
-                        Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
-                        Spawn->AI()->AttackStart(target);
+                        Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                        Spawn->AI()->AttackStart(pTarget);
                     }
                 }
             }
@@ -541,32 +541,32 @@ class npc_akama_shade : public CreatureScript
 public:
     npc_akama_shade() : CreatureScript("npc_akama_shade") { }
 
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
+    bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
     {
-        player->PlayerTalkClass->ClearMenus();
+        pPlayer->PlayerTalkClass->ClearMenus();
         if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)               //Fight time
         {
-            player->CLOSE_GOSSIP_MENU();
-            CAST_AI(npc_akama_shade::npc_akamaAI, creature->AI())->BeginEvent(player);
+            pPlayer->CLOSE_GOSSIP_MENU();
+            CAST_AI(npc_akama_shade::npc_akamaAI, pCreature->AI())->BeginEvent(pPlayer);
         }
 
         return true;
     }
 
-    bool OnGossipHello(Player* player, Creature* creature)
+    bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-        if (player->isAlive())
+        if (pPlayer->isAlive())
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            player->SEND_GOSSIP_MENU(907, creature->GetGUID());
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetGUID());
         }
 
         return true;
     }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_akamaAI (creature);
+        return new npc_akamaAI (pCreature);
     }
 
     struct npc_akamaAI : public ScriptedAI
@@ -661,7 +661,7 @@ public:
                 Shade->AddThreat(me, 1000000.0f);
                 me->CombatStart(Shade);
                 Shade->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_NONE);
-                Shade->SetTarget(me->GetGUID());
+                Shade->SetUInt64Value(UNIT_FIELD_TARGET, me->GetGUID());
                 if (pl) Shade->AddThreat(pl, 1.0f);
                 DoZoneInCombat(Shade);
                 EventBegun = true;
@@ -680,7 +680,7 @@ public:
             case 1:
                 if (Creature* Shade = Unit::GetCreature(*me, ShadeGUID))
                 {
-                    me->SetTarget(ShadeGUID);
+                    me->SetUInt64Value(UNIT_FIELD_TARGET, ShadeGUID);
                     DoCast(Shade, SPELL_AKAMA_SOUL_RETRIEVE);
                     EndingTalkCount = 0;
                     SoulRetrieveTimer = 16000;

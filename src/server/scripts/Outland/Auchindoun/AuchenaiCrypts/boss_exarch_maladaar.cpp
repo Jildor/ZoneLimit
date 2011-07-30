@@ -46,9 +46,9 @@ class mob_stolen_soul : public CreatureScript
 public:
     mob_stolen_soul() : CreatureScript("mob_stolen_soul") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_stolen_soulAI (creature);
+        return new mob_stolen_soulAI (pCreature);
     }
 
     struct mob_stolen_soulAI : public ScriptedAI
@@ -155,9 +155,9 @@ class boss_exarch_maladaar : public CreatureScript
 public:
     boss_exarch_maladaar() : CreatureScript("boss_exarch_maladaar") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_exarch_maladaarAI (creature);
+        return new boss_exarch_maladaarAI (pCreature);
     }
 
     struct boss_exarch_maladaarAI : public ScriptedAI
@@ -216,11 +216,11 @@ public:
                 summoned->SetDisplayId(soulmodel);
                 summoned->setFaction(me->getFaction());
 
-                if (Unit* target = Unit::GetUnit(*me, soulholder))
+                if (Unit* pTarget = Unit::GetUnit(*me, soulholder))
                 {
 
                 CAST_AI(mob_stolen_soul::mob_stolen_soulAI, summoned->AI())->SetMyClass(soulclass);
-                 summoned->AI()->AttackStart(target);
+                 summoned->AI()->AttackStart(pTarget);
                 }
             }
         }
@@ -259,9 +259,9 @@ public:
 
             if (StolenSoul_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {
-                    if (target->GetTypeId() == TYPEID_PLAYER)
+                    if (pTarget->GetTypeId() == TYPEID_PLAYER)
                     {
                         if (me->IsNonMeleeSpellCasted(false))
                             me->InterruptNonMeleeSpells(true);
@@ -272,11 +272,11 @@ public:
                         else
                             DoScriptText(SAY_SOUL_CLEAVE, me);
 
-                        soulmodel = target->GetDisplayId();
-                        soulholder = target->GetGUID();
-                        soulclass = target->getClass();
+                        soulmodel = pTarget->GetDisplayId();
+                        soulholder = pTarget->GetGUID();
+                        soulclass = pTarget->getClass();
 
-                        DoCast(target, SPELL_STOLEN_SOUL);
+                        DoCast(pTarget, SPELL_STOLEN_SOUL);
                         me->SummonCreature(ENTRY_STOLEN_SOUL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
                         StolenSoul_Timer = 20000 + rand()% 10000;
@@ -286,8 +286,8 @@ public:
 
             if (Ribbon_of_Souls_timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_RIBBON_OF_SOULS);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    DoCast(pTarget, SPELL_RIBBON_OF_SOULS);
 
                 Ribbon_of_Souls_timer = 5000 + (rand()%20 * 1000);
             } else Ribbon_of_Souls_timer -= diff;
@@ -312,9 +312,9 @@ class mob_avatar_of_martyred : public CreatureScript
 public:
     mob_avatar_of_martyred() : CreatureScript("mob_avatar_of_martyred") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new mob_avatar_of_martyredAI (creature);
+        return new mob_avatar_of_martyredAI (pCreature);
     }
 
     struct mob_avatar_of_martyredAI : public ScriptedAI

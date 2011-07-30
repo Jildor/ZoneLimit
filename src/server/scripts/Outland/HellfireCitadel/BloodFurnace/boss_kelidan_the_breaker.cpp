@@ -78,9 +78,9 @@ class boss_kelidan_the_breaker : public CreatureScript
 
         struct boss_kelidan_the_breakerAI : public ScriptedAI
         {
-            boss_kelidan_the_breakerAI(Creature* creature) : ScriptedAI(creature)
+            boss_kelidan_the_breakerAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
-                pInstance = creature->GetInstanceScript();
+                pInstance = pCreature->GetInstanceScript();
                 for (uint8 i=0; i<5; ++i)
                     Channelers[i] = 0;
             }
@@ -247,7 +247,7 @@ class boss_kelidan_the_breaker : public CreatureScript
 
                     DoScriptText(SAY_NOVA, me);
 
-                    if (SpellInfo const* nova = sSpellMgr->GetSpellInfo(SPELL_BURNING_NOVA))
+                    if (SpellEntry *nova = GET_SPELL(SPELL_BURNING_NOVA))
                     {
                         if (Aura * aura = Aura::TryRefreshStackOrCreate(nova, MAX_EFFECT_MASK, me, me))
                             aura->ApplyForTargets();
@@ -298,7 +298,7 @@ class mob_shadowmoon_channeler : public CreatureScript
 
         struct mob_shadowmoon_channelerAI : public ScriptedAI
         {
-            mob_shadowmoon_channelerAI(Creature* creature) : ScriptedAI(creature)
+            mob_shadowmoon_channelerAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
             }
 
@@ -352,8 +352,8 @@ class mob_shadowmoon_channeler : public CreatureScript
 
                 if (MarkOfShadow_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        DoCast(target, SPELL_MARK_OF_SHADOW);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(pTarget, SPELL_MARK_OF_SHADOW);
                     MarkOfShadow_Timer = 15000+rand()%5000;
                 }
                 else

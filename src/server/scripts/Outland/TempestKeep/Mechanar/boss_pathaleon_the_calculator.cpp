@@ -65,7 +65,7 @@ class boss_pathaleon_the_calculator : public CreatureScript
 
         struct boss_pathaleon_the_calculatorAI : public ScriptedAI
         {
-            boss_pathaleon_the_calculatorAI(Creature* creature) : ScriptedAI(creature), summons(me)
+            boss_pathaleon_the_calculatorAI(Creature* pCreature) : ScriptedAI(pCreature), summons(me)
             {
             }
 
@@ -129,10 +129,10 @@ class boss_pathaleon_the_calculator : public CreatureScript
                 {
                     for (uint8 i = 0; i < 3; ++i)
                     {
-                        Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                        Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
                         Creature* Wraith = me->SummonCreature(21062, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        if (target && Wraith)
-                            Wraith->AI()->AttackStart(target);
+                        if (pTarget && Wraith)
+                            Wraith->AI()->AttackStart(pTarget);
                     }
                     DoScriptText(SAY_SUMMON, me);
                     Summon_Timer = 30000 + rand()%15000;
@@ -158,10 +158,10 @@ class boss_pathaleon_the_calculator : public CreatureScript
 
                 if (Domination_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1))
                     {
                         DoScriptText(RAND(SAY_DOMINATION_1, SAY_DOMINATION_2), me);
-                        DoCast(target, SPELL_DOMINATION);
+                        DoCast(pTarget, SPELL_DOMINATION);
                     }
                     Domination_Timer = 25000 + rand()%5000;
                 }
@@ -192,9 +192,9 @@ class boss_pathaleon_the_calculator : public CreatureScript
             }
         };
 
-            CreatureAI* GetAI(Creature* creature) const
+            CreatureAI* GetAI(Creature* pCreature) const
             {
-                return new boss_pathaleon_the_calculatorAI (creature);
+                return new boss_pathaleon_the_calculatorAI (pCreature);
             }
 };
 
@@ -209,7 +209,7 @@ class mob_nether_wraith : public CreatureScript
 
         struct mob_nether_wraithAI : public ScriptedAI
         {
-            mob_nether_wraithAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_nether_wraithAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             uint32 ArcaneMissiles_Timer;
             uint32 Detonation_Timer;
@@ -233,8 +233,8 @@ class mob_nether_wraith : public CreatureScript
 
                 if (ArcaneMissiles_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1))
-                        DoCast(target, SPELL_ARCANE_MISSILES);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                        DoCast(pTarget, SPELL_ARCANE_MISSILES);
                     else
                         DoCast(me->getVictim(), SPELL_ARCANE_MISSILES);
                     ArcaneMissiles_Timer = 5000 + rand()%5000;
@@ -267,9 +267,9 @@ class mob_nether_wraith : public CreatureScript
             }
         };
 
-        CreatureAI* GetAI(Creature* creature) const
+        CreatureAI* GetAI(Creature* pCreature) const
         {
-            return new mob_nether_wraithAI (creature);
+            return new mob_nether_wraithAI (pCreature);
         }
 };
 

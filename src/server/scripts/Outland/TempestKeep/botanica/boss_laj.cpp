@@ -60,7 +60,7 @@ class boss_laj : public CreatureScript
 
         struct boss_lajAI : public ScriptedAI
         {
-            boss_lajAI(Creature* creature) : ScriptedAI(creature) {}
+            boss_lajAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             bool CanSummon;
             uint32 Teleport_Timer;

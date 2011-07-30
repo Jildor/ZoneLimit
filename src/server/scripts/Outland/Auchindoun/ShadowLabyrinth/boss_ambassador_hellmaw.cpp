@@ -49,16 +49,16 @@ class boss_ambassador_hellmaw : public CreatureScript
 public:
     boss_ambassador_hellmaw() : CreatureScript("boss_ambassador_hellmaw") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_ambassador_hellmawAI(creature);
+        return new boss_ambassador_hellmawAI(pCreature);
     }
 
     struct boss_ambassador_hellmawAI : public npc_escortAI
     {
-        boss_ambassador_hellmawAI(Creature* creature) : npc_escortAI(creature)
+        boss_ambassador_hellmawAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
-            m_pInstance = creature->GetInstanceScript();
+            m_pInstance = pCreature->GetInstanceScript();
         }
 
         InstanceScript* m_pInstance;
@@ -94,12 +94,12 @@ public:
                 m_pInstance->SetData(TYPE_HELLMAW, FAIL);
         }
 
-        void MoveInLineOfSight(Unit* who)
+        void MoveInLineOfSight(Unit* pWho)
         {
             if (me->HasAura(SPELL_BANISH))
                 return;
 
-            npc_escortAI::MoveInLineOfSight(who);
+            npc_escortAI::MoveInLineOfSight(pWho);
         }
 
         void WaypointReached(uint32 /*i*/)

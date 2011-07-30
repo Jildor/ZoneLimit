@@ -112,7 +112,7 @@ class mob_omrogg_heads : public CreatureScript
 
         struct mob_omrogg_headsAI : public ScriptedAI
         {
-            mob_omrogg_headsAI(Creature* creature) : ScriptedAI(creature) {}
+            mob_omrogg_headsAI(Creature* pCreature) : ScriptedAI(pCreature) {}
 
             bool DeathYell;
             uint32 Death_Timer;
@@ -160,11 +160,11 @@ class boss_warbringer_omrogg : public CreatureScript
 
         struct boss_warbringer_omroggAI : public ScriptedAI
         {
-            boss_warbringer_omroggAI(Creature* creature) : ScriptedAI(creature)
+            boss_warbringer_omroggAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
                 LeftHeadGUID  = 0;
                 RightHeadGUID = 0;
-                pInstance = creature->GetInstanceScript();
+                pInstance = pCreature->GetInstanceScript();
             }
 
             InstanceScript* pInstance;
@@ -383,11 +383,11 @@ class boss_warbringer_omrogg : public CreatureScript
 
                 if (ResetThreat_Timer <= diff)
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
                         DoYellForThreat();
                         DoResetThreat();
-                        me->AddThreat(target, 0.0f);
+                        me->AddThreat(pTarget, 0.0f);
                     }
                     ResetThreat_Timer = 25000+rand()%15000;
                 }
@@ -414,9 +414,9 @@ class boss_warbringer_omrogg : public CreatureScript
             }
         };
 
-        CreatureAI* GetAI(Creature* creature) const
+        CreatureAI* GetAI(Creature* pCreature) const
         {
-            return new boss_warbringer_omroggAI (creature);
+            return new boss_warbringer_omroggAI (pCreature);
         }
 };
 void AddSC_boss_warbringer_omrogg()

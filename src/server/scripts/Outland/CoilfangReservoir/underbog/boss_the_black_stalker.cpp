@@ -40,9 +40,9 @@ class boss_the_black_stalker : public CreatureScript
 public:
     boss_the_black_stalker() : CreatureScript("boss_the_black_stalker") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_the_black_stalkerAI (creature);
+        return new boss_the_black_stalkerAI (pCreature);
     }
 
     struct boss_the_black_stalkerAI : public ScriptedAI
@@ -80,8 +80,8 @@ public:
             if (summon && summon->GetEntry() == ENTRY_SPORE_STRIDER)
             {
                 Striders.push_back(summon->GetGUID());
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1))
-                    summon->AI()->AttackStart(target);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                    summon->AI()->AttackStart(pTarget);
                 else
                     if (me->getVictim())
                         summon->AI()->AttackStart(me->getVictim());
@@ -125,21 +125,21 @@ public:
             {
                 if (LevitatedTarget_Timer <= diff)
                 {
-                    if (Unit* target = Unit::GetUnit(*me, LevitatedTarget))
+                    if (Unit* pTarget = Unit::GetUnit(*me, LevitatedTarget))
                     {
-                        if (!target->HasAura(SPELL_LEVITATE))
+                        if (!pTarget->HasAura(SPELL_LEVITATE))
                         {
                             LevitatedTarget = 0;
                             return;
                         }
                         if (InAir)
                         {
-                            target->AddAura(SPELL_SUSPENSION, target);
+                            pTarget->AddAura(SPELL_SUSPENSION, pTarget);
                             LevitatedTarget = 0;
                         }
                         else
                         {
-                            target->CastSpell(target, SPELL_MAGNETIC_PULL, true);
+                            pTarget->CastSpell(pTarget, SPELL_MAGNETIC_PULL, true);
                             InAir = true;
                             LevitatedTarget_Timer = 1500;
                         }
@@ -150,10 +150,10 @@ public:
             }
             if (Levitate_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1))
                 {
-                    DoCast(target, SPELL_LEVITATE);
-                    LevitatedTarget = target->GetGUID();
+                    DoCast(pTarget, SPELL_LEVITATE);
+                    LevitatedTarget = pTarget->GetGUID();
                     LevitatedTarget_Timer = 2000;
                     InAir = false;
                 }
@@ -163,16 +163,16 @@ public:
             // Chain Lightning
             if (ChainLightning_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_CHAIN_LIGHTNING);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    DoCast(pTarget, SPELL_CHAIN_LIGHTNING);
                 ChainLightning_Timer = 7000;
             } else ChainLightning_Timer -= diff;
 
             // Static Charge
             if (StaticCharge_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 30, true))
-                    DoCast(target, SPELL_STATIC_CHARGE);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 30, true))
+                    DoCast(pTarget, SPELL_STATIC_CHARGE);
                 StaticCharge_Timer = 10000;
             } else StaticCharge_Timer -= diff;
 

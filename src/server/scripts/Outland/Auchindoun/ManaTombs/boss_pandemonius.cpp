@@ -46,9 +46,9 @@ class boss_pandemonius : public CreatureScript
 public:
     boss_pandemonius() : CreatureScript("boss_pandemonius") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_pandemoniusAI (creature);
+        return new boss_pandemoniusAI (pCreature);
     }
 
     struct boss_pandemoniusAI : public ScriptedAI
@@ -90,9 +90,9 @@ public:
 
             if (VoidBlast_Timer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {
-                    DoCast(target, SPELL_VOID_BLAST);
+                    DoCast(pTarget, SPELL_VOID_BLAST);
                     VoidBlast_Timer = 500;
                     ++VoidBlast_Counter;
                 }
