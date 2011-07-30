@@ -122,31 +122,31 @@ struct boss_horAI : ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* summoned)
+    void JustSummoned(Creature* pSummoned)
     {
-        summons.Summon(summoned);
+        summons.Summon(pSummoned);
 
-        if (Unit* target = summoned->SelectNearestTarget())
+        if (Unit* pUnit = pSummoned->SelectNearestTarget())
         {
-            if (summoned->AI())
-                summoned->AI()->AttackStart(target);
+            if (pSummoned->AI())
+                pSummoned->AI()->AttackStart(pUnit);
             else
             {
-                summoned->GetMotionMaster()->MoveChase(target);
-                summoned->Attack(target, true);
+                pSummoned->GetMotionMaster()->MoveChase(pUnit);
+                pSummoned->Attack(pUnit, true);
             }
         }
 
-        if (summoned->AI())
-            summoned->AI()->DoZoneInCombat();
+        if (pSummoned->AI())
+            pSummoned->AI()->DoZoneInCombat();
     }
 
-    void SummonedCreatureDespawn(Creature* summoned)
+    void SummonedCreatureDespawn(Creature* pSummoned)
     {
-        summons.Despawn(summoned);
+        summons.Despawn(pSummoned);
         if (summons.empty())
         {
-            if (summoned->isAlive())
+            if (pSummoned->isAlive())
                 pInstance->SetData(DATA_WAVE_COUNT, NOT_STARTED);
             else
                 pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);

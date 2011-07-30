@@ -157,19 +157,19 @@ private:
 public:
     npc_jaina_or_sylvanas_hor(bool isSylvana, const char* name) : CreatureScript(name), m_isSylvana(isSylvana) { }
 
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
+    bool OnGossipSelect(Player* pPlayer, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
     {
-        player->PlayerTalkClass->ClearMenus();
+        pPlayer->PlayerTalkClass->ClearMenus();
         switch (uiAction)
         {
             case GOSSIP_ACTION_INFO_DEF+1:
-                player->CLOSE_GOSSIP_MENU();
+                pPlayer->CLOSE_GOSSIP_MENU();
                 if (creature->AI())
                     creature->AI()->DoAction(ACTION_START_INTRO);
                 creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                 break;
             case GOSSIP_ACTION_INFO_DEF+2:
-                player->CLOSE_GOSSIP_MENU();
+                pPlayer->CLOSE_GOSSIP_MENU();
                 if (creature->AI())
                     creature->AI()->DoAction(ACTION_SKIP_INTRO);
                 creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -179,21 +179,21 @@ public:
         return true;
     }
 
-    bool OnGossipHello(Player* player, Creature* creature)
+    bool OnGossipHello(Player* pPlayer, Creature* creature)
     {
         if (creature->isQuestGiver())
-            player->PrepareQuestMenu(creature->GetGUID());
+            pPlayer->PrepareQuestMenu(creature->GetGUID());
 
-        QuestStatus status = player->GetQuestStatus(m_isSylvana ? QUEST_DELIVRANCE_FROM_THE_PIT_H2 : QUEST_DELIVRANCE_FROM_THE_PIT_A2);
+        QuestStatus status = pPlayer->GetQuestStatus(m_isSylvana ? QUEST_DELIVRANCE_FROM_THE_PIT_H2 : QUEST_DELIVRANCE_FROM_THE_PIT_A2);
         if (status == QUEST_STATUS_COMPLETE || status == QUEST_STATUS_REWARDED)
-            player->ADD_GOSSIP_ITEM( 0, "Can you remove the sword?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM( 0, "Can you remove the sword?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         // once last quest is completed, she offers this shortcut of the starting event
-        status = player->GetQuestStatus(m_isSylvana ? QUEST_WRATH_OF_THE_LICH_KING_H2 : QUEST_WRATH_OF_THE_LICH_KING_A2);
+        status = pPlayer->GetQuestStatus(m_isSylvana ? QUEST_WRATH_OF_THE_LICH_KING_H2 : QUEST_WRATH_OF_THE_LICH_KING_A2);
         if (status == QUEST_STATUS_COMPLETE || status == QUEST_STATUS_REWARDED)
-            player->ADD_GOSSIP_ITEM( 0, "Dark Lady, I think I hear Arthas coming. Whatever you're going to do, do it quickly.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM( 0, "Dark Lady, I think I hear Arthas coming. Whatever you're going to do, do it quickly.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
 
-        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
         return true;
     }
 
@@ -667,25 +667,25 @@ public:
                 switch(eventId)
                 {
                     case EVENT_SHADOW_WORD_PAIN:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_SHADOW_WORD_PAIN);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_SHADOW_WORD_PAIN);
                         events.ScheduleEvent(EVENT_SHADOW_WORD_PAIN, 8000);
                         return;
                     case EVENT_CIRCLE_OF_DESTRUCTION:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_CIRCLE_OF_DESTRUCTION);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_CIRCLE_OF_DESTRUCTION);
                         events.ScheduleEvent(EVENT_CIRCLE_OF_DESTRUCTION, 12000);
                         return;
                     case EVENT_COWER_IN_FEAR:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_COWER_IN_FEAR);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_COWER_IN_FEAR);
                         events.ScheduleEvent(EVENT_COWER_IN_FEAR, 10000);
                         return;
                     case EVENT_DARK_MENDING:
                         // find an ally with missing HP
-                        if (Unit* target = DoSelectLowestHpFriendly(40, DUNGEON_MODE(30000, 50000)))
+                        if (Unit* pTarget = DoSelectLowestHpFriendly(40, DUNGEON_MODE(30000, 50000)))
                         {
-                            DoCast(target, SPELL_DARK_MENDING);
+                            DoCast(pTarget, SPELL_DARK_MENDING);
                             events.ScheduleEvent(EVENT_DARK_MENDING, 20000);
                         }
                         else
@@ -750,8 +750,8 @@ public:
                 switch(eventId)
                 {
                     case EVENT_FIREBALL:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_FIREBALL);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_FIREBALL);
                         events.ScheduleEvent(EVENT_FIREBALL, 15000);
                         return;
                     case EVENT_FLAMESTRIKE:
@@ -759,13 +759,13 @@ public:
                         events.ScheduleEvent(EVENT_FLAMESTRIKE, 15000);
                         return;
                     case EVENT_FROSTBOLT:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_FROSTBOLT);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_FROSTBOLT);
                         events.ScheduleEvent(EVENT_FROSTBOLT, 15000);
                         return;
                     case EVENT_CHAINS_OF_ICE:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_CHAINS_OF_ICE);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_CHAINS_OF_ICE);
                         events.ScheduleEvent(EVENT_CHAINS_OF_ICE, 15000);
                         return;
                     case EVENT_HALLUCINATION:
@@ -796,7 +796,7 @@ public:
         {
         }
 
-        void JustDied(Unit* /*who*/)
+        void JustDied(Unit* /*pWho*/)
         {
             DoCast(SPELL_HALLUCINATION_2);
         }
@@ -858,8 +858,8 @@ public:
                         events.ScheduleEvent(EVENT_DEADLY_POISON, 10000);
                         return;
                     case EVENT_ENVENOMED_DAGGER_THROW:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_ENVENOMED_DAGGER_THROW);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_ENVENOMED_DAGGER_THROW);
                         events.ScheduleEvent(EVENT_ENVENOMED_DAGGER_THROW, 10000);
                         return;
                     case EVENT_KIDNEY_SHOT:
@@ -986,13 +986,13 @@ public:
                 switch(eventId)
                 {
                     case EVENT_SHOOT:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_SHOOT);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_SHOOT);
                         events.ScheduleEvent(EVENT_SHOOT, 2000);
                         return;
                     case EVENT_CURSED_ARROW:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_CURSED_ARROW);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_CURSED_ARROW);
                         events.ScheduleEvent(EVENT_CURSED_ARROW, 10000);
                         return;
                     case EVENT_FROST_TRAP:
@@ -1000,8 +1000,8 @@ public:
                         events.ScheduleEvent(EVENT_FROST_TRAP, 30000);
                         return;
                     case EVENT_ICE_SHOT:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM))
-                            DoCast(target, SPELL_ICE_SHOT);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(pTarget, SPELL_ICE_SHOT);
                         events.ScheduleEvent(EVENT_ICE_SHOT, 15000);
                         return;
                 }

@@ -110,16 +110,16 @@ class boss_black_knight : public CreatureScript
 public:
     boss_black_knight() : CreatureScript("boss_black_knight") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new boss_black_knightAI (pCreature);
+        return new boss_black_knightAI (creature);
     }
 
     struct boss_black_knightAI : public ScriptedAI
     {
-        boss_black_knightAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_black_knightAI(Creature* creature) : ScriptedAI(creature)
         {
-        pInstance = (InstanceScript*)pCreature->GetInstanceScript();
+        pInstance = (InstanceScript*)creature->GetInstanceScript();
         }
 
         InstanceScript* pInstance;
@@ -418,14 +418,14 @@ class npc_risen_ghoul : public CreatureScript
 public:
     npc_risen_ghoul() : CreatureScript("npc_risen_ghoul") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new npc_risen_ghoulAI(pCreature);
+        return new npc_risen_ghoulAI(creature);
     }
 
     struct npc_risen_ghoulAI : public ScriptedAI
     {
-        npc_risen_ghoulAI(Creature* pCreature) : ScriptedAI(pCreature) {}
+        npc_risen_ghoulAI(Creature* creature) : ScriptedAI(creature) {}
 
         uint32 uiAttackTimer;
 
@@ -459,17 +459,17 @@ class npc_black_knight_skeletal_gryphon : public CreatureScript
 public:
     npc_black_knight_skeletal_gryphon() : CreatureScript("npc_black_knight_skeletal_gryphon") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new npc_black_knight_skeletal_gryphonAI(pCreature);
+        return new npc_black_knight_skeletal_gryphonAI(creature);
     }
 
     struct npc_black_knight_skeletal_gryphonAI : public npc_escortAI
     {
-        npc_black_knight_skeletal_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature)
+        npc_black_knight_skeletal_gryphonAI(Creature* creature) : npc_escortAI(creature)
         {
             Start(false,true,0,NULL);
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
+            pInstance = (InstanceScript*)creature->GetInstanceScript();
         }
         InstanceScript* pInstance;
 
@@ -547,18 +547,18 @@ class npc_gr : public CreatureScript
 public:
     npc_gr() : CreatureScript("npc_gr") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new npc_grAI(pCreature);
+        return new npc_grAI(creature);
     }
 
     struct npc_grAI : public npc_escortAI
     {
 
-        npc_grAI(Creature* pCreature) : npc_escortAI(pCreature)
+        npc_grAI(Creature* creature) : npc_escortAI(creature)
         {
             Start(false,true,0,NULL);
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
+            pInstance = (InstanceScript*)creature->GetInstanceScript();
         }
 
         InstanceScript* pInstance;

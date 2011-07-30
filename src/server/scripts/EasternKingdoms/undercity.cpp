@@ -66,7 +66,7 @@ class npc_lady_sylvanas_windrunner : public CreatureScript
 public:
     npc_lady_sylvanas_windrunner() : CreatureScript("npc_lady_sylvanas_windrunner") { }
 
-    bool OnQuestReward(Player* /*player*/, Creature* creature, const Quest *_Quest, uint32 /*slot*/)
+    bool OnQuestReward(Player* /*pPlayer*/, Creature* creature, const Quest *_Quest, uint32 /*slot*/)
     {
         if (_Quest->GetQuestId() == QUEST_JOURNEY_TO_UNDERCITY)
         {
@@ -107,11 +107,11 @@ public:
         {
             if (summoned->GetEntry() == ENTRY_HIGHBORNE_BUNNY)
             {
-                if (Unit* target = Unit::GetUnit(*summoned, targetGUID))
+                if (Unit* pTarget = Unit::GetUnit(*summoned, targetGUID))
                 {
-                    target->SendMonsterMove(target->GetPositionX(), target->GetPositionY(), me->GetPositionZ()+15.0f, 0);
-                    target->GetMap()->CreatureRelocation(me, target->GetPositionX(), target->GetPositionY(), me->GetPositionZ()+15.0f, 0.0f);
-                    summoned->CastSpell(target, SPELL_RIBBON_OF_SOULS, false);
+                    pTarget->SendMonsterMove(pTarget->GetPositionX(), pTarget->GetPositionY(), me->GetPositionZ()+15.0f, 0);
+                    pTarget->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), me->GetPositionZ()+15.0f, 0.0f);
+                    summoned->CastSpell(pTarget, SPELL_RIBBON_OF_SOULS, false);
                 }
 
                 summoned->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
@@ -219,36 +219,36 @@ class npc_parqual_fintallas : public CreatureScript
 public:
     npc_parqual_fintallas() : CreatureScript("npc_parqual_fintallas") { }
 
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
+    bool OnGossipSelect(Player* pPlayer, Creature* creature, uint32 /*uiSender*/, uint32 uiAction)
     {
-        player->PlayerTalkClass->ClearMenus();
+        pPlayer->PlayerTalkClass->ClearMenus();
         if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
         {
-            player->CLOSE_GOSSIP_MENU();
-            creature->CastSpell(player, SPELL_MARK_OF_SHAME, false);
+            pPlayer->CLOSE_GOSSIP_MENU();
+            creature->CastSpell(pPlayer, SPELL_MARK_OF_SHAME, false);
         }
         if (uiAction == GOSSIP_ACTION_INFO_DEF+2)
         {
-            player->CLOSE_GOSSIP_MENU();
-            player->AreaExploredOrEventHappens(6628);
+            pPlayer->CLOSE_GOSSIP_MENU();
+            pPlayer->AreaExploredOrEventHappens(6628);
         }
         return true;
     }
 
-    bool OnGossipHello(Player* player, Creature* creature)
+    bool OnGossipHello(Player* pPlayer, Creature* creature)
     {
         if (creature->isQuestGiver())
-            player->PrepareQuestMenu(creature->GetGUID());
+            pPlayer->PrepareQuestMenu(creature->GetGUID());
 
-        if (player->GetQuestStatus(6628) == QUEST_STATUS_INCOMPLETE && !player->HasAura(SPELL_MARK_OF_SHAME))
+        if (pPlayer->GetQuestStatus(6628) == QUEST_STATUS_INCOMPLETE && !pPlayer->HasAura(SPELL_MARK_OF_SHAME))
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            player->SEND_GOSSIP_MENU(5822, creature->GetGUID());
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->SEND_GOSSIP_MENU(5822, creature->GetGUID());
         }
         else
-            player->SEND_GOSSIP_MENU(5821, creature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(5821, creature->GetGUID());
 
         return true;
     }

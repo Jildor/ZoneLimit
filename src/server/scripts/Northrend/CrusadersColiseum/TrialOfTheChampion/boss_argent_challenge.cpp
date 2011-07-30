@@ -124,19 +124,19 @@ class boss_eadric : public CreatureScript
 public:
     boss_eadric() : CreatureScript("boss_eadric") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new boss_eadricAI(pCreature);
+        return new boss_eadricAI(creature);
     }
 
     struct boss_eadricAI : public ScriptedAI
     {
-        boss_eadricAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_eadricAI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
-            pCreature->SetReactState(REACT_PASSIVE);
-            pCreature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
-            pCreature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
+            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            creature->SetReactState(REACT_PASSIVE);
+            creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+            creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
         }
 
         InstanceScript* pInstance;
@@ -238,22 +238,22 @@ class boss_paletress : public CreatureScript
 public:
     boss_paletress() : CreatureScript("boss_paletress") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new boss_paletressAI(pCreature);
+        return new boss_paletressAI(creature);
     }
 
     struct boss_paletressAI : public ScriptedAI
     {
-        boss_paletressAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_paletressAI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
+            pInstance = (InstanceScript*)creature->GetInstanceScript();
 
             MemoryGUID = 0;
-            pCreature->SetReactState(REACT_PASSIVE);
-            pCreature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
-            pCreature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
-            pCreature->RestoreFaction();
+            creature->SetReactState(REACT_PASSIVE);
+            creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+            creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
+            creature->RestoreFaction();
         }
 
         InstanceScript* pInstance;
@@ -460,14 +460,14 @@ class npc_memory : public CreatureScript
 public:
     npc_memory() : CreatureScript("npc_memory") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new npc_memoryAI(pCreature);
+        return new npc_memoryAI(creature);
     }
 
     struct npc_memoryAI : public ScriptedAI
     {
-        npc_memoryAI(Creature* pCreature) : ScriptedAI(pCreature)
+        npc_memoryAI(Creature* creature) : ScriptedAI(creature)
         {
         }
 
@@ -532,16 +532,16 @@ class npc_argent_soldier : public CreatureScript
 public:
     npc_argent_soldier() : CreatureScript("npc_argent_soldier") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* creature) const
     {
-        return new npc_argent_soldierAI(pCreature);
+        return new npc_argent_soldierAI(creature);
     }
 
     struct npc_argent_soldierAI : public npc_escortAI
     {
-        npc_argent_soldierAI(Creature* pCreature) : npc_escortAI(pCreature)
+        npc_argent_soldierAI(Creature* creature) : npc_escortAI(creature)
         {
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
+            pInstance = (InstanceScript*)creature->GetInstanceScript();
             me->SetReactState(REACT_DEFENSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
