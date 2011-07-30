@@ -38,9 +38,9 @@ class boss_grobbulus : public CreatureScript
 public:
     boss_grobbulus() : CreatureScript("boss_grobbulus") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_grobbulusAI (creature);
+        return new boss_grobbulusAI (pCreature);
     }
 
     struct boss_grobbulusAI : public BossAI
@@ -59,11 +59,11 @@ public:
             events.ScheduleEvent(EVENT_BERSERK, 12*60000);
         }
 
-        void SpellHitTarget(Unit* target, const SpellInfo *spell)
+        void SpellHitTarget(Unit* pTarget, const SpellEntry *spell)
         {
             if (spell->Id == uint32(SPELL_SLIME_SPRAY))
             {
-                if (TempSummon *slime = me->SummonCreature(MOB_FALLOUT_SLIME, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 0))
+                if (TempSummon *slime = me->SummonCreature(MOB_FALLOUT_SLIME, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 0))
                     DoZoneInCombat(slime);
             }
         }
@@ -91,9 +91,9 @@ public:
                         events.ScheduleEvent(EVENT_SPRAY, 15000+rand()%15000);
                         return;
                     case EVENT_INJECT:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1))
-                            if (!target->HasAura(SPELL_MUTATING_INJECTION))
-                                DoCast(target, SPELL_MUTATING_INJECTION);
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                            if (!pTarget->HasAura(SPELL_MUTATING_INJECTION))
+                                DoCast(pTarget, SPELL_MUTATING_INJECTION);
                         events.ScheduleEvent(EVENT_INJECT, 8000 + uint32(120 * me->GetHealthPct()));
                         return;
                 }
@@ -110,14 +110,14 @@ class npc_grobbulus_poison_cloud : public CreatureScript
 public:
     npc_grobbulus_poison_cloud() : CreatureScript("npc_grobbulus_poison_cloud") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_grobbulus_poison_cloudAI(creature);
+        return new npc_grobbulus_poison_cloudAI(pCreature);
     }
 
     struct npc_grobbulus_poison_cloudAI : public Scripted_NoMovementAI
     {
-        npc_grobbulus_poison_cloudAI(Creature* creature) : Scripted_NoMovementAI(creature)
+        npc_grobbulus_poison_cloudAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
         {
             Reset();
         }

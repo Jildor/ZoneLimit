@@ -50,9 +50,9 @@ class boss_gluth : public CreatureScript
 public:
     boss_gluth() : CreatureScript("boss_gluth") { }
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_gluthAI (creature);
+        return new boss_gluthAI (pCreature);
     }
 
     struct boss_gluthAI : public BossAI

@@ -338,8 +338,8 @@ public:
             std::map<uint64, float>::const_iterator itr;
             for (itr = chained.begin(); itr != chained.end(); ++itr)
             {
-                if (Player* player = Unit::GetPlayer(*me, (*itr).first))
-                    player->SetFloatValue(OBJECT_FIELD_SCALE_X, (*itr).second);
+                if (Player* pPlayer = Unit::GetPlayer(*me, (*itr).first))
+                    pPlayer->SetFloatValue(OBJECT_FIELD_SCALE_X, (*itr).second);
             }
             chained.clear();
         }
@@ -498,13 +498,13 @@ public:
                             uint32 count = urand(1, 3);
                             for (uint8 i = 1; i <= count; i++)
                             {
-                                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 200, true);
-                                if (target && !target->isCharmed() && (chained.find(target->GetGUID()) == chained.end()))
+                                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 200, true);
+                                if (pTarget && !pTarget->isCharmed() && (chained.find(pTarget->GetGUID()) == chained.end()))
                                 {
-                                    DoCast(target, SPELL_CHAINS_OF_KELTHUZAD);
-                                    float scale = target->GetFloatValue(OBJECT_FIELD_SCALE_X);
-                                    chained.insert(std::make_pair(target->GetGUID(), scale));
-                                    target->SetFloatValue(OBJECT_FIELD_SCALE_X, scale * 2);
+                                    DoCast(pTarget, SPELL_CHAINS_OF_KELTHUZAD);
+                                    float scale = pTarget->GetFloatValue(OBJECT_FIELD_SCALE_X);
+                                    chained.insert(std::make_pair(pTarget->GetGUID(), scale));
+                                    pTarget->SetFloatValue(OBJECT_FIELD_SCALE_X, scale * 2);
                                     events.ScheduleEvent(EVENT_CHAINED_SPELL, 2000); //core has 2000ms to set unit flag charm
                                 }
                             }
@@ -530,54 +530,54 @@ public:
                                         continue;
                                     }
 
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_TOPAGGRO, 0, NotCharmedTargetSelector()))
+                                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_TOPAGGRO, 0, NotCharmedTargetSelector()))
                                     {
                                         switch(player->getClass())
                                         {
                                             case CLASS_DRUID:
                                                 if (urand(0, 1))
-                                                    player->CastSpell(target, SPELL_MOONFIRE, false);
+                                                    player->CastSpell(pTarget, SPELL_MOONFIRE, false);
                                                 else
                                                     player->CastSpell(me, SPELL_LIFEBLOOM, false);
                                                 break;
                                             case CLASS_HUNTER:
-                                                player->CastSpell(target, RAND(SPELL_MULTI_SHOT, SPELL_VOLLEY), false);
+                                                player->CastSpell(pTarget, RAND(SPELL_MULTI_SHOT, SPELL_VOLLEY), false);
                                                 break;
                                             case CLASS_MAGE:
-                                                player->CastSpell(target, RAND(SPELL_FROST_FIREBOLT, SPELL_ARCANE_MISSILES), false);
+                                                player->CastSpell(pTarget, RAND(SPELL_FROST_FIREBOLT, SPELL_ARCANE_MISSILES), false);
                                                 break;
                                             case CLASS_WARLOCK:
-                                                player->CastSpell(target, RAND(SPELL_CURSE_OF_AGONY, SPELL_SHADOW_BOLT), true);
+                                                player->CastSpell(pTarget, RAND(SPELL_CURSE_OF_AGONY, SPELL_SHADOW_BOLT), true);
                                                 break;
                                             case CLASS_WARRIOR:
-                                                player->CastSpell(target, RAND(SPELL_BLADESTORM, SPELL_CLEAVE), false);
+                                                player->CastSpell(pTarget, RAND(SPELL_BLADESTORM, SPELL_CLEAVE), false);
                                                 break;
                                             case CLASS_PALADIN:
                                                 if (urand(0, 1))
-                                                    player->CastSpell(target, SPELL_HAMMER_OF_JUSTICE, false);
+                                                    player->CastSpell(pTarget, SPELL_HAMMER_OF_JUSTICE, false);
                                                 else
                                                     player->CastSpell(me, SPELL_HOLY_SHOCK, false);
                                                 break;
                                             case CLASS_PRIEST:
                                                 if (urand(0, 1))
-                                                    player->CastSpell(target, SPELL_VAMPIRIC_TOUCH, false);
+                                                    player->CastSpell(pTarget, SPELL_VAMPIRIC_TOUCH, false);
                                                 else
                                                     player->CastSpell(me, SPELL_RENEW, false);
                                                 break;
                                             case CLASS_SHAMAN:
                                                 if (urand(0, 1))
-                                                    player->CastSpell(target, SPELL_EARTH_SHOCK, false);
+                                                    player->CastSpell(pTarget, SPELL_EARTH_SHOCK, false);
                                                 else
                                                     player->CastSpell(me, SPELL_HEALING_WAVE, false);
                                                 break;
                                             case CLASS_ROGUE:
-                                                player->CastSpell(target, RAND(SPELL_HEMORRHAGE, SPELL_MUTILATE), false);
+                                                player->CastSpell(pTarget, RAND(SPELL_HEMORRHAGE, SPELL_MUTILATE), false);
                                                 break;
                                             case CLASS_DEATH_KNIGHT:
                                                 if (urand(0, 1))
-                                                    player->CastSpell(target, SPELL_PLAGUE_STRIKE, true);
+                                                    player->CastSpell(pTarget, SPELL_PLAGUE_STRIKE, true);
                                                 else
-                                                    player->CastSpell(target, SPELL_HOWLING_BLAST, true);
+                                                    player->CastSpell(pTarget, SPELL_HOWLING_BLAST, true);
                                                 break;
                                         }
                                     }
@@ -616,13 +616,13 @@ public:
                             break;
                         }
                         case EVENT_FISSURE:
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                                DoCast(target, SPELL_SHADOW_FISURE);
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                DoCast(pTarget, SPELL_SHADOW_FISURE);
                             events.RepeatEvent(urand(10000, 45000));
                             break;
                         case EVENT_BLAST:
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, RAID_MODE(1, 0), 0, true))
-                                DoCast(target, SPELL_FROST_BLAST);
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, RAID_MODE(1, 0), 0, true))
+                                DoCast(pTarget, SPELL_FROST_BLAST);
                             if (rand()%2)
                                 DoScriptText(SAY_FROST_BLAST, me);
                             events.RepeatEvent(urand(30000, 90000));
@@ -638,9 +638,9 @@ public:
         }
     };
 
-    CreatureAI* GetAI(Creature* creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new boss_kelthuzadAI (creature);
+        return new boss_kelthuzadAI (pCreature);
     }
 
 };
@@ -650,16 +650,16 @@ class at_kelthuzad_center : public AreaTriggerScript
 public:
     at_kelthuzad_center() : AreaTriggerScript("at_kelthuzad_center") { }
 
-    bool OnTrigger(Player* player, const AreaTriggerEntry * /*at*/)
+    bool OnTrigger(Player* pPlayer, const AreaTriggerEntry * /*at*/)
     {
-        if (player->isGameMaster())
+        if (pPlayer->isGameMaster())
             return false;
 
-        InstanceScript* pInstance = player->GetInstanceScript();
+        InstanceScript* pInstance = pPlayer->GetInstanceScript();
         if (!pInstance || pInstance->IsEncounterInProgress() || pInstance->GetBossState(BOSS_KELTHUZAD) == DONE)
             return false;
 
-        Creature* pKelthuzad = CAST_CRE(Unit::GetUnit(*player, pInstance->GetData64(DATA_KELTHUZAD)));
+        Creature* pKelthuzad = CAST_CRE(Unit::GetUnit(*pPlayer, pInstance->GetData64(DATA_KELTHUZAD)));
         if (!pKelthuzad)
             return false;
 
@@ -667,7 +667,7 @@ public:
         if (!pKelthuzadAI)
             return false;
 
-        pKelthuzadAI->AttackStart(player);
+        pKelthuzadAI->AttackStart(pPlayer);
         if (GameObject* trigger = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_KELTHUZAD_TRIGGER)))
         {
             if (trigger->getLootState() == GO_READY)
