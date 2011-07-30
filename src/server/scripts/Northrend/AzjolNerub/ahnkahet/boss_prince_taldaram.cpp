@@ -210,16 +210,16 @@ public:
                         if (uiVanishTimer <= diff)
                         {
                             //Count alive players
-                            Unit* target = NULL;
+                            Unit* pTarget = NULL;
                             std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
                             std::vector<Unit* > target_list;
                             for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
                             {
-                                target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+                                pTarget = Unit::GetUnit(*me, (*itr)->getUnitGuid());
                                 // exclude pets & totems
-                                if (target && target->GetTypeId() == TYPEID_PLAYER && target->isAlive())
-                                    target_list.push_back(target);
-                                target = NULL;
+                                if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->isAlive())
+                                    target_list.push_back(pTarget);
+                                pTarget = NULL;
                             }
                             //He only vanishes if there are 3 or more alive players
                             if (target_list.size() > 2)
@@ -386,7 +386,7 @@ class prince_taldaram_sphere : public GameObjectScript
 public:
     prince_taldaram_sphere() : GameObjectScript("prince_taldaram_sphere") { }
 
-    bool OnGossipHello(Player* /*player*/, GameObject* pGO)
+    bool OnGossipHello(Player* /*pPlayer*/, GameObject* pGO)
     {
         InstanceScript *pInstance = pGO->GetInstanceScript();
 

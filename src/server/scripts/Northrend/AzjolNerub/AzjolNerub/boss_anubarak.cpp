@@ -142,10 +142,10 @@ public:
             }
         }
 
-        Creature* DoSummonImpaleTarget(Unit* target)
+        Creature* DoSummonImpaleTarget(Unit* pTarget)
         {
             Position targetPos;
-            target->GetPosition(&targetPos);
+            pTarget->GetPosition(&targetPos);
 
             if (TempSummon* pImpaleTarget = me->SummonCreature(CREATURE_IMPALE_TARGET, targetPos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 6*IN_MILLISECONDS))
             {
@@ -159,7 +159,7 @@ public:
             return NULL;
         }
 
-        void EnterCombat(Unit* /*who*/)
+        void EnterCombat(Unit* /*pWho*/)
         {
             DoScriptText(SAY_AGGRO, me);
             if (pInstance)
@@ -325,7 +325,7 @@ public:
             }
         }
 
-        void JustDied(Unit* /*killer*/)
+        void JustDied(Unit* /*pKiller*/)
         {
             DoScriptText(SAY_DEATH, me);
             lSummons.DespawnAll();
@@ -333,9 +333,9 @@ public:
                 pInstance->SetData(DATA_ANUBARAK_EVENT, DONE);
         }
 
-        void KilledUnit(Unit* victim)
+        void KilledUnit(Unit* pVictim)
         {
-            if (victim == me)
+            if (pVictim == me)
                 return;
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }

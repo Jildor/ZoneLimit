@@ -67,9 +67,9 @@ public:
 
     struct boss_volazjAI : public ScriptedAI
     {
-        boss_volazjAI(Creature* creature) : ScriptedAI(creature), Summons(me)
+        boss_volazjAI(Creature* pCreature) : ScriptedAI(pCreature), Summons(me)
         {
-            pInstance = creature->GetInstanceScript();
+            pInstance = pCreature->GetInstanceScript();
         }
 
         InstanceScript *pInstance;
@@ -101,12 +101,12 @@ public:
             }
         }
 
-        void SpellHitTarget(Unit* target, const SpellInfo *spell)
+        void SpellHitTarget(Unit* pTarget, const SpellEntry *spell)
         {
             if (spell->Id == SPELL_INSANITY)
             {
                 // Not good target or too many players
-                if (target->GetTypeId() != TYPEID_PLAYER || insanityHandled > 4)
+                if (pTarget->GetTypeId() != TYPEID_PLAYER || insanityHandled > 4)
                     return;
                 // First target - start channel visual and set self as unnattackable
                 if (!insanityHandled)
@@ -118,7 +118,7 @@ public:
                     me->SetControlled(true, UNIT_STAT_STUNNED);
                 }
                 // phase mask
-                target->CastSpell(target, SPELL_INSANITY_TARGET+insanityHandled, true);
+                pTarget->CastSpell(pTarget, SPELL_INSANITY_TARGET+insanityHandled, true);
                 // summon twisted party members for this target
                 Map::PlayerList const &players = me->GetMap()->GetPlayers();
                 for (Map::PlayerList::const_iterator i = players.begin(); i != players.end(); ++i)
@@ -144,8 +144,8 @@ public:
             Map::PlayerList const &players = me->GetMap()->GetPlayers();
             for (Map::PlayerList::const_iterator i = players.begin(); i != players.end(); ++i)
             {
-                Player* player = i->getSource();
-                player->RemoveAurasDueToSpell(GetSpellForPhaseMask(player->GetPhaseMask()));
+                Player* pPlayer = i->getSource();
+                pPlayer->RemoveAurasDueToSpell(GetSpellForPhaseMask(pPlayer->GetPhaseMask()));
             }
         }
 
@@ -171,7 +171,6 @@ public:
             // Cleanup
             Summons.DespawnAll();
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            me->SetControlled(false, UNIT_STAT_STUNNED);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -245,13 +244,13 @@ public:
             {
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                 {
-                    if (Player* player = i->getSource())
+                    if (Player* pPlayer = i->getSource())
                     {
-                        if (player->HasAura(spell))
+                        if (pPlayer->HasAura(spell))
                         {
-                            player->RemoveAurasDueToSpell(spell);
+                            pPlayer->RemoveAurasDueToSpell(spell);
                             if (spell2) // if there is still some different mask cast spell for it
-                                player->CastSpell(player, spell2, true);
+                                pPlayer->CastSpell(pPlayer, spell2, true);
                         }
                     }
                 }
@@ -289,8 +288,8 @@ public:
 
             if (uiShiverTimer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_SHIVER);
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    DoCast(pTarget, SPELL_SHIVER);
                 uiShiverTimer = 15*IN_MILLISECONDS;
             } else uiShiverTimer -= diff;
 
