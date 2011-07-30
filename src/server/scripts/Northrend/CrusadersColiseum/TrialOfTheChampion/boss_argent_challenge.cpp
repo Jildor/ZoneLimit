@@ -203,12 +203,12 @@ public:
             {
                 me->InterruptNonMeleeSpells(true);
 
-                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
                 {
-                    if (pTarget && pTarget->isAlive())
+                    if (target && target->isAlive())
                     {
-                        DoCast(pTarget, SPELL_HAMMER_JUSTICE);
-                        DoCast(pTarget, SPELL_HAMMER_RIGHTEOUS);
+                        DoCast(target, SPELL_HAMMER_JUSTICE);
+                        DoCast(target, SPELL_HAMMER_RIGHTEOUS);
                     }
                 }
                 uiHammerJusticeTimer = 25000;
@@ -336,10 +336,10 @@ public:
 
             if (uiHolyFireTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
                 {
-                    if (pTarget && pTarget->isAlive())
-                        DoCast(pTarget,SPELL_HOLY_FIRE);
+                    if (target && target->isAlive())
+                        DoCast(target,SPELL_HOLY_FIRE);
                 }
                  if (me->HasAura(SPELL_SHIELD))
                     uiHolyFireTimer = 13000;
@@ -349,10 +349,10 @@ public:
 
             if (uiHolySmiteTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 250, true))
                 {
-                    if (pTarget && pTarget->isAlive())
-                        DoCast(pTarget,SPELL_SMITE);
+                    if (target && target->isAlive())
+                        DoCast(target,SPELL_SMITE);
                 }
                 if (me->HasAura(SPELL_SHIELD))
                     uiHolySmiteTimer = 9000;
@@ -489,10 +489,10 @@ public:
 
             if (uiOldWoundsTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
                 {
-                    if (pTarget && pTarget->isAlive())
-                        DoCast(pTarget, SPELL_OLD_WOUNDS);
+                    if (target && target->isAlive())
+                        DoCast(target, SPELL_OLD_WOUNDS);
                 }
                 uiOldWoundsTimer = 23000;
             }else uiOldWoundsTimer -= uiDiff;
@@ -505,10 +505,10 @@ public:
 
             if (uiShadowsPastTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,1))
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,1))
                 {
-                    if (pTarget && pTarget->isAlive())
-                        DoCast(pTarget,SPELL_SHADOWS_PAST);
+                    if (target && target->isAlive())
+                        DoCast(target,SPELL_SHADOWS_PAST);
                 }
                 uiShadowsPastTimer = 20000;
             }else uiShadowsPastTimer -= uiDiff;
@@ -694,15 +694,15 @@ public:
             {
                 if (uiCleaveTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_STRIKE);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_STRIKE);
                         uiCleaveTimer = 20000;
                 } else uiCleaveTimer -= uiDiff;
 
                 if (uiStrikeTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_CLEAVE);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_CLEAVE);
                         uiStrikeTimer = 25000;
                 } else uiStrikeTimer -= uiDiff;
 
@@ -729,8 +729,8 @@ public:
 
                 if (uiPummelTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_PUMMEL);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_PUMMEL);
                         uiPummelTimer = 35000;
                 } else uiPummelTimer -= uiDiff;
 
@@ -751,22 +751,22 @@ public:
 
                 if (uiPainTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_PAIN);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_PAIN);
                         uiPainTimer = 30000;
                 } else uiPainTimer -= uiDiff;
 
                 if (uiMindTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_MIND);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_MIND);
                         uiMindTimer = 90000;
                 } else uiMindTimer -= uiDiff;
 
                 if (uiSsmiteTimer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0))
-                        DoCast(pTarget,SPELL_SSMITE);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0))
+                        DoCast(target,SPELL_SSMITE);
                         uiSsmiteTimer = 25000;
                 } else uiSsmiteTimer -= uiDiff;
                 break;
