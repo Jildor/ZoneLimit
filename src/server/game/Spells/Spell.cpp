@@ -5115,8 +5115,8 @@ SpellCastResult Spell::CheckCast(bool strict)
                 {
                     float range = 10.0f;
                     Unit *target = NULL;
-                    Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck u_check(m_caster, range);
-                    Trinity::UnitLastSearcher<Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck> checker(m_caster, target, u_check);
+                    Trinity::AnyUnfriendlyAttackableVisibleUnitInObjectRangeCheck u_check(m_caster, m_caster, range);
+                    Trinity::UnitLastSearcher<Trinity::AnyUnfriendlyVisibleUnitInObjectRangeCheck> checker(m_caster, target, u_check);
                     m_caster->VisitNearbyObject(range, checker);
 
                     if (target)
