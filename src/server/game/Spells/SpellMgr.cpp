@@ -129,8 +129,9 @@ SpellMgr::SpellMgr()
             case TARGET_UNIT_TARGET_ANY:
             case TARGET_UNIT_TARGET_ENEMY:
             case TARGET_UNIT_TARGET_PARTY:
-            case TARGET_UNIT_PARTY_TARGET:
-            case TARGET_UNIT_CLASS_TARGET:
+            case TARGET_UNIT_TARGET_PASSENGER:
+            case TARGET_UNIT_TARGET_ALLY_PARTY:
+            case TARGET_UNIT_TARGET_RAID_CLASS:
             case TARGET_UNIT_CHAINHEAL:
                 SpellTargetType[i] = TARGET_TYPE_UNIT_TARGET;
                 break;
@@ -238,7 +239,7 @@ SpellMgr::SpellMgr()
             case TARGET_UNIT_AREA_ENTRY_SRC:
             case TARGET_UNIT_AREA_PARTY_DST:
             case TARGET_UNIT_AREA_PARTY_SRC:
-            case TARGET_UNIT_PARTY_TARGET:
+            case TARGET_UNIT_TARGET_ALLY_PARTY:
             case TARGET_UNIT_PARTY_CASTER:
             case TARGET_UNIT_CONE_ENEMY:
             case TARGET_UNIT_CONE_ALLY:
@@ -4152,11 +4153,6 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 61607: // Mark of Blood
             spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
-            ++count;
-            break;
-        // some dummy spell only has dest, should push caster in this case
-        case 62324: // Throw Passenger
-            spellInfo->Targets |= TARGET_FLAG_UNIT_CASTER;
             ++count;
             break;
         case 16834: // Natural shapeshifter
