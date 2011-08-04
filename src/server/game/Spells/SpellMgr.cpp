@@ -4198,10 +4198,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectBasePoints[2] += 30000;
             ++count;
             break;
-        case 61607: // Mark of Blood
-            spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
-            ++count;
-            break;
         case 16834: // Natural shapeshifter
         case 16835:
             spellInfo->DurationIndex = 21;
@@ -4212,6 +4208,10 @@ void SpellMgr::LoadSpellCustomAttr()
         case 51726:
             spellInfo->AttributesEx3 |= SPELL_ATTR3_STACK_FOR_DIFF_CASTERS;
             spellInfo->SpellFamilyFlags[2] = 0x10;
+            ++count;
+            break;
+        case 61607: // Mark of Blood
+            spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
             ++count;
             break;
         case 41013: // Parasitic Shadowfiend Passive
