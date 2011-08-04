@@ -54,6 +54,7 @@
 #include "InstanceScript.h"
 #include "OutdoorPvPWG.h"
 #include "OutdoorPvPMgr.h"
+#include "InstanceSaveMgr.h"
 
 extern pEffect SpellEffects[TOTAL_SPELL_EFFECTS];
 
@@ -5398,7 +5399,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     Difficulty difficulty = m_caster->GetMap()->GetDifficulty();
                     if (map->IsRaid())
                         if (InstancePlayerBind* targetBind = target->GetBoundInstance(mapId, difficulty))
-                            if (targetBind->perm && targetBind != m_caster->ToPlayer()->GetBoundInstance(mapId, difficulty))
+                            if (targetBind->perm && targetBind->save && targetBind->save->GetInstanceId() != m_caster->ToPlayer()->GetInstanceId())
                                 return SPELL_FAILED_TARGET_LOCKED_TO_RAID_INSTANCE;
 
                     InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(mapId);
