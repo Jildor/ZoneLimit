@@ -5965,9 +5965,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
             // Damage Shield
             if (dummySpell->SpellIconID == 3214)
             {
-                // to prevent proc from Sap
-                if (procSpell && procSpell->AttributesEx & SPELL_ATTR1_NOT_BREAK_STEALTH)
-                    return false;
                 triggered_spell_id = 59653;
                 // % of amount blocked
                 basepoints0 = CalculatePctN(int32(GetShieldBlockValue()), triggerAmount);
