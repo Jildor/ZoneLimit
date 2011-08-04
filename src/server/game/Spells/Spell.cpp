@@ -4976,12 +4976,12 @@ SpellCastResult Spell::CheckCast(bool strict)
             if (!GetSpellRadius(m_spellInfo, EFFECT_0, target->IsFriendlyTo(m_caster)))
             {
                 bool check = true;
-                uint32 dispelMask = GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[EFFECT_0]));
+                uint32 dispelMask = GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[EFFECT_0]));
 
                 for (uint8 effIndex = EFFECT_1; effIndex < MAX_SPELL_EFFECTS; ++effIndex)
                 {
                     if (m_spellInfo->Effect[effIndex] == SPELL_EFFECT_DISPEL)
-                        dispelMask |= GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[effIndex]));
+                        dispelMask |= GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[effIndex]));
                     // If there is any other effect don't check
                     else if (m_spellInfo->Effect[effIndex])
                     {
