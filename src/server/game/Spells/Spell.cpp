@@ -5164,7 +5164,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 uint32 dispelMask;
                 for (uint8 j = 0; j < MAX_SPELL_EFFECTS; ++j)
                     if (m_spellInfo->Effect[j] == SPELL_EFFECT_DISPEL)
-                        dispelMask |= GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[j]));
+                        dispelMask |= GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[j]));
 
                 // we should not be able to dispel diseases if the target is affected by unholy blight
                 if (dispelMask & (1 << DISPEL_DISEASE) && target->HasAura(50536))
