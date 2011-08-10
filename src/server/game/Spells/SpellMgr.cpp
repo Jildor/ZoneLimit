@@ -3999,7 +3999,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 20337:        
         case 63320: // Glyph of Life Tap
         // Entries were not updated after spell effect change, we have to do that manually :/
-            spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_TRIGGERED;
+            spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED;
             ++count;
             break;
         case 31117: // Unstable Affliction
