@@ -7069,7 +7069,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                 }
                 case 199997: // Divine Storm Helper (SERVERSIDE)
                 {
-                    if (pVictim == this)
+                    if (victim == this)
                         return false;
 
                     triggeredByAura->SetAmount(triggeredByAura->GetAmount() + damage);

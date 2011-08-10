@@ -4189,7 +4189,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 35098: // Rapid Killing
         case 35099:
             // just a temp solution to make Rapid Recuperation proc from this
-            spellInfo->AttributesEx2 |= SPELL_ATTR2_TRIGGERED_CAN_TRIGGER;
+            spellInfo->AttributesEx2 |= SPELL_ATTR2_TRIGGERED_CAN_TRIGGER_PROC;
             ++count;
             break;
         case 28200: // Ascendance (Talisman of Ascendance trinket)
