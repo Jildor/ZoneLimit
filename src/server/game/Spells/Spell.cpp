@@ -4963,56 +4963,6 @@ SpellCastResult Spell::CheckCast(bool strict)
             return castResult;
     }
 
-    // Dispel check - only if the first effect is dispel
-    if (!m_IsTriggeredSpell && (m_spellInfo->Effect[EFFECT_0] == SPELL_EFFECT_DISPEL))
-        if (Unit const * target = m_targets.GetUnitTarget())
-            if (!GetSpellRadius(m_spellInfo, EFFECT_0, target->IsFriendlyTo(m_caster)))
-            {
-                bool check = true;
-                uint32 dispelMask = GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[EFFECT_0]));
-
-                for (uint8 effIndex = EFFECT_1; effIndex < MAX_SPELL_EFFECTS; ++effIndex)
-                {
-                    if (m_spellInfo->Effect[effIndex] == SPELL_EFFECT_DISPEL)
-                        dispelMask |= GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[effIndex]));
-                    // If there is any other effect don't check
-                    else if (m_spellInfo->Effect[effIndex])
-                    {
-                        check = false;
-                        break;
-                    }
-                }
-
-                if (check)
-                {
-                    bool failed = true;
-
-                    Unit::AuraMap const & auras = target->GetOwnedAuras();
-                    for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
-                    {
-                        Aura * aura = itr->second;
-                        AuraApplication * aurApp = aura->GetApplicationOfTarget(target->GetGUID());
-                        if (!aurApp)
-                            continue;
-
-                        if ((1 << aura->GetSpellProto()->Dispel) & dispelMask)
-                        {
-                            bool positive = aurApp->IsPositive() ? !(aura->GetSpellProto()->AttributesEx & SPELL_ATTR1_NEGATIVE) : false;
-
-                            // Can only dispel positive auras on enemies and negative on allies
-                            if (positive != target->IsFriendlyTo(m_caster))
-                            {
-                                failed = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (failed)
-                        return SPELL_FAILED_NOTHING_TO_DISPEL;
-                }
-            }
-
     // script hook
     castResult = CallScriptCheckCastHandlers();
     if (castResult != SPELL_CAST_OK)
