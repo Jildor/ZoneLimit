@@ -731,8 +731,8 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
             {
                 bg->UpdatePlayerScore(killer, SCORE_DAMAGE_DONE, damage);
                 /** World of Warcraft Armory **/
-                if (Battleground *bgV = ((Player*)pVictim)->GetBattleground())
-                    bgV->UpdatePlayerScore(((Player*)pVictim), SCORE_DAMAGE_TAKEN, damage);
+                if (Battleground *bgV = ((Player*)victim)->GetBattleground())
+                    bgV->UpdatePlayerScore(((Player*)victim), SCORE_DAMAGE_TAKEN, damage);
                 /** World of Warcraft Armory **/
             }
         }
