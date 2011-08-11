@@ -3998,12 +3998,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED;
             ++count;
             break;
-        case 31117: // Unstable Affliction
-            // we need this because spell implemented wrong
-            // it should be done through aura proc with new procEx for dispel
-            spellInfo->AttributesEx4 &= ~SPELL_ATTR4_FIXED_DAMAGE;
-            ++count;
-            break;
         case 16007: // Draco-Incarcinatrix 900
             // was 46, but effect is aura effect
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_NEARBY_ENTRY;
