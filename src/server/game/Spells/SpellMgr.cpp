@@ -3983,13 +3983,7 @@ void SpellMgr::LoadSpellCustomAttr()
 			case 2825: // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             ++count;
-            break;
-        // Fiery Payback hack
-        case 44440:
-        case 44441:
-            spellInfo->CasterAuraStateNot = AURA_STATE_NONE;
-            ++count;
-            break;        
+            break;       
         case 20335: // Heart of the Crusader
         case 20336:
         case 20337:        
