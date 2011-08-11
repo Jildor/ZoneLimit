@@ -9919,7 +9919,7 @@ bool Unit::HasAuraState(AuraState flag, SpellEntry const* spellProto, Unit const
         }
         // Check per caster aura state
         // If aura with aurastate by caster not found return false
-        if ((1 << (flag - 1)) & PER_CASTER_AURA_STATE_MASK)
+        if ((1<<(flag-1)) & PER_CASTER_AURA_STATE_MASK)
         {
             for (AuraStateAurasMap::const_iterator itr = m_auraStateAuras.lower_bound(flag); itr != m_auraStateAuras.upper_bound(flag); ++itr)
                 if (itr->second->GetBase()->GetCasterGUID() == Caster->GetGUID())
@@ -10582,19 +10582,9 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
             case 6928:
             {
 				if (victim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))
-                    DoneTotalMod *= (100.0f + (*i)->GetAmount()) / 100.0f;
+                    AddPctN(DoneTotalMod, (*i)->GetAmount());
                 break;
             }
-            case 6427: // Dirty Deeds (Rank 1)
-            case 6580:
-            case 6428: // Dirty Deeds (Rank 2)
-            case 6579:
-                if (victim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))
-                {
-                    AuraEffect * eff0 = (*i)->GetBase()->GetEffect(0);
-                    DoneTotalMod *= (-eff0->GetAmount() + 100.0f) / 100.0f;
-                }
-                break;
             // Soul Siphon
             case 4992:
             case 4993:
@@ -10692,8 +10682,6 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
             {
                 if (victim->GetAuraEffect(SPELL_AURA_MOD_STALKED, SPELLFAMILY_HUNTER, 0x400, 0, 0))
                     AddPctN(DoneTotalMod, (*i)->GetAmount());
-                break;
-            default:
                 break;
             }
         }
@@ -12010,15 +11998,6 @@ void Unit::MeleeDamageBonus(Unit* victim, uint32 *pdamage, WeaponAttackType attT
                     AddPctN(DoneTotalMod, (*i)->GetAmount());
                 break;
             }
-            case 6427: case 6428:                           // Dirty Deeds
-				if (victim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))
-                {
-					AuraEffect* eff0 = (*i)->GetBase()->GetEffect(EFFECT_0);
-                    DoneTotalMod *= (-eff0->GetAmount() + 100.0f) / 100.0f;
-                }
-                break;
-            default:
-                break;
         }
     }
 
@@ -12103,18 +12082,27 @@ void Unit::MeleeDamageBonus(Unit* victim, uint32 *pdamage, WeaponAttackType attT
     }
 
     // .. taken pct: class scripts
-    //AuraEffectList const& mclassScritAuras = GetAuraEffectsByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
-    //for (AuraEffectList::const_iterator i = mclassScritAuras.begin(); i != mclassScritAuras.end(); ++i)
-    //{
-    //    switch((*i)->GetMiscValue())
-    //    {
-    //        if (!(*i)->IsAffectedOnSpell(spellProto))
-    //            continue;
+    AuraEffectList const& mclassScritAuras = GetAuraEffectsByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
+    for (AuraEffectList::const_iterator i = mclassScritAuras.begin(); i != mclassScritAuras.end(); ++i)
+    {
+        switch((*i)->GetMiscValue())
+        {
+            case 6427: case 6428:                           // Dirty Deeds
+                if (pVictim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))
+                {
+                    AuraEffect* eff0 = (*i)->GetBase()->GetEffect(0);
+                    if (!eff0 || (*i)->GetEffIndex() != 1)
+                    {
+                        sLog.outError("Spell structure of DD (%u) changed.",(*i)->GetId());
+                        continue;
+                    }
 
-    //        default:
-    //            break;
-    //    }
-    //}
+                    // effect 0 have expected value but in negative state
+                    TakenTotalMod *= (-eff0->GetAmount()+100.0f)/100.0f;
+                }
+                break;
+        }
+    }
 
     if (attType != RANGED_ATTACK)
     {
