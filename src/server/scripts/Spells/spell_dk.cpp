@@ -670,5 +670,3 @@ void AddSC_deathknight_spell_scripts()
     new spell_dk_improved_blood_presence();
     new spell_dk_improved_unholy_presence();
 }
-
-}
