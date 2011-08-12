@@ -88,8 +88,8 @@ void _RespawnCreatureIfNeeded(Creature *cr, uint32 entry)
     if (cr)
     {
         cr->UpdateEntry(entry); // SetOriginalEntry as used before may lead to crash
-        if (cr->GetAreaId() == 4575)
-            cr->AI()->EnterEvadeMode();
+        //if (cr->GetAreaId() == 4575)
+        //    cr->AI()->EnterEvadeMode();
         if (entry != cr->GetEntry() || !cr->isAlive())
             cr->Respawn(true);
         cr->SetVisible(true);
@@ -464,8 +464,12 @@ bool OutdoorPvPWG::SetupOutdoorPvP()
     return true;
 }
 
-void OutdoorPvPWG::ProcessEvent(GameObject *obj, uint32 eventId)
+void OutdoorPvPWG::ProcessEvent(WorldObject *objin, uint32 eventId)
 {
+    GameObject* obj = objin->ToGameObject();
+    if (!obj)
+        return;
+
     if (obj->GetEntry() == 192829) // Titan Relic
     {
         if (obj->GetGOInfo()->goober.eventId == eventId && isWarTime() && /*MaingateDestroyed==true &&*/ m_gate &&  m_gate->damageState == DAMAGE_DESTROYED)
@@ -915,10 +919,10 @@ void OutdoorPvPWG::OnGameObjectCreate(GameObject *go)
                 itr->second->type = BUILDING_TOWER;
             if (itr->second->damageState == DAMAGE_INTACT && !itr->second->health)
             {
-                itr->second->health = go->GetGOValue()->building.health;
+                itr->second->health = go->GetGOValue()->Building.Health;
                 go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_DESTROYED);
             } else {
-                go->GetGOValue()->building.health = itr->second->health;
+                go->GetGOValue()->Building.Health = itr->second->health
                 if (itr->second->damageState == DAMAGE_DAMAGED)
                     go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED);
                 else if (itr->second->damageState == DAMAGE_DESTROYED)
@@ -969,8 +973,9 @@ void OutdoorPvPWG::RebuildAllBuildings()
         if (itr->second->building && itr->second->building->GetGoType() == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING)
         {
             UpdateGameObjectInfo(itr->second->building);
-            itr->second->building->Rebuild();
-            itr->second->health = itr->second->building->GetGOValue()->building.health;
+            //itr->second->building->Rebuild();
+            itr->second->building->SetDestructibleState(GO_DESTRUCTIBLE_REBUILDING, NULL, true);
+			itr->second->health = itr->second->building->GetGOValue()->Building.Health;
             itr->second->damageState = DAMAGE_INTACT;
         }
         else
