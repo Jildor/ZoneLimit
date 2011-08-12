@@ -922,7 +922,7 @@ void OutdoorPvPWG::OnGameObjectCreate(GameObject *go)
                 itr->second->health = go->GetGOValue()->Building.Health;
                 go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_DESTROYED);
             } else {
-                go->GetGOValue()->Building.Health = itr->second->health
+                go->GetGOValue()->Building.Health = itr->second->health;
                 if (itr->second->damageState == DAMAGE_DAMAGED)
                     go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED);
                 else if (itr->second->damageState == DAMAGE_DESTROYED)
