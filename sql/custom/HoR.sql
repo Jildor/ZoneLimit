@@ -42,7 +42,7 @@ UPDATE `creature_template` SET `equipment_id`='2422' WHERE `entry` IN (@NPC_SYLV
 UPDATE `creature_template` SET `equipment_id`='0', `faction_A` = 2102, `faction_H` = 2102, `unit_flags` = 256  WHERE `entry`=@NPC_LICH_KING_EVENT;
 -- Lo edito como en TDB
 UPDATE `creature_template` SET `flags_extra` = 0 WHERE `entry` = @NPC_LICH_KING_BOSS;
-UPDATE `creature_template` SET `scale`='0.8', WHERE `entry` IN (@NPC_UTHER, @NPC_SYLVANA_INTRO, @NPC_LICH_KING_BOSS, @NPC_SYLVANA_OUTRO);
+UPDATE `creature_template` SET `scale`='0.8' WHERE `entry` IN (@NPC_UTHER, @NPC_SYLVANA_INTRO, @NPC_LICH_KING_BOSS, @NPC_SYLVANA_OUTRO);
 
 -- Creature Spawns
 -- Guids para ZLDB
