@@ -24,11 +24,14 @@ UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_abon' WHERE `entry
 -- Ice wall lo pongo de trigger
 UPDATE `creature_template` SET `flags_extra` = `flags_extra` | 128 WHERE `entry` = 37014;
 
--- Queldelar le quito AIscripts y le pongo de trigger
+-- Queldelar le quito AIscripts y le pongo de trigger y el scriptname
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37158;
-UPDATE `creature_template` SET `AIName` = '', `flags_extra` = `flags_extra` | 2 | 128 WHERE `entry` = 37158;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_queldelar', `flags_extra` = `flags_extra` | 2 | 128 WHERE `entry` = 37158;
 
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (37107,37068);
+UPDATE `creature_template` SET `unit_flags` = 32784, `AIName` = '', `ScriptName` = '', `difficulty_entry_1` = 0 WHERE `entry` = 37068; 
 UPDATE `creature_template` SET `unit_flags` = 32784, `AIName` = '', `ScriptName` = 'npc_spiritual_reflection', `difficulty_entry_1` = 37721 WHERE `entry` = 37107; 
+
 -- Borro el AIscript de ZLDB
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37107;
 UPDATE `creature_template` SET `minlevel` = 80, `maxlevel` = 80, `unit_flags` = 32784, `mindmg` = '422', `maxdmg` = '586', `attackpower` = '642', `dmg_multiplier` = '13' WHERE `entry` = 37721;
