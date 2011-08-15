@@ -44,6 +44,9 @@ UPDATE `creature_template` SET `equipment_id`='0', `faction_A` = 2102, `faction_
 UPDATE `creature_template` SET `flags_extra` = 0 WHERE `entry` = @NPC_LICH_KING_BOSS;
 UPDATE `creature_template` SET `scale`='0.8' WHERE `entry` IN (@NPC_UTHER, @NPC_SYLVANA_INTRO, @NPC_LICH_KING_BOSS, @NPC_SYLVANA_OUTRO);
 
+-- Borro al spawn del Lich King
+DELETE FROM `creature` WHERE `id` = @NPC_LICH_KING_BOSS AND `guid` = 135344;
+
 -- Creature Spawns
 -- Guids para ZLDB
 SET @GUID_CREATURE := 135310;
