@@ -1,7 +1,7 @@
--- Editado por Gildor
+ï»¿-- Editado por Gildor
 -- Halls of Reflection
 -- Creature Templates
-START TRANSACTION;
+
 SET @NPC_UTHER              := 37225;
 SET @NPC_JAINA_INTRO        := 37221;
 SET @NPC_SYLVANA_INTRO      := 37223;
@@ -21,6 +21,13 @@ UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_raging_gnoul' WHER
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_risen_witch_doctor' WHERE `entry`=36941;
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_abon' WHERE `entry`=37069;
 
+-- Ice wall lo pongo de trigger
+UPDATE `creature_template` SET `flags_extra` = `flags_extra` | 128 WHERE `entry` = 37014;
+
+-- Queldelar le quito AIscripts y le pongo de trigger
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37158;
+UPDATE `creature_template` SET `AIName` = '', `flags_extra` = `flags_extra` | 2 | 128 WHERE `entry` = 37158;
+
 UPDATE `creature_template` SET `unit_flags` = 32784, `AIName` = '', `ScriptName` = 'npc_spiritual_reflection', `difficulty_entry_1` = 37721 WHERE `entry` = 37107; 
 -- Borro el AIscript de ZLDB
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37107;
@@ -31,8 +38,11 @@ UPDATE `creature_template` SET `flags_extra` = 257 WHERE `entry` = @NPC_FROSTWOR
 -- equipment_id para ZLDB
 UPDATE `creature_template` SET `scale`='0.8', `equipment_id`='2491' WHERE `entry` IN (@NPC_JAINA_INTRO, @NPC_JAINA_OUTRO);
 UPDATE `creature_template` SET `equipment_id`='2422' WHERE `entry` IN (@NPC_SYLVANA_INTRO, @NPC_SYLVANA_OUTRO);
-UPDATE `creature_template` SET `equipment_id`='0' WHERE `entry`=@NPC_LICH_KING_EVENT;
-UPDATE `creature_template` SET `scale`='0.8' WHERE `entry` IN (@NPC_UTHER, @NPC_SYLVANA_INTRO, @NPC_LICH_KING_BOSS, @NPC_SYLVANA_OUTRO);
+-- Lo edito como en TDB
+UPDATE `creature_template` SET `equipment_id`='0', `faction_A` = 2102, `faction_H` = 2102, `unit_flags` = 256  WHERE `entry`=@NPC_LICH_KING_EVENT;
+-- Lo edito como en TDB
+UPDATE `creature_template` SET `flags_extra` = 0 WHERE `entry` = @NPC_LICH_KING_BOSS;
+UPDATE `creature_template` SET `scale`='0.8', WHERE `entry` IN (@NPC_UTHER, @NPC_SYLVANA_INTRO, @NPC_LICH_KING_BOSS, @NPC_SYLVANA_OUTRO);
 
 -- Creature Spawns
 -- Guids para ZLDB
@@ -52,49 +62,49 @@ UPDATE `gameobject_template` SET `faction`='1375' WHERE `entry` IN (197341, 2023
 
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1594540 AND -1594430;
 INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc8`,`sound`,`TYPE`,`LANGUAGE`,`emote`,`COMMENT`) VALUES
-(-1594473, 'Insensata, buscas lo que asesiné tiempo atras. Ahora no es mas que un fantasma, un eco lejano en mi mente.', '', 17229,1,0,0, '67234'),
-(-1594474, 'No cometeré el mismo error, Sylvanas. Esta vez no habrá escapatoria. Fallaste al servirme como no muerta. Ahora lo que te queda es el olvido.', '', 17228,1,0,0, '67234'),
+(-1594473, 'Insensata, buscas lo que asesinÃ© tiempo atras. Ahora no es mas que un fantasma, un eco lejano en mi mente.', '', 17229,1,0,0, '67234'),
+(-1594474, 'No cometerÃ© el mismo error, Sylvanas. Esta vez no habrÃ¡ escapatoria. Fallaste al servirme como no muerta. Ahora lo que te queda es el olvido.', '', 17228,1,0,0, '67234'),
 -- SCENE - Hall Of Reflection (Extro) - PreEscape
 (-1594477, 'Han llegado tus aliados, Jaina, como prometiste. Todos sereis poderosos agentes de la Plaga.', '', 17212,1,0,0, '67234'),
-(-1594478, 'No cometeré el mismo error, Sylvanas. Esta vez no habrá escapatoria. ¡Me servireis en la muerte!', '', 17213,1,0,0, '67234'),
-(-1594479, '¡Es demasiado poderoso, debemos abandonar este lugar ahora mismo! ¡Mi mágia podrá inmovilizarlo brevemente! ¡Vamos rápido, heroes!', '', 16644,0,0,1, '67234'),
-(-1594480, '¡Es demasiado poderoso! ¡Heroes, rápido, venid! ¡Debemos abandonar este lugar ahora mismo! Haré lo que pueda para inmovilizarlo mientras huimos.', '', 17058,0,0,1, '67234'),
+(-1594478, 'No cometerÃ© el mismo error, Sylvanas. Esta vez no habrÃ¡ escapatoria. Â¡Me servireis en la muerte!', '', 17213,1,0,0, '67234'),
+(-1594479, 'Â¡Es demasiado poderoso, debemos abandonar este lugar ahora mismo! Â¡Mi mÃ¡gia podrÃ¡ inmovilizarlo brevemente! Â¡Vamos rÃ¡pido, heroes!', '', 16644,0,0,1, '67234'),
+(-1594480, 'Â¡Es demasiado poderoso! Â¡Heroes, rÃ¡pido, venid! Â¡Debemos abandonar este lugar ahora mismo! HarÃ© lo que pueda para inmovilizarlo mientras huimos.', '', 17058,0,0,1, '67234'),
 -- SCENE - Hall Of Reflection (Extro) - Escape
-(-1594481, '¡El frio abrazo de la muerte os aguarda!', '', 17221,1,0,0, '67234'),
-(-1594482, 'Alzaos esbirros! ¡Que no pasen!', '', 17216,1,0,0, '67234'),
-(-1594483, 'Esbirros cojedlos. ¡Traedme sus cadaveres!', '', 17222,1,0,0, '67234'),
+(-1594481, 'Â¡El frio abrazo de la muerte os aguarda!', '', 17221,1,0,0, '67234'),
+(-1594482, 'Alzaos esbirros! Â¡Que no pasen!', '', 17216,1,0,0, '67234'),
+(-1594483, 'Esbirros cojedlos. Â¡Traedme sus cadaveres!', '', 17222,1,0,0, '67234'),
 (-1594484, 'Sin esperanza...', '!', 17214,1,0,0, '67234'),
-(-1594485, '¡Todo perdido!', '', 17215,1,0,0, '67234'),
-(-1594486, '¡No hay escapatoria!', '', 17217,1,0,0, '67234'),
-(-1594487, 'Destruiré esta barrera. ¡Debeis mantener atras a los no muertos!', '', 16607,1,0,0, '67234'),
-(-1594488, '¡Ninguna pared detendré a la Reina Alma en Pena! ¡Mantened a los no muertos a raya, heroes! ¡Destruiré esta barrera!', '', 17029,1,0,0, '67234'),
-(-1594489, '¡Otro muro de hielo! ¡Evitad que los no muertos interrumpan mis conjuros para que pueda derribar este muro!', '', 16608,1,0,0, '67234'),
-(-1594490, '¿Otra barrera? ¡Sed fuertes, campeones! ¡Derrumbaré el muro!', '', 17030,1,0,0, '67234'),
+(-1594485, 'Â¡Todo perdido!', '', 17215,1,0,0, '67234'),
+(-1594486, 'Â¡No hay escapatoria!', '', 17217,1,0,0, '67234'),
+(-1594487, 'DestruirÃ© esta barrera. Â¡Debeis mantener atras a los no muertos!', '', 16607,1,0,0, '67234'),
+(-1594488, 'Â¡Ninguna pared detendrÃ© a la Reina Alma en Pena! Â¡Mantened a los no muertos a raya, heroes! Â¡DestruirÃ© esta barrera!', '', 17029,1,0,0, '67234'),
+(-1594489, 'Â¡Otro muro de hielo! Â¡Evitad que los no muertos interrumpan mis conjuros para que pueda derribar este muro!', '', 16608,1,0,0, '67234'),
+(-1594490, 'Â¿Otra barrera? Â¡Sed fuertes, campeones! Â¡DerrumbarÃ© el muro!', '', 17030,1,0,0, '67234'),
 (-1594491, 'Sucumbid al frio de la tumba.', '', 17218,1,0,0, '67234'),
 (-1594492, 'Otro final sin salida.', '', 17219,1,0,0, '67234'),
-(-1594493, '¿Cuanto vais a aguantar?', '', 17220,1,0,0, '67234'),
-(-1594494, 'Esta jugando con nosotros. ¡Le enseñaré lo que le pasa al hielo cuando se junta con el fuego!', '', 16609,0,0,0, '67234'),
-(-1594495, 'Tus muros no pueden detenernos, monstruo. ¡Los destruiré todos!', '', 16610,1,0,0, '67234'),
-(-1594496, '¡Me canso de estos juegos, Arthas! ¡Tus muros no me detendrán!', '', 17031,1,0,0, '67234'),
-(-1594497, 'No impedirás que escapemos, demonio. ¡Acabad con los no muertos mientras derribo esta barrera!', '', 17032,1,0,0, '67234'),
-(-1594498, '¡Hay una salida ahí delante, vamos!', '', 16645,1,0,0, '67234'),
-(-1594499, '¡Casi estamos, no os rindais!', '', 16646,1,0,0, '67234'),
-(-1594500, '¡Hay una salida ahí delante, vamos!', '', 17059,1,0,0, '67234'),
-(-1594501, '¡Casi estamos, no os rindais!', '', 17060,1,0,0, '67234'),
-(-1594502, 'No... No hay salida. No tenemos más opción que luchar. ¡Armaos de valor heroes, pues esta será nuestra última batalla!', '', 16647,1,0,0, '67234'),
-(-1594503, '¡Maldición, no hay salida! Así es como acaba. ¡Preparaos heroes, hoy tendrá lugar nuestra última batalla!', '', 17061,1,0,0, '67234'),
+(-1594493, 'Â¿Cuanto vais a aguantar?', '', 17220,1,0,0, '67234'),
+(-1594494, 'Esta jugando con nosotros. Â¡Le enseÃ±arÃ© lo que le pasa al hielo cuando se junta con el fuego!', '', 16609,0,0,0, '67234'),
+(-1594495, 'Tus muros no pueden detenernos, monstruo. Â¡Los destruirÃ© todos!', '', 16610,1,0,0, '67234'),
+(-1594496, 'Â¡Me canso de estos juegos, Arthas! Â¡Tus muros no me detendrÃ¡n!', '', 17031,1,0,0, '67234'),
+(-1594497, 'No impedirÃ¡s que escapemos, demonio. Â¡Acabad con los no muertos mientras derribo esta barrera!', '', 17032,1,0,0, '67234'),
+(-1594498, 'Â¡Hay una salida ahÃ­ delante, vamos!', '', 16645,1,0,0, '67234'),
+(-1594499, 'Â¡Casi estamos, no os rindais!', '', 16646,1,0,0, '67234'),
+(-1594500, 'Â¡Hay una salida ahÃ­ delante, vamos!', '', 17059,1,0,0, '67234'),
+(-1594501, 'Â¡Casi estamos, no os rindais!', '', 17060,1,0,0, '67234'),
+(-1594502, 'No... No hay salida. No tenemos mÃ¡s opciÃ³n que luchar. Â¡Armaos de valor heroes, pues esta serÃ¡ nuestra Ãºltima batalla!', '', 16647,1,0,0, '67234'),
+(-1594503, 'Â¡MaldiciÃ³n, no hay salida! AsÃ­ es como acaba. Â¡Preparaos heroes, hoy tendrÃ¡ lugar nuestra Ãºltima batalla!', '', 17061,1,0,0, '67234'),
 (-1594504, 'No corrais. Sois mios....', '', 17223,1,0,0, '67234'),
-(-1594524,'Perdonadme heroes. Debí escuchar a Uther. Tenia que verlo por mi misma, poder mirarle a los ojos una última vez. Lo siento.', '','16648','0','0','0','67234'),
-(-1594525,'Ahora sabemos que debemos hacer, les daré estas noticias al Rey Varian y al alto señor Vadin.','','16649','0','0','0','67234'),
-(-1594522,'¡Fuego, fuego!','','16732','1','0','0','67234'),
-(-1594523,'¡A bordo! ¡Ya! ¡La ladera de la montaña se derrumbará en cualquier momento!','','16733','1','0','0','67234'),
-(-1594521,'Estamos a salvo por ahora. Su fuerza se ha multiplicado desde nuestra última batalla. Necesitamos un ejercito poderoso para destruir al Rey Exánime, mejor incluso que el que la Horda puede convocar.','','17062','0','0','0','67234'),
-(-1594526,'¡Fuego, fuego!','','16721','1','0','0','67234'),
-(-1594527,'¡Rápido! ¡A bordo! No debemos entretenernos. ¡La ladera de la montaña se derrumbará en cualquier momento!','','16722','1','0','0','67234'),
-(-1594505, '¡Soldados de Lordaeron, alzaos ante la llamada de vuestro maestro!', '', 16714,1,0,0, '67234'),
-(-1594506, 'El maestro observó su reino, y lo encontró... incompleto. Su juicio fue rápido y despiado. ¡Muerte a todos!', '', 16738,1,0,0, '67234'),
+(-1594524,'Perdonadme heroes. DebÃ­ escuchar a Uther. Tenia que verlo por mi misma, poder mirarle a los ojos una Ãºltima vez. Lo siento.', '','16648','0','0','0','67234'),
+(-1594525,'Ahora sabemos que debemos hacer, les darÃ© estas noticias al Rey Varian y al alto seÃ±or Vadin.','','16649','0','0','0','67234'),
+(-1594522,'Â¡Fuego, fuego!','','16732','1','0','0','67234'),
+(-1594523,'Â¡A bordo! Â¡Ya! Â¡La ladera de la montaÃ±a se derrumbarÃ¡ en cualquier momento!','','16733','1','0','0','67234'),
+(-1594521,'Estamos a salvo por ahora. Su fuerza se ha multiplicado desde nuestra Ãºltima batalla. Necesitamos un ejercito poderoso para destruir al Rey ExÃ¡nime, mejor incluso que el que la Horda puede convocar.','','17062','0','0','0','67234'),
+(-1594526,'Â¡Fuego, fuego!','','16721','1','0','0','67234'),
+(-1594527,'Â¡RÃ¡pido! Â¡A bordo! No debemos entretenernos. Â¡La ladera de la montaÃ±a se derrumbarÃ¡ en cualquier momento!','','16722','1','0','0','67234'),
+(-1594505, 'Â¡Soldados de Lordaeron, alzaos ante la llamada de vuestro maestro!', '', 16714,1,0,0, '67234'),
+(-1594506, 'El maestro observÃ³ su reino, y lo encontrÃ³... incompleto. Su juicio fue rÃ¡pido y despiado. Â¡Muerte a todos!', '', 16738,1,0,0, '67234'),
 -- FrostWorn General
-(-1594519, '¡No sois dignos de enfrentaros al Rey Exanime!', '', 16921,1,0,0, '67234'),
+(-1594519, 'Â¡No sois dignos de enfrentaros al Rey Exanime!', '', 16921,1,0,0, '67234'),
 (-1594520, 'Maestro, he fracasado...', '', 16922,1,0,0, '67234');
 
 -- Waipoints to escort event on Halls of reflection
@@ -250,10 +260,11 @@ INSERT INTO `gameobject_template` (`entry`, `TYPE`, `displayId`, `NAME`, `IconNa
 ('197341','0','9124','Impenetrable Door','','','','1375','32','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','12340'),
 ('500003','14','8253','Orgrim\'s Hammer','','','','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','1'),
 ('202079','22','8111','Portal to Dalaran','','','','0','0','1','0','0','0','0','0','0','53141','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','12340'),
-('201710','3','9280','The Captain\'s Chest','','','','1732','0','1','0','0','0','0','0','0','57','27985','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
-('202337','3','9281','The Captain\'s Chest','','','','1735','0','1','0','0','0','0','0','0','57','27993','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
-('202336','3','9280','The Captain\'s Chest','','','','1732','0','1','0','0','0','0','0','0','57','27993','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
-('202212','3','9281','The Captain\'s Chest','','','','1735','0','1','0','0','0','0','0','0','57','27985','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','11723'),
+-- Les pongo el loot de ZLDB
+('201710','3','9280','The Captain\'s Chest','','','','1732','0','1','0','0','0','0','0','0','57','201710','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
+('202337','3','9281','The Captain\'s Chest','','','','1735','0','1','0','0','0','0','0','0','57','202336','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
+('202336','3','9280','The Captain\'s Chest','','','','1732','0','1','0','0','0','0','0','0','57','202336','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','12340'),
+('202212','3','9281','The Captain\'s Chest','','','','1735','0','1','0','0','0','0','0','0','57','201710','0','1','0','0','0','0','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0','','','11723'),
 ('500002','14','9150','The Skybreaker','','','','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','1'),
 ('201709','5','9288','Gunship Stairs','','','','0','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','12340'),
 ('202211','5','9289','Gunship Stairs','','','','0','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','','','12340');
@@ -285,5 +296,3 @@ INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `positi
 (@GUID_GO+20,500003,668,3,1,5245.17,1582.11,761.72,5.86166,0,0,0.209207,-0.977871,300,0,1),
 (@GUID_GO+21,202212,668,1,1,5253.03,1585.13,796.089,2.75698,0,0,0.981566,0.191121,300,0,1),
 (@GUID_GO+22,201710,668,1,1,5262.5,1582.41,794.342,2.75698,0,0,0.981566,0.191121,300,0,1);
-
-COMMIT;
