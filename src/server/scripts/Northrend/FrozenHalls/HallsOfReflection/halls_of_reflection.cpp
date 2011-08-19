@@ -2019,9 +2019,6 @@ class at_hor_waves_restarter : public AreaTriggerScript
             if(pInstance->GetData(DATA_WAVE_COUNT) == SPECIAL)
                 return true;
 
-            f(pInstance->GetData(DATA_WAVE_COUNT) == IN_PROGRESS)
-                return true;
-
             if (pInstance->GetData(DATA_INTRO_EVENT) == DONE && pInstance->GetData(DATA_MARWYN_EVENT) != DONE)
             {
                 pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);
