@@ -1597,7 +1597,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     else
                         target->SetReducedThreatPercent(0,0);
                     break;
-                case 31842: // Divine Illumination
+               /* case 31842: // Divine Illumination
                     // Item - Paladin T10 Holy 2P Bonus
                     if (target->HasAura(70755))
                     {
@@ -1606,7 +1606,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                         else
                             target->RemoveAurasDueToSpell(71166);
                     }
-                    break;
+                    break;*/
             }
             break;
         case SPELLFAMILY_DRUID:
