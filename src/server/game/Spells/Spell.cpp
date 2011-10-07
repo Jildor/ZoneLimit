@@ -4916,7 +4916,6 @@ SpellCastResult Spell::CheckCast(bool strict)
             if (IsPositiveSpell(m_spellInfo->Id))
                 if (target->IsImmunedToSpell(m_spellInfo))
                     return SPELL_FAILED_TARGET_AURASTATE;
-
     }
 
     // Spell casted only on battleground
@@ -7396,7 +7395,6 @@ void Spell::CallScriptAfterHitHandlers()
         (*scritr)->_FinishScriptCall();
     }
 }
-
 
 void Spell::CallScriptAfterUnitTargetSelectHandlers(std::list<Unit*>& unitTargets, SpellEffIndex effIndex)
 {
