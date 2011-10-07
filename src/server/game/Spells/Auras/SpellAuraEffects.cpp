@@ -5246,7 +5246,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                             uint64 guid = pCaster->m_SummonSlot[4];
 							if (guid)
 							{
-								Creature* totem = caster->GetMap()->GetCreature(guid);
+								Creature* totem = pcaster->GetMap()->GetCreature(guid);
 								if (totem && totem->isTotem())
                                     pCaster->CastSpell(totem, 6496, true);
 							}
