@@ -797,7 +797,6 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                         default:
                             sLog->outError("Spell::EffectDummy: Spell %u not handled in DW",m_spellInfo->Id);
                             return;
-
                     }
 
                     SpellEntry const* spellInfo = sSpellStore.LookupEntry(12721);
@@ -1135,12 +1134,10 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 {
                     if (!damage)
                         return;
-
                     if (m_UniqueTargetInfo.size())
                     {
                         SpellEntry const * spellInfo = sSpellStore.LookupEntry(53385);
                         int32 heal = SpellMgr::CalculateSpellEffectAmount(spellInfo, EFFECT_1) * damage / m_UniqueTargetInfo.size() / 100;
-
                         m_caster->CastCustomSpell(unitTarget, 54172, &heal, NULL, NULL, true);
                     }
                     return;
@@ -1402,7 +1399,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
 
                 return;
             }
-
+			switch(m_spellInfo->Id)
             {
                 case 31789:                                 // Righteous Defense (step 1)
                 {
