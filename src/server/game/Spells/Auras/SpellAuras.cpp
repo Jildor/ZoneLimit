@@ -270,7 +270,6 @@ Aura* Aura::TryRefreshStackOrCreate(SpellEntry const* spellproto, uint8 tryEffMa
     }
     else
         return Create(spellproto,effMask,owner,caster,baseAmount,castItem,casterGUID);
-
 }
 
 Aura* Aura::TryCreate(SpellEntry const* spellproto, uint8 tryEffMask, WorldObject* owner, Unit* caster, int32* baseAmount /*= NULL*/, Item* castItem /*= NULL*/, uint64 casterGUID /*= 0*/)
@@ -1393,10 +1392,9 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                         if (caster->GetTypeId() == TYPEID_PLAYER && caster->ToPlayer()->isHonorOrXPTarget(target))
                             caster->CastSpell(target, 18662, true, NULL, GetEffect(0));
                     }
-                    break;
                 }
                 // Improved Fear
-                if (GetSpellProto()->SpellFamilyFlags[1] & 0x00000400)
+                else if (GetSpellProto()->SpellFamilyFlags[1] & 0x00000400)
                 {
                     if (AuraEffect* aurEff = caster->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_WARLOCK, 98, 0))
                     {
@@ -1411,7 +1409,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                         if (spellId)
                             caster->CastSpell(target, spellId, true);
                     }
-                    break;
                 }
                 switch(GetId())
                 {
