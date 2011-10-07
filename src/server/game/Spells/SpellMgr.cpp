@@ -3973,10 +3973,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ENEMY_SRC;
             ++count;
             break;
-        // Improved Succubus
-        case 18754:
-        case 18755:
-        case 18756:
+        case 18754: case 18755: case 18756: // Improved Succubus
             // now aura will be applied correctly
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             ++count;
@@ -3985,17 +3982,17 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             ++count;
-            break;        
-        case 45524: // Chains of Ice
-            // this will fix self-damage caused by Glyph of Chains of Ice
-            spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
-            ++count;
-            break;
+            break;   
         case 8494: // Mana Shield (rank 2)
             // because of bug in dbc
             spellInfo->procChance = 0;
             ++count;
-            break;			
+            break;				
+        case 45524: // Chains of Ice
+            // this will fix self-damage caused by Glyph of Chains of Ice
+            spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
+            ++count;
+            break;		
         case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             ++count;
@@ -4255,13 +4252,13 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Stances = 1 << (FORM_TREE - 1);
             ++count;
             break;
-        case 55689: // Glyph of Shadow (to prevent glyph aura loss)
-            spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
-            ++count;
-            break;
         case 47569: // Improved Shadowform (Rank 1)
             // with this spell atrribute aura can be stacked several times
             spellInfo->Attributes &= ~SPELL_ATTR0_NOT_SHAPESHIFT;
+            ++count;
+            break;
+        case 55689: // Glyph of Shadow (to prevent glyph aura loss)
+            spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
             ++count;
             break;
         case 30421: // Nether Portal - Perseverence
@@ -4322,6 +4319,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_INTERRUPT;
             ++count;
             break;
+        case 61851: // Killing Spree - should remove snares from caster
+            spellInfo->AttributesEx |= SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY;
+            ++count;
+            break;
         case 18500: // Wing Buffet
         case 33086: // Wild Bite
         case 49749: // Piercing Blow
@@ -4343,22 +4344,6 @@ void SpellMgr::LoadSpellCustomAttr()
         case 50526: // Wandering Plague
         case 63675: // Improved Devouring Plague
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
-            ++count;
-            break;
-        case 19970: // Entangling Roots (Rank 6)
-        case 19971: // Entangling Roots (Rank 5)
-        case 19972: // Entangling Roots (Rank 4)
-        case 19973: // Entangling Roots (Rank 3)
-        case 19974: // Entangling Roots (Rank 2)
-        case 19975: // Entangling Roots (Rank 1)
-        case 27010: // Entangling Roots (Rank 7)
-        case 53313: // Entangling Roots (Rank 8)
-            spellInfo->CastingTimeIndex = 1;
-            ++count;
-            break;
-        case 53651: // Light's Beacon
-            // aura casted on a whole raid and shouldn't put caster in combat
-            spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             ++count;
             break;
         case 8145: // Tremor Totem (instant pulse)
@@ -4394,6 +4379,22 @@ void SpellMgr::LoadSpellCustomAttr()
                     // SpellFamilyFlags[0] & 0x00000040 in SPELLFAMILY_DEATHKNIGHT is currently unused (3.3.5a)
                     // this needs research on modifier applying rules, does not seem to be in Attributes fields
             spellInfo->EffectSpellClassMask[0] = flag96(0x00000040, 0x00000000, 0x00000000);
+            ++count;
+            break;
+        case 19970: // Entangling Roots (Rank 6) -- Nature's Grasp Proc
+        case 19971: // Entangling Roots (Rank 5) -- Nature's Grasp Proc
+        case 19972: // Entangling Roots (Rank 4) -- Nature's Grasp Proc
+        case 19973: // Entangling Roots (Rank 3) -- Nature's Grasp Proc
+        case 19974: // Entangling Roots (Rank 2) -- Nature's Grasp Proc
+        case 19975: // Entangling Roots (Rank 1) -- Nature's Grasp Proc
+        case 27010: // Entangling Roots (Rank 7) -- Nature's Grasp Proc
+        case 53313: // Entangling Roots (Rank 8) -- Nature's Grasp Proc
+            spellInfo->CastingTimeIndex = 1;
+            ++count;
+            break;
+        case 53651: // Light's Beacon
+            // aura casted on a whole raid and shouldn't put caster in combat
+            spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             ++count;
             break;
         // ULDUAR SPELLS
@@ -4438,10 +4439,6 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
             ++count;
-            break;
-        case 61851: // Killing Spree - should remove snares from caster
-            spellInfo->AttributesEx |= SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY;
-            count++;
             break;
         case 64321: // Potent Pheromones (Freya)
             // spell should dispel area aura, but doesn't have the attribute
@@ -4632,6 +4629,8 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Icy Touch - extend FamilyFlags (unused value) for Sigil of the Frozen Conscience to use
                 if (spellInfo->SpellIconID == 2721 && spellInfo->SpellFamilyFlags[0] & 0x2)
                     spellInfo->SpellFamilyFlags[0] |= 0x40;
+                ++count;
+                break;
             case SPELLFAMILY_PRIEST:
                 // Twin Disciplines should affect at Prayer of Mending
                 if (spellInfo->SpellIconID == 2292)
