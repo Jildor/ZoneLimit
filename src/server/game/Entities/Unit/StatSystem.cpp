@@ -358,7 +358,6 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                         {
                             switch (aurEff->GetEffIndex())
                             {
-
                                 case 0: // Predatory Strikes (effect 0)
                                     mLevelMult = CalculatePctN(1.0f, aurEff->GetAmount());
                                     break;
@@ -380,8 +379,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                     }
                 }
 
-                ShapeshiftForm form = GetShapeshiftForm();
-                switch (form)
+                switch (GetShapeshiftForm())
                 {
                     case FORM_CAT:
                         val2 = getLevel() * (mLevelMult + 2.0f) + GetStat(STAT_STRENGTH) * 2.0f + GetStat(STAT_AGILITY) - 20.0f + weapon_bonus + m_baseFeralAP;
