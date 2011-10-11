@@ -2520,6 +2520,9 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit* victim, SpellEntry const* spell)
     if (Player* modOwner = GetSpellModOwner())
         modOwner->ApplySpellMod(spell->Id, SPELLMOD_RESIST_MISS_CHANCE, modHitChance);
 
+    // Increase from attacker SPELL_AURA_MOD_INCREASES_SPELL_PCT_TO_HIT auras
+    modHitChance += GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_INCREASES_SPELL_PCT_TO_HIT, schoolMask);
+
     // Spells with SPELL_ATTR3_IGNORE_HIT_RESULT will ignore target's avoidance effects
     if (!(spell->AttributesEx3 & SPELL_ATTR3_IGNORE_HIT_RESULT))
     {
@@ -2533,9 +2536,6 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit* victim, SpellEntry const* spell)
         if (victim->GetTypeId() == TYPEID_PLAYER)
             modHitChance -= int32(victim->ToPlayer()->GetRatingBonusValue(CR_HIT_TAKEN_SPELL));
     }
-
-    // Increase from attacker SPELL_AURA_MOD_INCREASES_SPELL_PCT_TO_HIT auras
-    modHitChance += GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_INCREASES_SPELL_PCT_TO_HIT, schoolMask);
 
     int32 HitChance = modHitChance * 100;
     // Increase hit chance from attacker SPELL_AURA_MOD_SPELL_HIT_CHANCE and attacker ratings
@@ -7975,13 +7975,6 @@ bool Unit::HandleObsModEnergyAuraProc(Unit* victim, uint32 /*damage*/, AuraEffec
             }
             break;
         }
-        case SPELLFAMILY_WARRIOR:
-        {
-            // Recklessness - prevent double proc
-            if (dummySpell->Id == 1719)
-                return false;
-            break;
-        }
     }
     // processed charge only counting case
     if (!triggered_spell_id)
@@ -8038,6 +8031,13 @@ bool Unit::HandleModDamagePctTakenAuraProc(Unit* victim, uint32 /*damage*/, Aura
                         return false;
                 }
             }
+            break;
+        }
+        case SPELLFAMILY_WARRIOR:
+        {
+            // Recklessness - prevent double proc
+            if (dummySpell->Id == 1719)
+                return false;
             break;
         }
     }
@@ -8985,6 +8985,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
 
     // Sword Specialization
     if (auraSpellInfo->SpellFamilyName == SPELLFAMILY_GENERIC && auraSpellInfo->SpellIconID == 1462 && procSpell)
+    {
         if (Player * plr = ToPlayer())
         {
             if (cooldown && plr->HasSpellCooldown(16459))
@@ -8999,6 +9000,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
                 plr->AddSpellCooldown(16459, 0, time(NULL) + cooldown);
             return true;
         }
+    }
 
     // Blade Barrier
     if (auraSpellInfo->SpellFamilyName == SPELLFAMILY_DEATHKNIGHT && auraSpellInfo->SpellIconID == 85)
@@ -9043,7 +9045,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
             target->CastSpell(target, trigger_spell_id, true, castItem, triggeredByAura);
 
             if (cooldown && target->GetTypeId() == TYPEID_PLAYER)
-                ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + cooldown);
+                target->ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + cooldown);
             return true;
         }
         // Cast positive spell on enemy target
@@ -10325,6 +10327,7 @@ int32 Unit::DealHeal(Unit* victim, uint32 addhealth)
     {
         if (Battleground* bg = player->GetBattleground())
             bg->UpdatePlayerScore(player, SCORE_HEALING_DONE, gain);
+
         // use the actual gain, as the overheal shall not be counted, skip gain 0 (it ignored anyway in to criteria)
         if (gain)
             player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HEALING_DONE, gain, 0, victim);
@@ -10866,7 +10869,7 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
                 if (HasAura(100001))
                     DoneTotalMod *= 4;
             // Shadow Bite (15% increase from each dot)
-            if (spellProto->SpellFamilyFlags[1] & 0x00400000 && isPet() && GetOwner())
+            if (spellProto->SpellFamilyFlags[1] & 0x00400000 && isPet())
                 if (uint8 count = victim->GetDoTsByCaster(GetOwnerGUID()))
                     AddPctN(DoneTotalMod, 15 * count);
         break;
@@ -12065,7 +12068,6 @@ void Unit::MeleeDamageBonus(Unit* victim, uint32 *pdamage, WeaponAttackType attT
                         AddPctF(DoneTotalMod, chain->rank * 2.0f);
                 break;
             }
-
             // Marked for Death
             case 7598:
             case 7599:
@@ -17056,8 +17058,8 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                 modelid = formEntry->modelID_A;
         }
     }
+	
     return modelid;
-
 }
 
 uint32 Unit::GetModelForTotem(PlayerTotemType totemType)
