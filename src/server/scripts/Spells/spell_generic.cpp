@@ -507,13 +507,13 @@ class spell_gen_tricky_treat : public SpellScriptLoader
         {
             PrepareSpellScript(spell_gen_tricky_treat_SpellScript);
 
-            bool Validate(SpellInfo const* /*spellEntry*/)
+            bool Validate(SpellEntry const* /*spellEntry*/)
             {
-                if (!sSpellMgr->GetSpellInfo(SPELL_TRICKY_TREAT_SPEED))
+                if (!sSpellStore.LookupEntry(SPELL_TRICKY_TREAT_SPEED))
                     return false;
-                if (!sSpellMgr->GetSpellInfo(SPELL_TRICKY_TREAT_TRIGGER))
+                if (!sSpellStore.LookupEntry(SPELL_TRICKY_TREAT_TRIGGER))
                     return false;
-                if (!sSpellMgr->GetSpellInfo(SPELL_UPSET_TUMMY))
+                if (!sSpellStore.LookupEntry(SPELL_UPSET_TUMMY))
                     return false;
                 return true;
             }
@@ -527,7 +527,7 @@ class spell_gen_tricky_treat : public SpellScriptLoader
 
             void Register()
             {
-                OnEffectHitTarget += SpellEffectFn(spell_gen_tricky_treat_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+                OnEffect += SpellEffectFn(spell_gen_tricky_treat_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
             }
         };
 
