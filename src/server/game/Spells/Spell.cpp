@@ -7416,7 +7416,7 @@ bool Spell::CanExecuteTriggersOnHit(uint8 effMask, SpellEntry const* spellInfo) 
      // If triggered spell doesn't have SPELL_ATTR4_PROC_ONLY_ON_DUMMY then it can NOT proc on SPELL_EFFECT_DUMMY (needs confirmation)
      for (uint8 i = 0;i < MAX_SPELL_EFFECTS; ++i)
       {
-         if ((effMask & (1 << i)) && (only_on_dummy == (m_spellInfo->Effects[i].Effect == SPELL_EFFECT_DUMMY)))
+         if ((effMask & (1 << i)) && (only_on_dummy == (m_spellInfo->Effect[i] == SPELL_EFFECT_DUMMY)))
              return true;
       }
      return false;
