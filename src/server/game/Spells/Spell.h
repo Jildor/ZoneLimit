@@ -667,7 +667,7 @@ class Spell
         void CallScriptAfterUnitTargetSelectHandlers(std::list<Unit*>& unitTargets, SpellEffIndex effIndex);
         std::list<SpellScript *> m_loadedScripts;
 
-        bool CanExecuteTriggersOnHit(uint8 effMask, SpellEntry const* spellInfo = NULL) const;
+        bool CanExecuteTriggersOnHit(uint8 effMask) const;
         void PrepareTriggersExecutedOnHit();
         typedef std::list< std::pair<SpellEntry const*, int32> > HitTriggerSpells;
         HitTriggerSpells m_hitTriggerSpells;
