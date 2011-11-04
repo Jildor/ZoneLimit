@@ -7415,9 +7415,13 @@ bool Spell::CanExecuteTriggersOnHit(uint8 effMask) const
     // check which effects can trigger proc
     // don't allow to proc for dummy-only spell target hits
     // prevents triggering/procing effects twice from spells like Eviscerate
+	// also prevents double proc from Envenom
     for (uint8 i = 0;effMask && i < MAX_SPELL_EFFECTS; ++i)
     {
         if (m_spellInfo->Effect[i] == SPELL_EFFECT_DUMMY)
+        if (m_spellInfo->Effect[i] == SPELL_EFFECT_DUMMY ||
+            (m_spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE &&
+            m_spellInfo->SpellFamilyFlags[1] & 0x8 && i != 0))
             effMask &= ~(1<<i);
     }
     return effMask;
