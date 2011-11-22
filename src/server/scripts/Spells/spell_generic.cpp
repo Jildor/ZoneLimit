@@ -1328,7 +1328,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
                if (Player* target = GetHitPlayer())
-			   if (Player->GetAuraCount(SPELL_TURKEY_TRACKER) =10)
+			   if (GetCaster()->ToPlayer()->GetAuraCount(SPELL_TURKEY_TRACKER) =10)
                 {
                     GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL);
                 }
