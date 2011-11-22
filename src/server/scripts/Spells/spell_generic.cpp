@@ -1315,11 +1315,11 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
         {
             PrepareSpellScript(spell_gen_turkey_tracker_SpellScript);
 
-            bool Validate(SpellInfo const* /*spellEntry*/)
+            bool Validate(SpellEntry const* /*spell*/)
             {
-                if (!sSpellMgr->GetSpellInfo(SPELL_KILL_COUNTER_VISUAL))
+                if (!sSpellStore.LookupEntry(SPELL_KILL_COUNTER_VISUAL))
                     return false;
-                if (!sSpellMgr->GetSpellInfo(SPELL_KILL_COUNTER_VISUAL_MAX))
+                if (!sSpellStore.LookupEntry(SPELL_KILL_COUNTER_VISUAL_MAX))
                     return false;
                 return true;
             }
@@ -1359,7 +1359,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
 
             void Register()
             {
-                OnEffectHitTarget += SpellEffectFn(spell_gen_turkey_tracker_SpellScript::HandleScript, EFFECT_1, SPELL_EFFECT_SCRIPT_EFFECT);
+                OnEffect += SpellEffectFn(spell_gen_turkey_tracker_SpellScript::HandleScript, EFFECT_1, SPELL_EFFECT_SCRIPT_EFFECT);
             }
         };
 
