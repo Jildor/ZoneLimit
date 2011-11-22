@@ -1335,21 +1335,21 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                     switch (aura->GetStackAmount())
                     {
                         case 10:
-                            // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target->GetTypeId() == TYPEID_PLAYER, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            target->MonsterTextEmote("Turkey Hunter!", 0, true);
+                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 20:
-                            // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target->GetTypeId() == TYPEID_PLAYER, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            target->MonsterTextEmote("Turkey Domination!", 0, true);
+                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 30:
-                            // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target->GetTypeId() == TYPEID_PLAYER, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            target->MonsterTextEmote("Turkey Slaughter!", 0, true);
+                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 40:
-                            // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target->GetTypeId() == TYPEID_PLAYER, SPELL_KILL_COUNTER_VISUAL, true, NULL);
-                            GetCaster()->CastSpell(target->GetTypeId() == TYPEID_PLAYER, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
+                            target->MonsterTextEmote("TURKEY TRIUMPH!", 0, true);
+                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
                             break;
                         default:
                             break;
