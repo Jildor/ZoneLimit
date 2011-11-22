@@ -1330,26 +1330,26 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                 if (!target)
                     return;
  
-                if (Aura* aura = GetHitPlayer()->GetAura(GetSpellInfo()->Id))
+                if (Aura* aura = GetHitPlayer()->ToPlayer()->GetAura(GetSpellInfo()->Id))
                 {
                     switch (aura->GetStackAmount())
                     {
                         case 10:
                             // To-Do: Missing Emote...
-                            GetHitPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetHitPlayer()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 20:
                             // To-Do: Missing Emote...
-                            GetHitPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetHitPlayer()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 30:
                             // To-Do: Missing Emote...
-                            GetHitPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetHitPlayer()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 40:
                             // To-Do: Missing Emote...
-                            GetHitPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
-                            GetHitPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
+                            GetHitPlayer()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetHitPlayer()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
                             break;
                         default:
                             break;
