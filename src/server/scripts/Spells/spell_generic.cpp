@@ -1330,7 +1330,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                 if (!target)
                     return;
  
-                if (Aura* aura = GetCaster()->ToPlayer()->GetAura(GetSpellInfo()->Id, GetCaster()->ToPlayer()))
+                if (Aura* aura = GetCaster()->GetAura(GetSpellInfo()->Id))
                 {
                     switch (aura->GetStackAmount())
                     {
