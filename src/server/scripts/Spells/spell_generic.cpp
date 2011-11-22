@@ -1336,20 +1336,20 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                     {
                         case 10:
                             // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->CastSpell(caster, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 20:
                             // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->CastSpell(caster, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 30:
                             // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->CastSpell(caster, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             break;
                         case 40:
                             // To-Do: Missing Emote...
-                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
-                            GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
+                            GetCaster()->CastSpell(caster, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->CastSpell(caster, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
                             break;
                         default:
                             break;
