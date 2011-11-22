@@ -1348,7 +1348,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                             break;
                         case 40:
                             // To-Do: Missing Emote...
-                            GetCaster()->ToPlayer()->astSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
+                            GetCaster()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL, true, NULL);
                             GetCaster()->ToPlayer()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL); // Achievement Credit
                             break;
                         default:
