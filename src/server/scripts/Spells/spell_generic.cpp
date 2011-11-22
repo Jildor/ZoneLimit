@@ -1300,6 +1300,10 @@ class spell_gen_vehicle_scaling : public SpellScriptLoader
         }
 };
 
+/*##################################
+# Pilgrim's bounty - The Turkinator
+###################################*/
+
 enum TheTurkinator
 {
     SPELL_KILL_COUNTER_VISUAL       = 62015,
@@ -1369,6 +1373,40 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
         }
 };
 
+/*################################
+# Pilgrim's Bounty - Wild Turkey
+#################################*/
+
+enum WildTurkey
+{
+    SPELL_TURKEY_TRACKER = 62014,
+};
+
+class npc_wild_turkey : public CreatureScript
+{
+public:
+    npc_wild_turkey() : CreatureScript("npc_wild_turkey") { }
+
+    struct npc_wild_turkeyAI : public ScriptedAI
+    {
+        npc_wild_turkeyAI(Creature* creature) : ScriptedAI(creature) {}
+
+        void JustDied(Unit* killer)
+        {
+            if (!killer)
+                return;
+
+            if (Player* player = killer->ToPlayer())
+                player->CastSpell(player, SPELL_TURKEY_TRACKER, false);
+        }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_wild_turkeyAI(creature);
+    }
+};
+
 void AddSC_generic_spell_scripts()
 {
     new spell_gen_absorb0_hitlimit1();
@@ -1400,4 +1438,5 @@ void AddSC_generic_spell_scripts()
     new spell_gen_launch();
     new spell_gen_vehicle_scaling();
     new spell_gen_turkey_tracker();
+    new npc_wild_turkey();
 }
