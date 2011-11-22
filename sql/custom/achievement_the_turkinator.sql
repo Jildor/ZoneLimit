@@ -1,4 +1,4 @@
-?-- Achievement: The Turkinator
+-- Achievement: The Turkinator
 SET @ENTRY := 32820;
 SET @SPELL := 62014;
 SET @SOURCETYPE := 0;

@@ -1315,7 +1315,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
         {
             PrepareSpellScript(spell_gen_turkey_tracker_SpellScript);
 
-            bool Validate(SpellEntry const* /*spell*/)
+            bool Validate(SpellEntry const* /*spellEntry*/)
             {
                 if (!sSpellStore.LookupEntry(SPELL_KILL_COUNTER_VISUAL))
                     return false;
