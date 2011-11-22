@@ -1302,6 +1302,7 @@ class spell_gen_vehicle_scaling : public SpellScriptLoader
 
 enum TheTurkinator
 {
+	SPELL_TURKEY_TRACKER			= 62014,
     SPELL_KILL_COUNTER_VISUAL       = 62015,
     SPELL_KILL_COUNTER_VISUAL_MAX   = 62021,
 };
@@ -1326,11 +1327,16 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
 
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
-                Player* target = GetHitPlayer();
+               if (Player* target = GetHitPlayer())
+			   if (Player->GetAuraCount(SPELL_TURKEY_TRACKER) =10)
+                {
+                    GetCaster()->CastSpell(target, SPELL_KILL_COUNTER_VISUAL_MAX, true, NULL);
+                }
+/*                Player* target = GetHitPlayer();
                 if (!target)
                     return;
-
-                if (Aura const* aura = GetCaster()->ToPlayer()->GetAura(GetSpellInfo()->Id))
+ 
+                if (Aura* aura = GetCaster()->ToPlayer()->GetAura(GetSpellInfo()->Id))
                 {
                     switch (aura->GetStackAmount())
                     {
@@ -1355,6 +1361,7 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
                             break;
                     }
                 }
+*/
             }
 
             void Register()
