@@ -2582,6 +2582,40 @@ public:
     }
 };
 
+/*################################
+# Pilgrim's Bounty - Wild Turkey
+#################################*/
+
+enum WildTurkey
+{
+    SPELL_TURKEY_TRACKER = 62014,
+};
+
+class npc_wild_turkey : public CreatureScript
+{
+public:
+    npc_wild_turkey() : CreatureScript("npc_wild_turkey") { }
+
+    struct npc_wild_turkeyAI : public ScriptedAI
+    {
+        npc_wild_turkeyAI(Creature* creature) : ScriptedAI(creature) {}
+
+        void JustDied(Unit* killer)
+        {
+            if (!killer)
+                return;
+
+            if (Player* player = killer->ToPlayer())
+                player->CastSpell(player, SPELL_TURKEY_TRACKER, false);
+        }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_wild_turkeyAI(creature);
+    }
+};
+
 void AddSC_npcs_special()
 {
     new npc_air_force_bots;
@@ -2611,5 +2645,6 @@ void AddSC_npcs_special()
     new npc_locksmith;
     new npc_tabard_vendor;
     new npc_experience;
+    new npc_wild_turkey();
 }
 
