@@ -1326,8 +1326,11 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
 
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
-                if (Player* target = GetHitPlayer())
-                if (Aura* aura = GetCaster()->ToPlayer()->GetAura(GetSpellInfo()->Id))
+                Player* target = GetHitPlayer();
+                if (!target)
+                    return;
+ 
+                if (Aura* aura = GetCaster()->ToPlayer()->GetAura(GetSpellInfo()->Id, GetCaster()->ToPlayer()))
                 {
                     switch (aura->GetStackAmount())
                     {
