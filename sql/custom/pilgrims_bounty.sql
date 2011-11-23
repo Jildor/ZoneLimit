@@ -201,11 +201,11 @@ INSERT INTO `creature_template_addon` (`entry`, `path_id`, `mount`, `bytes1`, `b
 ('34819', '0', '0', '0', '1', '0', '61795 61800'); -- The Stuffing Chair / (Stuffing Server | Can Eat - Stuffing)
 
 -- Spells for vehicles
-UPDATE creature_template SET spell1=66261, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=66476 WHERE entry=34823;
-UPDATE creature_template SET spell1=66250, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=66476 WHERE entry=34812;
-UPDATE creature_template SET spell1=66259, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=66476 WHERE entry=34819;
-UPDATE creature_template SET spell1=66260, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=66476 WHERE entry=34822;
-UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=66476 WHERE entry=34824;
+UPDATE creature_template SET spell1=66261, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34823;
+UPDATE creature_template SET spell1=66250, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34812;
+UPDATE creature_template SET spell1=66259, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34819;
+UPDATE creature_template SET spell1=66260, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34822;
+UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34824;
 
 -- Feast On Spells
 DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_feast_on';
