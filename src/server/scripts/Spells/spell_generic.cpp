@@ -1388,7 +1388,7 @@ class spell_gen_feast_on : public SpellScriptLoader
 
             void HandleDummy(SpellEffIndex /*effIndex*/)
             {
-                int32 basePoints0 = GetSpellInfo()->Effects[EFFECT_0].CalcValue();
+                int32 basePoints0 = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), 0);
 
                 if (Unit* caster = GetCaster())
                     if (caster->IsVehicle())
@@ -1399,7 +1399,7 @@ class spell_gen_feast_on : public SpellScriptLoader
 
             void Register()
             {
-                OnEffectHitTarget += SpellEffectFn(spell_gen_feast_on_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+                OnEffect += SpellEffectFn(spell_gen_feast_on_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
             }
         };
 
