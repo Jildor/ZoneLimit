@@ -1373,6 +1373,42 @@ class spell_gen_turkey_tracker : public SpellScriptLoader
         }
 };
 
+/*######################################
+# Pilgrim's Bounty - spell_gen_feast_on
+######################################*/
+
+class spell_gen_feast_on : public SpellScriptLoader
+{
+    public:
+        spell_gen_feast_on() : SpellScriptLoader("spell_gen_feast_on") { }
+
+        class spell_gen_feast_on_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_feast_on_SpellScript);
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                int32 basePoints0 = GetSpellInfo()->Effects[EFFECT_0].CalcValue();
+
+                if (Unit* caster = GetCaster())
+                    if (caster->IsVehicle())
+                        if (Unit* passenger = caster->GetVehicleKit()->GetPassenger(0))
+                            if (Player* player = passenger->ToPlayer())
+                                player->CastSpell(player, basePoints0, true);
+            }
+
+            void Register()
+            {
+                OnEffectHitTarget += SpellEffectFn(spell_gen_feast_on_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_feast_on_SpellScript();
+        }
+};
+
 void AddSC_generic_spell_scripts()
 {
     new spell_gen_absorb0_hitlimit1();
@@ -1404,4 +1440,5 @@ void AddSC_generic_spell_scripts()
     new spell_gen_launch();
     new spell_gen_vehicle_scaling();
     new spell_gen_turkey_tracker();
+    new spell_gen_feast_on();
 }
