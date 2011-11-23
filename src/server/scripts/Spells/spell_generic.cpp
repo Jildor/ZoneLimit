@@ -1388,7 +1388,7 @@ class spell_gen_feast_on : public SpellScriptLoader
 
             void HandleDummy(SpellEffIndex /*effIndex*/)
             {
-                int32 basePoints0 = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), 0);
+                int32 basePoints0 = SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), EFFECT_0);
 
                 if (Unit* caster = GetCaster())
                     if (caster->IsVehicle())
