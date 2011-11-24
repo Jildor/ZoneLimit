@@ -216,6 +216,19 @@ INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
 ('61787', 'spell_gen_feast_on'), -- Feast On Pie
 ('61788', 'spell_gen_feast_on'); -- Feast On Stuffing
 
+DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
+'spell_gen_well_fed_pilgrims_bount_ap',
+'spell_gen_well_fed_pilgrims_bount_zm',
+'spell_gen_well_fed_pilgrims_bount_hit',
+'spell_gen_well_fed_pilgrims_bount_haste',
+'spell_gen_well_fed_pilgrims_bount_spirit');
+INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
+(61807, 'spell_gen_well_fed_pilgrims_bount_ap'),     -- A Serving of Turkey
+(61804, 'spell_gen_well_fed_pilgrims_bount_zm'),     -- A Serving of Cranberries
+(61806, 'spell_gen_well_fed_pilgrims_bount_hit'),    -- A Serving of Stuffing
+(61808, 'spell_gen_well_fed_pilgrims_bount_haste'),  -- A Serving of Sweet Potatoes
+(61805, 'spell_gen_well_fed_pilgrims_bount_spirit'); -- A Serving of Pie
+
 -- Achievement: Pilgrim's Peril
 DELETE FROM `achievement_criteria_data` WHERE `type`= 16 AND `criteria_id` IN (11134,11135,11136,11137,11138,11139,11140,11141);
 DELETE FROM `achievement_criteria_data` WHERE `type`= 6 AND `criteria_id` IN (11134,11135,11136,11137,11138,11139,11140,11141);
@@ -265,3 +278,34 @@ INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value
 ('11125','16','404','0'), -- Now We're Cookin' / Pumpkin Pie
 ('11126','16','404','0'), -- Now We're Cookin' / Slow-Roasted Turkey
 ('11127','16','404','0'); -- Now We're Cookin' / Spice Bread Stuffing
+
+-- Achievement: Terokkar Turkey Time
+DELETE FROM `achievement_criteria_data` WHERE `type` = 5 AND `criteria_id` = 11142;
+DELETE FROM `achievement_criteria_data` WHERE `type` = 16 AND `criteria_id` = 11142;
+INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value2`) VALUES
+(11142, 5, 66303, 0), -- Pilgrim Costume
+(11142, 16, 404, 0);
+
+-- Achievement: Pilgrim's Paunch
+DELETE FROM `achievement_criteria_data` WHERE `type` = 6 AND `criteria_id` IN (11078,11079,11080,11081,11082,11083,11084,11085);
+DELETE FROM `achievement_criteria_data` WHERE `type` = 16 AND `criteria_id` IN (11078,11079,11080,11081,11082,11083,11084,11085);
+DELETE FROM `achievement_criteria_data` WHERE `type` = 14 AND `criteria_id` IN (11078,11079,11080,11081,11082,11083,11084,11085);
+INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value2`) VALUES
+-- Alliance
+(11078, 6, 1657, 0),  -- Darnassus
+(11078, 16, 404, 0),  -- Darnassus
+(11079, 6, 809, 0),   -- Ironforge
+(11079, 16, 404, 0),  -- Ironforge
+(11080, 6, 3557, 0),  -- Exodar
+(11080, 16, 404, 0),  -- Exodar
+(11081, 6, 12, 0),    -- Stormwind
+(11081, 16, 404, 0),  -- Stormwind
+-- Horde
+(11082, 6, 14, 0),    -- Orgrimmar
+(11082, 16, 404, 0),  -- Orgrimmar
+(11083, 6, 3470, 0),  -- Silvermoon City
+(11083, 16, 404, 0),  -- Silvermoon City
+(11084, 6, 1638, 0),  -- Thunder Bluff
+(11084, 16, 404, 0),  -- Thunder Bluff
+(11085, 6, 1497, 0),  -- Undercity
+(11085, 16, 404, 0);  -- Undercity
