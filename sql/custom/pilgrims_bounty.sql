@@ -238,11 +238,15 @@ DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
 'spell_gen_on_plate_pilgrims_bount_pie'
 );
 INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
-(66250, 'spell_gen_on_plate_pilgrims_bount_turkey'),     
-(66261, 'spell_gen_on_plate_pilgrims_bount_cranberries'),    
-(66259, 'spell_gen_on_plate_pilgrims_bount_stuffing'),    
-(66262, 'spell_gen_on_plate_pilgrims_bount_sweet_potatoes'), 
-(66260, 'spell_gen_on_plate_pilgrims_bount_pie'); 
+(66250, 'spell_gen_on_plate_pilgrims_bount_turkey'),            -- Pass The Turkey
+(66261, 'spell_gen_on_plate_pilgrims_bount_cranberries'),       -- Pass The Cranberries
+(66259, 'spell_gen_on_plate_pilgrims_bount_stuffing'),          -- Pass The Stuffing
+(66262, 'spell_gen_on_plate_pilgrims_bount_sweet_potatoes'),    -- Pass The Sweet Potatoes
+(66260, 'spell_gen_on_plate_pilgrims_bount_pie');               -- Pass The Pie
+
+DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_bountifu_feast';
+INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
+(66477, 'spell_gen_bountifu_feast'); -- Bountiful Feast
 
 -- Achievement: Pilgrim's Peril
 DELETE FROM `achievement_criteria_data` WHERE `type`= 16 AND `criteria_id` IN (11134,11135,11136,11137,11138,11139,11140,11141);

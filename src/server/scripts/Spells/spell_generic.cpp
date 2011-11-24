@@ -1980,6 +1980,47 @@ class spell_gen_on_plate_pilgrims_bount_pie : public SpellScriptLoader
         }
 };
 
+/*####################################
+# Pilgrim's Bounty - Bountiful Feast
+######################################*/
+enum BountifuFeast
+{
+    // Bountiful Feast
+    SPELL_BOUNTIFUL_FEAST_FOOD           = 66477,
+    SPELL_BOUNTIFUL_FEAST_REFRESHMENT    = 66622,
+};
+
+class spell_gen_bountiful_feast : public SpellScriptLoader
+{
+    public:
+        spell_gen_bountiful_feast() : SpellScriptLoader("spell_gen_bountiful_feast") { }
+
+        class spell_gen_bountiful_feast_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_bountiful_feast_SpellScript);
+
+            void HandleScriptEffect(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_BOUNTIFUL_FEAST_FOOD, true);
+                caster->CastSpell(caster, SPELL_BOUNTIFUL_FEAST_REFRESHMENT, true);
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_bountiful_feast_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_bountiful_feast_SpellScript();
+        }
+};
+
 void AddSC_generic_spell_scripts()
 {
     new spell_gen_absorb0_hitlimit1();
@@ -2022,4 +2063,5 @@ void AddSC_generic_spell_scripts()
     new spell_gen_on_plate_pilgrims_bount_stuffing();
     new spell_gen_on_plate_pilgrims_bount_sweet_potatoes();
     new spell_gen_on_plate_pilgrims_bount_pie();
+    new spell_gen_bountiful_feast();
 }
