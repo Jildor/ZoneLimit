@@ -1486,11 +1486,11 @@ class spell_gen_well_fed_pilgrims_bount_ap : public SpellScriptLoader
                         (SweetPotatoes && SweetPotatoes->GetStackAmount() == 5) && (Pie && Pie->GetStackAmount() == 5))
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
-            }
 
                 // Food
                 target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
                 target->CastSpell(target, SPELL_FOOD_AP, true);
+            }
 
             void Register()
             {
@@ -1547,11 +1547,11 @@ class spell_gen_well_fed_pilgrims_bount_zm : public SpellScriptLoader
                         (SweetPotatoes && SweetPotatoes->GetStackAmount() == 5) && (Pie && Pie->GetStackAmount() == 5))
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
-            }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_ZM);
-                target->CastSpell(target, SPELL_FOOD_ZM, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
+                target->CastSpell(target, SPELL_FOOD_AP, true);
+            }
 
             void Register()
             {
@@ -1608,11 +1608,11 @@ class spell_gen_well_fed_pilgrims_bount_hit : public SpellScriptLoader
                         (SweetPotatoes && SweetPotatoes->GetStackAmount() == 5) && (Pie && Pie->GetStackAmount() == 5))
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
-            }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_HIT);
-                target->CastSpell(target, SPELL_FOOD_HIT, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
+                target->CastSpell(target, SPELL_FOOD_AP, true);
+            }
 
             void Register()
             {
@@ -1669,11 +1669,11 @@ class spell_gen_well_fed_pilgrims_bount_haste : public SpellScriptLoader
                         (SweetPotatoes && SweetPotatoes->GetStackAmount() == 5) && (Pie && Pie->GetStackAmount() == 5))
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
-            }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_HASTE);
-                target->CastSpell(target, SPELL_FOOD_HASTE, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
+                target->CastSpell(target, SPELL_FOOD_AP, true);
+            }
 
             void Register()
             {
@@ -1731,11 +1731,11 @@ class spell_gen_well_fed_pilgrims_bount_spirit : public SpellScriptLoader
                         (SweetPotatoes && SweetPotatoes->GetStackAmount() == 5) && (Pie && Pie->GetStackAmount() == 5))
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
-            }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_SPIRIT);
-                target->CastSpell(target, SPELL_FOOD_SPIRIT, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
+                target->CastSpell(target, SPELL_FOOD_AP, true);
+            }
 
             void Register()
             {
