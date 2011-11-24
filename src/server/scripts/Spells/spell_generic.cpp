@@ -1986,7 +1986,7 @@ class spell_gen_on_plate_pilgrims_bount_pie : public SpellScriptLoader
 enum BountifuFeast
 {
     // Bountiful Feast
-    SPELL_BOUNTIFUL_FEAST_FOOD           = 66477,
+    SPELL_BOUNTIFUL_FEAST_FOOD           = 65422, // temp fix (wrong id)
     SPELL_BOUNTIFUL_FEAST_REFRESHMENT    = 66622,
 };
 

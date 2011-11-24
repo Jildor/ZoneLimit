@@ -244,9 +244,9 @@ INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
 (66262, 'spell_gen_on_plate_pilgrims_bount_sweet_potatoes'),    -- Pass The Sweet Potatoes
 (66260, 'spell_gen_on_plate_pilgrims_bount_pie');               -- Pass The Pie
 
-DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_bountifu_feast';
+DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_bountiful_feast';
 INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
-(66477, 'spell_gen_bountifu_feast'); -- Bountiful Feast
+(66477, 'spell_gen_bountiful_feast'); -- Bountiful Feast
 
 -- Achievement: Pilgrim's Peril
 DELETE FROM `achievement_criteria_data` WHERE `type`= 16 AND `criteria_id` IN (11134,11135,11136,11137,11138,11139,11140,11141);
