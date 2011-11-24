@@ -1549,8 +1549,8 @@ class spell_gen_well_fed_pilgrims_bount_zm : public SpellScriptLoader
                 }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
-                target->CastSpell(target, SPELL_FOOD_AP, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_ZM);
+                target->CastSpell(target, SPELL_FOOD_ZM, true);
             }
 
             void Register()
@@ -1610,8 +1610,8 @@ class spell_gen_well_fed_pilgrims_bount_hit : public SpellScriptLoader
                 }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
-                target->CastSpell(target, SPELL_FOOD_AP, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_HIT);
+                target->CastSpell(target, SPELL_FOOD_HIT, true);
             }
 
             void Register()
@@ -1671,8 +1671,8 @@ class spell_gen_well_fed_pilgrims_bount_haste : public SpellScriptLoader
                 }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
-                target->CastSpell(target, SPELL_FOOD_AP, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_HASTE);
+                target->CastSpell(target, SPELL_FOOD_HASTE, true);
             }
 
             void Register()
@@ -1733,8 +1733,8 @@ class spell_gen_well_fed_pilgrims_bount_spirit : public SpellScriptLoader
                 }
 
                 // Food
-                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
-                target->CastSpell(target, SPELL_FOOD_AP, true);
+                target->RemoveAurasDueToSpell(SPELL_FOOD_SPIRIT);
+                target->CastSpell(target, SPELL_FOOD_SPIRIT, true);
             }
 
             void Register()
