@@ -210,24 +210,39 @@ UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61
 -- Feast On Spells
 DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_feast_on';
 INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
-('61784', 'spell_gen_feast_on'), -- Feast On Turkey
-('61785', 'spell_gen_feast_on'), -- Feast On Cranberries
-('61786', 'spell_gen_feast_on'), -- Feast On Sweet Potatoes
-('61787', 'spell_gen_feast_on'), -- Feast On Pie
-('61788', 'spell_gen_feast_on'); -- Feast On Stuffing
+(61784, 'spell_gen_feast_on'), -- Feast On Turkey
+(61785, 'spell_gen_feast_on'), -- Feast On Cranberries
+(61786, 'spell_gen_feast_on'), -- Feast On Sweet Potatoes
+(61787, 'spell_gen_feast_on'), -- Feast On Pie
+(61788, 'spell_gen_feast_on'); -- Feast On Stuffing
 
 DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
 'spell_gen_well_fed_pilgrims_bount_ap',
 'spell_gen_well_fed_pilgrims_bount_zm',
 'spell_gen_well_fed_pilgrims_bount_hit',
 'spell_gen_well_fed_pilgrims_bount_haste',
-'spell_gen_well_fed_pilgrims_bount_spirit');
+'spell_gen_well_fed_pilgrims_bount_spirit'
+);
 INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
 (61807, 'spell_gen_well_fed_pilgrims_bount_ap'),     -- A Serving of Turkey
 (61804, 'spell_gen_well_fed_pilgrims_bount_zm'),     -- A Serving of Cranberries
 (61806, 'spell_gen_well_fed_pilgrims_bount_hit'),    -- A Serving of Stuffing
 (61808, 'spell_gen_well_fed_pilgrims_bount_haste'),  -- A Serving of Sweet Potatoes
 (61805, 'spell_gen_well_fed_pilgrims_bount_spirit'); -- A Serving of Pie
+
+DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
+'spell_gen_on_plate_pilgrims_bount_turkey',
+'spell_gen_on_plate_pilgrims_bount_cranberries',
+'spell_gen_on_plate_pilgrims_bount_stuffing',
+'spell_gen_on_plate_pilgrims_bount_sweet_potatoes',
+'spell_gen_on_plate_pilgrims_bount_pie'
+);
+INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
+(66250, 'spell_gen_on_plate_pilgrims_bount_turkey'),     
+(66261, 'spell_gen_on_plate_pilgrims_bount_cranberries'),    
+(66259, 'spell_gen_on_plate_pilgrims_bount_stuffing'),    
+(66262, 'spell_gen_on_plate_pilgrims_bount_sweet_potatoes'), 
+(66260, 'spell_gen_on_plate_pilgrims_bount_pie'); 
 
 -- Achievement: Pilgrim's Peril
 DELETE FROM `achievement_criteria_data` WHERE `type`= 16 AND `criteria_id` IN (11134,11135,11136,11137,11138,11139,11140,11141);
@@ -309,3 +324,18 @@ INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value
 (11084, 16, 404, 0),  -- Thunder Bluff
 (11085, 6, 1497, 0),  -- Undercity
 (11085, 16, 404, 0);  -- Undercity
+
+-- Achievement: "FOOD FIGHT!"
+DELETE FROM `achievement_criteria_data` WHERE `type` = 11 AND `criteria_id` IN (11168,11178,11179,11180,11181);
+DELETE FROM `achievement_criteria_data` WHERE `type` = 16 AND `criteria_id` IN (11168,11178,11179,11180,11181);
+INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value2`, `ScriptName`) VALUES
+(11168, 11, 0, 0, 'achievement_food_fight'),
+(11168, 16, 404, 0, ''),
+(11178, 11, 0, 0, 'achievement_food_fight'),
+(11178, 16, 404, 0, ''),
+(11179, 11, 0, 0, 'achievement_food_fight'),
+(11179, 16, 404, 0, ''),
+(11180, 11, 0, 0, 'achievement_food_fight'),
+(11180, 16, 404, 0, ''),
+(11181, 11, 0, 0, 'achievement_food_fight'),
+(11181, 16, 404, 0, '');

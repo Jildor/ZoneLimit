@@ -1722,6 +1722,225 @@ class spell_gen_well_fed_pilgrims_bount_spirit : public SpellScriptLoader
         }
 };
 
+/*#################################
+# Pilgrim's Bounty - "FOOD FIGHT!"
+###################################*/
+
+enum OnPlatePilgrimsBount
+{
+    // On Plate Visual - Achivement Credit
+    SPELL_ON_PLATE_TURKEY           = 61928,
+    SPELL_ON_PLATE_CRANBERRIES      = 61925,
+    SPELL_ON_PLATE_STUFFING         = 61927,
+    SPELL_ON_PLATE_SWEET_POTATOES   = 61929,
+    SPELL_ON_PLATE_PIE              = 61926,
+};
+
+class spell_gen_on_plate_pilgrims_bount_turkey : public SpellScriptLoader
+{
+    public:
+        spell_gen_on_plate_pilgrims_bount_turkey() : SpellScriptLoader("spell_gen_on_plate_pilgrims_bount_turkey") { }
+
+        class spell_gen_on_plate_pilgrims_bount_turkey_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_on_plate_pilgrims_bount_turkey_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ON_PLATE_TURKEY))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (caster->IsVehicle())
+                {
+                    Unit* player = caster->GetVehicleKit()->GetPassenger(0);
+                    if (!player)
+                        return;
+
+                    player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_TURKEY, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_on_plate_pilgrims_bount_turkey_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_on_plate_pilgrims_bount_turkey_SpellScript();
+        }
+};
+
+class spell_gen_on_plate_pilgrims_bount_cranberries : public SpellScriptLoader
+{
+    public:
+        spell_gen_on_plate_pilgrims_bount_cranberries() : SpellScriptLoader("spell_gen_on_plate_pilgrims_bount_cranberries") { }
+
+        class spell_gen_on_plate_pilgrims_bount_cranberries_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_on_plate_pilgrims_bount_cranberries_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ON_PLATE_CRANBERRIES))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (caster->IsVehicle())
+                {
+                    Unit* player = caster->GetVehicleKit()->GetPassenger(0);
+                    if (!player)
+                        return;
+
+                    player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_CRANBERRIES, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_on_plate_pilgrims_bount_cranberries_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_on_plate_pilgrims_bount_cranberries_SpellScript();
+        }
+};
+
+class spell_gen_on_plate_pilgrims_bount_stuffing : public SpellScriptLoader
+{
+    public:
+        spell_gen_on_plate_pilgrims_bount_stuffing() : SpellScriptLoader("spell_gen_on_plate_pilgrims_bount_stuffing") { }
+
+        class spell_gen_on_plate_pilgrims_bount_stuffing_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_on_plate_pilgrims_bount_stuffing_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ON_PLATE_STUFFING))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (caster->IsVehicle())
+                {
+                    Unit* player = caster->GetVehicleKit()->GetPassenger(0);
+                    if (!player)
+                        return;
+
+                    player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_STUFFING, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_on_plate_pilgrims_bount_stuffing_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_on_plate_pilgrims_bount_stuffing_SpellScript();
+        }
+};
+
+class spell_gen_on_plate_pilgrims_bount_sweet_potatoes : public SpellScriptLoader
+{
+    public:
+        spell_gen_on_plate_pilgrims_bount_sweet_potatoes() : SpellScriptLoader("spell_gen_on_plate_pilgrims_bount_sweet_potatoes") { }
+
+        class spell_gen_on_plate_pilgrims_bount_sweet_potatoes_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_on_plate_pilgrims_bount_sweet_potatoes_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ON_PLATE_SWEET_POTATOES))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (caster->IsVehicle())
+                {
+                    Unit* player = caster->GetVehicleKit()->GetPassenger(0);
+                    if (!player)
+                        return;
+
+                    player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_SWEET_POTATOES, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_on_plate_pilgrims_bount_sweet_potatoes_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_on_plate_pilgrims_bount_sweet_potatoes_SpellScript();
+        }
+};
+
+class spell_gen_on_plate_pilgrims_bount_pie : public SpellScriptLoader
+{
+    public:
+        spell_gen_on_plate_pilgrims_bount_pie() : SpellScriptLoader("spell_gen_on_plate_pilgrims_bount_pie") { }
+
+        class spell_gen_on_plate_pilgrims_bount_pie_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gen_on_plate_pilgrims_bount_pie_SpellScript);
+
+            bool Validate(SpellEntry const* /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ON_PLATE_PIE))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (caster->IsVehicle())
+                {
+                    Unit* player = caster->GetVehicleKit()->GetPassenger(0);
+                    if (!player)
+                        return;
+
+                    player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_PIE, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_gen_on_plate_pilgrims_bount_pie_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_gen_on_plate_pilgrims_bount_pie_SpellScript();
+        }
+};
+
 void AddSC_generic_spell_scripts()
 {
     new spell_gen_absorb0_hitlimit1();
@@ -1759,4 +1978,9 @@ void AddSC_generic_spell_scripts()
     new spell_gen_well_fed_pilgrims_bount_hit();
     new spell_gen_well_fed_pilgrims_bount_haste();
     new spell_gen_well_fed_pilgrims_bount_spirit();
+    new spell_gen_on_plate_pilgrims_bount_turkey();
+    new spell_gen_on_plate_pilgrims_bount_cranberries();
+    new spell_gen_on_plate_pilgrims_bount_stuffing();
+    new spell_gen_on_plate_pilgrims_bount_sweet_potatoes();
+    new spell_gen_on_plate_pilgrims_bount_pie();
 }

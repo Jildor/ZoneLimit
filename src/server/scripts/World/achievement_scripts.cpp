@@ -206,6 +206,27 @@ public:
     }
 };
 
+class achievement_food_fight : public AchievementCriteriaScript
+{
+    public:
+        achievement_food_fight() : AchievementCriteriaScript("achievement_food_fight") { }
+
+        bool OnCheck(Player* /*source*/, Unit* target)
+        {
+            if (!target)
+                return false;
+
+            if (Player* victim = target->ToPlayer())
+            {
+                if (Vehicle* vehicle = victim->GetVehicle())
+                    if (vehicle->GetVehicleInfo()->m_ID == 321)
+                        return true;
+            }
+
+            return false;
+        }
+};
+
 void AddSC_achievement_scripts()
 {
     new achievement_storm_glory();
@@ -220,4 +241,5 @@ void AddSC_achievement_scripts()
     new achievement_arena_kills("achievement_arena_2v2_kills", ARENA_TYPE_2v2);
     new achievement_arena_kills("achievement_arena_3v3_kills", ARENA_TYPE_3v3);
     new achievement_arena_kills("achievement_arena_5v5_kills", ARENA_TYPE_5v5);
+    new achievement_food_fight();
 }
