@@ -1432,6 +1432,13 @@ enum WellFedPilgrimsBount
     SPELL_WELL_FED_HASTE                = 65410,
     SPELL_WELL_FED_SPIRIT               = 65415,
 
+    // Food
+    SPELL_FOOD_AP                       = 65422,
+    SPELL_FOOD_ZM                       = 65420,
+    SPELL_FOOD_HIT                      = 65419,
+    SPELL_FOOD_HASTE                    = 65418,
+    SPELL_FOOD_SPIRIT                   = 65421,
+
     // Pilgrim's Paunch	
     SPELL_THE_SPIRIT_OF_SHARING         = 61849,
 };
@@ -1480,6 +1487,10 @@ class spell_gen_well_fed_pilgrims_bount_ap : public SpellScriptLoader
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
             }
+
+                // Food
+                target->RemoveAurasDueToSpell(SPELL_FOOD_AP);
+                target->CastSpell(target, SPELL_FOOD_AP, true);
 
             void Register()
             {
@@ -1538,6 +1549,10 @@ class spell_gen_well_fed_pilgrims_bount_zm : public SpellScriptLoader
                 }
             }
 
+                // Food
+                target->RemoveAurasDueToSpell(SPELL_FOOD_ZM);
+                target->CastSpell(target, SPELL_FOOD_ZM, true);
+
             void Register()
             {
                 OnEffect += SpellEffectFn(spell_gen_well_fed_pilgrims_bount_zm_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_APPLY_AURA);
@@ -1594,6 +1609,10 @@ class spell_gen_well_fed_pilgrims_bount_hit : public SpellScriptLoader
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
             }
+
+                // Food
+                target->RemoveAurasDueToSpell(SPELL_FOOD_HIT);
+                target->CastSpell(target, SPELL_FOOD_HIT, true);
 
             void Register()
             {
@@ -1652,6 +1671,10 @@ class spell_gen_well_fed_pilgrims_bount_haste : public SpellScriptLoader
                 }
             }
 
+                // Food
+                target->RemoveAurasDueToSpell(SPELL_FOOD_HASTE);
+                target->CastSpell(target, SPELL_FOOD_HASTE, true);
+
             void Register()
             {
                 OnEffect += SpellEffectFn(spell_gen_well_fed_pilgrims_bount_haste_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_APPLY_AURA);
@@ -1709,6 +1732,10 @@ class spell_gen_well_fed_pilgrims_bount_spirit : public SpellScriptLoader
                         target->CastSpell(target, SPELL_THE_SPIRIT_OF_SHARING, true);
                 }
             }
+
+                // Food
+                target->RemoveAurasDueToSpell(SPELL_FOOD_SPIRIT);
+                target->CastSpell(target, SPELL_FOOD_SPIRIT, true);
 
             void Register()
             {
