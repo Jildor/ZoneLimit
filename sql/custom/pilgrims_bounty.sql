@@ -99,7 +99,7 @@ INSERT INTO `vehicle_template_accessory` (`entry`, `accessory_entry`, `seat_id`,
 (32840, 32839, 4, 1, 'Plate Holder - Sturdy Plate', 8, 0);
 -- --
 
--- HyD
+-- HyD & Vincent Michael
 -- ----------------------
 -- -- Event Misc Fixes --
 -- ----------------------
@@ -339,3 +339,12 @@ INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value
 (11180, 16, 404, 0, ''),
 (11181, 11, 0, 0, 'achievement_food_fight'),
 (11181, 16, 404, 0, '');
+
+-- Achievement: Sharing is Caring
+DELETE FROM `achievement_criteria_data` WHERE `criteria_id` IN (11086,11088,11089,11090,11167);
+INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value2`) VALUES
+(11086, 16, 404, 0),
+(11088, 16, 404, 0),
+(11089, 16, 404, 0),
+(11090, 16, 404, 0),
+(11167, 16, 404, 0);

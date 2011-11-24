@@ -1722,18 +1722,25 @@ class spell_gen_well_fed_pilgrims_bount_spirit : public SpellScriptLoader
         }
 };
 
-/*#################################
-# Pilgrim's Bounty - "FOOD FIGHT!"
-###################################*/
+/*#######################################################
+# Pilgrim's Bounty - "FOOD FIGHT!" AND Sharing is Caring
+#########################################################*/
 
 enum OnPlatePilgrimsBount
 {
-    // On Plate Visual - Achivement Credit
+    // "FOOD FIGHT!" - Achivement Credit
     SPELL_ON_PLATE_TURKEY           = 61928,
     SPELL_ON_PLATE_CRANBERRIES      = 61925,
     SPELL_ON_PLATE_STUFFING         = 61927,
     SPELL_ON_PLATE_SWEET_POTATOES   = 61929,
     SPELL_ON_PLATE_PIE              = 61926,
+
+    // Sharing is Caring - Achivement Credit
+    SPELL_PASS_THE_TURKEY           = 66373,
+    SPELL_PASS_THE_CRANBERRIES      = 66372,
+    SPELL_PASS_THE_STUFFING         = 66375,
+    SPELL_PASS_THE_SWEET_POTATOES   = 66376,
+    SPELL_PASS_THE_PIE              = 66374,
 };
 
 class spell_gen_on_plate_pilgrims_bount_turkey : public SpellScriptLoader
@@ -1762,6 +1769,7 @@ class spell_gen_on_plate_pilgrims_bount_turkey : public SpellScriptLoader
                         return;
 
                     player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_TURKEY, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                    player->CastSpell(player, SPELL_PASS_THE_TURKEY, true);
                 }
             }
 
@@ -1803,6 +1811,7 @@ class spell_gen_on_plate_pilgrims_bount_cranberries : public SpellScriptLoader
                         return;
 
                     player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_CRANBERRIES, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                    player->CastSpell(player, SPELL_PASS_THE_CRANBERRIES, true);
                 }
             }
 
@@ -1844,6 +1853,7 @@ class spell_gen_on_plate_pilgrims_bount_stuffing : public SpellScriptLoader
                         return;
 
                     player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_STUFFING, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                    player->CastSpell(player, SPELL_PASS_THE_STUFFING, true);
                 }
             }
 
@@ -1885,6 +1895,7 @@ class spell_gen_on_plate_pilgrims_bount_sweet_potatoes : public SpellScriptLoade
                         return;
 
                     player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_SWEET_POTATOES, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                    player->CastSpell(player, SPELL_PASS_THE_SWEET_POTATOES, true);
                 }
             }
 
@@ -1926,6 +1937,7 @@ class spell_gen_on_plate_pilgrims_bount_pie : public SpellScriptLoader
                         return;
 
                     player->CastSpell(GetHitUnit(), SPELL_ON_PLATE_PIE, true, NULL, NULL, player->ToPlayer()->GetGUID());
+                    player->CastSpell(player, SPELL_PASS_THE_PIE, true);
                 }
             }
 
