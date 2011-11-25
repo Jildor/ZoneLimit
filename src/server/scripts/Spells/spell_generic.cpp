@@ -1956,6 +1956,7 @@ class spell_gen_on_plate_pilgrims_bount_pie : public SpellScriptLoader
 /*####################################
 # Pilgrim's Bounty - Bountiful Feast
 ######################################*/
+
 enum BountifuFeast
 {
     // Bountiful Feast
@@ -1993,6 +1994,170 @@ class spell_gen_bountiful_feast : public SpellScriptLoader
         SpellScript* GetSpellScript() const
         {
             return new spell_gen_bountiful_feast_SpellScript();
+        }
+};
+
+/*####################################
+# Pilgrim's Bounty - Buff Food
+######################################*/
+
+enum PilgrimsBountyBuffFood
+{
+    // Pilgrims Bounty Buff Food
+    SPELL_WELL_FED_AP_TRIGGER       = 65414,
+    SPELL_WELL_FED_ZM_TRIGGER       = 65412,
+    SPELL_WELL_FED_HIT_TRIGGER      = 65416,
+    SPELL_WELL_FED_HASTE_TRIGGER    = 65410,
+    SPELL_WELL_FED_SPIRIT_TRIGGER   = 65415,
+};
+
+class spell_gen_slow_roasted_turkey : public SpellScriptLoader
+{
+    public:
+        spell_gen_slow_roasted_turkey() : SpellScriptLoader("spell_gen_slow_roasted_turkey") { }
+
+        class spell_gen_slow_roasted_turkey_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_slow_roasted_turkey_AuraScript)
+
+            void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_WELL_FED_AP_TRIGGER, true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_slow_roasted_turkey_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_slow_roasted_turkey_AuraScript();
+        }
+};
+
+class spell_gen_cranberry_chutney : public SpellScriptLoader
+{
+    public:
+        spell_gen_cranberry_chutney() : SpellScriptLoader("spell_gen_cranberry_chutney") { }
+
+        class spell_gen_cranberry_chutney_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_cranberry_chutney_AuraScript)
+
+            void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_WELL_FED_ZM_TRIGGER, true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_cranberry_chutney_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_cranberry_chutney_AuraScript();
+        }
+};
+
+class spell_gen_spice_bread_stuffing : public SpellScriptLoader
+{
+    public:
+        spell_gen_spice_bread_stuffing() : SpellScriptLoader("spell_gen_spice_bread_stuffing") { }
+
+        class spell_gen_spice_bread_stuffing_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_spice_bread_stuffing_AuraScript)
+
+            void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_WELL_FED_HIT_TRIGGER, true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_spice_bread_stuffing_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_spice_bread_stuffing_AuraScript();
+        }
+};
+
+class spell_gen_pumpkin_pie : public SpellScriptLoader
+{
+    public:
+        spell_gen_pumpkin_pie() : SpellScriptLoader("spell_gen_pumpkin_pie") { }
+
+        class spell_gen_pumpkin_pie_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_pumpkin_pie_AuraScript)
+
+            void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_WELL_FED_SPIRIT_TRIGGER, true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_pumpkin_pie_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_pumpkin_pie_AuraScript();
+        }
+};
+
+class spell_gen_candied_sweet_potato : public SpellScriptLoader
+{
+    public:
+        spell_gen_candied_sweet_potato() : SpellScriptLoader("spell_gen_candied_sweet_potato") { }
+
+        class spell_gen_candied_sweet_potato_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_candied_sweet_potato_AuraScript)
+
+            void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster)
+                    return;
+
+                caster->CastSpell(caster, SPELL_WELL_FED_HASTE_TRIGGER, true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_candied_sweet_potato_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_candied_sweet_potato_AuraScript();
         }
 };
 
@@ -2039,4 +2204,9 @@ void AddSC_generic_spell_scripts()
     new spell_gen_on_plate_pilgrims_bount_sweet_potatoes();
     new spell_gen_on_plate_pilgrims_bount_pie();
     new spell_gen_bountiful_feast();
+    new spell_gen_slow_roasted_turkey();
+    new spell_gen_cranberry_chutney();
+    new spell_gen_spice_bread_stuffing();
+    new spell_gen_pumpkin_pie();
+    new spell_gen_candied_sweet_potato();
 }
