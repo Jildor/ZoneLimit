@@ -2020,12 +2020,22 @@ class spell_gen_slow_roasted_turkey : public SpellScriptLoader
         {
             PrepareAuraScript(spell_gen_slow_roasted_turkey_AuraScript)
 
+            bool Load()
+            {
+                _handled = false;
+                return true;
+            }
+
             void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
             {
+                if (_handled)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
+                _handled = true;
                 caster->CastSpell(caster, SPELL_WELL_FED_AP_TRIGGER, true);
             }
 
@@ -2033,6 +2043,8 @@ class spell_gen_slow_roasted_turkey : public SpellScriptLoader
             {
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_slow_roasted_turkey_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
+
+            bool _handled;
         };
 
         AuraScript* GetAuraScript() const
@@ -2050,12 +2062,22 @@ class spell_gen_cranberry_chutney : public SpellScriptLoader
         {
             PrepareAuraScript(spell_gen_cranberry_chutney_AuraScript)
 
+            bool Load()
+            {
+                _handled = false;
+                return true;
+            }
+
             void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
             {
+                if (_handled)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
+                _handled = true;
                 caster->CastSpell(caster, SPELL_WELL_FED_ZM_TRIGGER, true);
             }
 
@@ -2063,6 +2085,8 @@ class spell_gen_cranberry_chutney : public SpellScriptLoader
             {
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_cranberry_chutney_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
+
+            bool _handled;
         };
 
         AuraScript* GetAuraScript() const
@@ -2080,12 +2104,22 @@ class spell_gen_spice_bread_stuffing : public SpellScriptLoader
         {
             PrepareAuraScript(spell_gen_spice_bread_stuffing_AuraScript)
 
+            bool Load()
+            {
+                _handled = false;
+                return true;
+            }
+
             void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
             {
+                if (_handled)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
+                _handled = true;
                 caster->CastSpell(caster, SPELL_WELL_FED_HIT_TRIGGER, true);
             }
 
@@ -2093,6 +2127,8 @@ class spell_gen_spice_bread_stuffing : public SpellScriptLoader
             {
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_spice_bread_stuffing_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
+
+            bool _handled;
         };
 
         AuraScript* GetAuraScript() const
@@ -2110,12 +2146,22 @@ class spell_gen_pumpkin_pie : public SpellScriptLoader
         {
             PrepareAuraScript(spell_gen_pumpkin_pie_AuraScript)
 
+            bool Load()
+            {
+                _handled = false;
+                return true;
+            }
+
             void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
             {
+                if (_handled)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
+                _handled = true;
                 caster->CastSpell(caster, SPELL_WELL_FED_SPIRIT_TRIGGER, true);
             }
 
@@ -2123,6 +2169,8 @@ class spell_gen_pumpkin_pie : public SpellScriptLoader
             {
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_pumpkin_pie_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
+
+            bool _handled;
         };
 
         AuraScript* GetAuraScript() const
@@ -2140,12 +2188,22 @@ class spell_gen_candied_sweet_potato : public SpellScriptLoader
         {
             PrepareAuraScript(spell_gen_candied_sweet_potato_AuraScript)
 
+            bool Load()
+            {
+                _handled = false;
+                return true;
+            }
+
             void HandleTriggerSpell(AuraEffect const* /*aurEff*/)
             {
+                if (_handled)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster)
                     return;
 
+                _handled = true;
                 caster->CastSpell(caster, SPELL_WELL_FED_HASTE_TRIGGER, true);
             }
 
@@ -2153,6 +2211,8 @@ class spell_gen_candied_sweet_potato : public SpellScriptLoader
             {
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_candied_sweet_potato_AuraScript::HandleTriggerSpell, EFFECT_2, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
+
+            bool _handled;
         };
 
         AuraScript* GetAuraScript() const
