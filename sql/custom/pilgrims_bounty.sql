@@ -200,12 +200,21 @@ INSERT INTO `creature_template_addon` (`entry`, `path_id`, `mount`, `bytes1`, `b
 ('34822', '0', '0', '0', '1', '0', '61794 61799'), -- The Pie Chair / (Pie Server | Can Eat - Pie)
 ('34819', '0', '0', '0', '1', '0', '61795 61800'); -- The Stuffing Chair / (Stuffing Server | Can Eat - Stuffing)
 
--- Spells for vehicles
-UPDATE creature_template SET spell1=66261, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34823;
-UPDATE creature_template SET spell1=66250, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34812;
-UPDATE creature_template SET spell1=66259, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34819;
-UPDATE creature_template SET spell1=66260, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34822;
-UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34824;
+-- Pilgrims Bount: Chair
+UPDATE creature_template SET spell1=66261, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34823; -- The Cranberry Chair
+UPDATE creature_template SET spell1=66250, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34812; -- The Turkey Chair
+UPDATE creature_template SET spell1=66259, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34819; -- The Stuffing Chair
+UPDATE creature_template SET spell1=66260, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34822; -- The Pie Chair
+UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34824; -- The Sweet Potato Chair
+
+-- Achievement: The Turkinator (wild turkey)
+UPDATE creature_template SET AIName='', ScriptName='npc_wild_turkey' WHERE entry=32820;
+DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_turkey_tracker';
+INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
+(62014, 'spell_gen_turkey_tracker');
+
+-- Item: Turkey Caller
+UPDATE `creature_template` SET `faction_A`=35, `faction_H`=35, `ScriptName` = 'npc_lonely_turkey' WHERE `entry` =32956;
 
 -- Feast On Spells
 DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_feast_on';

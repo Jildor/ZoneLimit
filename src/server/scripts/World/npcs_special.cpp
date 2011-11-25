@@ -2593,27 +2593,73 @@ enum WildTurkey
 
 class npc_wild_turkey : public CreatureScript
 {
-public:
-    npc_wild_turkey() : CreatureScript("npc_wild_turkey") { }
+    public:
+        npc_wild_turkey() : CreatureScript("npc_wild_turkey") { }
 
-    struct npc_wild_turkeyAI : public ScriptedAI
-    {
-        npc_wild_turkeyAI(Creature* creature) : ScriptedAI(creature) {}
-
-        void JustDied(Unit* killer)
+        struct npc_wild_turkeyAI : public ScriptedAI
         {
-            if (!killer)
-                return;
+            npc_wild_turkeyAI(Creature* creature) : ScriptedAI(creature) {}
 
-            if (Player* player = killer->ToPlayer())
-                player->CastSpell(player, SPELL_TURKEY_TRACKER, false);
+            void JustDied(Unit* killer)
+            {
+                if (!killer)
+                    return;
+
+                if (Player* player = killer->ToPlayer())
+                    player->CastSpell(player, SPELL_TURKEY_TRACKER, false);
+            }
+        };
+
+        CreatureAI* GetAI(Creature* creature) const
+        {
+            return new npc_wild_turkeyAI(creature);
         }
-    };
+};
 
-    CreatureAI* GetAI(Creature* creature) const
-    {
-        return new npc_wild_turkeyAI(creature);
-    }
+/*#######################################
+# Pilgrim's Bounty - Item: Turkey Caller
+#########################################*/
+
+enum LonelyTurkey
+{
+    SPELL_STINKER_BROKEN_HEART  = 62004,
+};
+
+class npc_lonely_turkey : public CreatureScript
+{
+    public:
+        npc_lonely_turkey() : CreatureScript("npc_lonely_turkey") { }
+
+        struct npc_lonely_turkeyAI : public ScriptedAI
+        {
+            npc_lonely_turkeyAI(Creature* creature) : ScriptedAI(creature) {}
+
+            void Reset()
+            {
+                if (me->isSummon())
+                    if (Unit* owner = me->ToTempSummon()->GetSummoner())
+                        me->GetMotionMaster()->MovePoint(0, owner->GetPositionX() + 25 * cos(owner->GetOrientation()), owner->GetPositionY() + 25 * cos(owner->GetOrientation()), owner->GetPositionZ());
+
+                _StinkerBrokenHeartTimer = 3.5 * IN_MILLISECONDS;
+            }
+
+            void UpdateAI(uint32 const diff)
+            {
+                if (_StinkerBrokenHeartTimer <= diff)
+                {
+                    DoCast(SPELL_STINKER_BROKEN_HEART);
+                    me->setFaction(31);
+                }
+                _StinkerBrokenHeartTimer -= diff;
+            }
+        private:
+            uint32 _StinkerBrokenHeartTimer;
+        };
+
+        CreatureAI* GetAI(Creature* creature) const
+        {
+            return new npc_lonely_turkeyAI(creature);
+        }
 };
 
 void AddSC_npcs_special()
@@ -2646,5 +2692,6 @@ void AddSC_npcs_special()
     new npc_tabard_vendor;
     new npc_experience;
     new npc_wild_turkey();
+    new npc_lonely_turkey();
 }
 

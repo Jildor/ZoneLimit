@@ -4577,6 +4577,9 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Effect[1] = 0;
             ++count;
             break;
+        case 62012: // Turkey Caller
+            spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_0_YARDS;
+            break;
         default:
             break;
         }
