@@ -14,14 +14,14 @@ UPDATE `waypoint_data` SET `delay`=10000 WHERE `id`=115219 AND `point` IN (2, 5,
 -- Cast self Charge Up to get Temporary Electrical Charge
 DELETE FROM `waypoint_scripts` WHERE `id`=11521901;
 INSERT INTO `waypoint_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `dataint`, `x`, `y`, `z`, `o`, `guid`) VALUES
-(11521901, 0, 14, 52092, 1, 0, 0, 0, 0, 0, 855),
-(11521901, 2, 15, 52098, 1, 0, 0, 0, 0, 0, 856);
+(11521901, 0, 14, 52092, 1, 0, 0, 0, 0, 0, 5028),
+(11521901, 2, 15, 52098, 1, 0, 0, 0, 0, 0, 5029);
 UPDATE `waypoint_data` SET `action`=11521901 WHERE `id`=115219 AND `point` IN (5, 14);
 
 -- Remove aura Temporary Electrical Charge
 DELETE FROM `waypoint_scripts` WHERE `id`=11521902;
 INSERT INTO `waypoint_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `dataint`, `x`, `y`, `z`, `o`, `guid`) VALUES
-(11521902, 0, 14, 52092, 1, 0, 0, 0, 0, 0, 857);
+(11521902, 0, 14, 52092, 1, 0, 0, 0, 0, 0, 5030);
 UPDATE `waypoint_data` SET `action`=11521902 WHERE `id`=115219 AND `point` IN (2, 3, 4, 11, 12, 13);
 
 -- Lightning Struck achievement
