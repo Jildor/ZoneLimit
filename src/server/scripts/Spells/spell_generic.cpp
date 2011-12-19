@@ -2238,7 +2238,7 @@ public:
             {
 
                 uint32 factionId = SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), effIndex);
-                int32  repChange =  SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), 1);
+                int32  repChange =  SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), 1);
 
                 FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
 
