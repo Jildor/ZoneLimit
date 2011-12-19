@@ -2237,8 +2237,8 @@ public:
         if (Player* player = GetCaster()->ToPlayer())
             {
 
-                uint32 factionId = GetSpellInfo()->Effects[effIndex].CalcValue();
-                int32  repChange =  GetSpellInfo()->Effects[EFFECT_1].CalcValue();
+                uint32 factionId = SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), effIndex);
+                int32  repChange =  SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), 1);
 
                 FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
 
