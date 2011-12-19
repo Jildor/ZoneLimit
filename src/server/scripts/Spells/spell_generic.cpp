@@ -2221,6 +2221,52 @@ class spell_gen_candied_sweet_potato : public SpellScriptLoader
         }
 };
 
+
+class spell_gen_oracle_wolvar_reputation: public SpellScriptLoader
+{
+public:
+    spell_gen_oracle_wolvar_reputation() : SpellScriptLoader("spell_gen_oracle_wolvar_reputation") { }
+
+    class spell_gen_oracle_wolvar_reputation_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_gen_oracle_wolvar_reputation_SpellScript)
+
+        void HandleDummy(SpellEffIndex effIndex)
+        {
+
+        if (Player* player = GetCaster()->ToPlayer())
+            {
+
+                uint32 factionId = GetSpellInfo()->Effects[effIndex].CalcValue();
+                int32  repChange =  GetSpellInfo()->Effects[EFFECT_1].CalcValue();
+
+                FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
+
+                if (!factionEntry)
+                    return;
+
+                // Set rep to baserep + basepoints (expecting spillover for oposite faction -> become hated)
+                // Not when player already has equal or higher rep with this faction
+                if (player->GetReputationMgr().GetBaseReputation(factionEntry) < repChange)
+                    player->GetReputationMgr().SetReputation(factionEntry, repChange);
+
+                // EFFECT_INDEX_2 most likely update at war state, we already handle this in SetReputation
+            }
+
+        }
+
+        void Register()
+        {
+        OnEffect += SpellEffectFn(spell_gen_oracle_wolvar_reputation_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_gen_oracle_wolvar_reputation_SpellScript();
+    }
+};
+
 void AddSC_generic_spell_scripts()
 {
     new spell_gen_absorb0_hitlimit1();
@@ -2251,6 +2297,7 @@ void AddSC_generic_spell_scripts()
     new spell_gen_allow_cast_from_item_only();
     new spell_gen_launch();
     new spell_gen_vehicle_scaling();
+    new spell_gen_oracle_wolvar_reputation();
     new spell_gen_turkey_tracker();
     new spell_gen_feast_on();
     new spell_gen_well_fed_pilgrims_bount_ap();
