@@ -1,3 +1,4 @@
+-- Editado por Gildor
 -- planar anomaly
 DELETE FROM creature_template_addon WHERE entry=30879;
 INSERT INTO creature_template_addon (`entry`,`auras`) VALUES (30879,'57971 0');
