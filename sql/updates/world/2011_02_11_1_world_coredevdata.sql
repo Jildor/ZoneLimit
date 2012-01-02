@@ -13,15 +13,15 @@ DELETE FROM `creature_addon` WHERE `guid` IN (SELECT `guid` FROM `creature` WHER
 DELETE FROM `creature` WHERE `id`=28183;
 -- this guids were used by the old spawns.
 -- Guids de ZLDB
-INSERT INTO `creature` (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES
-(86828, 28183, 578, 3, 1, 0, 0, 1242.73267, 1079.592, 439.232849, 6.108652, 120, 0, 0, 1, 0, 0, 0),
-(86829, 28183, 578, 3, 1, 0, 0, 1246.566, 1051.25171, 439.232849, 0.5061455, 120, 0, 0, 1, 0, 0, 0),
-(86830, 28183, 578, 3, 1, 0, 0, 1265.30212, 1109.22742, 439.232849, 5.18362761, 120, 0, 0, 1, 0, 0, 0),
-(86831, 28183, 578, 3, 1, 0, 0, 1277.07471, 1027.78992, 439.232849, 1.37881, 120, 0, 0, 1, 0, 0, 0),
-(86832, 28183, 578, 3, 1, 0, 0, 1293.79858, 1113.18054, 439.232849, 4.485496, 120, 0, 0, 1, 0, 0, 0),
-(86833, 28183, 578, 3, 1, 0, 0, 1305.63025, 1031.75171, 439.232849, 2.042035, 120, 0, 0, 1, 0, 0, 0),
-(86834, 28183, 578, 3, 1, 0, 0, 1324.38538, 1089.79688, 439.232849, 3.59537816, 120, 0, 0, 1, 0, 0, 0),
-(86835, 28183, 578, 3, 1, 0, 0, 1328.00171, 1061.15283, 439.232849, 2.8972466, 120, 0, 0, 1, 0, 0, 0);
+INSERT INTO `creature` (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, MovementType) VALUES
+(86828, 28183, 578, 3, 1, 0, 0, 1242.73267, 1079.592, 439.232849, 6.108652, 120, 0, 0, 1, 0, 0),
+(86829, 28183, 578, 3, 1, 0, 0, 1246.566, 1051.25171, 439.232849, 0.5061455, 120, 0, 0, 1, 0, 0),
+(86830, 28183, 578, 3, 1, 0, 0, 1265.30212, 1109.22742, 439.232849, 5.18362761, 120, 0, 0, 1, 0, 0),
+(86831, 28183, 578, 3, 1, 0, 0, 1277.07471, 1027.78992, 439.232849, 1.37881, 120, 0, 0, 1, 0, 0),
+(86832, 28183, 578, 3, 1, 0, 0, 1293.79858, 1113.18054, 439.232849, 4.485496, 120, 0, 0, 1, 0, 0),
+(86833, 28183, 578, 3, 1, 0, 0, 1305.63025, 1031.75171, 439.232849, 2.042035, 120, 0, 0, 1, 0, 0),
+(86834, 28183, 578, 3, 1, 0, 0, 1324.38538, 1089.79688, 439.232849, 3.59537816, 120, 0, 0, 1, 0, 0),
+(86835, 28183, 578, 3, 1, 0, 0, 1328.00171, 1061.15283, 439.232849, 2.8972466, 120, 0, 0, 1, 0, 0);
 
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry` IN (54069,56251);
 INSERT INTO `conditions` (SourceTypeOrReferenceId, SourceGroup, SourceEntry, ElseGroup, ConditionTypeOrReference, ConditionValue1, ConditionValue2, ConditionValue3, ErrorTextId, ScriptName, COMMENT) VALUES 
