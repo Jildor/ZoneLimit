@@ -5,8 +5,11 @@ INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,
 (1,28519,38660,0,14,12238,0,0,0,'',NULL),
 (1,28519,38673,0,8,12238,0,0,0,'',NULL);
 
--- Pongo los gossips de TDB
+
 -- Mission: Plague This (11332)
+-- Le pongo el ReqSpellCast necesario
+UPDATE `quest_template` SET `ReqSpellCast1`= 43404 WHERE `entry`=11332;
+-- Pongo los gossips de TDB
 DELETE FROM `gossip_menu_option` WHERE `menu_id`=9546;
 INSERT INTO `gossip_menu_option` (`menu_id`,`id`,`option_icon`,`option_text`,`option_id`,`npc_option_npcflag`,`action_menu_id`,`action_poi_id`,`action_script_id`,`box_coded`,`box_money`,`box_text`) VALUES
 (9546,1,0, 'I need to Borrow a Gryphon',1,1,0,0,0,0,0, ''), -- Text Unsure
