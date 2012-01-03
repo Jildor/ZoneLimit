@@ -75,11 +75,14 @@ DELETE FROM `spell_scripts` WHERE `id`=56515;
 INSERT INTO `spell_scripts` (`id`,`effIndex`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`) VALUES
 (56515,0,0,15,56516,2,0,0,0,0,0);
 -- Webed Crusader (Ambusher Version)
-UPDATE `creature_template` SET `AIName`= 'SmartAI', `minlevel`=1, `maxlevel`=1 WHERE `entry`=30268;
+-- Le cambio faccion y unitflags como en TDB
+UPDATE `creature_template` SET `AIName`= 'SmartAI', `minlevel`=1, `maxlevel`=1, `faction_A` = 14, `faction_H` = 14, `unit_flags` = 0 WHERE `entry`=30268;
 DELETE FROM `smart_scripts` WHERE `entryorguid`=30268;
 INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type`,`event_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action_type`,`action_param1`,`action_param2`,`action_param3`,`action_param4`,`action_param5`,`action_param6`,`target_type`,`target_param1`,`target_param2`,`target_param3`,`target_x`,`target_y`,`target_z`,`target_o`,`comment`) VALUES
 (30268,0,0,0,6,0,100,0,0,0,0,0,12,30204,1,30000,0,0,0,1,0,0,0,0,0,0,0, 'Summon Forgotten Depths Ambusher');
 -- Freeed Crusader
+-- Elimino Spawns
+DELETE FROM `creature` WHERE `id`=30274;
 -- Le cambio faccion y unitflags como en TDB
 UPDATE `creature_template` SET `AIName`= 'SmartAI', `faction_A` = 35, `faction_H` = 35, `unit_flags` = 0 WHERE `entry`=30274;
 -- Le borro los AIScripts
