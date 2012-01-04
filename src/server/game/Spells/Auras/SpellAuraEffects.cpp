@@ -5660,7 +5660,7 @@ void AuraEffect::HandlePeriodicDummyAuraTick(Unit* target, Unit* caster) const
                     break;
                 }
                 case 47214: // Burninate Effect
-                    if (!caster || !target || !target->ToCreature() || target->HasAura(54683))
+                    if (!caster || !target || !target->ToCreature() || target->HasAura(54683) || target->GetEntry() != 26570)
                         break;
 
                         target->CastSpell(target, 54683, true);
