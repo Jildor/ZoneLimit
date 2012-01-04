@@ -5658,13 +5658,12 @@ void AuraEffect::HandlePeriodicDummyAuraTick(Unit* target, Unit* caster) const
                             rider->CastSpell(rider, 54893, true);
                     }
                     break;
+                }
                 case 47214: // Burninate Effect
-                {
                     if (!caster || !target || !target->ToCreature() || target->HasAura(54683))
                         break;
 
                         target->CastSpell(target, 54683, true);
-                }
                     break;
                 case 62292: // Blaze (Pool of Tar)
                     // should we use custom damage?
