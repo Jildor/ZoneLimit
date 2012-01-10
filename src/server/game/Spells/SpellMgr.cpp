@@ -3956,6 +3956,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectTriggerSpell[0] = 36325; // They Must Burn Bomb Drop (DND)
             ++count;
             break;
+        case 40244: case 40245: // Simon Game Visual
+        case 40246: case 40247: // Simon Game Visual
+            spellInfo->Effect[0] = 0;
+            ++count;
+            break;
         case 49838: // Stop Time
         case 52916: // Honor Among Thieves
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
@@ -4579,6 +4584,14 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 62012: // Turkey Caller
             spellInfo->EffectRadiusIndex[0] = 0;   // 0yd
+            ++count;
+            break;
+        case 40055: // Introspection
+        case 40165: // Introspection
+        case 40166: // Introspection
+        case 40167: // Introspection
+            spellInfo->Attributes |= SPELL_ATTR0_NEGATIVE_1;
+            ++count;
             break;
         default:
             break;
