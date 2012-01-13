@@ -778,7 +778,7 @@ public:
             me->SetInCombatWithZone();
         }
 
-        void SpellHitTarget(Unit* target, const SpellEntry* spell)
+        void SpellHitTarget(Unit* target, const SpellInfo* spell)
         {
             if (spell->Id == SPELL_TRAMPLE && target->GetTypeId() == TYPEID_PLAYER)
             {

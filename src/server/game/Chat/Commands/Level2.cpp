@@ -863,7 +863,7 @@ bool ChatHandler::HandlePetLearnCommand(const char* args)
 
     uint32 spellId = extractSpellIdFromLink((char*)args);
 
-    if (!spellId || !sSpellStore.LookupEntry(spellId))
+    if (!spellId || !sSpellMgr->GetSpellInfo(spellId))
         return false;
 
     // Check if pet already has it
@@ -875,7 +875,7 @@ bool ChatHandler::HandlePetLearnCommand(const char* args)
     }
 
     // Check if spell is valid
-    SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
+    SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
     if (!spellInfo || !SpellMgr::IsSpellValid(spellInfo))
     {
         PSendSysMessage(LANG_COMMAND_SPELL_BROKEN, spellId);

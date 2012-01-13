@@ -1681,6 +1681,7 @@ bool SpellInfo::_IsPositiveEffect(uint8 effIndex, bool deep) const
             switch (Id)
             {
                 case 34700: // Allergic Reaction
+				case 34709: // Shadow Sight
                 case 61716: // Rabbit Costume
                 case 61734: // Noblegarden Bunny
                 case 61987: // Avenging Wrath Marker
@@ -1693,6 +1694,14 @@ bool SpellInfo::_IsPositiveEffect(uint8 effIndex, bool deep) const
                 default:
                     break;
             }
+            break;
+        case SPELLFAMILY_ROGUE:
+            // Envenom
+            if (SpellFamilyFlags[1] & 0x8)
+                return true;
+            // Slice and Dice
+            else if (SpellFamilyFlags[0] & 0x40000)
+                return true;
             break;
         case SPELLFAMILY_MAGE:
             // Amplify Magic, Dampen Magic
