@@ -617,8 +617,8 @@ void Spell::SelectSpellTargets()
         if (effectTargetType == SPELL_REQUIRE_NONE)
             continue;
 
-        uint32 targetA = m_spellInfo->Effects[i].TargetA;
-        uint32 targetB = m_spellInfo->Effects[i].TargetA;
+        uint32 targetA = m_spellInfo->Effects[i].TargetA.GetTarget();
+        uint32 targetB = m_spellInfo->Effects[i].TargetB.GetTarget();
 
         if (targetA)
             SelectEffectTargets(i, m_spellInfo->Effects[i].TargetA);
@@ -2028,7 +2028,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
     {
         case TARGET_TYPE_UNIT_CASTER:
         {
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_UNIT_CASTER:
                     AddUnitTarget(m_caster, i);
@@ -2073,7 +2073,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
                 case TARGET_UNIT_PASSENGER_6:
                 case TARGET_UNIT_PASSENGER_7:
                     if (m_caster->GetTypeId() == TYPEID_UNIT && m_caster->ToCreature()->IsVehicle())
-                        if (Unit *unit = m_caster->GetVehicleKit()->GetPassenger(cur - TARGET_UNIT_PASSENGER_0))
+                        if (Unit *unit = m_caster->GetVehicleKit()->GetPassenger(cur.GetTarget() - TARGET_UNIT_PASSENGER_0))
                             AddUnitTarget(unit, i);
                     break;
                 default:
@@ -2091,7 +2091,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
                 break;
             }
 
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_UNIT_TARGET_ENEMY:
                     if (Unit *magnet = m_caster->SelectMagnetTarget(target, m_spellInfo))
@@ -2137,7 +2137,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             WorldObject *target = NULL;
             float range;
 
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_UNIT_NEARBY_ENEMY:
                     range = m_spellInfo->GetMaxRange(false);
@@ -2195,12 +2195,12 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
 
         case TARGET_TYPE_DEST_CASTER: //4+8+2
         {
-            if (cur == TARGET_SRC_CASTER)
+            if (cur.GetTarget() == TARGET_SRC_CASTER)
             {
                 m_targets.SetSrc(*m_caster);
                 break;
             }
-            else if (cur == TARGET_DST_CASTER)
+            else if (cur.GetTarget() == TARGET_DST_CASTER)
             {
                 m_targets.SetDst(*m_caster);
                 break;
@@ -2209,17 +2209,17 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             float angle, dist;
 
             float objSize = m_caster->GetObjectSize();
-            if (cur == TARGET_MINION)
+            if (cur.GetTarget() == TARGET_MINION)
                 dist = 0.0f;
             else
                 dist = m_spellInfo->Effects[i].CalcRadius(m_caster);
             if (modOwner) modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_RADIUS, dist, this);
             if (dist < objSize)
                 dist = objSize;
-            else if (cur == TARGET_DEST_CASTER_RANDOM)
+            else if (cur.GetTarget() == TARGET_DEST_CASTER_RANDOM)
                 dist = objSize + (dist - objSize) * (float)rand_norm();
 
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_DEST_CASTER_FRONT_LEFT: angle = static_cast<float>(-M_PI/4);                   break;
                 case TARGET_DEST_CASTER_BACK_LEFT:  angle = static_cast<float>(-3*M_PI/4);                 break;
@@ -2235,7 +2235,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             }
 
             Position pos;
-            switch (cur)
+            switch (cur.GetTarget())
             {
                 case TARGET_DEST_CASTER_FRONT_LEAP:
                 case TARGET_DEST_CASTER_FRONT_LEFT:
@@ -2262,7 +2262,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
                 break;
             }
 
-            if (cur == TARGET_DST_TARGET_ENEMY || cur == TARGET_DEST_TARGET_ANY)
+            if (cur.GetTarget() == TARGET_DST_TARGET_ENEMY || cur.GetTarget() == TARGET_DEST_TARGET_ANY)
             {
                 m_targets.SetDst(*target);
                 break;
@@ -2274,10 +2274,10 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             dist = m_spellInfo->Effects[i].CalcRadius(m_caster);
             if (dist < objSize)
                 dist = objSize;
-            else if (cur == TARGET_DEST_TARGET_RANDOM)
+            else if (cur.GetTarget() == TARGET_DEST_TARGET_RANDOM)
                 dist = objSize + (dist - objSize) * (float)rand_norm();
 
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_DEST_TARGET_FRONT:      angle = 0.0f;                                          break;
                 case TARGET_DEST_TARGET_BACK:       angle = static_cast<float>(M_PI);                      break;
@@ -2322,7 +2322,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             }
 
             float angle;
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_DEST_DYNOBJ_ENEMY:
                 case TARGET_DEST_DYNOBJ_ALLY:
@@ -2344,7 +2344,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             }
 
             float dist = m_spellInfo->Effects[i].CalcRadius(m_caster);
-            if (cur == TARGET_DEST_DEST_RANDOM || cur == TARGET_DEST_DEST_RANDOM_DIR_DIST)
+            if (cur.GetTarget() == TARGET_DEST_DEST_RANDOM || cur.GetTarget() == TARGET_DEST_DEST_RANDOM_DIR_DIST)
                 dist *= (float)rand_norm();
 
             // must has dst, no need to set flag
@@ -2356,7 +2356,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
 
         case TARGET_TYPE_DEST_SPECIAL:
         {
-            switch(cur)
+            switch(cur.GetTarget())
             {
                 case TARGET_DST_DB:
                     if (SpellTargetPosition const* st = sSpellMgr->GetSpellTargetPosition(m_spellInfo->Id))
@@ -2403,7 +2403,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
                 break;
             }
 
-            switch (cur)
+            switch (cur.GetTarget())
             {
                 case TARGET_UNIT_CHANNEL_TARGET:
                     // unit target may be no longer avalible - teleported out of map for example
@@ -2431,7 +2431,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
 
         default:
         {
-            switch (cur)
+            switch (cur.GetTarget())
             {
                 case TARGET_GAMEOBJECT:
                     if (m_targets.GetGOTarget())
@@ -2475,7 +2475,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
             float range;
             std::list<Unit*> unitList;
 
-            switch (cur)
+            switch (cur.GetTarget())
             {
                 case TARGET_UNIT_NEARBY_ENEMY:
                 case TARGET_UNIT_TARGET_ENEMY:
@@ -2512,7 +2512,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
 
         float radius;
         SpellTargets targetType;
-        switch(cur)
+        switch(cur.GetTarget())
         {
             case TARGET_UNIT_AREA_ENEMY_SRC:
             case TARGET_UNIT_AREA_ENEMY_DST:
@@ -2680,7 +2680,7 @@ void Spell::SelectEffectTargets(uint32 i, SpellImplicitTargetInfo const& cur)
                 SearchAreaTarget(unitList, radius, pushType, targetType);
                 break;
             default:
-                switch (cur)
+                switch (cur.GetTarget())
                 {
                     case TARGET_UNIT_AREA_PARTY_SRC:
                     case TARGET_UNIT_AREA_PARTY_DST:
@@ -4870,7 +4870,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 // If 0 spell effect empty - client not send target data (need use selection)
                 // TODO: check it on next client version
                 if (m_targets.GetTargetMask() == TARGET_FLAG_SELF &&
-                    m_spellInfo->Effects[1].TargetA == TARGET_UNIT_TARGET_ENEMY)
+                    m_spellInfo->Effects[1].TargetA.GetTarget() == TARGET_UNIT_TARGET_ENEMY)
                 {
                     target = m_caster->GetUnit(*m_caster, m_caster->ToPlayer()->GetSelection());
                     if (target)
@@ -4888,7 +4888,7 @@ SpellCastResult Spell::CheckCast(bool strict)
         // check pet presents
         for (int j = 0; j < MAX_SPELL_EFFECTS; ++j)
         {
-            if (m_spellInfo->Effects[j].TargetA == TARGET_UNIT_PET)
+            if (m_spellInfo->Effects[j].TargetA.GetTarget() == TARGET_UNIT_PET)
             {
                 target = m_caster->GetGuardianPet();
                 if (!target)
@@ -5076,7 +5076,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 if (m_caster->GetTypeId() != TYPEID_PLAYER)
                     return SPELL_FAILED_BAD_TARGETS;
 
-                if (m_spellInfo->Effects[i].TargetA != TARGET_UNIT_PET)
+                if (m_spellInfo->Effects[i].TargetA.GetTarget() != TARGET_UNIT_PET)
                     break;
 
                 Pet* pet = m_caster->ToPlayer()->GetPet();
@@ -5245,13 +5245,13 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
             case SPELL_EFFECT_OPEN_LOCK:
             {
-                if (m_spellInfo->Effects[i].TargetA != TARGET_GAMEOBJECT &&
-                    m_spellInfo->Effects[i].TargetA != TARGET_GAMEOBJECT_ITEM)
+                if (m_spellInfo->Effects[i].TargetA.GetTarget() != TARGET_GAMEOBJECT &&
+                    m_spellInfo->Effects[i].TargetA.GetTarget() != TARGET_GAMEOBJECT_ITEM)
                     break;
 
                 if (m_caster->GetTypeId() != TYPEID_PLAYER  // only players can open locks, gather etc.
                     // we need a go target in case of TARGET_GAMEOBJECT
-                    || (m_spellInfo->Effects[i].TargetA == TARGET_GAMEOBJECT && !m_targets.GetGOTarget()))
+                    || (m_spellInfo->Effects[i].TargetA.GetTarget() == TARGET_GAMEOBJECT && !m_targets.GetGOTarget()))
                     return SPELL_FAILED_BAD_TARGETS;
 
                 Item *pTempItem = NULL;
@@ -5264,7 +5264,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     pTempItem = m_caster->ToPlayer()->GetItemByGuid(m_targets.GetItemTargetGUID());
 
                 // we need a go target, or an openable item target in case of TARGET_GAMEOBJECT_ITEM
-                if (m_spellInfo->Effects[i].TargetA == TARGET_GAMEOBJECT_ITEM &&
+                if (m_spellInfo->Effects[i].TargetA.GetTarget() == TARGET_GAMEOBJECT_ITEM &&
                     !m_targets.GetGOTarget() &&
                     (!pTempItem || !pTempItem->GetTemplate()->LockID || !pTempItem->IsLocked()))
                     return SPELL_FAILED_BAD_TARGETS;
@@ -5994,7 +5994,7 @@ SpellCastResult Spell::CheckItems()
             for (int i = 0; i < MAX_SPELL_EFFECTS; i++)
             {
                     // skip check, pet not required like checks, and for TARGET_UNIT_PET m_targets.GetUnitTarget() is not the real target but the caster
-                    if (m_spellInfo->Effects[i].TargetA == TARGET_UNIT_PET)
+                    if (m_spellInfo->Effects[i].TargetA.GetTarget() == TARGET_UNIT_PET)
                     continue;
 
                 if (m_spellInfo->Effects[i].Effect == SPELL_EFFECT_HEAL)
@@ -6612,7 +6612,7 @@ CurrentSpellTypes Spell::GetCurrentContainer()
 bool Spell::CheckTarget(Unit* target, uint32 eff)
 {
     // Check targets for creature type mask and remove not appropriate (skip explicit self target case, maybe need other explicit targets)
-    if (m_spellInfo->Effects[eff].TargetA != TARGET_UNIT_CASTER)
+    if (m_spellInfo->Effects[eff].TargetA.GetTarget() != TARGET_UNIT_CASTER)
     {
         if (!CheckTargetCreatureType(target))
             return false;
@@ -6726,7 +6726,7 @@ bool Spell::IsNextMeleeSwingSpell() const
     return m_spellInfo->Attributes & SPELL_ATTR0_ON_NEXT_SWING;
 }
 
-bool Spell::IsAutoActionResetSpell() const 
+bool Spell::IsAutoActionResetSpell() const
 {
     return !m_IsTriggeredSpell && (m_spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_AUTOATTACK);
 }
@@ -6905,7 +6905,7 @@ bool Spell::IsValidSingleTargetSpell(Unit const* target) const
     }
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-        if (!IsValidSingleTargetEffect(target, m_spellInfo->Effects[i].TargetA))
+        if (!IsValidSingleTargetEffect(target, m_spellInfo->Effects[i].TargetA.GetTarget()))
             return false;
         // Need to check B?
         //if (!IsValidSingleTargetEffect(m_spellInfo->Effects[i].TargetB, target)
@@ -7089,7 +7089,7 @@ SpellCastResult Spell::CanOpenLock(uint32 effIndex, uint32 lockId, SkillType& sk
 
                     // skill bonus provided by casting spell (mostly item spells)
                     // add the damage modifier from the spell casted (cheat lock / skeleton key etc.)
-                    if (m_spellInfo->Effects[effIndex].TargetA == TARGET_GAMEOBJECT_ITEM || m_spellInfo->Effects[effIndex].TargetB == TARGET_GAMEOBJECT_ITEM)
+                    if (m_spellInfo->Effects[effIndex].TargetA.GetTarget() == TARGET_GAMEOBJECT_ITEM || m_spellInfo->Effects[effIndex].TargetB.GetTarget() == TARGET_GAMEOBJECT_ITEM)
                         skillValue += uint32(CalculateDamage(effIndex, NULL));
 
                     if (skillValue < reqSkillValue)
