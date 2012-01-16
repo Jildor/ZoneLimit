@@ -340,12 +340,12 @@ std::string MySQLPreparedStatement::getQueryString(const char *query)
         pos = queryString.find("?", pos);
         std::stringstream replace;
 
-        replace << "'";
+        replace << '\'';
 
         switch (m_stmt->statement_data[i].type)
         {
             case TYPE_BOOL:
-                replace << (m_stmt->statement_data[i].data.boolean ? "1" : "0");
+                replace << (m_stmt->statement_data[i].data.boolean ? '1' : '0');
                 break;
             case TYPE_UI8:
             case TYPE_UI16:
@@ -373,8 +373,8 @@ std::string MySQLPreparedStatement::getQueryString(const char *query)
                 replace << m_stmt->statement_data[i].str;
                 break;
         }
-        replace << "'";
-        queryString.replace(pos,1, replace.str());
+        replace << '\'';
+        queryString.replace(pos, 1, replace.str());
     }
 
     return queryString;
