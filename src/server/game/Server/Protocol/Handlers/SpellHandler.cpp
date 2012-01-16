@@ -31,6 +31,7 @@
 #include "CreatureAI.h"
 #include "ScriptMgr.h"
 #include "GameObjectAI.h"
+#include "SpellAuraEffects.h"
 
 void WorldSession::HandleClientCastFlags(WorldPacket& recvPacket, uint8 castFlags, SpellCastTargets& targets)
 {
@@ -143,7 +144,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
             {
                 if (!spellInfo->CanBeUsedInCombat())
                 {
-                    pUser->SendEquipError(EQUIP_ERR_NOT_IN_COMBAT,pItem,NULL);
+                    pUser->SendEquipError(EQUIP_ERR_NOT_IN_COMBAT, pItem, NULL);
                     return;
                 }
             }
@@ -174,19 +175,19 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
         {
             // for implicit area/coord target spells
             if (!targets.GetUnitTarget())
-                Spell::SendCastResult(_player,spellInfo,castCount,SPELL_FAILED_NO_VALID_TARGETS);
+                Spell::SendCastResult(_player, spellInfo, castCount, SPELL_FAILED_NO_VALID_TARGETS);
             // for explicit target spells
             else
-                Spell::SendCastResult(_player,spellInfo,castCount,SPELL_FAILED_BAD_TARGETS);
+                Spell::SendCastResult(_player, spellInfo, castCount, SPELL_FAILED_BAD_TARGETS);
         }
         return;
     }
 
     // Note: If script stop casting it must send appropriate data to client to prevent stuck item in gray state.
-    if (!sScriptMgr->OnItemUse(pUser,pItem,targets))
+    if (!sScriptMgr->OnItemUse(pUser, pItem, targets))
     {
         // no script or script not process request by self
-        pUser->CastItemUseSpell(pItem,targets,castCount,glyphIndex);
+        pUser->CastItemUseSpell(pItem, targets, castCount, glyphIndex);
     }
 }
 
@@ -198,7 +199,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
 
 void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDetail("WORLD: CMSG_OPEN_ITEM packet, data length = %i",(uint32)recvPacket.size());
+    sLog->outDetail("WORLD: CMSG_OPEN_ITEM packet, data length = %i", (uint32)recvPacket.size());
 
     Player* pUser = _player;
 
@@ -210,7 +211,7 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
 
     recvPacket >> bagIndex >> slot;
 
-    sLog->outDetail("bagIndex: %u, slot: %u",bagIndex,slot);
+    sLog->outDetail("bagIndex: %u, slot: %u", bagIndex, slot);
 
     Item *pItem = pUser->GetItemByPos(bagIndex, slot);
     if (!pItem)
@@ -279,7 +280,7 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
         CharacterDatabase.PExecute("DELETE FROM character_gifts WHERE item_guid = '%u'", pItem->GetGUIDLow());
     }
     else
-        pUser->SendLoot(pItem->GetGUID(),LOOT_CORPSE);
+        pUser->SendLoot(pItem->GetGUID(), LOOT_CORPSE);
 }
 
 void WorldSession::HandleGameObjectUseOpcode(WorldPacket & recv_data)
@@ -317,7 +318,7 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
     if (!go)
         return;
 
-    if (!go->IsWithinDistInMap(_player,INTERACTION_DISTANCE))
+    if (!go->IsWithinDistInMap(_player, INTERACTION_DISTANCE))
         return;
 
     go->AI()->GossipHello(_player);
@@ -415,7 +416,7 @@ void WorldSession::HandleCancelCastOpcode(WorldPacket& recvPacket)
     recvPacket >> spellId;
 
     if (_player->IsNonMeleeSpellCasted(false))
-        _player->InterruptNonMeleeSpells(false,spellId,false);
+        _player->InterruptNonMeleeSpells(false, spellId, false);
 }
 
 void WorldSession::HandleCancelAuraOpcode(WorldPacket& recvPacket)
@@ -464,7 +465,7 @@ void WorldSession::HandlePetCancelAuraOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    Creature* pet=ObjectAccessor::GetCreatureOrPetOrVehicle(*_player,guid);
+    Creature* pet=ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, guid);
 
     if (!pet)
     {
@@ -543,7 +544,7 @@ void WorldSession::HandleSelfResOpcode(WorldPacket & /*recv_data*/)
     {
         SpellInfo const *spellInfo = sSpellMgr->GetSpellInfo(_player->GetUInt32Value(PLAYER_SELF_RES_SPELL));
         if (spellInfo)
-            _player->CastSpell(_player,spellInfo,false,0);
+            _player->CastSpell(_player, spellInfo, false, 0);
 
         _player->SetUInt32Value(PLAYER_SELF_RES_SPELL, 0);
     }
@@ -574,32 +575,36 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket & recv_data)
     recv_data >> guid;
 
     // Get unit for which data is needed by client
-    Unit *unit = ObjectAccessor::GetObjectInWorld(guid, (Unit*)NULL);
+    Unit* unit = ObjectAccessor::GetObjectInWorld(guid, (Unit*)NULL);
     if (!unit)
         return;
 
-    // Get creator of the unit
-    Unit *creator = ObjectAccessor::GetObjectInWorld(unit->GetCreatorGUID(),(Unit*)NULL);
+    if (!unit->HasAuraType(SPELL_AURA_CLONE_CASTER))
+        return;
+
+    // Get creator of the unit (SPELL_AURA_CLONE_CASTER does not stack)
+    Unit* creator = unit->GetAuraEffectsByType(SPELL_AURA_CLONE_CASTER).front()->GetCaster();
     if (!creator)
         return;
 
     WorldPacket data(SMSG_MIRRORIMAGE_DATA, 68);
     data << uint64(guid);
     data << uint32(creator->GetDisplayId());
+    data << uint8(creator->getRace());
+    data << uint8(creator->getGender());
+    data << uint8(creator->getClass());
+
     if (creator->GetTypeId() == TYPEID_PLAYER)
     {
-        Player* pCreator = creator->ToPlayer();
-        data << uint8(pCreator->getRace());
-        data << uint8(pCreator->getGender());
-        data << uint8(pCreator->getClass());
-        data << uint8(pCreator->GetByteValue(PLAYER_BYTES, 0)); // skin
-        data << uint8(pCreator->GetByteValue(PLAYER_BYTES, 1)); // face
-        data << uint8(pCreator->GetByteValue(PLAYER_BYTES, 2)); // hair
-        data << uint8(pCreator->GetByteValue(PLAYER_BYTES, 3)); // haircolor
-        data << uint8(pCreator->GetByteValue(PLAYER_BYTES_2, 0)); // facialhair
-        data << uint32(pCreator->GetGuildId());  // unk
+        Player* player = creator->ToPlayer();
+        data << uint8(player->GetByteValue(PLAYER_BYTES, 0));   // skin
+        data << uint8(player->GetByteValue(PLAYER_BYTES, 1));   // face
+        data << uint8(player->GetByteValue(PLAYER_BYTES, 2));   // hair
+        data << uint8(player->GetByteValue(PLAYER_BYTES, 3));   // haircolor
+        data << uint8(player->GetByteValue(PLAYER_BYTES_2, 0)); // facialhair
+        data << uint32(player->GetGuildId());                   // unk
 
-        static const EquipmentSlots ItemSlots[] =
+        static EquipmentSlots const itemSlots[] =
         {
             EQUIPMENT_SLOT_HEAD,
             EQUIPMENT_SLOT_SHOULDERS,
@@ -616,13 +621,13 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket & recv_data)
         };
 
         // Display items in visible slots
-        for (EquipmentSlots const* itr = &ItemSlots[0]; *itr != EQUIPMENT_SLOT_END; ++itr)
+        for (EquipmentSlots const* itr = &itemSlots[0]; *itr != EQUIPMENT_SLOT_END; ++itr)
         {
-            if (*itr == EQUIPMENT_SLOT_HEAD && pCreator->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM))
+            if (*itr == EQUIPMENT_SLOT_HEAD && player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM))
                 data << uint32(0);
-            else if (*itr == EQUIPMENT_SLOT_BACK && pCreator->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK))
+            else if (*itr == EQUIPMENT_SLOT_BACK && player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK))
                 data << uint32(0);
-            else if (Item const *item = pCreator->GetItemByPos(INVENTORY_SLOT_BAG_0, *itr))
+            else if (Item const *item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, *itr))
                 data << uint32(item->GetTemplate()->DisplayInfoID);
             else
                 data << uint32(0);
@@ -631,7 +636,7 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket & recv_data)
     else
     {
         // Skip player data for creatures
-        data << uint32(0);
+        data << uint8(0);
         data << uint32(0);
         data << uint32(0);
         data << uint32(0);
@@ -649,28 +654,28 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket & recv_data)
 
     SendPacket(&data);
 }
- 
- void WorldSession::HandleUpdateProjectilePosition(WorldPacket& recvPacket)
- {
-     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: CMSG_UPDATE_PROJECTILE_POSITION");
- 
-     uint64 casterGuid;
-     uint32 spellId;
-     uint8 castCount;
-     float x, y, z;    // Position of missile hit
- 
-     recvPacket.readPackGUID(casterGuid);
-     recvPacket >> spellId;
-     recvPacket >> castCount;
-     recvPacket >> x;
-     recvPacket >> y;
-     recvPacket >> z;
- 
-     WorldPacket data(SMSG_SET_PROJECTILE_POSITION, 21);
-     data << uint64(casterGuid);
-     data << uint8(castCount);
-     data << float(x);
-     data << float(y);
-     data << float(z);
-     SendPacket(&data);
- }
+
+void WorldSession::HandleUpdateProjectilePosition(WorldPacket& recvPacket)
+{
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: CMSG_UPDATE_PROJECTILE_POSITION");
+
+    uint64 casterGuid;
+    uint32 spellId;
+    uint8 castCount;
+    float x, y, z;    // Position of missile hit
+
+    recvPacket.readPackGUID(casterGuid);
+    recvPacket >> spellId;
+    recvPacket >> castCount;
+    recvPacket >> x;
+    recvPacket >> y;
+    recvPacket >> z;
+
+    WorldPacket data(SMSG_SET_PROJECTILE_POSITION, 21);
+    data << uint64(casterGuid);
+    data << uint8(castCount);
+    data << float(x);
+    data << float(y);
+    data << float(z);
+    SendPacket(&data);
+}
