@@ -5858,7 +5858,7 @@ bool Spell::CanAutoCast(Unit* target)
                         return false;
             }
         }
-        else if (m_spellInfo->Effects[j].IsArea())
+        else if (m_spellInfo->Effects[j].IsAreaAuraEffect())
         {
             if (target->HasAuraEffect(m_spellInfo->Id, j))
                 return false;
