@@ -511,7 +511,7 @@ ItemTemplate const *Item::GetTemplate() const
 
 Player* Item::GetOwner()const
 {
-    return sObjectMgr->GetPlayer(GetOwnerGUID());
+    return ObjectAccessor::FindPlayer(GetOwnerGUID());
 }
 
 uint32 Item::GetSkill()
