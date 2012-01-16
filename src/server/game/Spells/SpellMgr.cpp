@@ -2978,10 +2978,6 @@ void SpellMgr::LoadDbcDataCorrections()
         case 32182: // Heroism
             spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
             break;
-        case 57994: // Wind Shear
-            // this required because with 0 bp it isn't handled in SpellEffects
-            spellInfo->EffectBasePoints[1] = 1;
-            break;
         case 2825:  // Bloodlust
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             break;
@@ -3191,6 +3187,10 @@ void SpellMgr::LoadDbcDataCorrections()
         case 31687: // Summon Water Elemental
             // 322-330 switch - effect changed to dummy, target entry not changed in client:(
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
+            break;
+        case 57994: // Wind Shear - improper data for EFFECT_1 in 3.3.5 DBC, but is correct in 4.x
+            spellInfo->Effect[EFFECT_1] = SPELL_EFFECT_MODIFY_THREAT_PERCENT;
+            spellInfo->EffectBasePoints[EFFECT_1] = -6; // -5%
             break;
         case 12051: // Evocation - now we can interrupt this
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;

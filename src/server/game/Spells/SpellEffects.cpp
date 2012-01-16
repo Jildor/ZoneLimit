@@ -4177,10 +4177,6 @@ void Spell::EffectThreat(SpellEffIndex /*effIndex*/)
     if (!unitTarget->CanHaveThreatList())
         return;
 
-    // hack for Wind Shear, these values are approximate
-    if (m_spellInfo->Id == 57994)
-        damage = -(30 * (m_caster->getLevel() - 10));
-
     unitTarget->AddThreat(m_caster, float(damage));
 }
 
