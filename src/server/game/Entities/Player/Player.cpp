@@ -24755,6 +24755,16 @@ void Player::_SaveInstanceTimeRestrictions(SQLTransaction& trans)
     }
 }
 
+bool Player::IsInWhipserWhiteList(uint64 guid)
+{
+    for (WhisperListContainer::const_iterator itr = WhisperList.begin(); itr != WhisperList.end(); ++itr)
+    {
+        if (*itr == guid)
+            return true;
+    }
+    return false;
+}
+
 void Player::InitWowarmoryFeeds() {
     // Clear feeds
     m_wowarmory_feeds.clear();
