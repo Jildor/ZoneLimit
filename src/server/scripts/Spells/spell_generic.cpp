@@ -1252,6 +1252,7 @@ class spell_gen_soul_preserver : public SpellScriptLoader
 {
     enum Spells
     {
+        SOUL_PRESERVER          = 60510,
         HEALING_TRANCE_DRUID    = 60512,
         HEALING_TRANCE_PALADIN  = 60513,
         HEALING_TRANCE_PRIEST   = 60514,
@@ -1264,6 +1265,13 @@ class spell_gen_soul_preserver : public SpellScriptLoader
         class spell_gen_soul_preserver_SpellScript : public SpellScript
         {
             PrepareSpellScript(spell_gen_soul_preserver_SpellScript);
+
+            bool Load()
+            {
+                // 18350 is a common placeholder for trigered spells
+                // this script only applies to 60510
+                return GetTriggeringSpell()->Id == SOUL_PRESERVER;
+            }
 
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
