@@ -140,7 +140,7 @@ public:
                     if (m_auiEncounter[1] == DONE)
                     {
                         HandleGameObject(0, true, go);
-                        go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                        go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
                     }
                     break;
             }
