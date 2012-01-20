@@ -8055,9 +8055,6 @@ void Player::_ApplyWeaponDependentAuraMods(Item *item, WeaponAttackType attackTy
                 mod += (*itr)->GetAmount();
 
     SetFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT, mod/100.0f);
-    UpdateDamagePhysical(BASE_ATTACK);
-    UpdateDamagePhysical(OFF_ATTACK);
-    UpdateDamagePhysical(RANGED_ATTACK);
 }
 
 void Player::_ApplyWeaponDependentAuraCritMod(Item *item, WeaponAttackType attackType, AuraEffect const* aura, bool apply)
