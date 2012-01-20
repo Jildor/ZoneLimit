@@ -986,7 +986,7 @@ void Unit::CastCustomSpell(uint32 spellId, CustomSpellValues const& value, Unit*
 }
 
 // used for scripting
-void Unit::CastSpell(float x, float y, float z, uint32 spellId, bool triggered, Item* castItem, AuraEffect const* triggeredByAura, uint64 originalCaster, Unit* OriginalVictim)
+void Unit::CastSpell(float x, float y, float z, uint32 spellId, bool triggered, Item* castItem, AuraEffect const* triggeredByAura, uint64 originalCaster)
 {
     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
 
@@ -1006,8 +1006,6 @@ void Unit::CastSpell(float x, float y, float z, uint32 spellId, bool triggered, 
 
     SpellCastTargets targets;
     targets.SetDst(x, y, z, GetOrientation());
-    if (OriginalVictim)
-        targets.SetUnitTarget(OriginalVictim);
     spell->m_CastItem = castItem;
     spell->prepare(&targets, triggeredByAura);
 }
