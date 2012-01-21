@@ -5014,7 +5014,7 @@ bool Unit::HandleHasteAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
     }
 
     // default case
-    if ((!target && triggerEntry->IsRequiringSelectedTarget()) || (target && target != this && !target->isAlive()))
+    if ((!target && triggerEntry->NeedsExplicitUnitTarget()) || (target && target != this && !target->isAlive()))
         return false;
 
     if (cooldown && GetTypeId() == TYPEID_PLAYER && ToPlayer()->HasSpellCooldown(triggered_spell_id))
@@ -7859,7 +7859,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
     }
 
     // default case
-    if ((!target && triggerEntry->IsRequiringSelectedTarget()) || (target && target != this && !target->isAlive()))
+    if ((!target && triggerEntry->NeedsExplicitUnitTarget()) || (target && target != this && !target->isAlive()))
         return false;
 
     if (cooldown_spell_id == 0)
@@ -7921,7 +7921,7 @@ bool Unit::HandleObsModEnergyAuraProc(Unit* victim, uint32 /*damage*/, AuraEffec
     }
 
     // default case
-    if ((!target && triggerEntry->IsRequiringSelectedTarget()) || (target && target != this && !target->isAlive()))
+    if ((!target && triggerEntry->NeedsExplicitUnitTarget()) || (target && target != this && !target->isAlive()))
         return false;
 
     if (cooldown && GetTypeId() == TYPEID_PLAYER && ToPlayer()->HasSpellCooldown(triggered_spell_id))
@@ -7985,7 +7985,7 @@ bool Unit::HandleModDamagePctTakenAuraProc(Unit* victim, uint32 /*damage*/, Aura
     }
 
     // default case
-    if ((!target && triggerEntry->IsRequiringSelectedTarget()) || (target && target != this && !target->isAlive()))
+    if ((!target && triggerEntry->NeedsExplicitUnitTarget()) || (target && target != this && !target->isAlive()))
         return false;
 
     if (cooldown && GetTypeId() == TYPEID_PLAYER && ToPlayer()->HasSpellCooldown(triggered_spell_id))
@@ -9238,7 +9238,7 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
         target = !(procFlags & (PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_POS | PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_POS)) && triggerEntry && triggerEntry->IsPositive() ? this : victim;
 
     // default case
-    if ((!target && triggerEntry->IsRequiringSelectedTarget()) || (target && target != this && !target->isAlive()))
+    if ((!target && triggerEntry->NeedsExplicitUnitTarget()) || (target && target != this && !target->isAlive()))
         return false;
 
     if (basepoints0)
