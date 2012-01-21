@@ -1,0 +1,18 @@
+-- Editado por Gildor
+DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=13 AND `SourceEntry` IN (70346,72456,72868,72869);
+INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,`ElseGroup`,`ConditionTypeOrReference`,`ConditionValue1`,`ConditionValue2`,`ConditionValue3`,`ErrorTextId`,`ScriptName`,`Comment`) VALUES
+(13,0,70346,0,18,1,37672,0,0, '', 'Slime Puddle - target Mutated Abomination'),
+(13,0,72456,0,18,1,38285,0,0, '', 'Slime Puddle - target Mutated Abomination'),
+(13,0,72868,0,18,1,37672,0,0, '', 'Slime Puddle - target Mutated Abomination'),
+(13,0,72869,0,18,1,38285,0,0, '', 'Slime Puddle - target Mutated Abomination');
+
+-- Los pongo como en TDB
+UPDATE `creature_template` SET `exp`=2,`spell1`=70360,`spell2`=70539,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=37672;
+UPDATE `creature_template` SET `exp`=2,`spell1`=72527,`spell2`=72457,`spell4`=0,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38605;
+UPDATE `creature_template` SET `exp`=2,`spell1`=70360,`spell2`=72875,`spell4`=0,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38786;
+UPDATE `creature_template` SET `exp`=2,`spell1`=72527,`spell2`=72876,`spell4`=0,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38787;
+
+UPDATE `creature_template` SET `exp`=2,`spell1`=70360,`spell2`=70539,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38285;
+UPDATE `creature_template` SET `exp`=2,`spell1`=72527,`spell2`=72457,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38788;
+UPDATE `creature_template` SET `exp`=2,`spell1`=70360,`spell2`=72875,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38789;
+UPDATE `creature_template` SET `exp`=2,`spell1`=72527,`spell2`=72876,`RegenHealth`=1,`mechanic_immune_mask`=8388624 WHERE `entry`=38790;
