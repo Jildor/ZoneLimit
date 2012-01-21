@@ -372,7 +372,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNoImmediateEffect,                         //316 SPELL_AURA_PERIODIC_HASTE implemented in AuraEffect::CalculatePeriodic
 };
 
-AuraEffect::AuraEffect(Aura * base, uint8 effIndex, int32 *baseAmount, Unit* caster):
+AuraEffect::AuraEffect(Aura* base, uint8 effIndex, int32 *baseAmount, Unit* caster):
 m_base(base), m_spellInfo(base->GetSpellInfo()), m_effIndex(effIndex),
 m_baseAmount(baseAmount ? *baseAmount : m_spellInfo->Effects[m_effIndex].BasePoints),
 m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false),
@@ -4995,16 +4995,9 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                     }
                     break;
                 case SPELLFAMILY_HUNTER:
-                    switch (GetId())
-                    {
-                        case 35079: // Misdirection
+                    // Misdirection
+                    if (GetId() == 34477)
                         target->SetReducedThreatPercent(0, 0);
-                            break;
-                        case 34477: // Misdirection
-                            if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
-                                target->SetReducedThreatPercent(0, 0);
-                            break;
-                    }
                     break;
                 case SPELLFAMILY_DEATHKNIGHT:
                     // Summon Gargoyle (Dismiss Gargoyle at remove)
