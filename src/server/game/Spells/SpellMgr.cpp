@@ -3162,7 +3162,7 @@ void SpellMgr::LoadDbcDataCorrections()
             case 61607: // Mark of Blood
                 spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
                 break;
-            case 41013: // Parasitic Shadowfiend Passive
+            case 41913: // Parasitic Shadowfiend Passive
                 spellInfo->EffectApplyAuraName[0] = 4; // proc debuff, and summon infinite fiends
                 break;
             case 27892: // To Anchor 1
