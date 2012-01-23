@@ -1803,7 +1803,6 @@ void GameObject::SetDestructibleState(GameObjectDestructibleState state, Player*
         case GO_DESTRUCTIBLE_DAMAGED:
         {
             EventInform(m_goInfo->building.damagedEvent);
-
             if (eventInvoker)
             {
                 sScriptMgr->OnGameObjectDamaged(this, eventInvoker);
