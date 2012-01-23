@@ -8879,17 +8879,6 @@ bool Unit::HandleProcTriggerSpell(Unit* victim, uint32 damage, AuraEffect* trigg
         case 72176:
             basepoints0 = 3;
             break;
-        case 71761: // Deep Freeze Immunity State
-        {
-            if (!victim->ToCreature())
-                return false;
-
-            if (victim->ToCreature()->GetCreatureInfo()->MechanicImmuneMask & (1 << procSpell->EffectMechanic[EFFECT_0]))
-                target = victim;
-            else
-                return false;
-            break;
-        }
         // Deathbringer Saurfang - Mark of the Fallen Champion
         case 72256:
             // this should be handled by targetAuraSpell, but because 72408 is not passive
@@ -11157,9 +11146,9 @@ bool Unit::isSpellCrit(Unit* victim, SpellInfo const* spellProto, SpellSchoolMas
                         case  911: modChance+= 16;
                         case  910: modChance+= 17;
                         case  849: modChance+= 17;
-                            // Deep Freeze damage trigger is always shattered and does not consume FoF charges
-                            if ((spellProto->Id == 71757) || victim->HasAuraState(AURA_STATE_FROZEN, spellProto, this))
-                                crit_chance += modChance;
+                            if (!victim->HasAuraState(AURA_STATE_FROZEN, spellProto, this))
+                                break;
+                            crit_chance+=modChance;
                             break;
                         case 7917: // Glyph of Shadowburn
                             if (victim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))

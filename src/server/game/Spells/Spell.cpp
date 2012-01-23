@@ -1257,19 +1257,13 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
             positive = false;
         else if (!m_healing)
         {
-            if (mask)
-            {
-                for (uint8 effIndex = 0; effIndex < MAX_SPELL_EFFECTS; ++effIndex)
-                    // If at least one effect negative spell is negative hit
-                    if (mask & (1 << effIndex) && !m_spellInfo->IsPositiveEffect(effIndex))
-                    {
-                        positive = false;
-                        break;
-                    }
-            }
-            else
-                // If there is no effect mask determine from spell proto
-                positive = IsPositiveSpell(m_spellInfo->Id);
+            for (uint8 i = 0; i< MAX_SPELL_EFFECTS; ++i)
+                // If at least one effect negative spell is negative hit
+                if (mask & (1<<i) && !m_spellInfo->IsPositiveEffect(i))
+                {
+                    positive = false;
+                    break;
+                }
         }
         switch (m_spellInfo->DmgClass)
         {
