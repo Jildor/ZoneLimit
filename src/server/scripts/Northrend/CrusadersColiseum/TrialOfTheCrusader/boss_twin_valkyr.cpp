@@ -629,7 +629,7 @@ public:
             else m_uiRangeCheckTimer -= uiDiff;
         }
 
-        void SpellHitTarget(Unit* who, const SpellInfo* spell)
+        void SpellHitTarget(Unit* who, const SpellInfo* /*spell*/)
         {
             if(spell->Id == SPELL_UNLEASHED_DARK_HELPER)
             {
@@ -671,7 +671,7 @@ public:
             else m_uiRangeCheckTimer -= uiDiff;
         }
 
-        void SpellHitTarget(Unit* who, const SpellInfo* spell)
+        void SpellHitTarget(Unit* who, const SpellInfo* /*spell*/)
         {
             if(spell->Id == SPELL_UNLEASHED_LIGHT_HELPER)
             {
