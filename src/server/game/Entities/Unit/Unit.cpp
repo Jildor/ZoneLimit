@@ -12528,6 +12528,8 @@ bool Unit::IsValidAttackTarget(Unit const* target) const
 
 bool Unit::_IsValidAttackTarget(Unit const* target, SpellInfo const* bySpell) const
 {
+    ASSERT(target);
+
     // can't attack self
     if (this == target)
         return false;
@@ -12664,6 +12666,8 @@ bool Unit::IsValidAssistTarget(Unit const* target) const
 
 bool Unit::_IsValidAssistTarget(Unit const* target, SpellInfo const* bySpell) const
 {
+    ASSERT(target);
+
     // can assist to self
     if (this == target)
         return true;
@@ -13332,7 +13336,7 @@ Unit* Creature::SelectVictim()
             {
                 --aura;
                 caster = (*aura)->GetCaster();
-                if (caster && canSeeOrDetect(caster, true) && canAttack(caster) && caster->isInAccessiblePlaceFor(ToCreature()))
+                if (caster && canSeeOrDetect(caster, true) && IsValidAttackTarget(caster) && caster->isInAccessiblePlaceFor(ToCreature()))
                 {
                     target = caster;
                     break;
