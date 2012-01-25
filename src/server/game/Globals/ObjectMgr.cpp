@@ -306,7 +306,7 @@ void ObjectMgr::LoadCreatureLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -342,7 +342,7 @@ void ObjectMgr::LoadGossipMenuItemsLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint16 menuId   = fields[0].GetUInt16();
         uint16 id       = fields[1].GetUInt16();
@@ -374,7 +374,7 @@ void ObjectMgr::LoadPointOfInterestLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -420,7 +420,7 @@ void ObjectMgr::LoadCreatureTemplates()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -546,7 +546,7 @@ void ObjectMgr::LoadCreatureTemplateAddons()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -569,7 +569,7 @@ void ObjectMgr::LoadCreatureTemplateAddons()
         creatureAddon.auras.resize(tokens.size());
         for (Tokens::iterator itr = tokens.begin(); itr != tokens.end(); ++itr)
         {
-            SpellInfo const *AdditionalSpellInfo = sSpellMgr->GetSpellInfo(uint32(atol(*itr)));
+            SpellInfo const* AdditionalSpellInfo = sSpellMgr->GetSpellInfo(uint32(atol(*itr)));
             if (!AdditionalSpellInfo)
             {
                 sLog->outErrorDb("Creature (GUID: %u) has wrong spell %u defined in `auras` field in `creature_addon`.", entry, uint32(atol(*itr)));
@@ -914,7 +914,7 @@ void ObjectMgr::LoadCreatureAddons()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 guid = fields[0].GetUInt32();
 
@@ -937,7 +937,7 @@ void ObjectMgr::LoadCreatureAddons()
         creatureAddon.auras.resize(tokens.size());
         for (Tokens::iterator itr = tokens.begin(); itr != tokens.end(); ++itr)
         {
-            SpellInfo const *AdditionalSpellInfo = sSpellMgr->GetSpellInfo(uint32(atol(*itr)));
+            SpellInfo const* AdditionalSpellInfo = sSpellMgr->GetSpellInfo(uint32(atol(*itr)));
             if (!AdditionalSpellInfo)
             {
                 sLog->outErrorDb("Creature (GUID: %u) has wrong spell %u defined in `auras` field in `creature_addon`.", guid, uint32(atol(*itr)));
@@ -1024,7 +1024,7 @@ void ObjectMgr::LoadEquipmentTemplates()
             if (!equipmentInfo.ItemEntry[i])
                 continue;
 
-           ItemEntry const *dbcItem = sItemStore.LookupEntry(equipmentInfo.ItemEntry[i]);
+           ItemEntry const* dbcItem = sItemStore.LookupEntry(equipmentInfo.ItemEntry[i]);
 
             if (!dbcItem)
             {
@@ -1067,7 +1067,7 @@ CreatureModelInfo const* ObjectMgr::GetCreatureModelInfo(uint32 modelId)
     return NULL;
 }
 
-uint32 ObjectMgr::ChooseDisplayId(uint32 /*team*/, const CreatureTemplate *cinfo, const CreatureData *data /*= NULL*/)
+uint32 ObjectMgr::ChooseDisplayId(uint32 /*team*/, const CreatureTemplate* cinfo, const CreatureData* data /*= NULL*/)
 {
     // Load creature model (display id)
     uint32 display_id = 0;
@@ -1082,7 +1082,7 @@ uint32 ObjectMgr::ChooseDisplayId(uint32 /*team*/, const CreatureTemplate *cinfo
     return display_id;
 }
 
-void ObjectMgr::ChooseCreatureFlags(const CreatureTemplate *cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, const CreatureData *data /*= NULL*/)
+void ObjectMgr::ChooseCreatureFlags(const CreatureTemplate* cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, const CreatureData* data /*= NULL*/)
 {
     npcflag = cinfo->npcflag;
     unit_flags = cinfo->unit_flags;
@@ -1110,7 +1110,7 @@ CreatureModelInfo const* ObjectMgr::GetCreatureModelRandomGender(uint32* display
     // If a model for another gender exists, 50% chance to use it
     if (minfo->modelid_other_gender != 0 && urand(0, 1) == 0)
     {
-        CreatureModelInfo const *minfo_tmp = GetCreatureModelInfo(minfo->modelid_other_gender);
+        CreatureModelInfo const* minfo_tmp = GetCreatureModelInfo(minfo->modelid_other_gender);
         if (!minfo_tmp)
             sLog->outErrorDb("Model (Entry: %u) has modelid_other_gender %u not found in table `creature_model_info`. ", *displayID, minfo->modelid_other_gender);
         else
@@ -1141,7 +1141,7 @@ void ObjectMgr::LoadCreatureModelInfo()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 modelId = fields[0].GetUInt32();
 
@@ -1198,7 +1198,7 @@ void ObjectMgr::LoadLinkedRespawn()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 guidLow = fields[0].GetUInt32();
         uint32 linkedGuidLow = fields[1].GetUInt32();
@@ -1449,7 +1449,7 @@ void ObjectMgr::LoadCreatures()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 guid         = fields[ 0].GetUInt32();
         uint32 entry        = fields[ 1].GetUInt32();
@@ -1632,7 +1632,7 @@ uint32 ObjectMgr::AddGOData(uint32 entry, uint32 mapId, float x, float y, float 
     // We use spawn coords to spawn
     if (!map->Instanceable() && map->IsLoaded(x, y))
     {
-        GameObject *go = new GameObject;
+        GameObject* go = new GameObject;
         if (!go->LoadFromDB(guid, map))
         {
             sLog->outError("AddGOData: cannot add gameobject entry %u to map", entry);
@@ -1668,7 +1668,7 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data.posX, data.posY))
         {
-            Creature *creature = new Creature;
+            Creature* creature = new Creature;
             if (!creature->LoadFromDB(guid, map))
             {
                 sLog->outError("AddCreature: cannot add creature entry %u to map", guid);
@@ -1683,7 +1683,7 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
 
 uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float x, float y, float z, float o, uint32 spawntimedelay)
 {
-    CreatureTemplate const *cInfo = GetCreatureTemplate(entry);
+    CreatureTemplate const* cInfo = GetCreatureTemplate(entry);
     if (!cInfo)
         return 0;
 
@@ -1765,7 +1765,7 @@ void ObjectMgr::LoadGameobjects()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 guid         = fields[ 0].GetUInt32();
         uint32 entry        = fields[ 1].GetUInt32();
@@ -1924,7 +1924,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 loguid       = fields[0].GetUInt32();
         uint32 respawn_time = fields[1].GetUInt32();
@@ -1958,7 +1958,7 @@ void ObjectMgr::LoadGameobjectRespawnTimes()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 loguid       = fields[0].GetUInt32();
         uint32 respawn_time = fields[1].GetUInt32();
@@ -2076,7 +2076,7 @@ void ObjectMgr::LoadItemLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -2143,7 +2143,7 @@ void ObjectMgr::LoadItemTemplates()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -2256,7 +2256,7 @@ void ObjectMgr::LoadItemTemplates()
 
         // Checks
 
-        ItemEntry const *dbcitem = sItemStore.LookupEntry(entry);
+        ItemEntry const* dbcitem = sItemStore.LookupEntry(entry);
 
         if (dbcitem)
         {
@@ -2713,7 +2713,7 @@ void ObjectMgr::LoadItemSetNameLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -2760,7 +2760,7 @@ void ObjectMgr::LoadItemSetNames()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
         if (itemSetItems.find(entry) == itemSetItems.end())
@@ -2828,7 +2828,7 @@ void ObjectMgr::LoadVehicleTemplateAccessories()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 uiEntry      = fields[0].GetUInt32();
         uint32 uiAccessory  = fields[1].GetUInt32();
@@ -2884,7 +2884,7 @@ void ObjectMgr::LoadVehicleAccessories()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 uiGUID       = fields[0].GetUInt32();
         uint32 uiAccessory  = fields[1].GetUInt32();
@@ -3743,7 +3743,7 @@ void ObjectMgr::LoadQuests()
     // for example set of race quests can lead to single not race specific quest
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         Quest * newQuest = new Quest(fields);
         mQuestTemplates[newQuest->GetQuestId()] = newQuest;
@@ -4346,7 +4346,7 @@ void ObjectMgr::LoadQuests()
     // check QUEST_TRINITY_FLAGS_EXPLORATION_OR_EVENT for spell with SPELL_EFFECT_QUEST_COMPLETE
     for (uint32 i = 0; i < sSpellMgr->GetSpellInfoStoreSize(); ++i)
     {
-        SpellInfo const *spellInfo = sSpellMgr->GetSpellInfo(i);
+        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(i);
         if (!spellInfo)
             continue;
 
@@ -4399,7 +4399,7 @@ void ObjectMgr::LoadQuestLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -4430,7 +4430,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
 {
     uint32 oldMSTime = getMSTime();
 
-    ScriptMapMap *scripts = GetScriptsMapByType(type);
+    ScriptMapMap* scripts = GetScriptsMapByType(type);
     if (!scripts)
         return;
 
@@ -4462,7 +4462,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         ScriptInfo tmp;
         tmp.type      = type;
         tmp.id           = fields[0].GetUInt32();
@@ -4866,7 +4866,7 @@ void ObjectMgr::LoadWaypointScripts()
     {
         do
         {
-            Field *fields = result->Fetch();
+            Field* fields = result->Fetch();
             uint32 action = fields[0].GetUInt32();
 
             actionSet.erase(action);
@@ -4898,7 +4898,7 @@ void ObjectMgr::LoadSpellScriptNames()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         int32 spellId         = fields[0].GetInt32();
         const char *scriptName = fields[1].GetCString();
@@ -4962,8 +4962,8 @@ void ObjectMgr::ValidateSpellScripts()
 
         for (std::vector<std::pair<SpellScriptLoader *, SpellScriptsMap::iterator> >::iterator sitr = SpellScriptLoaders.begin(); sitr != SpellScriptLoaders.end(); ++sitr)
         {
-            SpellScript * spellScript = sitr->first->GetSpellScript();
-            AuraScript * auraScript = sitr->first->GetAuraScript();
+            SpellScript* spellScript = sitr->first->GetSpellScript();
+            AuraScript* auraScript = sitr->first->GetAuraScript();
             bool valid = true;
             if (!spellScript && !auraScript)
             {
@@ -5069,7 +5069,7 @@ void ObjectMgr::LoadPageTextLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -5214,7 +5214,7 @@ void ObjectMgr::LoadInstanceEncounters()
     sLog->outString();
 }
 
-GossipText const *ObjectMgr::GetGossipText(uint32 Text_ID) const
+GossipText const* ObjectMgr::GetGossipText(uint32 Text_ID) const
 {
     GossipTextMap::const_iterator itr = mGossipText.find(Text_ID);
     if (itr != mGossipText.end())
@@ -5244,7 +5244,7 @@ void ObjectMgr::LoadGossipText()
         ++count;
         cic = 0;
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 Text_ID    = fields[cic++].GetUInt32();
         if (!Text_ID)
@@ -5297,7 +5297,7 @@ void ObjectMgr::LoadNpcTextLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -5366,8 +5366,8 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
     do
     {
 
-        Field *fields = result->Fetch();
-        Mail *m = new Mail;
+        Field* fields = result->Fetch();
+        Mail* m = new Mail;
         m->messageID = fields[0].GetUInt32();
         m->messageType = fields[1].GetUInt8();
         m->sender = fields[2].GetUInt32();
@@ -5379,7 +5379,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
         m->checked = fields[7].GetUInt32();
         m->mailTemplateId = fields[8].GetInt16();
 
-        Player *pl = NULL;
+        Player* pl = NULL;
         if (serverUp)
             pl = ObjectAccessor::FindPlayer((uint64)m->receiver);
 
@@ -5470,7 +5470,7 @@ void ObjectMgr::LoadQuestAreaTriggers()
     {
         ++count;
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 trigger_ID = fields[0].GetUInt32();
         uint32 quest_ID   = fields[1].GetUInt32();
@@ -5529,7 +5529,7 @@ void ObjectMgr::LoadTavernAreaTriggers()
     {
         ++count;
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 Trigger_ID      = fields[0].GetUInt32();
 
@@ -5567,7 +5567,7 @@ void ObjectMgr::LoadAreaTriggerScripts()
     {
         ++count;
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 Trigger_ID      = fields[0].GetUInt32();
         const char *scriptName = fields[1].GetCString();
@@ -5671,7 +5671,7 @@ uint32 ObjectMgr::GetTaxiMountDisplayId(uint32 id, uint32 team, bool allowed_alt
             mount_entry = team == ALLIANCE ? node->MountCreatureID[0] : node->MountCreatureID[1];
         }
 
-        CreatureTemplate const *mount_info = GetCreatureTemplate(mount_entry);
+        CreatureTemplate const* mount_info = GetCreatureTemplate(mount_entry);
         if (mount_info)
         {
             mount_id = mount_info->GetRandomValidModelId();
@@ -5710,7 +5710,7 @@ void ObjectMgr::LoadGraveyardZones()
     {
         ++count;
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 safeLocId = fields[0].GetUInt32();
         uint32 zoneId = fields[1].GetUInt32();
@@ -5723,7 +5723,7 @@ void ObjectMgr::LoadGraveyardZones()
             continue;
         }
 
-        AreaTableEntry const *areaEntry = GetAreaEntryByAreaID(zoneId);
+        AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(zoneId);
         if (!areaEntry)
         {
             sLog->outErrorDb("Table `game_graveyard_zone` has a record for not existing zone id (%u), skipped.", zoneId);
@@ -5750,7 +5750,7 @@ void ObjectMgr::LoadGraveyardZones()
     sLog->outString();
 }
 
-WorldSafeLocsEntry const *ObjectMgr::GetDefaultGraveYard(uint32 team)
+WorldSafeLocsEntry const* ObjectMgr::GetDefaultGraveYard(uint32 team)
 {
     enum DefaultGraveyard
     {
@@ -5765,7 +5765,7 @@ WorldSafeLocsEntry const *ObjectMgr::GetDefaultGraveYard(uint32 team)
     else return NULL;
 }
 
-WorldSafeLocsEntry const *ObjectMgr::GetClosestGraveYard(float x, float y, float z, uint32 MapId, uint32 team)
+WorldSafeLocsEntry const* ObjectMgr::GetClosestGraveYard(float x, float y, float z, uint32 MapId, uint32 team)
 {
     // search for zone associated closest graveyard
     uint32 zoneId = sMapMgr->GetZoneId(MapId, x, y, z);
@@ -5992,7 +5992,7 @@ void ObjectMgr::LoadAreaTriggerTeleports()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         ++count;
 
@@ -6053,7 +6053,7 @@ void ObjectMgr::LoadAccessRequirements()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         ++count;
 
@@ -6074,7 +6074,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item)
         {
-            ItemTemplate const *pProto = sObjectMgr->GetItemTemplate(ar.item);
+            ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(ar.item);
             if (!pProto)
             {
                 sLog->outError("Key item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item, mapid, difficulty);
@@ -6084,7 +6084,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item2)
         {
-            ItemTemplate const *pProto = sObjectMgr->GetItemTemplate(ar.item2);
+            ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(ar.item2);
             if (!pProto)
             {
                 sLog->outError("Second item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item2, mapid, difficulty);
@@ -6133,13 +6133,13 @@ AreaTrigger const* ObjectMgr::GetGoBackTrigger(uint32 Map) const
 {
     bool useParentDbValue = false;
     uint32 parentId = 0;
-    const MapEntry *mapEntry = sMapStore.LookupEntry(Map);
+    const MapEntry* mapEntry = sMapStore.LookupEntry(Map);
     if (!mapEntry || mapEntry->entrance_map < 0)
         return NULL;
 
     if (mapEntry->IsDungeon())
     {
-        const InstanceTemplate *iTemplate = sObjectMgr->GetInstanceTemplate(Map);
+        const InstanceTemplate* iTemplate = sObjectMgr->GetInstanceTemplate(Map);
 
         if (!iTemplate)
             return NULL;
@@ -6356,7 +6356,7 @@ void ObjectMgr::LoadGameObjectLocales()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -6454,7 +6454,7 @@ void ObjectMgr::LoadGameObjectTemplate()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -6641,7 +6641,7 @@ void ObjectMgr::LoadExplorationBaseXP()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         uint8 level  = fields[0].GetUInt8();
         uint32 basexp = fields[1].GetUInt32();
         mBaseXPTable[level] = basexp;
@@ -6683,7 +6683,7 @@ void ObjectMgr::LoadPetNames()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         std::string word = fields[0].GetString();
         uint32 entry     = fields[1].GetUInt32();
         bool   half      = fields[2].GetBool();
@@ -6706,7 +6706,7 @@ void ObjectMgr::LoadPetNumber()
     QueryResult result = CharacterDatabase.Query("SELECT MAX(id) FROM character_pet");
     if (result)
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         m_hiPetNumber = fields[0].GetUInt32()+1;
     }
 
@@ -6721,7 +6721,7 @@ std::string ObjectMgr::GeneratePetName(uint32 entry)
 
     if (list0.empty() || list1.empty())
     {
-        CreatureTemplate const *cinfo = GetCreatureTemplate(entry);
+        CreatureTemplate const* cinfo = GetCreatureTemplate(entry);
         char* petname = GetPetName(cinfo->family, sWorld->GetDefaultDbcLocale());
         if (!petname)
             return cinfo->Name;
@@ -6752,10 +6752,10 @@ void ObjectMgr::LoadCorpses()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         uint32 guid = fields[16].GetUInt32();
 
-        Corpse *corpse = new Corpse();
+        Corpse* corpse = new Corpse();
         if (!corpse->LoadFromDB(guid, fields))
         {
             delete corpse;
@@ -6790,7 +6790,7 @@ void ObjectMgr::LoadReputationRewardRate()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 factionId        = fields[0].GetUInt32();
 
@@ -6800,7 +6800,7 @@ void ObjectMgr::LoadReputationRewardRate()
         repRate.creature_rate   = fields[2].GetFloat();
         repRate.spell_rate      = fields[3].GetFloat();
 
-        FactionEntry const *factionEntry = sFactionStore.LookupEntry(factionId);
+        FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
         if (!factionEntry)
         {
             sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `reputation_reward_rate`", factionId);
@@ -6859,7 +6859,7 @@ void ObjectMgr::LoadReputationOnKill()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 creature_id = fields[0].GetUInt32();
 
@@ -6882,7 +6882,7 @@ void ObjectMgr::LoadReputationOnKill()
 
         if (repOnKill.repfaction1)
         {
-            FactionEntry const *factionEntry1 = sFactionStore.LookupEntry(repOnKill.repfaction1);
+            FactionEntry const* factionEntry1 = sFactionStore.LookupEntry(repOnKill.repfaction1);
             if (!factionEntry1)
             {
                 sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `creature_onkill_reputation`", repOnKill.repfaction1);
@@ -6892,7 +6892,7 @@ void ObjectMgr::LoadReputationOnKill()
 
         if (repOnKill.repfaction2)
         {
-            FactionEntry const *factionEntry2 = sFactionStore.LookupEntry(repOnKill.repfaction2);
+            FactionEntry const* factionEntry2 = sFactionStore.LookupEntry(repOnKill.repfaction2);
             if (!factionEntry2)
             {
                 sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `creature_onkill_reputation`", repOnKill.repfaction2);
@@ -6928,7 +6928,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 factionId                = fields[0].GetUInt32();
 
@@ -6947,7 +6947,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
         repTemplate.faction_rate[3]     = fields[11].GetFloat();
         repTemplate.faction_rank[3]     = fields[12].GetUInt32();
 
-        FactionEntry const *factionEntry = sFactionStore.LookupEntry(factionId);
+        FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
 
         if (!factionEntry)
         {
@@ -6965,7 +6965,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
         {
             if (repTemplate.faction[i])
             {
-                FactionEntry const *factionSpillover = sFactionStore.LookupEntry(repTemplate.faction[i]);
+                FactionEntry const* factionSpillover = sFactionStore.LookupEntry(repTemplate.faction[i]);
 
                 if (!factionSpillover)
                 {
@@ -6987,25 +6987,25 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
             }
         }
 
-        FactionEntry const *factionEntry0 = sFactionStore.LookupEntry(repTemplate.faction[0]);
+        FactionEntry const* factionEntry0 = sFactionStore.LookupEntry(repTemplate.faction[0]);
         if (repTemplate.faction[0] && !factionEntry0)
         {
             sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `reputation_spillover_template`", repTemplate.faction[0]);
             continue;
         }
-        FactionEntry const *factionEntry1 = sFactionStore.LookupEntry(repTemplate.faction[1]);
+        FactionEntry const* factionEntry1 = sFactionStore.LookupEntry(repTemplate.faction[1]);
         if (repTemplate.faction[1] && !factionEntry1)
         {
             sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `reputation_spillover_template`", repTemplate.faction[1]);
             continue;
         }
-        FactionEntry const *factionEntry2 = sFactionStore.LookupEntry(repTemplate.faction[2]);
+        FactionEntry const* factionEntry2 = sFactionStore.LookupEntry(repTemplate.faction[2]);
         if (repTemplate.faction[2] && !factionEntry2)
         {
             sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `reputation_spillover_template`", repTemplate.faction[2]);
             continue;
         }
-        FactionEntry const *factionEntry3 = sFactionStore.LookupEntry(repTemplate.faction[3]);
+        FactionEntry const* factionEntry3 = sFactionStore.LookupEntry(repTemplate.faction[3]);
         if (repTemplate.faction[3] && !factionEntry3)
         {
             sLog->outErrorDb("Faction (faction.dbc) %u does not exist but is used in `reputation_spillover_template`", repTemplate.faction[3]);
@@ -7042,7 +7042,7 @@ void ObjectMgr::LoadPointsOfInterest()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 point_id = fields[0].GetUInt32();
 
@@ -7095,14 +7095,14 @@ void ObjectMgr::LoadQuestPOI()
     if (points)
     {
         // The first result should have the highest questId
-        Field *fields = points->Fetch();
+        Field* fields = points->Fetch();
         uint32 questId = fields[0].GetUInt32();
         POIs.resize(questId + 1);
 
         do
         {
 
-            Field *fields = points->Fetch();
+            Field* fields = points->Fetch();
 
             uint32 questId            = fields[0].GetUInt32();
             uint32 id                 = fields[1].GetUInt32();
@@ -7119,7 +7119,7 @@ void ObjectMgr::LoadQuestPOI()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 questId            = fields[0].GetUInt32();
         uint32 id                 = fields[1].GetUInt32();
@@ -7161,7 +7161,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 npc_entry = fields[0].GetUInt32();
         CreatureTemplate const* cInfo = GetCreatureTemplate(npc_entry);
@@ -7172,7 +7172,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         }
 
         uint32 spellid = fields[1].GetUInt32();
-        SpellInfo const *spellinfo = sSpellMgr->GetSpellInfo(spellid);
+        SpellInfo const* spellinfo = sSpellMgr->GetSpellInfo(spellid);
         if (!spellinfo)
         {
             sLog->outErrorDb("Table npc_spellclick_spells references unknown spellid %u. Skipping entry.", spellid);
@@ -7182,7 +7182,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         uint32 auraRequired = fields[6].GetUInt32();
         if (auraRequired)
         {
-            SpellInfo const *aurReqInfo = sSpellMgr->GetSpellInfo(auraRequired);
+            SpellInfo const* aurReqInfo = sSpellMgr->GetSpellInfo(auraRequired);
             if (!aurReqInfo)
             {
                 sLog->outErrorDb("Table npc_spellclick_spells references unknown aura required %u. Skipping entry.", auraRequired);
@@ -7193,7 +7193,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         uint32 auraForbidden = fields[7].GetUInt32();
         if (auraForbidden)
         {
-            SpellInfo const *aurForInfo = sSpellMgr->GetSpellInfo(auraForbidden);
+            SpellInfo const* aurForInfo = sSpellMgr->GetSpellInfo(auraForbidden);
             if (!aurForInfo)
             {
                 sLog->outErrorDb("Table npc_spellclick_spells references unknown aura forbidden %u. Skipping entry.", auraForbidden);
@@ -7810,7 +7810,7 @@ bool ObjectMgr::LoadTrinityStrings(char const* table, int32 min_value, int32 max
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         int32 entry = fields[0].GetInt32();
 
@@ -7851,7 +7851,7 @@ bool ObjectMgr::LoadTrinityStrings(char const* table, int32 min_value, int32 max
 
 const char *ObjectMgr::GetTrinityString(int32 entry, LocaleConstant locale_idx) const
 {
-    if (TrinityStringLocale const *msl = GetTrinityStringLocale(entry))
+    if (TrinityStringLocale const* msl = GetTrinityStringLocale(entry))
     {
         if (msl->Content.size() > size_t(locale_idx) && !msl->Content[locale_idx].empty())
             return msl->Content[locale_idx].c_str();
@@ -7886,7 +7886,7 @@ void ObjectMgr::LoadFishingBaseSkillLevel()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         uint32 entry  = fields[0].GetUInt32();
         int32 skill   = fields[1].GetInt32();
 
@@ -7943,7 +7943,7 @@ SpellScriptsBounds ObjectMgr::GetSpellScriptsBounds(uint32 spell_id)
     return SpellScriptsBounds(mSpellScripts.lower_bound(spell_id), mSpellScripts.upper_bound(spell_id));
 }
 
-SkillRangeType GetSkillRangeType(SkillLineEntry const *pSkill, bool racial)
+SkillRangeType GetSkillRangeType(SkillLineEntry const* pSkill, bool racial)
 {
     switch(pSkill->categoryId)
     {
@@ -7995,7 +7995,7 @@ void ObjectMgr::LoadGameTele()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 id         = fields[0].GetUInt32();
 
@@ -8121,7 +8121,7 @@ void ObjectMgr::LoadMailLevelRewards()
     do
     {
 
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint8 level           = fields[0].GetUInt8();
         uint32 raceMask       = fields[1].GetUInt32();
@@ -8180,7 +8180,7 @@ void ObjectMgr::AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, 
         return;
     }
 
-    SpellInfo const *spellinfo = sSpellMgr->GetSpellInfo(spell);
+    SpellInfo const* spellinfo = sSpellMgr->GetSpellInfo(spell);
     if (!spellinfo)
     {
         sLog->outErrorDb("Table `npc_trainer` contains an entry (Entry: %u) for a non-existing spell (Spell: %u), ignoring", entry, spell);
@@ -8683,7 +8683,7 @@ uint32 ObjectMgr::GetScriptId(const char *name)
 
 void ObjectMgr::CheckScripts(ScriptsType type, std::set<int32>& ids)
 {
-    ScriptMapMap *scripts = GetScriptsMapByType(type);
+    ScriptMapMap* scripts = GetScriptsMapByType(type);
     if (!scripts)
         return;
     for (ScriptMapMap::const_iterator itrMM = scripts->begin(); itrMM != scripts->end(); ++itrMM)
@@ -8774,7 +8774,7 @@ void ObjectMgr::LoadCreatureClassLevelStats()
     uint32 count = 0;
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint8 Level = fields[0].GetUInt8();
         uint8 Class = fields[1].GetUInt8();
@@ -8836,7 +8836,7 @@ void ObjectMgr::LoadFactionChangeAchievements()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 alliance = fields[0].GetUInt32();
         uint32 horde = fields[1].GetUInt32();
@@ -8873,7 +8873,7 @@ void ObjectMgr::LoadFactionChangeItems()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 alliance = fields[0].GetUInt32();
         uint32 horde = fields[1].GetUInt32();
@@ -8910,7 +8910,7 @@ void ObjectMgr::LoadFactionChangeSpells()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 alliance = fields[0].GetUInt32();
         uint32 horde = fields[1].GetUInt32();
@@ -8947,7 +8947,7 @@ void ObjectMgr::LoadFactionChangeReputations()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
         uint32 alliance = fields[0].GetUInt32();
         uint32 horde = fields[1].GetUInt32();

@@ -222,8 +222,8 @@ public:
             uint32 repValue = pQuest->GetRepObjectiveValue();
             uint32 curRep = player->GetReputationMgr().GetReputation(repFaction);
             if (curRep < repValue)
-                if (FactionEntry const *factionEntry = sFactionStore.LookupEntry(repFaction))
-                    player->GetReputationMgr().SetReputation(factionEntry,repValue);
+                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
+                    player->GetReputationMgr().SetReputation(factionEntry, repValue);
         }
 
         // If the quest requires a SECOND reputation to complete
@@ -232,8 +232,8 @@ public:
             uint32 repValue2 = pQuest->GetRepObjectiveValue2();
             uint32 curRep = player->GetReputationMgr().GetReputation(repFaction);
             if (curRep < repValue2)
-                if (FactionEntry const *factionEntry = sFactionStore.LookupEntry(repFaction))
-                    player->GetReputationMgr().SetReputation(factionEntry,repValue2);
+                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
+                    player->GetReputationMgr().SetReputation(factionEntry, repValue2);
         }
 
         // If the quest requires money
