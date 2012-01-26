@@ -2276,7 +2276,6 @@ class spell_gen_candied_sweet_potato : public SpellScriptLoader
         }
 };
 
-
 class spell_gen_oracle_wolvar_reputation: public SpellScriptLoader
 {
 public:
@@ -2287,13 +2286,13 @@ public:
         PrepareSpellScript(spell_gen_oracle_wolvar_reputation_SpellScript)
 
         void HandleDummy(SpellEffIndex effIndex)
-        {
-
-        if (Player* player = GetCaster()->ToPlayer())
+        {                 
+            
+            if (Player* player = GetCaster()->ToPlayer())
             {
 
-                uint32 factionId = SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), effIndex);
-                int32  repChange =  SpellMgr::CalculateSpellEffectAmount(GetSpellInfo(), 1);
+                uint32 factionId = GetSpellInfo()->Effects[effIndex].CalcValue();
+                int32  repChange =  GetSpellInfo()->Effects[EFFECT_1].CalcValue();
 
                 FactionEntry const* factionEntry = sFactionStore.LookupEntry(factionId);
 
@@ -2307,7 +2306,7 @@ public:
 
                 // EFFECT_INDEX_2 most likely update at war state, we already handle this in SetReputation
             }
-
+              
         }
 
         void Register()
