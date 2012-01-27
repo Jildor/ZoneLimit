@@ -103,7 +103,7 @@ class spell_eadric_radiance : public SpellScriptLoader
             PrepareSpellScript(spell_eadric_radiance_SpellScript);
             void FilterTargets(std::list<Unit*>& unitList)
             {
-                unitList.remove_if(OrientationCheck(GetCaster()));
+                unitList.remove_if (OrientationCheck(GetCaster()));
             }
 
             void Register()
@@ -364,11 +364,11 @@ public:
                 if (uiRenewTimer <= uiDiff)
                 {
                     me->InterruptNonMeleeSpells(true);
-                    uint8 uiTarget = urand(0,1);
-                    switch(uiTarget)
+                    uint8 uiTarget = urand(0, 1);
+                    switch (uiTarget)
                     {
                         case 0:
-                            DoCast(me,SPELL_RENEW);
+                            DoCast(me, SPELL_RENEW);
                             break;
                         case 1:
                             if (Creature* pMemory = Unit::GetCreature(*me, MemoryGUID))
@@ -590,7 +590,7 @@ public:
         {
             if (uiPoint == 0)
             {
-                switch(uiWaypoint)
+                switch (uiWaypoint)
                 {
                     case 1:
                         me->SetOrientation(4.60f);
@@ -625,10 +625,10 @@ public:
 
         void SetData(uint32 uiType, uint32 /*uiData*/)
         {
-            switch(me->GetEntry())
+            switch (me->GetEntry())
             {
                 case NPC_ARGENT_LIGHWIELDER:
-                    switch(uiType)
+                    switch (uiType)
                     {
                         case 0:
                             AddWaypoint(0,737.14f,655.42f,412.88f);
@@ -644,7 +644,7 @@ public:
                     }
                     break;
                 case NPC_ARGENT_MONK:
-                    switch(uiType)
+                    switch (uiType)
                     {
                         case 0:
                             AddWaypoint(0,737.14f,655.42f,412.88f);
@@ -660,7 +660,7 @@ public:
                     }
                     break;
                 case NPC_PRIESTESS:
-                    switch(uiType)
+                    switch (uiType)
                     {
                         case 0:
                             AddWaypoint(0,737.14f,655.42f,412.88f);

@@ -160,7 +160,7 @@ public:
         void MovementInform(uint32 uiType, uint32 uiId)
         {
             if (uiType != POINT_MOTION_TYPE) return;
-            
+
             switch (uiId)
             {
                 case 0:
@@ -665,11 +665,11 @@ public:
             submergeTimer = 45 * IN_MILLISECONDS;
             stage = 0;
         }
-        
+
         void MovementInform(uint32 uiType, uint32 uiId)
         {
             if (uiType != POINT_MOTION_TYPE) return;
-            
+
             switch (uiId)
             {
                 case 0:
@@ -693,7 +693,7 @@ public:
             instanceScript->DoUseDoorOrButton(instanceScript->GetData64(GO_MAIN_GATE_DOOR));
             boss_jormungarAI::EnterEvadeMode();
         }
-        
+
         void JustReachedHome()
         {
             if (instanceScript)

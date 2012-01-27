@@ -503,13 +503,13 @@ public:
             mapid = (uint32)atoi(pmapid);
         else
             mapid = _player->GetMapId();
-            
-        if( port )
+
+        if ( port )
             ort = (float)atof(port);
         else
             ort = _player->GetOrientation();
-        
-        if( pz )
+
+        if ( pz )
         {
             z = (float)atof(pz);
             if (!MapManager::IsValidMapCoord(mapid, x, y, z))

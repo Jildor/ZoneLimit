@@ -229,7 +229,7 @@ public:
                 {
                         me->SetHealth(me->GetMaxHealth());
                         me->AttackStop();
-                        switch(uiPhase)
+                        switch (uiPhase)
                         {
                             case PHASE_UNDEAD:
                                 DoScriptText(SAY_DEATH_1, me);
@@ -246,7 +246,7 @@ public:
                     me->ClearUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
                 } else uiResurrectTimer -= uiDiff;
 
-            switch(uiPhase)
+            switch (uiPhase)
             {
                 case PHASE_UNDEAD:
                     {
@@ -258,7 +258,7 @@ public:
                     if (uiObliterateTimer <= uiDiff)
                     {
                         DoCastVictim(SPELL_OBLITERATE);
-                        uiObliterateTimer = urand(17000,19000);
+                        uiObliterateTimer = urand(17000, 19000);
                     } else uiObliterateTimer -= uiDiff;
 
                            if (uiIcyTouchTimer <= uiDiff)
@@ -385,7 +385,7 @@ public:
                 me->AddUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
                 me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
                 RemoveSummons();
-                switch(uiPhase)
+                switch (uiPhase)
                 {
                     case PHASE_UNDEAD:
                         me->SetDisplayId(MODEL_SKELETON);

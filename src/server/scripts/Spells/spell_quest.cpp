@@ -647,7 +647,7 @@ public:
                 Unit* target = GetTarget();
                 if (Player* player = caster->GetCharmerOrOwnerPlayerOrPlayerItself())
                 {
-                    switch(target->GetEntry())
+                    switch (target->GetEntry())
                     {
                         case NPC_FROSTWORG:
                             target->CastSpell(player, SPELL_FROSTWORG_CREDIT, true);
@@ -706,7 +706,7 @@ public:
             Unit* pCaster = GetCaster();
             if (Player* player = pCaster->ToPlayer())
             {
-                if(Creature* target = GetHitCreature())
+                if (Creature* target = GetHitCreature())
                 {
                     player->CastSpell(player, SPELL_TRIGGER_AID_OF_THE_EARTHEN, true, NULL);
                     player->KilledMonsterCredit(NPC_FALLEN_EARTHEN_DEFENDER, 0);

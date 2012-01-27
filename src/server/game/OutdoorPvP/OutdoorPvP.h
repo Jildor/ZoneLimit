@@ -181,11 +181,11 @@ class OPvPCapturePoint
         OutdoorPvP* m_PvP;
 
         // map to store the various gameobjects and creatures spawned by the objective
-        //        type , guid
-        std::map<uint32,uint64> m_Objects;
-        std::map<uint32,uint64> m_Creatures;
-        std::map<uint64,uint32> m_ObjectTypes;
-        std::map<uint64,uint32> m_CreatureTypes;
+        //        type, guid
+        std::map<uint32, uint64> m_Objects;
+        std::map<uint32, uint64> m_Creatures;
+        std::map<uint64, uint32> m_ObjectTypes;
+        std::map<uint64, uint32> m_CreatureTypes;
 };
 
 // base class for specific outdoor pvp handlers

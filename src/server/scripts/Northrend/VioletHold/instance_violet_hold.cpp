@@ -198,7 +198,7 @@ public:
             uiDoorIntegrity = 100;
 
             uiWaveCount = 0;
-            uiLocation = urand(0,5);
+            uiLocation = urand(0, 5);
             uiFirstBoss = 0;
             uiSecondBoss = 0;
             uiCountErekemGuards = 0;
@@ -228,7 +228,7 @@ public:
 
         void OnCreatureCreate(Creature* creature)
         {
-            switch(creature->GetEntry())
+            switch (creature->GetEntry())
             {
                 case CREATURE_XEVOZZ:
                     uiXevozz = creature->GetGUID();
@@ -273,7 +273,7 @@ public:
 
         void OnGameObjectCreate(GameObject* go)
         {
-            switch(go->GetEntry())
+            switch (go->GetEntry())
             {
                 case GO_EREKEM_GUARD_1_DOOR:
                     uiErekemLeftGuardCell = go->GetGUID();
@@ -311,7 +311,7 @@ public:
 
         void SetData(uint32 type, uint32 data)
         {
-            switch(type)
+            switch (type)
             {
                 case DATA_1ST_BOSS_EVENT:
                     UpdateEncounterState(ENCOUNTER_CREDIT_KILL_CREATURE, CREATURE_EREKEM, NULL);
@@ -354,13 +354,13 @@ public:
                     NpcAtDoorCastingList.push_back(data);
                     break;
                 case DATA_NPC_PRESENCE_AT_DOOR_REMOVE:
-                    if(!NpcAtDoorCastingList.empty())
+                    if (!NpcAtDoorCastingList.empty())
                         NpcAtDoorCastingList.pop_back();
                     break;
                 case DATA_MAIN_DOOR:
                     if (GameObject* pMainDoor = instance->GetGameObject(uiMainDoor))
                     {
-                        switch(data)
+                        switch (data)
                         {
                             case GO_STATE_ACTIVE:
                                 pMainDoor->SetGoState(GO_STATE_ACTIVE);
@@ -375,7 +375,7 @@ public:
                     }
                     break;
                 case DATA_START_BOSS_ENCOUNTER:
-                    switch(uiWaveCount)
+                    switch (uiWaveCount)
                     {
                         case 6:
                             StartBossEncounter(uiFirstBoss);
@@ -404,7 +404,7 @@ public:
 
         void SetData64(uint32 type, uint64 data)
         {
-            switch(type)
+            switch (type)
             {
                 case DATA_ADD_TRASH_MOB:
                     trashMobs.insert(data);
@@ -417,7 +417,7 @@ public:
 
         uint32 GetData(uint32 type)
         {
-            switch(type)
+            switch (type)
             {
                 case DATA_1ST_BOSS_EVENT:           return m_auiEncounter[0];
                 case DATA_2ND_BOSS_EVENT:           return m_auiEncounter[1];
@@ -438,7 +438,7 @@ public:
 
         uint64 GetData64(uint32 identifier)
         {
-            switch(identifier)
+            switch (identifier)
             {
                 case DATA_MORAGG:                   return uiMoragg;
                 case DATA_EREKEM:                   return uiErekem;
@@ -468,9 +468,9 @@ public:
 
         void SpawnPortal()
         {
-            SetData(DATA_PORTAL_LOCATION, (GetData(DATA_PORTAL_LOCATION) + urand(1,5))%6);
+            SetData(DATA_PORTAL_LOCATION, (GetData(DATA_PORTAL_LOCATION) + urand(1, 5))%6);
             if (Creature* pSinclari = instance->GetCreature(uiSinclari))
-                if(Creature* portal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL,PortalLocation[GetData(DATA_PORTAL_LOCATION)],TEMPSUMMON_CORPSE_DESPAWN))
+                if (Creature* portal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, PortalLocation[GetData(DATA_PORTAL_LOCATION)], TEMPSUMMON_CORPSE_DESPAWN))
                     uiTeleportationPortal = portal->GetGUID();
         }
 
@@ -478,10 +478,10 @@ public:
         {
             Creature* pBoss = NULL;
 
-            switch(uiBoss)
+            switch (uiBoss)
             {
                 case BOSS_MORAGG:
-                    HandleGameObject(uiMoraggCell,bForceRespawn);
+                    HandleGameObject(uiMoraggCell, bForceRespawn);
                     pBoss = instance->GetCreature(uiMoragg);
                     if (pBoss)
                         pBoss->GetMotionMaster()->MovePoint(0, BossStartMove1);
@@ -515,25 +515,25 @@ public:
                     }
                     break;
                 case BOSS_ICHORON:
-                    HandleGameObject(uiIchoronCell,bForceRespawn);
+                    HandleGameObject(uiIchoronCell, bForceRespawn);
                     pBoss = instance->GetCreature(uiIchoron);
                     if (pBoss)
                         pBoss->GetMotionMaster()->MovePoint(0, BossStartMove3);
                     break;
                 case BOSS_LAVANTHOR:
-                    HandleGameObject(uiLavanthorCell,bForceRespawn);
+                    HandleGameObject(uiLavanthorCell, bForceRespawn);
                     pBoss = instance->GetCreature(uiLavanthor);
                     if (pBoss)
                         pBoss->GetMotionMaster()->MovePoint(0, BossStartMove4);
                     break;
                 case BOSS_XEVOZZ:
-                    HandleGameObject(uiXevozzCell,bForceRespawn);
+                    HandleGameObject(uiXevozzCell, bForceRespawn);
                     pBoss = instance->GetCreature(uiXevozz);
                     if (pBoss)
                         pBoss->GetMotionMaster()->MovePoint(0, BossStartMove5);
                     break;
                 case BOSS_ZURAMAT:
-                    HandleGameObject(uiZuramatCell,bForceRespawn);
+                    HandleGameObject(uiZuramatCell, bForceRespawn);
                     pBoss = instance->GetCreature(uiZuramat);
                     if (pBoss)
                         pBoss->GetMotionMaster()->MovePoint(0, BossStartMove6);
@@ -565,14 +565,14 @@ public:
             DoUpdateWorldState(WORLD_STATE_VH, 1);
             DoUpdateWorldState(WORLD_STATE_VH_WAVE_COUNT, uiWaveCount);
 
-            switch(uiWaveCount)
+            switch (uiWaveCount)
             {
                 case 6:
                     if (uiFirstBoss == 0)
-                        uiFirstBoss = urand(1,6);
+                        uiFirstBoss = urand(1, 6);
                     if (Creature* pSinclari = instance->GetCreature(uiSinclari))
                     {
-                        if(Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
+                        if (Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
                             uiSaboteurPortal = pPortal->GetGUID();
                         if (Creature* pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
                             pAzureSaboteur->CastSpell(pAzureSaboteur, SABOTEUR_SHIELD_EFFECT, false);
@@ -582,11 +582,11 @@ public:
                     if (uiSecondBoss == 0)
                         do
                         {
-                            uiSecondBoss = urand(1,6);
+                            uiSecondBoss = urand(1, 6);
                         } while (uiSecondBoss == uiFirstBoss);
                     if (Creature* pSinclari = instance->GetCreature(uiSinclari))
                     {
-                        if(Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
+                        if (Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
                             uiSaboteurPortal = pPortal->GetGUID();
                         if (Creature* pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
                             pAzureSaboteur->CastSpell(pAzureSaboteur, SABOTEUR_SHIELD_EFFECT, false);
@@ -596,7 +596,7 @@ public:
                 {
                     Creature* pSinclari = instance->GetCreature(uiSinclari);
                     if (pSinclari)
-                        pSinclari->SummonCreature(CREATURE_CYANIGOSA,CyanigosasSpawnLocation,TEMPSUMMON_DEAD_DESPAWN);
+                        pSinclari->SummonCreature(CREATURE_CYANIGOSA, CyanigosasSpawnLocation, TEMPSUMMON_DEAD_DESPAWN);
                     break;
                 }
                 case 1:
@@ -700,7 +700,7 @@ public:
                 StartBossEncounter(uiFirstBoss, false);
                 StartBossEncounter(uiSecondBoss, false);
 
-                SetData(DATA_MAIN_DOOR,GO_STATE_ACTIVE);
+                SetData(DATA_MAIN_DOOR, GO_STATE_ACTIVE);
                 SetData(DATA_WAVE_COUNT, 0);
                 uiMainEventPhase = NOT_STARTED;
 
@@ -718,12 +718,12 @@ public:
                             {
                                 pGuard->SetVisible(true);
                                 pGuard->SetReactState(REACT_AGGRESSIVE);
-                                pGuard->GetMotionMaster()->MovePoint(1,pGuard->GetHomePosition());
+                                pGuard->GetMotionMaster()->MovePoint(1, pGuard->GetHomePosition());
                             }
                         }
                     }
-                    pSinclari->GetMotionMaster()->MovePoint(1,pSinclari->GetHomePosition());
-                    pSinclari->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
+                    pSinclari->GetMotionMaster()->MovePoint(1, pSinclari->GetHomePosition());
+                    pSinclari->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 }
             }
 
@@ -733,7 +733,7 @@ public:
             {
                 if (uiCyanigosaEventTimer <= diff)
                 {
-                    switch(uiCyanigosaEventPhase)
+                    switch (uiCyanigosaEventPhase)
                     {
                         case 1:
                             pCyanigosa->CastSpell(pCyanigosa, CYANIGOSA_BLUE_AURA, false);
@@ -766,18 +766,18 @@ public:
             if (GetData(DATA_NPC_PRESENCE_AT_DOOR) && uiMainEventPhase == IN_PROGRESS)
             {
                 // if door integrity is > 0 then decrase it's integrity state
-                if(GetData(DATA_DOOR_INTEGRITY))
+                if (GetData(DATA_DOOR_INTEGRITY))
                 {
-                    if(uiDoorSpellTimer < diff)
+                    if (uiDoorSpellTimer < diff)
                     {
-                        SetData(DATA_DOOR_INTEGRITY,GetData(DATA_DOOR_INTEGRITY)-1);
+                        SetData(DATA_DOOR_INTEGRITY, GetData(DATA_DOOR_INTEGRITY)-1);
                         uiDoorSpellTimer =2000;
                     } else uiDoorSpellTimer -= diff;
                 }
                 // else set door state to active (means door will open and group have failed to sustain mob invasion on the door)
                 else
                 {
-                    SetData(DATA_MAIN_DOOR,GO_STATE_ACTIVE);
+                    SetData(DATA_MAIN_DOOR, GO_STATE_ACTIVE);
                     uiMainEventPhase = FAIL;
                 }
             }
@@ -791,7 +791,7 @@ public:
             {
                 Creature* creature = instance->GetCreature(*itr);
                 if (creature && creature->isAlive())
-                    creature->CastSpell(creature,SPELL_ARCANE_LIGHTNING,true);  // Who should cast the spell?
+                    creature->CastSpell(creature, SPELL_ARCANE_LIGHTNING, true);  // Who should cast the spell?
             }
         }
 

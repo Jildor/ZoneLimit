@@ -290,7 +290,7 @@ class spell_sha_bloodlust : public SpellScriptLoader
 
             void RemoveInvalidTargets(std::list<Unit*>& targets)
             {
-                targets.remove_if(Trinity::UnitAuraCheck(true, SHAMAN_SPELL_SATED));
+                targets.remove_if (Trinity::UnitAuraCheck(true, SHAMAN_SPELL_SATED));
             }
 
             void ApplyDebuff()
@@ -331,7 +331,7 @@ class spell_sha_heroism : public SpellScriptLoader
 
             void RemoveInvalidTargets(std::list<Unit*>& targets)
             {
-                targets.remove_if(Trinity::UnitAuraCheck(true, SHAMAN_SPELL_EXHAUSTION));
+                targets.remove_if (Trinity::UnitAuraCheck(true, SHAMAN_SPELL_EXHAUSTION));
             }
 
             void ApplyDebuff()
