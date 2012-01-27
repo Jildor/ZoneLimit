@@ -1195,8 +1195,7 @@ class ObjectMgr
         void LoadFactionChangeSpells();
         void LoadFactionChangeReputations();
 
-    protected:
-
+    private:
         // first free id for selected id type
         uint32 m_auctionid;
         uint64 m_equipmentSetGuid;
