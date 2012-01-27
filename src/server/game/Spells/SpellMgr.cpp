@@ -3000,12 +3000,6 @@ void SpellMgr::LoadDbcDataCorrections()
                 // this will fix self-damage caused by Glyph of Chains of Ice
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
-            case 32182: // Heroism
-                spellInfo->excludeCasterAuraSpell = 57723; // Exhaustion
-                break;
-            case 2825:  // Bloodlust
-                spellInfo->excludeCasterAuraSpell = 57724; // Sated
-                break;
             case 20335: // Heart of the Crusader
             case 20336:
             case 20337:
