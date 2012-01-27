@@ -3153,6 +3153,9 @@ void SpellMgr::LoadDbcDataCorrections()
             case 55689: // Glyph of Shadow (to prevent glyph aura loss)
                 spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
                 break;
+            case 64904: //Hymn of Hope
+                spellInfo->EffectApplyAuraName[EFFECT_1] = SPELL_AURA_MOD_INCREASE_ENERGY_PERCENT;
+                break;
             case 30421: // Nether Portal - Perseverence
                 spellInfo->EffectBasePoints[2] += 30000;
                 break;
