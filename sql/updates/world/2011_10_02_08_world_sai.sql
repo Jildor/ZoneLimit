@@ -22,6 +22,6 @@ INSERT INTO `conditions` (`SourceTypeOrReferenceId`,`SourceGroup`,`SourceEntry`,
 (18,0,@ITEM,0,24,2,@GRIZZLY,0,0,'','Item Elune Liquid Fire target Rabid Grizzly (dead)'),
 (18,0,@ITEM,0,24,2,@ELK,0,0,'','Item Elune Liquid Fire target Blighted Elk (dead)');
 
-DELETE FROM `spell_linked_spell` `WHERE `spell_trigger`=46770;
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger`=46770;
 INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES
 (46770, 47972, 1, 'Liquid Fire of Elune');
