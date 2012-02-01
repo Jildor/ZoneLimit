@@ -765,23 +765,6 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
     bool triggered = true;
     SpellCastTargets targets;
 
-    // Lunar Festival Invitation
-    switch (m_spellInfo->Id)
-    {
-                case 26373:
-                {
-                     if (!m_caster)
-                     return;
-
-                     if(m_caster->GetTypeId() != TYPEID_PLAYER)
-                     return;
-
-                     // Teleport to Lunar Festival
-                     m_caster->ToPlayer()->TeleportTo(1,7581.01,-2225.35,473.64,1.80);
-                     return;
-                }
-    }
-
     // selection by spell family
     switch (m_spellInfo->SpellFamilyName)
     {
