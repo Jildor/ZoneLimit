@@ -61,6 +61,7 @@ UPDATE `creature_template` SET `speed_walk`=2.8,`speed_run`=1,`exp`=2,`minlevel`
 UPDATE `creature_template` SET `exp`=2,`minlevel`=83,`maxlevel`=83,`faction_A`=14,`faction_H`=14,`dynamicflags`=0,`flags_extra`=256,`mechanic_immune_mask`=8388624,`AIName`='' WHERE `entry`=36824; -- Spirit Warden
 UPDATE `creature_template` SET `exp`=2,`minlevel`=83,`maxlevel`=83,`faction_A`=14,`faction_H`=14,`dynamicflags`=0,`flags_extra`=128 WHERE `entry`=39137; -- Shadow Trap
 UPDATE `creature_template` SET `exp`=2,`minlevel`=80,`maxlevel`=80,`faction_A`=14,`faction_H`=14,`InhabitType`=1|4,`flags_extra`=`flags_extra`|128 WHERE `entry`=39189; -- Spirit Bomb
+UPDATE `creature_template` SET `InhabitType`=7 WHERE `entry`=22515; -- World Trigger
 
 -- Le quito EventAI
 DELETE FROM `creature_ai_scripts` WHERE `creature_id`=36701; -- Raging Spirit
@@ -86,6 +87,34 @@ DELETE FROM `creature` WHERE `id` IN (36597,38995);
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
 (115782,36597,631,15,1,0,0,428.597,-2123.88,864.959,0,604800,0,0,0,0,0,0,0,0), -- The Lich King
 (115781,38995,631,15,1,0,0,505.212,-2124.35,840.94,0,3600,0,0,0,0,0,0,0,0); -- Highlord Tirion Fordring
+DELETE FROM `creature` WHERE `id`=22515 AND `map`=631;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
+(86814,22515,631,15,1,0,0,512.806,-2172.62,840.94,0,120,0,0,0,0,0,0,0,0),
+(86815,22515,631,15,1,0,0,503.969,-2075.85,840.94,0,120,0,0,0,0,0,0,0,0),
+(86816,22515,631,15,1,0,0,500.323,-2188.93,845.878,0,120,0,0,0,0,0,0,0,0),
+(86817,22515,631,15,1,0,0,494.024,-2172.17,840.94,0,120,0,0,0,0,0,0,0,0),
+(86818,22515,631,15,1,0,0,486.092,-2061.76,845.878,0,120,0,0,0,0,0,0,0,0),
+(86819,22515,631,15,1,0,0,482.924,-2078.25,840.94,0,120,0,0,0,0,0,0,0,0),
+(86820,22515,631,15,1,0,0,477.042,-2164.19,840.94,0,120,0,0,0,0,0,0,0,0),
+(86821,22515,631,15,1,0,0,470.72,-2183.84,845.878,0,120,0,0,0,0,0,0,0,0),
+(86822,22515,631,15,1,0,0,466.25,-2071.3,845.878,0,120,0,0,0,0,0,0,0,0),
+(86837,22515,631,15,1,0,0,542.776,-2071.84,845.878,0,120,0,0,0,0,0,0,0,0),
+(86838,22515,631,15,1,0,0,542.559,-2151.41,840.94,0,120,0,0,0,0,0,0,0,0),
+(86839,22515,631,15,1,0,0,539.628,-2089.51,840.94,0,120,0,0,0,0,0,0,0,0),
+(86855,22515,631,15,1,0,0,530.698,-2182.86,845.878,0,120,0,0,0,0,0,0,0,0),
+(86856,22515,631,15,1,0,0,530.625,-2166.15,840.94,0,120,0,0,0,0,0,0,0,0),
+(86857,22515,631,15,1,0,0,521.602,-2079.36,840.94,0,120,0,0,0,0,0,0,0,0),
+(86858,22515,631,15,1,0,0,515.104,-2058.46,845.878,0,120,0,0,0,0,0,0,0,0),
+(86859,22515,631,10,1,0,0,4166.17,2411.52,364.952,1.5708,120,0,0,0,0,0,0,0,0),
+(86860,22515,631,15,1,0,0,4241.34,2411.52,364.952,1.5708,120,0,0,0,0,0,0,0,0),
+(86861,22515,631,10,1,0,0,4166.02,2557.49,364.952,4.72984,120,0,0,0,0,0,0,0,0),
+(86862,22515,631,15,1,0,0,4241.19,2557.49,364.952,4.72984,120,0,0,0,0,0,0,0,0),
+(86863,22515,631,15,1,0,0,548.729,-2110.41,840.94,0,120,0,0,0,0,0,0,0,0),
+(86864,22515,631,15,1,0,0,550.62,-2132.89,840.94,0,120,0,0,0,0,0,0,0,0),
+(225151,22515,631,15,1,0,0,554.196,-2166.77,845.878,0,120,0,0,0,0,0,0,0,0),
+(225152,22515,631,15,1,0,0,567.837,-2144.41,845.878,0,120,0,0,0,0,0,0,0,0),
+(225153,22515,631,15,1,0,0,568.533,-2106.96,845.878,0,120,0,0,0,0,0,0,0,0);
+
 -- Guid de YTDB
 DELETE FROM `creature_addon` WHERE `guid`=115782;
 INSERT INTO `creature_addon` (`guid`,`bytes1`,`auras`) VALUES
