@@ -2609,6 +2609,20 @@ CharDelete.MinLevel = 0
 CharDelete.KeepDays = 30
 
 #
+#     PlayerDump.DisallowPaths
+#        Description: Disallow using paths in PlayerDump output files
+#        Default:     1
+
+PlayerDump.DisallowPaths = 1
+
+#
+#     PlayerDump.DisallowOverwrite
+#        Description: Disallow overwriting existing files with PlayerDump
+#        Default:     1
+
+PlayerDump.DisallowOverwrite = 1
+
+#
 ###################################################################################################
 
 #     Anticheat.MaxReportsForDailyReport

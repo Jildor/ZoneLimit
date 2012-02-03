@@ -1213,6 +1213,10 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ATK]  = ConfigMgr::GetIntDefault("OutdoorPvP.Wintergrasp.Antifarm.Atk", 5);
     m_int_configs[CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_DEF]  = ConfigMgr::GetIntDefault("OutdoorPvP.Wintergrasp.Antifarm.Def", 5);
 
+    // misc
+    m_bool_configs[CONFIG_PDUMP_NO_PATHS] = ConfigMgr::GetBoolDefault("PlayerDump.DisallowPaths", true);
+    m_bool_configs[CONFIG_PDUMP_NO_OVERWRITE] = ConfigMgr::GetBoolDefault("PlayerDump.DisallowOverwrite", true);
+
     sScriptMgr->OnConfigLoad(reload);
 }
 
