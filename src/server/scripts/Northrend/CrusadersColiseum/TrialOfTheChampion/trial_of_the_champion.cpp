@@ -91,7 +91,7 @@ public:
         npc_anstartAI(Creature *creature) : ScriptedAI(creature)
 
         {
-        pInstance = (InstanceScript*)creature->GetInstanceScript();
+        instance = (InstanceScript*)creature->GetInstanceScript();
         }
 
         uint32 uiIntroTimer;
@@ -106,7 +106,7 @@ public:
         Creature* pLady;
         Creature* pHighlord;
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
 
 
@@ -268,23 +268,23 @@ public:
 
     bool OnGossipHello(Player* player, Creature* creature)
     {
-        InstanceScript* pInstance = (InstanceScript*)creature->GetInstanceScript();
+        InstanceScript* instance = (InstanceScript*)creature->GetInstanceScript();
 
-        if (pInstance &&
-            pInstance->GetData(BOSS_GRAND_CHAMPIONS) == DONE &&
-            pInstance->GetData(BOSS_BLACK_KNIGHT) == DONE &&
-            (pInstance->GetData(BOSS_ARGENT_CHALLENGE_E) == DONE ||
-            pInstance->GetData(BOSS_ARGENT_CHALLENGE_P) == DONE))
+        if (instance &&
+            instance->GetData(BOSS_GRAND_CHAMPIONS) == DONE &&
+            instance->GetData(BOSS_BLACK_KNIGHT) == DONE &&
+            (instance->GetData(BOSS_ARGENT_CHALLENGE_E) == DONE ||
+            instance->GetData(BOSS_ARGENT_CHALLENGE_P) == DONE))
 
             return false;
 
-        if (pInstance &&
-            pInstance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED &&
-            pInstance->GetData(BOSS_ARGENT_CHALLENGE_E) == NOT_STARTED &&
-            pInstance->GetData(BOSS_ARGENT_CHALLENGE_P) == NOT_STARTED &&
-            pInstance->GetData(BOSS_BLACK_KNIGHT) == NOT_STARTED)
+        if (instance &&
+            instance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED &&
+            instance->GetData(BOSS_ARGENT_CHALLENGE_E) == NOT_STARTED &&
+            instance->GetData(BOSS_ARGENT_CHALLENGE_P) == NOT_STARTED &&
+            instance->GetData(BOSS_BLACK_KNIGHT) == NOT_STARTED)
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_START_EVENT1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        else if (pInstance)
+        else if (instance)
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_START_EVENT2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
@@ -296,7 +296,7 @@ public:
     {
         npc_announcer_toc5AI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            instance = (InstanceScript*)creature->GetInstanceScript();
 
             uiSummonTimes = 0;
             uiPosition = 0;
@@ -326,7 +326,7 @@ public:
             SetArgentChampion();
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
         uint8 uiSummonTimes;
         uint8 uiPosition;
@@ -366,10 +366,10 @@ public:
             switch (uiType)
             {
                 case DATA_START:
-                    if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
-                    if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),false);
+                    if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
+                    if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                        instance->HandleGameObject(pGO->GetGUID(),false);
                     DoScriptText(SAY_START, me);
                     DoSummonGrandChampion(uiFirstBoss);
                     NextStep(10000,false,1);
@@ -378,8 +378,8 @@ public:
                     me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
                     me->GetMotionMaster()->MovePoint(1,735.898f, 651.961f, 411.93f);
                     DoScriptText(SAY_START2, me);
-                    if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),false);
+                    if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),false);
                     NextStep(20000,false,3);
                     break;
                 case DATA_LESSER_CHAMPIONS_DEFEATED:
@@ -478,10 +478,10 @@ public:
                             if (Vehicle* pVehicle = pBoss->GetVehicleKit())
                                 if (Unit* unit = pVehicle->GetPassenger(0))
                                     uiGrandChampionBoss1 = unit->GetGUID();
-                        if (pInstance)
+                        if (instance)
                         {
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_1,uiVehicle1GUID);
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_1,uiGrandChampionBoss1);
+                            instance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_1,uiVehicle1GUID);
+                            instance->SetData64(DATA_GRAND_CHAMPION_1,uiGrandChampionBoss1);
                         }
                         pBoss->AI()->SetData(1,0);
                         break;
@@ -494,10 +494,10 @@ public:
                             if (Vehicle* pVehicle = pBoss->GetVehicleKit())
                                 if (Unit* unit = pVehicle->GetPassenger(0))
                                     uiGrandChampionBoss2 = unit->GetGUID();
-                        if (pInstance)
+                        if (instance)
                         {
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_2,uiVehicle2GUID);
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_2,uiGrandChampionBoss2);
+                            instance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_2,uiVehicle2GUID);
+                            instance->SetData64(DATA_GRAND_CHAMPION_2,uiGrandChampionBoss2);
                         }
                         pBoss->AI()->SetData(2,0);
                         break;
@@ -510,10 +510,10 @@ public:
                             if (Vehicle* pVehicle = pBoss->GetVehicleKit())
                                 if (Unit* unit = pVehicle->GetPassenger(0))
                                     uiGrandChampionBoss3 = unit->GetGUID();
-                        if (pInstance)
+                        if (instance)
                         {
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_3,uiVehicle3GUID);
-                            pInstance->SetData64(DATA_GRAND_CHAMPION_3,uiGrandChampionBoss3);
+                            instance->SetData64(DATA_GRAND_CHAMPION_VEHICLE_3,uiVehicle3GUID);
+                            instance->SetData64(DATA_GRAND_CHAMPION_3,uiGrandChampionBoss3);
                         }
                         pBoss->AI()->SetData(3,0);
                         break;
@@ -607,27 +607,27 @@ public:
 
         void StartEncounter()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
             me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),false);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                        instance->HandleGameObject(pGO->GetGUID(),false);
 
-            if (pInstance->GetData(BOSS_BLACK_KNIGHT) == NOT_STARTED)
+            if (instance->GetData(BOSS_BLACK_KNIGHT) == NOT_STARTED)
             {
-                if (pInstance->GetData(BOSS_ARGENT_CHALLENGE_E) == NOT_STARTED && pInstance->GetData(BOSS_ARGENT_CHALLENGE_P) == NOT_STARTED)
+                if (instance->GetData(BOSS_ARGENT_CHALLENGE_E) == NOT_STARTED && instance->GetData(BOSS_ARGENT_CHALLENGE_P) == NOT_STARTED)
                 {
-                    if (pInstance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED)
+                    if (instance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED)
                         me->AI()->SetData(DATA_START,0);
 
-                    if (pInstance->GetData(BOSS_GRAND_CHAMPIONS) == DONE)
+                    if (instance->GetData(BOSS_GRAND_CHAMPIONS) == DONE)
                         DoStartArgentChampionEncounter();
                 }
 
-               if (pInstance->GetData(BOSS_GRAND_CHAMPIONS) == DONE &&
-                   pInstance->GetData(BOSS_ARGENT_CHALLENGE_E) == DONE ||
-                   pInstance->GetData(BOSS_ARGENT_CHALLENGE_P) == DONE)
+               if (instance->GetData(BOSS_GRAND_CHAMPIONS) == DONE &&
+                   instance->GetData(BOSS_ARGENT_CHALLENGE_E) == DONE ||
+                   instance->GetData(BOSS_ARGENT_CHALLENGE_P) == DONE)
                 {
                    if (Unit* pBlackKnight = me->SummonCreature(VEHICLE_BLACK_KNIGHT,801.369507f, 640.574280f, 469.314362f, 3.97124f,TEMPSUMMON_DEAD_DESPAWN,180000))
                     {
@@ -635,8 +635,8 @@ public:
                                 pBlackKnight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                 pBlackKnight->SetUInt64Value(UNIT_FIELD_TARGET, me->GetGUID());
                                 me->SetUInt64Value(UNIT_FIELD_TARGET, uiBlackKnightGUID);
-                                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                                                pInstance->HandleGameObject(pGO->GetGUID(),false);
+                                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                                                instance->HandleGameObject(pGO->GetGUID(),false);
                     }
                     me->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
                     me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -652,7 +652,7 @@ public:
             uiBlackKnightGUID = 0;
         }
 
-        void AggroAllPlayers(Creature* pTemp)
+        void AggroAllPlayers(Creature* temp)
         {
             Map::PlayerList const &PlList = me->GetMap()->GetPlayers();
 
@@ -668,12 +668,12 @@ public:
 
                     if (player->isAlive())
                     {
-                        pTemp->SetHomePosition(me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),me->GetOrientation());
-                        pTemp->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
-                        pTemp->SetReactState(REACT_AGGRESSIVE);
-                        pTemp->SetInCombatWith(player);
-                        player->SetInCombatWith(pTemp);
-                        pTemp->AddThreat(player, 0.0f);
+                        temp->SetHomePosition(me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),me->GetOrientation());
+                        temp->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                        temp->SetReactState(REACT_AGGRESSIVE);
+                        temp->SetInCombatWith(player);
+                        player->SetInCombatWith(temp);
+                        temp->AddThreat(player, 0.0f);
                     }
                 }
             }
@@ -713,7 +713,7 @@ public:
 
         void JustSummoned(Creature* summon)
         {
-            if (pInstance && pInstance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED)
+            if (instance && instance->GetData(BOSS_GRAND_CHAMPIONS) == NOT_STARTED)
             {
                 summon->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
                 summon->SetReactState(REACT_PASSIVE);

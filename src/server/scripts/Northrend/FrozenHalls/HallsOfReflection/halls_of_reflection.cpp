@@ -227,10 +227,10 @@ public:
     {
         npc_jaina_or_sylvanas_horAI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = me->GetInstanceScript();
+            instance = me->GetInstanceScript();
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
         uint64 uiUther;
         uint64 uiLichKing;
 
@@ -270,7 +270,7 @@ public:
                     me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);                    
                     me->GetMotionMaster()->MovePoint(0, MoveDoorPos);
                     
-                    if (pInstance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
+                    if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
                         events.ScheduleEvent(EVENT_PREINTRO_1, 0);
                     else
                         events.ScheduleEvent(EVENT_START_INTRO, 0);
@@ -290,7 +290,7 @@ public:
                     me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);                    
                     me->GetMotionMaster()->MovePoint(0, MoveThronePos);
                     // Begining of intro is differents between factions as the speech sequence and timers are differents.
-                    if (pInstance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
+                    if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
                         events.ScheduleEvent(EVENT_INTRO_A2_1, 0);
                     else
                         events.ScheduleEvent(EVENT_INTRO_H2_1, 0);
@@ -308,7 +308,7 @@ public:
                 case EVENT_INTRO_A2_3:
                     DoCast(me, SPELL_CAST_VISUAL);
                     me->CastSpell(me, SPELL_FROSTMOURNE_SOUNDS, true);
-                    pInstance->HandleGameObject(pInstance->GetData64(DATA_FROSTMOURNE), true);
+                    instance->HandleGameObject(instance->GetData64(DATA_FROSTMOURNE), true);
                     events.ScheduleEvent(EVENT_INTRO_A2_4, 10000);
                     break;
                 case EVENT_INTRO_A2_4:
@@ -407,7 +407,7 @@ public:
                 case EVENT_INTRO_H2_3:
                     DoScriptText(SAY_SYLVANAS_INTRO_3, me);
                     DoCast(me, SPELL_CAST_VISUAL);
-                    pInstance->HandleGameObject(pInstance->GetData64(DATA_FROSTMOURNE), true);
+                    instance->HandleGameObject(instance->GetData64(DATA_FROSTMOURNE), true);
                     me->CastSpell(me, SPELL_FROSTMOURNE_SOUNDS, true);
                     events.ScheduleEvent(EVENT_INTRO_H2_4, 6000);
                     break;
@@ -487,7 +487,7 @@ public:
                         pLichKing->SetReactState(REACT_PASSIVE);
                         uiLichKing = pLichKing->GetGUID();
 
-                        if(GameObject* pGate = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_FROSTWORN_DOOR)))
+                        if(GameObject* pGate = instance->instance->GetGameObject(instance->GetData64(DATA_FROSTWORN_DOOR)))
                              pGate->SetGoState(GO_STATE_ACTIVE);
 
                         me->SetUInt64Value(UNIT_FIELD_TARGET, uiLichKing);
@@ -497,7 +497,7 @@ public:
                     if (Creature* pUther = me->GetCreature(*me, uiUther))
                     {
                         pUther->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_COWER);                        
-                        if (pInstance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
+                        if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
                             DoScriptText(SAY_UTHER_INTRO_A2_9, pUther);
                         else
                             DoScriptText(SAY_UTHER_INTRO_H2_7, pUther);
@@ -509,7 +509,7 @@ public:
                 case EVENT_INTRO_LK_2:
                      if (Creature* pLichKing = me->GetCreature(*me, uiLichKing))
                          DoScriptText(SAY_LK_INTRO_1, pLichKing);
-                    if(GameObject* pGate = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_FROSTWORN_DOOR)))
+                    if(GameObject* pGate = instance->instance->GetGameObject(instance->GetData64(DATA_FROSTWORN_DOOR)))
                         pGate->SetGoState(GO_STATE_READY);
                      events.ScheduleEvent(EVENT_INTRO_LK_3, 2000);
                      break;
@@ -545,13 +545,13 @@ public:
 
                 case EVENT_INTRO_LK_5:
                     // summon Falric and Marwyn. then go back to the door
-                    if (Creature* pFalric = me->GetCreature(*me, pInstance->GetData64(DATA_FALRIC)))
+                    if (Creature* pFalric = me->GetCreature(*me, instance->GetData64(DATA_FALRIC)))
                     {
                         pFalric->CastSpell(pFalric, SPELL_BOSS_SPAWN_AURA, true);
                         pFalric->SetVisible(true);
                         pFalric->GetMotionMaster()->MovePoint(0, 5283.309f, 2031.173f, 709.319f);
                     }
-                    if (Creature* pMarwyn = me->GetCreature(*me, pInstance->GetData64(DATA_MARWYN)))
+                    if (Creature* pMarwyn = me->GetCreature(*me, instance->GetData64(DATA_MARWYN)))
                     {
                         pMarwyn->CastSpell(pMarwyn, SPELL_BOSS_SPAWN_AURA, true);
                         pMarwyn->SetVisible(true);
@@ -565,19 +565,19 @@ public:
                     break;
 
                 case EVENT_INTRO_LK_6:
-                    if (Creature* pFalric = me->GetCreature(*me, pInstance->GetData64(DATA_FALRIC)))
+                    if (Creature* pFalric = me->GetCreature(*me, instance->GetData64(DATA_FALRIC)))
                         DoScriptText(SAY_FALRIC_INTRO_1, pFalric);
 
                     events.ScheduleEvent(EVENT_INTRO_LK_7, 2000);
                     break;
 
                 case EVENT_INTRO_LK_7:
-                    if (Creature* pMarwyn = me->GetCreature(*me, pInstance->GetData64(DATA_MARWYN)))
+                    if (Creature* pMarwyn = me->GetCreature(*me, instance->GetData64(DATA_MARWYN)))
                         DoScriptText(SAY_MARWYN_INTRO_1, pMarwyn);
 
                     if (Creature* pLichKing = me->GetCreature(*me, uiLichKing))
                     {
-                        if(GameObject* pGate = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_FROSTWORN_DOOR)))
+                        if(GameObject* pGate = instance->instance->GetGameObject(instance->GetData64(DATA_FROSTWORN_DOOR)))
                             pGate->SetGoState(GO_STATE_ACTIVE);
                         pLichKing->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
                         pLichKing->GetMotionMaster()->MovePoint(0, LichKingMoveAwayPos);
@@ -587,14 +587,14 @@ public:
                     break;
 
                 case EVENT_INTRO_LK_8:
-                    if (Creature* pFalric = me->GetCreature(*me, pInstance->GetData64(DATA_FALRIC)))
+                    if (Creature* pFalric = me->GetCreature(*me, instance->GetData64(DATA_FALRIC)))
                         DoScriptText(SAY_FALRIC_INTRO_2, pFalric);
 
                     events.ScheduleEvent(EVENT_INTRO_LK_9, 5000);
                     break;
 
                 case EVENT_INTRO_LK_9:
-                    if (pInstance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
+                    if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
                         DoScriptText(SAY_JAINA_INTRO_END, me);
                     else
                         DoScriptText(SAY_SYLVANAS_INTRO_END, me);
@@ -612,7 +612,7 @@ public:
 
                 case EVENT_INTRO_LK_10:
                      if (Creature* pLichKing = me->GetCreature(*me, uiLichKing))
-                         if (pInstance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
+                         if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
                             DoScriptText(SAY_LK_JAINA_INTRO_END, pLichKing);
                          else
                              DoScriptText(SAY_LK_SYLVANAS_INTRO_END, pLichKing);
@@ -621,13 +621,13 @@ public:
                      break;
 
                 case EVENT_INTRO_END:
-                    if (pInstance)
+                    if (instance)
                     {
-                        pInstance->SetData(DATA_INTRO_EVENT, DONE);
-                        pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);   // start first wave
+                        instance->SetData(DATA_INTRO_EVENT, DONE);
+                        instance->SetData(DATA_WAVE_COUNT, SPECIAL);   // start first wave
                     }
 
-                    if(GameObject* pGate = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_FROSTWORN_DOOR)))
+                    if(GameObject* pGate = instance->instance->GetGameObject(instance->GetData64(DATA_FROSTWORN_DOOR)))
                         pGate->SetGoState(GO_STATE_READY);
 
                     // Loralen or Koreln disappearAndDie()
@@ -1154,11 +1154,11 @@ public:
     {
         npc_frostworn_generalAI(Creature *creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            instance = (InstanceScript*)creature->GetInstanceScript();
             Reset();
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
         uint32 uiShieldTimer;
         uint32 uiSpikeTimer;
@@ -1166,33 +1166,33 @@ public:
 
         void Reset()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
             uiShieldTimer = 5000;
             uiSpikeTimer = 14000;
             uiCloneTimer = 22000;
-            pInstance->SetData(DATA_FROSWORN_EVENT, NOT_STARTED);
+            instance->SetData(DATA_FROSWORN_EVENT, NOT_STARTED);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         }
 
         void JustDied(Unit* pKiller)
         {
-            if (!pInstance)
+            if (!instance)
                 return;
             DoScriptText(SAY_DEATH, me);
-            pInstance->SetData(DATA_FROSWORN_EVENT, DONE);
+            instance->SetData(DATA_FROSWORN_EVENT, DONE);
         }
 
         void MoveInLineOfSight(Unit* who)
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
             if (me->getVictim())
                 return;
 
             if (who->GetTypeId() != TYPEID_PLAYER
-                || pInstance->GetData(DATA_MARWYN_EVENT) != DONE
+                || instance->GetData(DATA_MARWYN_EVENT) != DONE
                 || !me->IsWithinDistInMap(who, 20.0f)
                 ) return;
 
@@ -1207,10 +1207,10 @@ public:
 
         void EnterCombat(Unit* victim)
         {
-            if (!pInstance)
+            if (!instance)
                 return;
             DoScriptText(SAY_AGGRO, me);
-            pInstance->SetData(DATA_FROSWORN_EVENT, IN_PROGRESS);
+            instance->SetData(DATA_FROSWORN_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -1282,7 +1282,7 @@ public:
             Reset();
         }
 
-        InstanceScript* pInstance;    
+        InstanceScript* instance;
         uint32 uiStrikeTimer;
 
         void Reset()
@@ -2011,27 +2011,27 @@ class at_hor_waves_restarter : public AreaTriggerScript
 
         bool OnTrigger(Player* player, AreaTriggerEntry const* /*trigger*/)
         {
-            InstanceScript* pInstance = player->GetInstanceScript();
+            InstanceScript* instance = player->GetInstanceScript();
 
             if (player->isGameMaster())
                 return true;
 
-            if(pInstance->GetData(DATA_WAVE_COUNT) == SPECIAL)
+            if(instance->GetData(DATA_WAVE_COUNT) == SPECIAL)
                 return true;
 
-            if(pInstance->GetData(DATA_WAVE_COUNT) != 0)
+            if(instance->GetData(DATA_WAVE_COUNT) != 0)
                 return true;
 
-            if (pInstance->GetData(DATA_INTRO_EVENT) == DONE && pInstance->GetData(DATA_MARWYN_EVENT) != DONE)
+            if (instance->GetData(DATA_INTRO_EVENT) == DONE && instance->GetData(DATA_MARWYN_EVENT) != DONE)
             {
-                pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);
+                instance->SetData(DATA_WAVE_COUNT, SPECIAL);
 
-                if (Creature* pFalric = player->GetCreature(*player, pInstance->GetData64(DATA_FALRIC)))
+                if (Creature* pFalric = player->GetCreature(*player, instance->GetData64(DATA_FALRIC)))
                 {
                     pFalric->CastSpell(pFalric, SPELL_BOSS_SPAWN_AURA, true);
                     pFalric->SetVisible(true);
                 }
-                if (Creature* pMarwyn = player->GetCreature(*player, pInstance->GetData64(DATA_MARWYN)))
+                if (Creature* pMarwyn = player->GetCreature(*player, instance->GetData64(DATA_MARWYN)))
                 {
                     pMarwyn->CastSpell(pMarwyn, SPELL_BOSS_SPAWN_AURA, true);
                     pMarwyn->SetVisible(true);

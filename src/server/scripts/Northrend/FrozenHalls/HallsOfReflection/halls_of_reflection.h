@@ -142,10 +142,10 @@ struct boss_horAI : ScriptedAI
 {
     boss_horAI(Creature* creature) : ScriptedAI(creature), summons(creature)
     {
-        pInstance = me->GetInstanceScript();
+        instance = me->GetInstanceScript();
     }
 
-    InstanceScript* pInstance;
+    InstanceScript* instance;
     EventMap events;
     SummonList summons;
 
@@ -157,7 +157,7 @@ struct boss_horAI : ScriptedAI
         me->SetReactState(REACT_PASSIVE);
     }
 
-    void DamageTaken(Unit* /*pWho*/, uint32 &uiDamage)
+    void DamageTaken(Unit* /*who*/, uint32 &uiDamage)
     {
         if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
             uiDamage = 0;
@@ -208,9 +208,9 @@ struct boss_horAI : ScriptedAI
         if (summons.empty())
         {
             if (summoned->isAlive())
-                pInstance->SetData(DATA_WAVE_COUNT, NOT_STARTED);
+                instance->SetData(DATA_WAVE_COUNT, NOT_STARTED);
             else
-                pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);
+                instance->SetData(DATA_WAVE_COUNT, SPECIAL);
         }
     }
 };

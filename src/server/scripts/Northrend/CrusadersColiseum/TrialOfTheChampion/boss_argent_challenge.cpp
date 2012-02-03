@@ -133,13 +133,13 @@ public:
     {
         boss_eadricAI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            instance = (InstanceScript*)creature->GetInstanceScript();
             creature->SetReactState(REACT_PASSIVE);
             creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
             creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
         uint32 uiVenganceTimer;
         uint32 uiRadianceTimer;
@@ -171,12 +171,12 @@ public:
                 DoScriptText(SAY_START_8, me);
                 me->setFaction(35);
                 bDone = true;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
-            if (pInstance)
-                pInstance->SetData(BOSS_ARGENT_CHALLENGE_E, DONE);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
+            if (instance)
+                instance->SetData(BOSS_ARGENT_CHALLENGE_E, DONE);
             }
         }
 
@@ -192,8 +192,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0,746.843f, 695.68f, 412.339f);
                 bDone = false;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
             } else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
@@ -247,7 +247,7 @@ public:
     {
         boss_paletressAI(Creature* creature) : ScriptedAI(creature)
         {
-            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            instance = (InstanceScript*)creature->GetInstanceScript();
 
             MemoryGUID = 0;
             creature->SetReactState(REACT_PASSIVE);
@@ -256,7 +256,7 @@ public:
             creature->RestoreFaction();
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
         Creature* pMemory;
         uint64 MemoryGUID;
@@ -307,11 +307,11 @@ public:
                 DoScriptText(SAY_START_7, me);
                 me->setFaction(35);
                 bDone = true;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
-                pInstance->SetData(BOSS_ARGENT_CHALLENGE_P, DONE);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
+                instance->SetData(BOSS_ARGENT_CHALLENGE_P, DONE);
             }
         }
 
@@ -327,8 +327,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0,746.843f, 695.68f, 412.339f);
                 bDone = false;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
             } else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
@@ -541,18 +541,18 @@ public:
     {
         npc_argent_soldierAI(Creature* creature) : npc_escortAI(creature)
         {
-            pInstance = (InstanceScript*)creature->GetInstanceScript();
+            instance = (InstanceScript*)creature->GetInstanceScript();
             me->SetReactState(REACT_DEFENSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
-            if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),true);
+            if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),true);
 
             SetDespawnAtEnd(false);
             uiWaypoint = 0;
         }
 
-        InstanceScript* pInstance;
+        InstanceScript* instance;
 
         uint8 uiWaypoint;
 
@@ -613,8 +613,8 @@ public:
                         me->SetOrientation(3.39f);
                         me->SetReactState(REACT_AGGRESSIVE);
                         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
-                    if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(),false);
+                    if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(),false);
                         break;
 
                 }
@@ -778,8 +778,8 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_ARGENT_SOLDIER_DEFEATED,pInstance->GetData(DATA_ARGENT_SOLDIER_DEFEATED) + 1);
+            if (instance)
+                instance->SetData(DATA_ARGENT_SOLDIER_DEFEATED,instance->GetData(DATA_ARGENT_SOLDIER_DEFEATED) + 1);
         }
     };
 };
