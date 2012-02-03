@@ -1556,25 +1556,9 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     target->RemoveAurasWithFamily(SPELLFAMILY_ROGUE, 0x0000800, 0, 0, target->GetGUID());
                 break;
             case SPELLFAMILY_PALADIN:
-                switch (GetId())
-                {                   
-                    case 25771: // Remove the immunity shield marker on Forbearance removal if AW marker is not present
-                        if (target->HasAura(61988) && !target->HasAura(61987))
-                            target->RemoveAura(61988);
-                        break;
-                    case 199997: // Divine Storm Helper (SERVERSIDE)
-                    {
-                        int32 damage = aurApp->GetBase()->GetEffect(EFFECT_0)->GetAmount();
-
-                        if (!damage)
-                            break;
-
-                        caster->CastCustomSpell(target, 54171, &damage, NULL, NULL, true);
-                        break;
-                    }
-                    default:
-                        break;
-                }
+                // Remove the immunity shield marker on Forbearance removal if AW marker is not present
+                if (GetId() == 25771 && target->HasAura(61988) && !target->HasAura(61987))
+                    target->RemoveAura(61988);
                 break;
             case SPELLFAMILY_DEATHKNIGHT:
                 // Blood of the North
