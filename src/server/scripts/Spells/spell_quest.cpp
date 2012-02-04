@@ -898,7 +898,6 @@ class spell_q9874_liquid_fire : public SpellScriptLoader
         };
 };
 
-
 enum SalvagingLifesStength
 {
     NPC_SHARD_KILL_CREDIT                        = 29303,
@@ -939,6 +938,54 @@ class spell_q12805_lifeblood_dummy : public SpellScriptLoader
         };
 };
 
+enum ChumTheWaterSummons
+{
+    SUMMON_ANGRY_KVALDIR = 66737,
+    SUMMON_NORTH_SEA_MAKO = 66738,
+    SUMMON_NORTH_SEA_THRESHER = 66739,
+    SUMMON_NORTH_SEA_BLUE_SHARK = 66740
+};
+
+class spell_q14112_14145_chum_the_water: public SpellScriptLoader
+{
+public:
+    spell_q14112_14145_chum_the_water() : SpellScriptLoader("spell_q14112_14145_chum_the_water") { }
+
+    class spell_q14112_14145_chum_the_water_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_q14112_14145_chum_the_water_SpellScript);
+    
+        bool Validate(SpellInfo const* /*spellEntry*/)
+        {
+            if (!sSpellMgr->GetSpellInfo(SUMMON_ANGRY_KVALDIR))
+                return false;
+            if (!sSpellMgr->GetSpellInfo(SUMMON_NORTH_SEA_MAKO))
+                return false;
+            if (!sSpellMgr->GetSpellInfo(SUMMON_NORTH_SEA_THRESHER))
+                return false;
+            if (!sSpellMgr->GetSpellInfo(SUMMON_NORTH_SEA_BLUE_SHARK))
+                return false;
+            return true;
+        }
+
+        void HandleScriptEffect(SpellEffIndex /*effIndex*/)
+        {
+            Unit* caster = GetCaster();
+            caster->CastSpell(caster, RAND(SUMMON_ANGRY_KVALDIR, SUMMON_NORTH_SEA_MAKO, SUMMON_NORTH_SEA_THRESHER, SUMMON_NORTH_SEA_BLUE_SHARK));
+        }
+
+        void Register()
+        {
+            OnEffectHitTarget += SpellEffectFn(spell_q14112_14145_chum_the_water_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_q14112_14145_chum_the_water_SpellScript();
+    }
+};
+
 void AddSC_quest_spell_scripts()
 {
     new spell_q55_sacred_cleansing();
@@ -961,4 +1008,5 @@ void AddSC_quest_spell_scripts()
     new spell_q12659_ahunaes_knife();
     new spell_q9874_liquid_fire();
     new spell_q12805_lifeblood_dummy();
+    new spell_q14112_14145_chum_the_water();
 }
