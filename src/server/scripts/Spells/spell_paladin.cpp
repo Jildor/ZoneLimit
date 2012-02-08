@@ -27,9 +27,7 @@
 enum PaladinSpells
 {
     PALADIN_SPELL_DIVINE_PLEA                    = 54428,
-
     PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF     = 67480,
-    PALADIN_SPELL_BLESSING_OF_SANCTUARY_HELPER   = 20912,
 
     PALADIN_SPELL_HOLY_SHOCK_R1                  = 20473,
     PALADIN_SPELL_HOLY_SHOCK_R1_DAMAGE           = 25912,
@@ -194,17 +192,13 @@ public:
         {
             Unit* target = GetTarget();
             if (Unit* pCaster = GetCaster())
-            {
                 pCaster->CastSpell(target, PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, true);
-                pCaster->CastSpell(target, PALADIN_SPELL_BLESSING_OF_SANCTUARY_HELPER, true);
-            }
         }
 
         void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             Unit* target = GetTarget();
             target->RemoveAura(PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, GetCasterGUID());
-            target->RemoveAura(PALADIN_SPELL_BLESSING_OF_SANCTUARY_HELPER, GetCasterGUID());
         }
 
         void Register()
