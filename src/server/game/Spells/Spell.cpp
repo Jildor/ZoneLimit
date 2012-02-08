@@ -7177,7 +7177,7 @@ bool Spell::CallScriptEffectHandlers(SpellEffIndex effIndex, SpellEffectHandleMo
                 break;
             default:
                 ASSERT(false);
-                break;
+                return;
         }
         (*scritr)->_PrepareScriptCall(hookType);
         for (; effItr != effEndItr ; ++effItr)
