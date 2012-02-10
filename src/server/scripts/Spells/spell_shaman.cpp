@@ -165,7 +165,7 @@ class spell_sha_fire_nova : public SpellScriptLoader
                 {
                     Creature* totem = caster->GetMap()->GetCreature(caster->m_SummonSlot[1]);
                     if (totem && totem->isTotem())
-                        totem->CastSpell(totem, spellId, true);
+                        caster->CastSpell(totem, spellId, true);
                 }
             }
 
