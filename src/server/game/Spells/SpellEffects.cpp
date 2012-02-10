@@ -6279,13 +6279,13 @@ void Spell::EffectCharge(SpellEffIndex /*effIndex*/)
         if (!unitTarget)
             return;
 
-    float angle = unitTarget->GetRelativeAngle(m_caster);
-    Position pos;
+        float angle = unitTarget->GetRelativeAngle(m_caster);
+        Position pos;
 
-    unitTarget->GetContactPoint(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ);
-    unitTarget->GetFirstCollisionPosition(pos, unitTarget->GetObjectSize(), angle);
+        unitTarget->GetContactPoint(m_caster, pos.m_positionX, pos.m_positionY, pos.m_positionZ);
+        unitTarget->GetFirstCollisionPosition(pos, unitTarget->GetObjectSize(), angle);
 
-    m_caster->GetMotionMaster()->MoveCharge(pos.m_positionX, pos.m_positionY, pos.m_positionZ + unitTarget->GetObjectSize());
+        m_caster->GetMotionMaster()->MoveCharge(pos.m_positionX, pos.m_positionY, pos.m_positionZ + unitTarget->GetObjectSize());
     }
 
     if (effectHandleMode == SPELL_EFFECT_HANDLE_HIT_TARGET)
@@ -6306,10 +6306,13 @@ void Spell::EffectChargeDest(SpellEffIndex /*effIndex*/)
 
     if (m_targets.HasDst())
     {
+        Position pos;
+        m_targets.GetDst()->GetPosition(&pos);
+        float angle = m_caster->GetRelativeAngle(pos.GetPositionX(), pos.GetPositionY());
+        float dist = m_caster->GetDistance(pos);
+        m_caster->GetFirstCollisionPosition(pos, dist, angle);
 
-        float x, y, z;
-        m_targets.GetDst()->GetPosition(x, y, z);
-        m_caster->GetMotionMaster()->MoveCharge(x, y, z);
+        m_caster->GetMotionMaster()->MoveCharge(pos.m_positionX, pos.m_positionY, pos.m_positionZ);
     }
 }
 
