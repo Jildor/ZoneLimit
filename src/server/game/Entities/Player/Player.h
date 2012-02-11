@@ -1127,7 +1127,7 @@ class Player : public Unit, public GridObject<Player>
 
         void Update(uint32 time);
 
-        static bool BuildEnumData(QueryResult result, WorldPacket* data);
+        static bool BuildEnumData(PreparedQueryResult result, WorldPacket* data);
 
         void SetInWater(bool apply);
 
@@ -2522,7 +2522,7 @@ class Player : public Unit, public GridObject<Player>
                 CreatureDisplayInfoEntry const* mountDisplayInfo = sCreatureDisplayInfoStore.LookupEntry(GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
                 if (!mountDisplayInfo)
                     return GetCollisionHeight(false);
-                    
+
                 CreatureModelDataEntry const* mountModelData = sCreatureModelDataStore.LookupEntry(mountDisplayInfo->ModelId);
                 if (!mountModelData)
                     return GetCollisionHeight(false);
