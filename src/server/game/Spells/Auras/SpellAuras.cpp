@@ -1614,32 +1614,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     break;*/
             }
             break;
-        case SPELLFAMILY_DRUID:
-            // Enrage
-            if (GetSpellProto()->SpellFamilyFlags[0] & 0x80000)
-            {
-                if (target->HasAura(70726)) // Druid T10 Feral 4P Bonus
-                {
-                    if (apply)
-                        target->CastSpell(target, 70725, true);
-                }
-                else // armor reduction implemented here
-                    if (AuraEffect * auraEff = target->GetAuraEffectOfRankedSpell(1178, 0))
-                    {
-                        int32 value = auraEff->GetAmount();
-                        int32 mod;
-                        switch (auraEff->GetId())
-                        {
-                            case 1178: mod = 27; break;
-                            case 9635: mod = 16; break;
-                        }
-                        mod = value / 100 * mod;
-                        value = value + (apply ? -mod : mod);
-                        auraEff->ChangeAmount(value);
-                    }
-                //break;
-            }
-            break;
         case SPELLFAMILY_ROGUE:
             // Stealth
             if (GetSpellInfo()->SpellFamilyFlags[0] & 0x00400000)

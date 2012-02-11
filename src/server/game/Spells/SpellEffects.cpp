@@ -1399,10 +1399,6 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             if (m_spellInfo->Id == 16870 && m_caster->HasAura(70718))
                 m_caster->CastSpell(m_caster, 70721, true);
 
-            // Item - Druid T10 Feral 4P Bonus
-            if (m_spellInfo->Id == 5229 && m_caster->HasAura(70726))
-                m_caster->CastSpell(m_caster, 70725, true);
-
             break;
         case SPELLFAMILY_PALADIN:
 			switch (m_spellInfo->Id)
