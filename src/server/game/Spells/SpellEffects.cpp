@@ -3290,7 +3290,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
 
         if (aura->GetSpellInfo()->GetDispelMask() & dispelMask)
         {
-            if (aura->GetSpellInfo()->Dispel == DISPEL_MAGIC || aura->GetSpellInfo()->Dispel == DISPEL_POISON)
+            if (aura->GetSpellInfo()->Dispel == DISPEL_MAGIC)
             {
                 // do not remove positive auras if friendly target
                 //               negative auras if non-friendly target
