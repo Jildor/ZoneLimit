@@ -2277,11 +2277,6 @@ bool SpellInfo::_IsPositiveEffect(uint8 effIndex, bool deep) const
                     break;
             }
             break;
-        case SPELLFAMILY_ROGUE:
-            // Slice and Dice
-            else if (SpellFamilyFlags[0] & 0x40000)
-                return true;
-            break;
         case SPELLFAMILY_MAGE:
             // Amplify Magic, Dampen Magic
             if (SpellFamilyFlags[0] == 0x00002000)
