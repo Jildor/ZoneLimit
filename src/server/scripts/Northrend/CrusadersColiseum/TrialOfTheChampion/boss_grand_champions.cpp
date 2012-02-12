@@ -873,7 +873,7 @@ public:
                 {
                     DoCast(target, SPELL_MULTI_SHOT);
                 }
-                else if (target)
+                else
                 {
                     Map::PlayerList const& players = me->GetMap()->GetPlayers();
                     if (me->GetMap()->IsDungeon() && !players.isEmpty())
@@ -881,9 +881,9 @@ public:
                         for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                         {
                             Player* player = itr->getSource();
-                            if (player && !player->isGameMaster() && me->IsInRange(player,5.0f,30.0f,false))
+                            if (player && !player->isGameMaster() && me->IsInRange(player, 5.0f, 30.0f, false))
                             {
-                                DoCast(target,SPELL_MULTI_SHOT);
+                                DoCast(player, SPELL_MULTI_SHOT);
                                 break;
                             }
                         }
