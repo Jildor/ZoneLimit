@@ -869,10 +869,11 @@ public:
                 me->InterruptNonMeleeSpells(true);
                 Unit* target = Unit::GetUnit(*me, uiTargetGUID);
 
-                if (target && me->IsInRange(target,5.0f,30.0f,false))
+                if (target && me->IsInRange(target, 5.0f, 30.0f, false))
                 {
-                    DoCast(target,SPELL_MULTI_SHOT);
-                } else
+                    DoCast(target, SPELL_MULTI_SHOT);
+                }
+                else if (target)
                 {
                     Map::PlayerList const& players = me->GetMap()->GetPlayers();
                     if (me->GetMap()->IsDungeon() && !players.isEmpty())
