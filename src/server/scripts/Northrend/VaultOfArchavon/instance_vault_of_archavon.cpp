@@ -48,13 +48,13 @@ class instance_archavon : public InstanceMapScript
                 KoralonDeath = 0;
             }
 
-            void OnPlayerEnter(Player *m_player)
+            void OnPlayerEnter(Player *player)
             {
                 if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
                 {
                     OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
-                    if (pvpWG && !m_player->isGameMaster() && m_player->GetTeamId() != pvpWG->getDefenderTeam())
-                        m_player->CastSpell(m_player, SPELL_TELEPORT_FORTRESS, true);
+                    if (pvpWG && !player->isGameMaster() && player->GetTeamId() != pvpWG->getDefenderTeam())
+                        player->CastSpell(player, SPELL_TELEPORT_FORTRESS, true);
                 }
             }
 

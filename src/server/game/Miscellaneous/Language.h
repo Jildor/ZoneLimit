@@ -705,6 +705,7 @@ enum TrinityStrings
 //  LANG_BG_AB_START_TWO_MINUTES        = 754, - defined above
 //  LANG_BG_EY_START_TWO_MINUTES        = 755, - defined above
 
+    // Wintergrasp
     LANG_BG_WG_BATTLE_STARTS            = 756,
     LANG_BG_WG_DEFENDED                 = 757,
     LANG_BG_WG_CAPTURED                 = 758,
@@ -722,7 +723,6 @@ enum TrinityStrings
     LANG_BG_WG_ENABLE                   = 770,
     LANG_BG_WG_RANK1                    = 771,
     LANG_BG_WG_RANK2                    = 772,
-
     LANG_BG_WG_WORLD_ANNOUNCE_30        = 780,
     LANG_BG_WG_WORLD_ANNOUNCE_10        = 781,
     LANG_BG_WG_WORLD_NO_DEF             = 782,

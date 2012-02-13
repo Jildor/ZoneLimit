@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2008 - 2010 Trinity <http://www.trinitycore.org/>
+ * Copyright (C) 2008 - 2011 Trinity <http://www.trinitycore.org/>
  *
- * Patch supported by ChaosUA & TCRU community http://trinity-core.ru/
+ * Copyright (C) 2011 Patch supported by ChaosUA & TCRU community http://trinity-core.ru/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -459,7 +459,7 @@ bool OutdoorPvPWG::SetupOutdoorPvP()
         StartBattle();
         m_timer = m_WSTimer;
     }
-	else RemoveOfflinePlayerWGAuras();
+    else RemoveOfflinePlayerWGAuras();
 
     return true;
 }
@@ -583,7 +583,7 @@ void OutdoorPvPWG::ProcessEvent(WorldObject *objin, uint32 eventId)
                             TeamIDsound=OutdoorPvP_WG_SOUND_KEEP_CAPTURED_ALLIANCE;  //Horde Worn Sound
                         (*itr)->PlayDirectSound(TeamIDsound) ; // Wintergrasp Fortress under Siege
                     }
-                }
+                 }
                     break;
             }
         }
@@ -975,7 +975,7 @@ void OutdoorPvPWG::RebuildAllBuildings()
             UpdateGameObjectInfo(itr->second->building);
             //itr->second->building->Rebuild();
             itr->second->building->SetDestructibleState(GO_DESTRUCTIBLE_REBUILDING, NULL, true);
-			itr->second->health = itr->second->building->GetGOValue()->Building.Health;
+            itr->second->health = itr->second->building->GetGOValue()->Building.Health;
             itr->second->damageState = DAMAGE_INTACT;
         }
         else
@@ -1067,6 +1067,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
         {
             if (isWarTime())
             {
+                /* Uncomment if want to disable ressurect for both factions at the same time at fortress graveyard
                 if (creature->GetAreaId() == 4575) // Select Fortress Spirit
                 {
                     FortressSpirit = creature;
@@ -1074,7 +1075,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
                             FortressSpirit->UpdateEntry(CRE_SPI_A);
                     if (getDefenderTeam() == TEAM_HORDE) // Fortress Spirit Horde
                         FortressSpirit->UpdateEntry(CRE_SPI_H);
-                }
+                }*/
                 creature->SetVisible(true);
             }
             else
@@ -1103,7 +1104,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
         case CREATURE_GUARD:
         case CREATURE_SPECIAL:
         {
-           /* //TDB users comment this block if your guards doesn't spawn by pairs A+H at fortress
+            //TDB users comment this block if your guards doesn't spawn by pairs A+H at fortress
             if (creature->GetAreaId()==4575)
             {
                 switch (entry)
@@ -1131,7 +1132,7 @@ bool OutdoorPvPWG::UpdateCreatureInfo(Creature *creature)
                 creature->AI()->EnterEvadeMode();
                 return false;
             }
-            else //End of block to comment  */
+            else //End of block to comment
             {
                 TeamPairMap::const_iterator itr = m_creEntryPair.find(creature->GetCreatureData()->id);
                 if (itr != m_creEntryPair.end())
@@ -1170,7 +1171,7 @@ bool OutdoorPvPWG::UpdateQuestGiverPosition(uint32 guid, Creature *creature)
         if (creature->GetEntry() != 30400 || creature->GetEntry() != 30499)
             creature->SetReactState(REACT_AGGRESSIVE);
         creature->DestroyForNearbyPlayers();
-        if (!creature->GetMap()->IsLoaded(pos.GetPositionX(), pos.GetPositionY()))
+        if (!creature->GetMap()->IsGridLoaded(pos.GetPositionX(), pos.GetPositionY()))
             creature->GetMap()->LoadGrid(pos.GetPositionX(), pos.GetPositionY());
         creature->GetMap()->CreatureRelocation(creature, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation());
         if (!creature->isAlive())
@@ -1538,7 +1539,7 @@ bool OutdoorPvPWG::Update(uint32 diff)
                         Creature* sh = NULL;
                         for (std::vector<uint64>::const_iterator itr2 = (itr->second).begin(); itr2 != (itr->second).end(); ++itr2)
                         {
-                            Player *plr = sObjectMgr->GetPlayer(*itr2);
+                            Player *plr = ObjectAccessor::FindPlayer(*itr2);
                             if (!plr)
                                 continue;
                             if (!sh && plr->IsInWorld())
@@ -1568,7 +1569,7 @@ bool OutdoorPvPWG::Update(uint32 diff)
             {
                 for (std::vector<uint64>::const_iterator itr = m_ResurrectQueue.begin(); itr != m_ResurrectQueue.end(); ++itr)
                 {
-                    Player *plr = sObjectMgr->GetPlayer(*itr);
+                    Player *plr = ObjectAccessor::FindPlayer(*itr);
                     if (!plr)
                         continue;
                     plr->ResurrectPlayer(1.0f);
@@ -1718,9 +1719,9 @@ void OutdoorPvPWG::StartBattle()
         }
     }
 
-    if (sWorld->getBoolConfig(CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ENABLE))
+    if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ENABLE))
     {
-        if ((CountAtk < sWorld->getIntConfig(CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ATK)) || (CountDef < sWorld->getIntConfig(CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_DEF)))
+        if ((CountAtk < sWorld->getIntConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ATK)) || (CountDef < sWorld->getIntConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_DEF)))
         {
             if (CountAtk<=CountDef)
                 sWorld->SendWorldText(LANG_BG_WG_WORLD_NO_ATK);
@@ -2013,7 +2014,7 @@ void OutdoorPvPWG::AddPlayerToResurrectQueue(uint64 npc_guid, uint64 player_guid
 {
     m_ReviveQueue[npc_guid].push_back(player_guid);
 
-    Player *plr = sObjectMgr->GetPlayer(player_guid);
+    Player *plr = ObjectAccessor::FindPlayer(player_guid);
     if (!plr)
         return;
 
@@ -2030,7 +2031,7 @@ void OutdoorPvPWG::RemovePlayerFromResurrectQueue(uint64 player_guid)
             {
                 (itr->second).erase(itr2);
 
-                Player *plr = sObjectMgr->GetPlayer(player_guid);
+                Player *plr = ObjectAccessor::FindPlayer(player_guid);
                 if (!plr)
                     return;
 
@@ -2054,7 +2055,7 @@ void OutdoorPvPWG::RelocateAllianceDeadPlayers(Creature *cr)
         WorldSafeLocsEntry const *ClosestGrave = NULL;
         for (std::vector<uint64>::const_iterator itr = ghost_list.begin(); itr != ghost_list.end(); ++itr)
         {
-            Player* plr = sObjectMgr->GetPlayer(*itr);
+            Player* plr = ObjectAccessor::FindPlayer(*itr);
             if (!plr)
                 continue;
 
@@ -2081,7 +2082,7 @@ void OutdoorPvPWG::RelocateHordeDeadPlayers(Creature *cr)
         WorldSafeLocsEntry const *ClosestGrave = NULL;
         for (std::vector<uint64>::const_iterator itr = ghost_list.begin(); itr != ghost_list.end(); ++itr)
         {
-            Player* plr = sObjectMgr->GetPlayer(*itr);
+            Player* plr = ObjectAccessor::FindPlayer(*itr);
             if (!plr)
                 continue;
             if (plr->getFaction() == HORDE)

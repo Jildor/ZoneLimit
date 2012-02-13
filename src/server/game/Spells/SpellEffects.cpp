@@ -49,7 +49,6 @@
 #include "BattlegroundEY.h"
 #include "BattlegroundWS.h"
 #include "OutdoorPvPMgr.h"
-#include "OutdoorPvPWG.h"
 #include "Language.h"
 #include "SocialMgr.h"
 #include "Util.h"
@@ -65,6 +64,7 @@
 #include "GameObjectAI.h"
 #include "AccountMgr.h"
 #include "InstanceScript.h"
+#include "OutdoorPvPWG.h"
 
 pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
 {
@@ -4504,7 +4504,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
         {
             switch (m_spellInfo->Id)
             {
-                //Teleport to Lake Wintergrasp
+                // Teleport to Lake Wintergrasp
                 case 58622:
                 {
                   if (OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197))
@@ -4514,13 +4514,12 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                           unitTarget->CastSpell(unitTarget, SPELL_TELEPORT_FORTRESS, true);
                        else if ((pvpWG->getDefenderTeam()==TEAM_ALLIANCE) && (unitTarget->ToPlayer()->GetTeam() == HORDE))
                           unitTarget->CastSpell(unitTarget, SPELL_TELEPORT_HORDE_CAMP, true);
-
-                       if ((pvpWG->getDefenderTeam()!=TEAM_ALLIANCE) && (unitTarget->ToPlayer()->GetTeam() == HORDE))
+                       else if ((pvpWG->getDefenderTeam()!=TEAM_ALLIANCE) && (unitTarget->ToPlayer()->GetTeam() == HORDE))
                           unitTarget->CastSpell(unitTarget, SPELL_TELEPORT_FORTRESS, true);
                        else if ((pvpWG->getDefenderTeam()!=TEAM_ALLIANCE) && (unitTarget->ToPlayer()->GetTeam() == ALLIANCE))
                           unitTarget->CastSpell(unitTarget, SPELL_TELEPORT_ALLIENCE_CAMP, true);
                      }
-                return;
+                    return;
                 }
                 // Glyph of Backstab
                 case 63975:

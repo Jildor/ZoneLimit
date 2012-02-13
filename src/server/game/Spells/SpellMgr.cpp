@@ -1135,22 +1135,22 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
         }
         case 58730: // No fly Zone - Wintergrasp
         {
-            if (!player)
-                return false;
+             if (!player)
+                 return false;
 
-            if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
-            {
-                OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
-                if ((pvpWG->isWarTime()==false) || player->isDead() || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)) || player->HasAura(45472) || player->HasAura(44795) || player->GetPositionZ() > 619.2f || player->isInFlight())
+             if (sWorld->getBoolConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
+             {
+                 OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr->GetOutdoorPvPToZoneId(4197);
+                 if ((pvpWG->isWarTime()==false) || player->isDead() || player->HasAura(45472) || player->HasAura(44795) || player->GetPositionZ() > 619.2f || player->isInFlight() || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)))
                     return false;
-            }
-            break;
+             }
+             break;
         }
         case 58045: // Essence of Wintergrasp - Wintergrasp
         case 57940: // Essence of Wintergrasp - Northrend
         {
-            if (!player || player->GetTeamId() != sWorld->getWorldState(WORLDSTATE_WINTERGRASP_CONTROLING_FACTION))
-                return false;
+             if (!player || player->GetTeamId() != sWorld->getWorldState(WORLDSTATE_WINTERGRASP_CONTROLING_FACTION))
+             return false;
             break;
         }
         case 68719: // Oil Refinery - Isle of Conquest.
@@ -3034,6 +3034,10 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 72405: // Broken Frostmourne
                 spellInfo->EffectRadiusIndex[1] = EFFECT_RADIUS_200_YARDS;   // 200yd
+                break;
+            case 51678: // WintergraspSiegeEngine Ram set damage radius to 5 yards
+                spellInfo->EffectRadiusIndex[0] = 52;
+                spellInfo->EffectRadiusIndex[1] = 52;
                 break;
             default:
                 break;

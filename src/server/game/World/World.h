@@ -163,7 +163,7 @@ enum WorldBoolConfigs
     CONFIG_ANTICHEAT_ENABLE,
     CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED,
     CONFIG_OUTDOORPVP_WINTERGRASP_CUSTOM_HONOR,
-    CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ENABLE,
+    CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ENABLE,
     BOOL_CONFIG_VALUE_COUNT
 };
 
@@ -313,7 +313,7 @@ enum WorldIntConfigs
     CONFIG_ANTICHEAT_REPORTS_INGAME_NOTIFICATION,
     CONFIG_ANTICHEAT_MAX_REPORTS_FOR_DAILY_REPORT,
     CONFIG_MAX_INSTANCES_PER_HOUR,
-	CONFIG_ANTICHEAT_DETECTIONS_ENABLED,
+    CONFIG_ANTICHEAT_DETECTIONS_ENABLED,
     CONFIG_OUTDOORPVP_WINTERGRASP_START_TIME,
     CONFIG_OUTDOORPVP_WINTERGRASP_BATTLE_TIME,
     CONFIG_OUTDOORPVP_WINTERGRASP_INTERVAL,
@@ -324,8 +324,8 @@ enum WorldIntConfigs
     CONFIG_OUTDOORPVP_WINTERGRASP_DAMAGED_BUILDING,
     CONFIG_OUTDOORPVP_WINTERGRASP_INTACT_BUILDING,
     CONFIG_OUTDOORPVP_WINTERGRASP_SAVESTATE_PERIOD,
-    CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ATK,
-    CONFIG_CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_DEF,
+    CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_ATK,
+    CONFIG_OUTDOORPVP_WINTERGRASP_ANTIFARM_DEF,
     INT_CONFIG_VALUE_COUNT
 };
 
@@ -758,6 +758,12 @@ class World
 
         bool isEventKillStart;
 
+        CharacterNameData const* GetCharacterNameData(uint32 guid) const;
+        void AddCharacterNameData(uint32 guid, std::string const& name, uint8 gender, uint8 race, uint8 playerClass);
+        void UpdateCharacterNameData(uint32 guid, std::string const& name, uint8 gender = GENDER_NONE, uint8 race = RACE_NONE);
+        void DeleteCharaceterNameData(uint32 guid) { _characterNameDataMap.erase(guid); }
+
+        // Wintergrasp
         uint32 GetWintergrapsTimer() { return m_WintergrapsTimer; }
         uint32 GetWintergrapsState() { return m_WintergrapsState; }
         uint32 m_WintergrapsTimer;
@@ -768,11 +774,6 @@ class World
             m_WintergrapsTimer = timer;
             m_WintergrapsState = state;
         }
-
-        CharacterNameData const* GetCharacterNameData(uint32 guid) const;
-        void AddCharacterNameData(uint32 guid, std::string const& name, uint8 gender, uint8 race, uint8 playerClass);
-        void UpdateCharacterNameData(uint32 guid, std::string const& name, uint8 gender = GENDER_NONE, uint8 race = RACE_NONE);
-        void DeleteCharaceterNameData(uint32 guid) { _characterNameDataMap.erase(guid); }
 
         uint32 GetCleaningFlags() const { return m_CleaningFlags; }
         void   SetCleaningFlags(uint32 flags) { m_CleaningFlags = flags; }
