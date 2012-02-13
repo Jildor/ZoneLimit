@@ -51,21 +51,20 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
 {
     if (getWaterFallTimer() < diff)
     {
-        if (GetBgMap(false))
-            if (isWaterFallActive())
-            {
-                setWaterFallTimer(urand(BG_DS_WATERFALL_TIMER_MIN, BG_DS_WATERFALL_TIMER_MAX));
-                for (uint32 i = BG_DS_OBJECT_WATER_1; i <= BG_DS_OBJECT_WATER_2; ++i)
-                    SpawnBGObject(i, getWaterFallTimer());
-                setWaterFallActive(false);
-            }
-            else
-            {
-                setWaterFallTimer(BG_DS_WATERFALL_DURATION);
-                for (uint32 i = BG_DS_OBJECT_WATER_1; i <= BG_DS_OBJECT_WATER_2; ++i)
-                    SpawnBGObject(i, RESPAWN_IMMEDIATELY);
-                setWaterFallActive(true);
-            }
+        if (isWaterFallActive())
+        {
+            setWaterFallTimer(urand(BG_DS_WATERFALL_TIMER_MIN, BG_DS_WATERFALL_TIMER_MAX));
+            for (uint32 i = BG_DS_OBJECT_WATER_1; i <= BG_DS_OBJECT_WATER_2; ++i)
+                SpawnBGObject(i, getWaterFallTimer());
+            setWaterFallActive(false);
+        }
+        else
+        {
+            setWaterFallTimer(BG_DS_WATERFALL_DURATION);
+            for (uint32 i = BG_DS_OBJECT_WATER_1; i <= BG_DS_OBJECT_WATER_2; ++i)
+                SpawnBGObject(i, RESPAWN_IMMEDIATELY);
+            setWaterFallActive(true);
+        }
     }
     else
         setWaterFallTimer(getWaterFallTimer() - diff);
