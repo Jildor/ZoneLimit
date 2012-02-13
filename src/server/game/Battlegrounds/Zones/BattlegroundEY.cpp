@@ -104,15 +104,15 @@ void BattlegroundEY::PostUpdateImpl(uint32 diff)
         {
             for(BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
             {
-                Player * plr = sObjectMgr->GetPlayer(itr->first);
-                if (!plr || !plr->IsInWorld())
+                Player * player = ObjectAccessor::FindPlayer(itr->first);
+                if (!player || !player->IsInWorld())
                     continue;
-                if (plr->GetPositionZ() < 1249)
+                if (player->GetPositionZ() < 1249)
                 {
-                    if (plr->GetTeam() == HORDE)
-                        plr->TeleportTo(566, 1807.73f, 1539.41f, 1267.63f, plr->GetOrientation(), 0);
+                    if (player->GetTeam() == HORDE)
+                        player->TeleportTo(566, 1807.73f, 1539.41f, 1267.63f, player->GetOrientation(), 0);
                     else
-                        plr->TeleportTo(566, 2523.68f, 1596.59f, 1269.35f, plr->GetOrientation(), 0);
+                        player->TeleportTo(566, 2523.68f, 1596.59f, 1269.35f, player->GetOrientation(), 0);
                 }
             }
             m_CheatersCheckTimer = 3000;
@@ -280,10 +280,10 @@ void BattlegroundEY::UpdatePointStatuses()
                 }
 
                 // hack fix for Fel Reaver Ruins
-                if (point == FEL_REAVER && m_PointOwnedByTeam[point] == plr->GetTeam())
-                    if (m_FlagState && GetFlagPickerGUID() == plr->GetGUID())
-                        if (plr->GetDistance2d(2044,1730) < 2)
-                            EventPlayerCapturedFlag(plr, BG_EY_OBJECT_FLAG_FEL_REAVER);
+                if (point == FEL_REAVER && m_PointOwnedByTeam[point] == player->GetTeam())
+                    if (m_FlagState && GetFlagPickerGUID() == player->GetGUID())
+                        if (player->GetDistance2d(2044,1730) < 2)
+                            EventPlayerCapturedFlag(player, BG_EY_OBJECT_FLAG_FEL_REAVER);
             }
         }
     }
