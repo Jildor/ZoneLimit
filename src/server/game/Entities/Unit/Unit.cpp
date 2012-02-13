@@ -2549,7 +2549,7 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit* victim, SpellInfo const* spell)
         bool bDirectDamage = false;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
-            if (spell->Effect[i] == SPELL_EFFECT_SCHOOL_DAMAGE || spell->Effect[i] == SPELL_EFFECT_HEALTH_LEECH)
+            if (spell->Effects[i].Effect == SPELL_EFFECT_SCHOOL_DAMAGE || spell->Effects[i].Effect == SPELL_EFFECT_HEALTH_LEECH)
             {
                 bDirectDamage = true;
                 break;
@@ -10758,7 +10758,7 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellInfo const* spellProto, uint32 
     // Pets just add their bonus damage to their spell damage
     // note that their spell damage is just gain of their own auras
     if (HasUnitTypeMask(UNIT_MASK_GUARDIAN))
-        if (!(GetSpellSchoolMask(spellProto) & SPELL_SCHOOL_MASK_NORMAL)) // Do not add Spellpower to melee abilities
+        if (!(spellProto->GetSchoolMask() & SPELL_SCHOOL_MASK_NORMAL)) // Do not add Spellpower to melee abilities
             DoneAdvertisedBenefit += ((Guardian*)this)->GetBonusDamage(); 
         else if (((Guardian*)this)->GetBonusDamage())                     // Instead add a fixed amount of AP                    
             DoneAdvertisedBenefit += GetTotalAttackPowerValue(BASE_ATTACK) * 0.2f;
