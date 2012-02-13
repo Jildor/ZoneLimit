@@ -577,7 +577,7 @@ void Vehicle::Relocate(Position pos)
         }
     }
 
-    _me->SetPosition(pos, true);
+    _me->UpdatePosition(pos, true);
     // problems, and impossible to do delayed enter
     //pPlayer->EnterVehicle(veh);
 }
