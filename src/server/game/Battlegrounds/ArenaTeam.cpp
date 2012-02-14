@@ -612,18 +612,21 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won,
     float won_mod = (won) ? 1.0f : 0.0f;
 
     // Calculate the rating modification
-    // Simulation on how it works. Not much info on how it really works	
-    float mod = 32.0f * (won_mod - chance); // correct value of K is 32 says wowwiki
-    
-    // if it's loss and it's not calculation of MMR
-    if(!won && !calculateMatchMakerRating){
-        if(ownRating < 1000){ // team rating shouldn't decrease if it's already bellow 1000
-            mod = 0;    
-        }else if(ownRating <= 1300){
-            mod /= 2;
-        }
+    // Simulation on how it works. Not much info on how it really works
+    float mod;
+
+    if (won && !calculateMatchMakerRating)
+    {
+        if (ownRating < 1000)
+            mod = 48.0f * (won_mod - chance);
+        else if (ownRating < 1300)
+            mod = (24.0f + (24.0f * (1300.0f - int32(ownRating)) / 300.0f)) * (won_mod - chance);
+        else
+            mod = 24.0f * (won_mod - chance);
     }
-	
+    else
+        mod = 24.0f * (won_mod - chance);
+
     return (int32)ceil(mod);
 }
 
@@ -669,7 +672,7 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
 {
     // Called when the team has won
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetRatingMod(Stats.Rating, againstRating, true, false);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, true);
 
     // Modify the team stats accordingly
     FinishGame(mod);
@@ -686,7 +689,7 @@ int32 ArenaTeam::LostAgainst(uint32 againstRating)
 {
     // Called when the team has lost
     // Own team rating versus opponents matchmaker rating
-    int32 mod = GetRatingMod(Stats.Rating, againstRating, false, false);
+    int32 mod = GetRatingMod(Stats.Rating, againstRating, false);
 
     // Modify the team stats accordingly
     FinishGame(mod);
