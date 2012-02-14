@@ -4784,7 +4784,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                             Unit* spellTarget = ObjectAccessor::GetUnit(*pTarget, pTarget->GetComboTarget());
                             if (!spellTarget)
                                 spellTarget = pTarget->GetSelectedUnit();
-                            if (spellTarget && pTarget->canAttack(spellTarget))
+                            if (spellTarget && pTarget->IsValidAttackTarget(spellTarget))
                                 pTarget->CastSpell(spellTarget, 51699, true);
                         }
                    break;
@@ -6204,7 +6204,7 @@ void AuraEffect::HandlePeriodicDamageAurasTick(Unit* target, Unit* caster) const
         return;
 
     // Hack for Consecration to enter in combat and PvP mode
-    if (GetSpellInfo()->Effect[GetEffIndex()].Effect == SPELL_EFFECT_PERSISTENT_AREA_AURA)
+    if (GetSpellInfo()->Effects[GetEffIndex()].Effect == SPELL_EFFECT_PERSISTENT_AREA_AURA)
         caster->CombatStart(target);
 
     // some auras remove at specific health level or more
