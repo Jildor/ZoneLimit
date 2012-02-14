@@ -4784,7 +4784,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                             Unit* spellTarget = ObjectAccessor::GetUnit(*pTarget, pTarget->GetComboTarget());
                             if (!spellTarget)
                                 spellTarget = pTarget->GetSelectedUnit();
-                            if (spellTarget && pTarget->CanAttack(spellTarget))
+                            if (spellTarget && pTarget->canAttack(spellTarget))
                                 pTarget->CastSpell(spellTarget, 51699, true);
                         }
                    break;
