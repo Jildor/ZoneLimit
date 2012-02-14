@@ -6212,8 +6212,6 @@ void ObjectMgr::SetHighestGuids()
         sGroupMgr->SetGroupDbStoreSize((*result)[0].GetUInt32()+1);
 }
 
-
-
 uint32 ObjectMgr::GenerateAuctionID()
 {
     if (m_auctionid >= 0xFFFFFFFE)
