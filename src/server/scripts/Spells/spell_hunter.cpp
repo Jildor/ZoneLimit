@@ -334,7 +334,7 @@ public:
                     spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER &&
                     spellInfo->Id != HUNTER_SPELL_BESTIAL_WRATH &&
                     spellInfo->GetRecoveryTime() > 0 &&
-                    spellInfo->spellLevel > 1) // excludes Readiness, Gift of the Naaru and etc
+                    spellInfo->SpellLevel > 1) // excludes Readiness, Gift of the Naaru and etc
                     caster->ToPlayer()->RemoveSpellCooldown((itr++)->first,true);
                 else
                     ++itr;
