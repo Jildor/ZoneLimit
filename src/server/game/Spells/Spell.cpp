@@ -1506,12 +1506,12 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, const uint32 effectMask, bool 
 
         // Chance resist debuff
         bool auraResist = false;
-        if (!IsPositiveSpell(m_spellInfo->Id))
+        if (!m_spellInfo->IsPositive())
         {
             bool bNegativeAura = false;
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
-                if (m_spellInfo->EffectApplyAuraName[i] != 0)
+                if (m_spellInfo->Effects[i].ApplyAuraName != 0)
                 {
                     bNegativeAura = true;
                     break;
@@ -1521,7 +1521,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit* unit, const uint32 effectMask, bool 
             bool bDirectDamage = false;
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
-                if (m_spellInfo->Effect[i] == SPELL_EFFECT_SCHOOL_DAMAGE || m_spellInfo->Effect[i] == SPELL_EFFECT_HEALTH_LEECH)
+                if (m_spellInfo->Effects[i].Effect == SPELL_EFFECT_SCHOOL_DAMAGE || m_spellInfo->Effects[i].Effect == SPELL_EFFECT_HEALTH_LEECH)
                 {
                     bDirectDamage = true;
                     break;
@@ -5066,8 +5066,8 @@ SpellCastResult Spell::CheckCast(bool strict)
                 // Create dispel mask by dispel type
                 uint32 dispelMask;
                 for (uint8 j = 0; j < MAX_SPELL_EFFECTS; ++j)
-                    if (m_spellInfo->Effect[j] == SPELL_EFFECT_DISPEL)
-                        dispelMask |= GetDispelMask(DispelType(m_spellInfo->EffectMiscValue[j]));
+                    if (m_spellInfo->Effects[j].Effect == SPELL_EFFECT_DISPEL)
+                        dispelMask |= SpellInfo::GetDispelMask(DispelType(m_spellInfo->Effects[j].MiscValue));
 
                 // we should not be able to dispel diseases if the target is affected by unholy blight
                 if (dispelMask & (1 << DISPEL_DISEASE) && target->HasAura(50536))
@@ -5082,11 +5082,11 @@ SpellCastResult Spell::CheckCast(bool strict)
                     if (aura->IsPassive())
                         continue;
 
-                    if ((1<<aura->GetSpellProto()->Dispel) & dispelMask)
+                    if ((1<<aura->GetSpellInfo()->Dispel) & dispelMask)
                     {
                         // do not remove positive auras if friendly target
                         //               negative auras if non-friendly target
-                        if (IsPositiveSpell(aura->GetId()) == target->IsFriendlyTo(m_caster))
+                        if (aura->GetSpellInfo()->IsPositive() == target->IsFriendlyTo(m_caster))
                             continue;
 
                         dispelAura = true;
@@ -5236,7 +5236,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 switch (SummonProperties->Category)
                 {
                     case SUMMON_CATEGORY_PET:
-                        m_caster->RemoveAllMinionsByEntry(m_spellInfo->EffectMiscValue[i]);
+                        m_caster->RemoveAllMinionsByEntry(m_spellInfo->Effects[i].MiscValue);
                         break;
                     case SUMMON_CATEGORY_PUPPET:
                         if (m_caster->GetCharmGUID())
