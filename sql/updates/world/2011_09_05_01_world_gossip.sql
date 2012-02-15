@@ -5,7 +5,7 @@ UPDATE `creature_template` SET `gossip_menu_id`=9691,`faction_A`=2104,`faction_H
 UPDATE `creature_template` SET `gossip_menu_id`=9692,`mechanic_immune_mask`=8388624 WHERE `entry`=28472; -- Lord Thorval
 UPDATE `creature_template` SET `gossip_menu_id`=9693,`mechanic_immune_mask`=8388624 WHERE `entry`=28474; -- Amal'thazad
 -- Le borro el EventAI
-DELETE FROM `creature_ai_scipts` WHERE `creature_id` = 28471; -- Lady Alistra
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28471; -- Lady Alistra
 
 DELETE FROM `gossip_menu` WHERE `entry`=9791 AND `text_id`=13475;
 INSERT INTO `gossip_menu` (`entry`,`text_id`) VALUES (9791,13475);

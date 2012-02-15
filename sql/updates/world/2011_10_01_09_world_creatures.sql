@@ -6,16 +6,16 @@ UPDATE `creature_template` SET `faction_A`=1885,`faction_H`=1885,`unit_flags`=0x
 -- Le cambio EventAI como en TDB
 DELETE FROM `creature_ai_scripts` WHERE `creature_id`=32438;
 INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_inverse_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action1_type`,`action1_param1`,`action1_param2`,`action1_param3`,`action2_type`,`action2_param1`,`action2_param2`,`action2_param3`,`action3_type`,`action3_param1`,`action3_param2`,`action3_param3`,`comment`) VALUES
-(3243801,32438,1,0,100,0,0,0,0,0,21,0,0,0,20,0,0,0,0,0,0,0,'Syreian the Bonecarver - Prevent Combat Movement and Prevent Melee on Spawn');
-(3243802,32438,4,0,100,0,0,0,0,0,11,38952,1,0,23,1,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Frost Arrow and Set Phase 1 on Aggro');
-(3243803,32438,9,5,100,1,5,30,2300,3900,11,50092,1,0,40,2,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Shoot and Set Ranged Weapon Model (Phase 1)');
-(3243804,32438,0,5,100,1,12000,15000,11000,14000,11,38952,1,1,40,2,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Frost Arrow and Set Ranged Weapon Model (Phase 1)');
-(3243805,32438,9,5,100,1,25,80,0,0,21,1,1,0,20,1,0,0,0,0,0,0,'Syreian the Bonecarver - Start Combat Movement and Start Melee at 25 Yards (Phase 1)');
-(3243806,32438,9,5,100,1,0,5,0,0,21,1,0,0,40,1,0,0,20,1,0,0,'Syreian the Bonecarver - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)');
-(3243807,32438,9,5,100,1,5,15,0,0,21,0,1,0,20,0,0,0,0,0,0,0,'Syreian the Bonecarver - Prevent Combat Movement and Prevent Melee at 15 Yards (Phase 1)');
-(3243808,32438,9,0,100,1,0,5,12000,16000,11,47168,1,1,0,0,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Improved Wing Clip');
-(3243809,32438,2,0,100,0,15,0,0,0,23,1,0,0,0,0,0,0,0,0,0,0,'Syreian the Bonecarver - Set Phase 2 at 15% HP');
-(3243810,32438,2,3,100,0,15,0,0,0,21,1,0,0,25,0,0,0,1,-47,0,0,'Syreian the Bonecarver - Start Combat Movement and Flee at 15% HP (Phase 2)');
+(3243801,32438,1,0,100,0,0,0,0,0,21,0,0,0,20,0,0,0,0,0,0,0,'Syreian the Bonecarver - Prevent Combat Movement and Prevent Melee on Spawn'),
+(3243802,32438,4,0,100,0,0,0,0,0,11,38952,1,0,23,1,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Frost Arrow and Set Phase 1 on Aggro'),
+(3243803,32438,9,5,100,1,5,30,2300,3900,11,50092,1,0,40,2,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+(3243804,32438,0,5,100,1,12000,15000,11000,14000,11,38952,1,1,40,2,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Frost Arrow and Set Ranged Weapon Model (Phase 1)'),
+(3243805,32438,9,5,100,1,25,80,0,0,21,1,1,0,20,1,0,0,0,0,0,0,'Syreian the Bonecarver - Start Combat Movement and Start Melee at 25 Yards (Phase 1)'),
+(3243806,32438,9,5,100,1,0,5,0,0,21,1,0,0,40,1,0,0,20,1,0,0,'Syreian the Bonecarver - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)'),
+(3243807,32438,9,5,100,1,5,15,0,0,21,0,1,0,20,0,0,0,0,0,0,0,'Syreian the Bonecarver - Prevent Combat Movement and Prevent Melee at 15 Yards (Phase 1)'),
+(3243808,32438,9,0,100,1,0,5,12000,16000,11,47168,1,1,0,0,0,0,0,0,0,0,'Syreian the Bonecarver - Cast Improved Wing Clip'),
+(3243809,32438,2,0,100,0,15,0,0,0,23,1,0,0,0,0,0,0,0,0,0,0,'Syreian the Bonecarver - Set Phase 2 at 15% HP'),
+(3243810,32438,2,3,100,0,15,0,0,0,21,1,0,0,25,0,0,0,1,-47,0,0,'Syreian the Bonecarver - Start Combat Movement and Flee at 15% HP (Phase 2)'),
 (3243811,32438,7,0,100,0,0,0,0,0,22,0,0,0,40,1,0,0,0,0,0,0,'Syreian the Bonecarver - Set Phase to 0 and Set Melee Weapon Model on Evade');
 
 UPDATE `creature_model_info` SET `bounding_radius`=1.25,`combat_reach`=3.919432,`gender`=1 WHERE `modelid`=27970; -- Syreian the Bonecarver

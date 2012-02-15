@@ -74,7 +74,7 @@ INSERT INTO `creature_equip_template` (`entry`,`itemEntry1`,`itemEntry2`,`itemEn
 
 -- HACK, Unit::_IsValidAttackTarget returns false because of UNIT_FLAG_OOC_NOT_ATTACKABLE flag
 -- Lo pongo como en TDB
-UPDATE `creature_template` SET `speed_run`=0.992063,`exp`=0,`unit_flags`=0x02000000,`InhabitType`=7, WHERE `entry`=36171;
+UPDATE `creature_template` SET `speed_run`=0.992063,`exp`=0,`unit_flags`=0x02000000,`InhabitType`=7 WHERE `entry`=36171;
 
 -- Los pongo como en TDB
 UPDATE `creature_model_info` SET `combat_reach`=5.5,`gender`=0 WHERE `modelid`=30721; -- The Lich King

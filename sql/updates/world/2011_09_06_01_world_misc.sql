@@ -4,4 +4,4 @@ INSERT INTO `spell_dbc` (`Id`,`Dispel`,`Mechanic`,`Attributes`,`AttributesEx`,`A
 (24677,0,0,256,0,4,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,6,0,-1,0,0,77,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,'GY Mid Trigger - 2.0.12 spell - AV Snowfall Graveyard');
 
 -- Lo pongo como en TDB
-UPDATE `gameobject_template` SET `type`=10,`data0`=1479,`data1`=0,`data2`=0,`data3`=3000,`data4`=0,`data10`=24677,`data12`=0`data16`=1,`WDBVerified`=11723 WHERE `entry`=180418;
+UPDATE `gameobject_template` SET `type`=10,`data0`=1479,`data1`=0,`data2`=0,`data3`=3000,`data4`=0,`data10`=24677,`data12`=0,`data16`=1,`WDBVerified`=11723 WHERE `entry`=180418;

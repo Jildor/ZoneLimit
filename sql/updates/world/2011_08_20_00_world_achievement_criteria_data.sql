@@ -1,6 +1,6 @@
 -- Editado por Gildor
 -- Lo pongo como en TDB
-UPDATE `creature_template` SET `faction_A`=14, `faction_H`=14, `AIName`='', `mechanic_immune_mask`=8388625, `flags_extra`=0 `ScriptName`='npc_kelthuzad_abomination' WHERE `entry` IN (16428,30048);
+UPDATE `creature_template` SET `faction_A`=14, `faction_H`=14, `AIName`='', `mechanic_immune_mask`=8388625, `flags_extra`=0, `ScriptName`='npc_kelthuzad_abomination' WHERE `entry` IN (16428,30048);
 
 DELETE FROM `creature_ai_scripts` WHERE `creature_id`=16428;
 

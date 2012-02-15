@@ -16,14 +16,14 @@ UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16,`speed_walk`=1.6,`s
 UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16,`speed_walk`=1,`unit_flags`=33554688,`flags_extra`=2 WHERE `entry` IN (33121,33191); -- Iron Construct
 UPDATE `creature_template` SET `RegenHealth`=1,`flags_extra`=0 WHERE `entry`=33114; -- Flame Leviathan Seat
 UPDATE `creature_template` SET `unit_flags`=33554432,`AIName`='' WHERE `entry`=33142; -- Leviathan Defense Turret
-UPDATE `creature_template` SET `speed_walk`=1.2, WHERE `entry`=33189; -- Liquid Pyrite
+UPDATE `creature_template` SET `speed_walk`=1.2 WHERE `entry`=33189; -- Liquid Pyrite
 UPDATE `creature_template` SET `minlevel`=80,`maxlevel`=80 WHERE `entry`=33090; -- Pool of Tar
 UPDATE `creature_template` SET `faction_A`=2105,`faction_H`=2105,`unit_flags`=33280,`flags_extra`=0 WHERE `entry` IN (33816,34255); -- Expedition Defender
 UPDATE `creature_template` SET `faction_A`=2105,`faction_H`=2105 WHERE `entry` IN (33287,34256); -- Expedition Engineer
-UPDATE `creature_template` SET `faction_A`=2105,`faction_H`=2105,`unit_flags`=33280, WHERE `entry` IN (33259,34257); -- Expedition Trapper
+UPDATE `creature_template` SET `faction_A`=2105,`faction_H`=2105,`unit_flags`=33280 WHERE `entry` IN (33259,34257); -- Expedition Trapper
 UPDATE `creature_template` SET `unit_flags`=33555200,`AIName`='SmartAI',`InhabitType`=7,`flags_extra`=130 WHERE `entry`=23033; -- Invisible Stalker (Floating)
-UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16, WHERE `entry` IN (34086,34201); -- Magma Rager
-UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16, WHERE `entry` IN (34085,34186); -- Forge Construct
+UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16 WHERE `entry` IN (34086,34201); -- Magma Rager
+UPDATE `creature_template` SET `faction_A`=16,`faction_H`=16 WHERE `entry` IN (34085,34186); -- Forge Construct
 
 -- EventAI
 DELETE FROM `creature_ai_scripts` WHERE `creature_id`=33113; -- Flame Leviathan
@@ -81,7 +81,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- Pongo el spawn de Iron Construct como en TDB (guid de YTDB)
 DELETE FROM `creature` WHERE `id`=33121;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
-(129337,33121,603,3,1,26154,0,543.22,313.451,360.886,0.10472,604800,0,0,3780000,0,0,0,0,0),
+(129377,33121,603,3,1,26154,0,543.22,313.451,360.886,0.10472,604800,0,0,3780000,0,0,0,0,0),
 (129378,33121,603,3,1,26154,0,630.366,216.772,360.891,3.00197,604800,0,0,3780000,0,0,0,0,0),
 (129379,33121,603,3,1,26154,0,630.594,231.846,360.891,3.12414,604800,0,0,3780000,0,0,0,0,0),
 (129380,33121,603,3,1,26154,0,543.356,329.408,360.886,6.24828,604800,0,0,3780000,0,0,0,0,0),
@@ -111,32 +111,32 @@ INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`
 (129442,1294420,0,33554432,1,0,NULL),
 (129443,1294430,0,33554432,1,0,NULL);
 DELETE FROM `waypoint_data` WHERE `id` IN (1294400,1294410,1294420,1294430);
-INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`orientation`,`delay`,`move_flag`,`action`,`action_chance`,`wpguid`) VALUES
-(1294400,1,548.726,269.269,360.555,0,0,0,0,100,0),
-(1294400,2,550.913,194.13,360.822,0,0,0,0,100,0),
-(1294410,1,558.047,269.941,360.802,0,0,0,0,100,0),
-(1294410,2,559.746,193.785,360.826,0,0,0,0,100,0),
-(1294420,1,620.037,184.087,360.802,0,0,0,0,100,0),
-(1294420,2,622.226,265.287,360.801,0,0,0,0,100,0),
-(1294430,1,630.567,183.767,360.783,0,0,0,0,100,0),
-(1294430,2,628.666,265.356,360.213,0,0,0,0,100,0);
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_flag`,`action`,`action_chance`,`wpguid`) VALUES
+(1294400,1,548.726,269.269,360.555,0,0,0,100,0),
+(1294400,2,550.913,194.13,360.822,0,0,0,100,0),
+(1294410,1,558.047,269.941,360.802,0,0,0,100,0),
+(1294410,2,559.746,193.785,360.826,0,0,0,100,0),
+(1294420,1,620.037,184.087,360.802,0,0,0,100,0),
+(1294420,2,622.226,265.287,360.801,0,0,0,100,0),
+(1294430,1,630.567,183.767,360.783,0,0,0,100,0),
+(1294430,2,628.666,265.356,360.213,0,0,0,100,0);
 -- Pongo waypoints Forge Construct de TDB (Guids ZLDB)
 DELETE FROM `creature_addon` WHERE `guid` IN (129346,129347,129348,129349);
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES
-(129346,1293460,0,0,1,0,NULL);
-(129347,1293470,0,0,1,0,NULL);
-(129348,1293480,0,0,1,0,NULL);
+(129346,1293460,0,0,1,0,NULL),
+(129347,1293470,0,0,1,0,NULL),
+(129348,1293480,0,0,1,0,NULL),
 (129349,1293490,0,0,1,0,NULL);
 DELETE FROM `waypoint_data` WHERE `id` IN (1293460,1293470,1293480,1293490);
-INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`orientation`,`delay`,`move_flag`,`action`,`action_chance`,`wpguid`) VALUES
-(1293460,1,610.829,342.605,360.802,0,0,0,0,100,0),
-(1293460,2,611.942,272.636,360.802,0,0,0,0,100,0),
-(1293470,1,614.9,342.16,360.802,0,0,0,0,100,0),
-(1293470,2,616.596,272.531,360.802,0,0,0,0,100,0),
-(1293480,1,563.666,274.287,360.802,0,0,0,0,100,0),
-(1293480,2,562.532,345.703,360.795,0,0,0,0,100,0),
-(1293490,1,555.526,274.789,360.802,0,0,0,0,100,0),
-(1293490,2,556.726,346.031,360.795,0,0,0,0,100,0);
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_flag`,`action`,`action_chance`,`wpguid`) VALUES
+(1293460,1,610.829,342.605,360.802,0,0,0,100,0),
+(1293460,2,611.942,272.636,360.802,0,0,0,100,0),
+(1293470,1,614.9,342.16,360.802,0,0,0,100,0),
+(1293470,2,616.596,272.531,360.802,0,0,0,100,0),
+(1293480,1,563.666,274.287,360.802,0,0,0,100,0),
+(1293480,2,562.532,345.703,360.795,0,0,0,100,0),
+(1293490,1,555.526,274.789,360.802,0,0,0,100,0),
+(1293490,2,556.726,346.031,360.795,0,0,0,100,0);
 
 -- Model data
 UPDATE `creature_model_info` SET `bounding_radius`=5,`combat_reach`=1,`gender`=2 WHERE `modelid`=25870; -- Salvaged Chopper
