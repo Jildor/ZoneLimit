@@ -58,4 +58,4 @@ INSERT INTO `creature_text` (`entry`,`groupid`,`id`,`text`,`type`,`language`,`pr
 -- Delete the old EAI script.
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (25321,25322);
 -- Delete the EAI texts.
-DELETE FROM `creature_ai_texts` WHERE `creature_id` IN (-899,-898,-900,-901);
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-899,-898,-900,-901);
