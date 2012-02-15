@@ -60,17 +60,17 @@ public:
 
         // .addquest #entry'
         // number or [name] Shift-click form |color|Hquest:quest_id:quest_level|h[name]|h|r
-        char* cId = handler->extractKeyFromLink((char*)args,"Hquest");
+        char* cId = handler->extractKeyFromLink((char*)args, "Hquest");
         if (!cId)
             return false;
 
         uint32 entry = atol(cId);
 
-        Quest const* pQuest = sObjectMgr->GetQuestTemplate(entry);
+        Quest const* quest = sObjectMgr->GetQuestTemplate(entry);
 
-        if (!pQuest)
+        if (!quest)
         {
-            handler->PSendSysMessage(LANG_COMMAND_QUEST_NOTFOUND,entry);
+            handler->PSendSysMessage(LANG_COMMAND_QUEST_NOTFOUND, entry);
             handler->SetSentErrorMessage(true);
             return false;
         }
@@ -110,7 +110,7 @@ public:
 
         // .removequest #entry'
         // number or [name] Shift-click form |color|Hquest:quest_id:quest_level|h[name]|h|r
-        char* cId = handler->extractKeyFromLink((char*)args,"Hquest");
+        char* cId = handler->extractKeyFromLink((char*)args, "Hquest");
         if (!cId)
             return false;
 
@@ -157,7 +157,7 @@ public:
 
         // .quest complete #entry
         // number or [name] Shift-click form |color|Hquest:quest_id:quest_level|h[name]|h|r
-        char* cId = handler->extractKeyFromLink((char*)args,"Hquest");
+        char* cId = handler->extractKeyFromLink((char*)args, "Hquest");
         if (!cId)
             return false;
 
@@ -181,14 +181,14 @@ public:
             if (!id || !count)
                 continue;
 
-            uint32 curItemCount = player->GetItemCount(id,true);
+            uint32 curItemCount = player->GetItemCount(id, true);
 
             ItemPosCountVec dest;
             uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, id, count-curItemCount);
             if (msg == EQUIP_ERR_OK)
             {
                 Item* item = player->StoreNewItem(dest, id, true);
-                player->SendNewItem(item,count-curItemCount,true,false);
+                player->SendNewItem(item, count-curItemCount, true, false);
             }
         }
 
@@ -201,18 +201,18 @@ public:
             if (uint32 spell_id = quest->RequiredSpellCast[i])
             {
                 for (uint16 z = 0; z < creaturecount; ++z)
-                    player->CastedCreatureOrGO(creature,0,spell_id);
+                    player->CastedCreatureOrGO(creature, 0, spell_id);
             }
             else if (creature > 0)
             {
                 if (CreatureTemplate const* cInfo = sObjectMgr->GetCreatureTemplate(creature))
                     for (uint16 z = 0; z < creaturecount; ++z)
-                        player->KilledMonster(cInfo,0);
+                        player->KilledMonster(cInfo, 0);
             }
             else if (creature < 0)
             {
                 for (uint16 z = 0; z < creaturecount; ++z)
-                    player->CastedCreatureOrGO(creature,0,0);
+                    player->CastedCreatureOrGO(creature, 0, 0);
             }
         }
 
