@@ -25,9 +25,9 @@ INSERT INTO `creature_template_addon` (`entry`,`path_id`,`mount`,`bytes1`,`bytes
 -- Pongo los gossip como en TDB
 DELETE FROM `gossip_menu_option` WHERE `menu_id` IN (8161,8162,8163);
 INSERT INTO `gossip_menu_option` (`menu_id`,`id`,`option_icon`,`option_text`,`option_id`,`npc_option_npcflag`,`action_menu_id`,`action_poi_id`,`box_coded`,`box_money`,`box_text`) VALUES
-(8161,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0),
-(8162,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0),
-(8163,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0);
+(8161,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0,0),
+(8162,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0,0),
+(8163,0,0,'Walk free, elder.  Bring the spirits back to your tribe.',1,1,0,0,0,0,0);
 -- Borro gossip_scripts
 DELETE FROM `gossip_scripts` WHERE `id` IN (50016,50015,50017);
 
