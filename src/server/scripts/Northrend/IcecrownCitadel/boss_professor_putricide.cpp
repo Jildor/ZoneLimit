@@ -262,6 +262,7 @@ class boss_professor_putricide : public CreatureScript
                         break;
                     case NPC_GAS_CLOUD:
                         // no possible aura seen in sniff adding the aurastate
+                        summon->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
                         summon->ModifyAuraState(AURA_STATE_UNKNOWN22, true);
                         summon->CastSpell(summon, SPELL_GASEOUS_BLOAT_PROC, true);
                         summon->CastCustomSpell(SPELL_GASEOUS_BLOAT, SPELLVALUE_AURA_STACK, 10, summon, false);
@@ -269,6 +270,7 @@ class boss_professor_putricide : public CreatureScript
                         return;
                     case NPC_VOLATILE_OOZE:
                         // no possible aura seen in sniff adding the aurastate
+                        summon->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
                         summon->ModifyAuraState(AURA_STATE_UNKNOWN19, true);
                         summon->CastSpell(summon, SPELL_OOZE_ERUPTION_SEARCH_PERIODIC, true);
                         summon->CastSpell(summon, SPELL_VOLATILE_OOZE_ADHESIVE, false);
