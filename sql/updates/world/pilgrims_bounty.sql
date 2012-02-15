@@ -205,7 +205,7 @@ INSERT INTO `creature_template_addon` (`entry`, `path_id`, `mount`, `bytes1`, `b
 ('34822', '0', '0', '0', '1', '0', '61794 61799'), -- The Pie Chair / (Pie Server | Can Eat - Pie)
 ('34819', '0', '0', '0', '1', '0', '61795 61800'); -- The Stuffing Chair / (Stuffing Server | Can Eat - Stuffing)
 
--- Pilgrims Bount: Chair
+-- Pilgrims Bounty: Chair
 UPDATE creature_template SET spell1=66261, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34823; -- The Cranberry Chair
 UPDATE creature_template SET spell1=66250, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34812; -- The Turkey Chair
 UPDATE creature_template SET spell1=66259, spell2=61784, spell3=61785, spell4=61788, spell5=61786, spell6=61787 WHERE entry=34819; -- The Stuffing Chair
@@ -216,7 +216,7 @@ UPDATE creature_template SET spell1=66262, spell2=61784, spell3=61785, spell4=61
 UPDATE creature_template SET AIName='', ScriptName='npc_wild_turkey' WHERE entry=32820;
 DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_turkey_tracker';
 INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
-(62014, 'spell_gen_turkey_tracker');
+(62014, 'spell_gen_turkey_tracker'); -- Turkey Tracker
 
 -- Item: Turkey Caller
 UPDATE `creature_template` SET `faction_A`=35, `faction_H`=35, `ScriptName` = 'npc_lonely_turkey' WHERE `entry` =32956;
@@ -231,32 +231,32 @@ INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
 (61788, 'spell_gen_feast_on'); -- Feast On Stuffing
 
 DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
-'spell_gen_well_fed_pilgrims_bount_ap',
-'spell_gen_well_fed_pilgrims_bount_zm',
-'spell_gen_well_fed_pilgrims_bount_hit',
-'spell_gen_well_fed_pilgrims_bount_haste',
-'spell_gen_well_fed_pilgrims_bount_spirit'
+'spell_gen_well_fed_pilgrims_bounty_ap',
+'spell_gen_well_fed_pilgrims_bounty_zm',
+'spell_gen_well_fed_pilgrims_bounty_hit',
+'spell_gen_well_fed_pilgrims_bounty_haste',
+'spell_gen_well_fed_pilgrims_bounty_spirit'
 );
 INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
-(61807, 'spell_gen_well_fed_pilgrims_bount_ap'),     -- A Serving of Turkey
-(61804, 'spell_gen_well_fed_pilgrims_bount_zm'),     -- A Serving of Cranberries
-(61806, 'spell_gen_well_fed_pilgrims_bount_hit'),    -- A Serving of Stuffing
-(61808, 'spell_gen_well_fed_pilgrims_bount_haste'),  -- A Serving of Sweet Potatoes
-(61805, 'spell_gen_well_fed_pilgrims_bount_spirit'); -- A Serving of Pie
+(61807, 'spell_gen_well_fed_pilgrims_bounty_ap'),     -- A Serving of Turkey
+(61804, 'spell_gen_well_fed_pilgrims_bounty_zm'),     -- A Serving of Cranberries
+(61806, 'spell_gen_well_fed_pilgrims_bounty_hit'),    -- A Serving of Stuffing
+(61808, 'spell_gen_well_fed_pilgrims_bounty_haste'),  -- A Serving of Sweet Potatoes
+(61805, 'spell_gen_well_fed_pilgrims_bounty_spirit'); -- A Serving of Pie
 
 DELETE FROM `spell_script_names` WHERE `ScriptName` IN (
-'spell_gen_on_plate_pilgrims_bount_turkey',
-'spell_gen_on_plate_pilgrims_bount_cranberries',
-'spell_gen_on_plate_pilgrims_bount_stuffing',
-'spell_gen_on_plate_pilgrims_bount_sweet_potatoes',
-'spell_gen_on_plate_pilgrims_bount_pie'
+'spell_gen_on_plate_pilgrims_bounty_turkey',
+'spell_gen_on_plate_pilgrims_bounty_cranberries',
+'spell_gen_on_plate_pilgrims_bounty_stuffing',
+'spell_gen_on_plate_pilgrims_bounty_sweet_potatoes',
+'spell_gen_on_plate_pilgrims_bounty_pie'
 );
 INSERT INTO `spell_script_names` (`spell_id` ,`ScriptName`) VALUES
-(66250, 'spell_gen_on_plate_pilgrims_bount_turkey'),            -- Pass The Turkey
-(66261, 'spell_gen_on_plate_pilgrims_bount_cranberries'),       -- Pass The Cranberries
-(66259, 'spell_gen_on_plate_pilgrims_bount_stuffing'),          -- Pass The Stuffing
-(66262, 'spell_gen_on_plate_pilgrims_bount_sweet_potatoes'),    -- Pass The Sweet Potatoes
-(66260, 'spell_gen_on_plate_pilgrims_bount_pie');               -- Pass The Pie
+(66250, 'spell_gen_on_plate_pilgrims_bounty_turkey'),            -- Pass The Turkey
+(66261, 'spell_gen_on_plate_pilgrims_bounty_cranberries'),       -- Pass The Cranberries
+(66259, 'spell_gen_on_plate_pilgrims_bounty_stuffing'),          -- Pass The Stuffing
+(66262, 'spell_gen_on_plate_pilgrims_bounty_sweet_potatoes'),    -- Pass The Sweet Potatoes
+(66260, 'spell_gen_on_plate_pilgrims_bounty_pie');               -- Pass The Pie
 
 DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_bountiful_feast';
 INSERT INTO `spell_script_names` (`spell_id`, `ScriptName`) VALUES
