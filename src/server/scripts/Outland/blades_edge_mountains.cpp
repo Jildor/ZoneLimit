@@ -536,10 +536,6 @@ public:
 
 };
 
-/*######
-## AddSC
-######*/
-
 enum SimonGame
 {
     NPC_SIMON_BUNNY                 = 22923,
@@ -735,7 +731,7 @@ class npc_simon_bunny : public CreatureScript
             }
 
             // Used for getting involved player guid. Parameter id is used for defining if is a large(Monument) or small(Relic) node
-            void SetGUID(const uint64 &guid, int32 id)
+            void SetGUID(uint64 guid, int32 id)
             {
                 me->SetFlying(true);
 
@@ -799,7 +795,7 @@ class npc_simon_bunny : public CreatureScript
                 _events.ScheduleEvent(EVENT_SIMON_PERIODIC_PLAYER_CHECK, 2000);
 
                 if (GameObject* relic = me->FindNearestGameObject(large ? GO_APEXIS_MONUMENT : GO_APEXIS_RELIC, searchDistance))
-                    relic->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                    relic->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
             }
 
             // Called when despawning the bunny. Sets all the node GOs to their default states.
@@ -809,14 +805,14 @@ class npc_simon_bunny : public CreatureScript
 
                 for (uint32 clusterId = SIMON_BLUE; clusterId < SIMON_MAX_COLORS; clusterId++)
                     if (GameObject* cluster = me->FindNearestGameObject(clusterIds[clusterId], searchDistance))
-                        cluster->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                        cluster->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
 
                 for (uint32 auraId = GO_AURA_BLUE; auraId <= GO_AURA_YELLOW; auraId++)
                     if (GameObject* auraGo = me->FindNearestGameObject(auraId, searchDistance))
                         auraGo->RemoveFromWorld();
 
                 if (GameObject* relic = me->FindNearestGameObject(large ? GO_APEXIS_MONUMENT : GO_APEXIS_RELIC, searchDistance))
-                    relic->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                    relic->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
 
                 me->ForcedDespawn(1000);
             }
@@ -860,7 +856,7 @@ class npc_simon_bunny : public CreatureScript
             {
                 for (uint32 clusterId = SIMON_BLUE; clusterId < SIMON_MAX_COLORS; clusterId++)
                     if (GameObject* cluster = me->FindNearestGameObject(clusterIds[clusterId], searchDistance))
-                        cluster->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                        cluster->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
 
                 if (clustersOnly)
                     return;
@@ -914,7 +910,7 @@ class npc_simon_bunny : public CreatureScript
                 {
                     if (GameObject* cluster = me->FindNearestGameObject(clusterIds[clusterId], 2.0f*searchDistance))
                     {
-                        cluster->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                        cluster->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
 
                         // break since we don't need glowing auras for large clusters
                         if (large)
@@ -955,7 +951,7 @@ class npc_simon_bunny : public CreatureScript
                 uint32 rewSpell;
                 switch (level)
                 {
-                    case 6:
+                    case 6: 
                         if (large)
                             GivePunishment();
                         else
@@ -1005,7 +1001,7 @@ class npc_simon_bunny : public CreatureScript
                 }
             }
 
-            void SpellHitTarget(Unit* target, const SpellEntry* spell)
+            void SpellHitTarget(Unit* target, const SpellInfo* spell)
             {
                 // Cast SPELL_BAD_PRESS_DAMAGE with scaled basepoints when the visual hits the target.
                 // Need Fix: When SPELL_BAD_PRESS_TRIGGER hits target it triggers spell SPELL_BAD_PRESS_DAMAGE by itself
