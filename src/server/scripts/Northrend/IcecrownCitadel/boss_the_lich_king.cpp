@@ -483,6 +483,8 @@ class boss_the_lich_king : public CreatureScript
         {
             boss_the_lich_kingAI(Creature* creature) : BossAI(creature, DATA_THE_LICH_KING)
             {
+                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             }
 
             void Reset()
