@@ -73,11 +73,11 @@ public:
             if (spell->Id == SPELL_AWAKEN_PEON && caster->GetTypeId() == TYPEID_PLAYER
                 && CAST_PLR(caster)->GetQuestStatus(QUEST_LAZY_PEONS) == QUEST_STATUS_INCOMPLETE)
             {
-                caster->ToPlayer()->KilledMonsterCredit(me->GetEntry(),me->GetGUID());
+                caster->ToPlayer()->KilledMonsterCredit(me->GetEntry(), me->GetGUID());
                 DoScriptText(SAY_SPELL_HIT, me, caster);
                 me->RemoveAllAuras();
                 if (GameObject* Lumberpile = me->FindNearestGameObject(GO_LUMBERPILE, 20))
-                    me->GetMotionMaster()->MovePoint(1,Lumberpile->GetPositionX()-1,Lumberpile->GetPositionY(),Lumberpile->GetPositionZ());
+                    me->GetMotionMaster()->MovePoint(1, Lumberpile->GetPositionX()-1, Lumberpile->GetPositionY(), Lumberpile->GetPositionZ());
             }
         }
 
@@ -332,9 +332,9 @@ class npc_tiger_matriarch : public CreatureScript
 // These models was found in sniff.
 // TODO: generalize these models with race from dbc
 uint32 const trollmodel[] =
-{11665,11734,11750,12037,12038,12042,12049,12849,13529,14759,15570,15701,
-15702,1882,1897,1976,2025,27286,2734,2735,4084,4085,4087,4089,4231,4357,
-4358,4360,4361,4362,4363,4370,4532,4537,4540,4610,6839,7037,9767,9768};
+{11665, 11734, 11750, 12037, 12038, 12042, 12049, 12849, 13529, 14759, 15570, 15701,
+15702, 1882, 1897, 1976, 2025, 27286, 2734, 2735, 4084, 4085, 4087, 4089, 4231, 4357,
+4358, 4360, 4361, 4362, 4363, 4370, 4532, 4537, 4540, 4610, 6839, 7037, 9767, 9768};
 
 class npc_troll_volunteer : public CreatureScript
 {
@@ -348,7 +348,7 @@ class npc_troll_volunteer : public CreatureScript
                 Reset();
                 Player* player = me->GetOwner()->ToPlayer();
 
-                switch (urand(1,4))
+                switch (urand(1, 4))
                 {
                     case 1:
                         _mountModel = 6471;
@@ -530,12 +530,12 @@ class spell_voodoo : public SpellScriptLoader
         {
             PrepareSpellScript(spell_voodoo_SpellScript)
 
-            bool Validate(SpellEntry const* /*spellEntry*/)
+            bool Validate(SpellInfo const* /*spellEntry*/)
             {
-                if (!sSpellStore.LookupEntry(SPELL_BREW) || !sSpellStore.LookupEntry(SPELL_GHOSTLY) ||
-                    !sSpellStore.LookupEntry(SPELL_HEX1) || !sSpellStore.LookupEntry(SPELL_HEX2) ||
-                    !sSpellStore.LookupEntry(SPELL_HEX3) || !sSpellStore.LookupEntry(SPELL_GROW) ||
-                    !sSpellStore.LookupEntry(SPELL_LAUNCH))
+                if (!sSpellMgr->GetSpellInfo(SPELL_BREW) || !sSpellMgr->GetSpellInfo(SPELL_GHOSTLY) ||
+                    !sSpellMgr->GetSpellInfo(SPELL_HEX1) || !sSpellMgr->GetSpellInfo(SPELL_HEX2) ||
+                    !sSpellMgr->GetSpellInfo(SPELL_HEX3) || !sSpellMgr->GetSpellInfo(SPELL_GROW) ||
+                    !sSpellMgr->GetSpellInfo(SPELL_LAUNCH))
                     return false;
                 return true;
             }
@@ -553,7 +553,7 @@ class spell_voodoo : public SpellScriptLoader
 
             void Register()
             {
-                OnEffect += SpellEffectFn(spell_voodoo_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+                OnEffectHitTarget += SpellEffectFn(spell_voodoo_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
             }
         };
 
