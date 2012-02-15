@@ -300,16 +300,12 @@ class boss_professor_putricide : public CreatureScript
                             return;
                         me->SetReactState(REACT_PASSIVE);
                         DoAction(ACTION_CHANGE_PHASE);
-                        UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
-                        UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
                         break;
                     case PHASE_COMBAT_2:
                         if (HealthAbovePct(35))
                             return;
                         me->SetReactState(REACT_PASSIVE);
                         DoAction(ACTION_CHANGE_PHASE);
-                        UnsummonSpecificCreaturesNearby(me,NPC_VOLATILE_OOZE,100.0f);
-                        UnsummonSpecificCreaturesNearby(me,NPC_GAS_CLOUD,100.0f);
                         break;
                     default:
                         break;
