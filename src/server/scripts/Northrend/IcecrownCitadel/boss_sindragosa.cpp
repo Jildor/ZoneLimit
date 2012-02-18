@@ -607,7 +607,6 @@ class npc_spinestalker : public CreatureScript
                 _events.ScheduleEvent(EVENT_BELLOWING_ROAR, urand(20000, 25000));
                 _events.ScheduleEvent(EVENT_CLEAVE_SPINESTALKER, urand(10000, 15000));
                 _events.ScheduleEvent(EVENT_TAIL_SWEEP, urand(8000, 12000));
-                me->SetReactState(REACT_DEFENSIVE);
 
                 if (_instance->GetData(DATA_SPINESTALKER) != 255)
                 {
@@ -658,6 +657,15 @@ class npc_spinestalker : public CreatureScript
                 me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                 me->SetHomePosition(SpinestalkerLandPos);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            }
+
+            void MoveInLineOfSight(Unit* who)
+            {
+                if (me->IsWithinDistInMap(who, 20.0f))
+                {
+                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetInCombatWithZone();
+                }
             }
 
             void UpdateAI(uint32 const diff)
@@ -723,7 +731,6 @@ class npc_rimefang : public CreatureScript
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_FROST_BREATH_RIMEFANG, urand(12000, 15000));
                 _events.ScheduleEvent(EVENT_ICY_BLAST, urand(30000, 35000));
-                me->SetReactState(REACT_DEFENSIVE);
                 _icyBlastCounter = 0;
 
                 if (_instance->GetData(DATA_RIMEFANG) != 255)
@@ -775,6 +782,15 @@ class npc_rimefang : public CreatureScript
                 me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                 me->SetHomePosition(RimefangLandPos);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+            }
+
+            void MoveInLineOfSight(Unit* who)
+            {
+                if (me->IsWithinDistInMap(who, 20.0f))
+                {
+                    me->SetReactState(REACT_AGGRESSIVE);
+                    me->SetInCombatWithZone();
+                }
             }
 
             void EnterCombat(Unit* /*victim*/)
