@@ -898,7 +898,8 @@ class boss_the_lich_king : public CreatureScript
                             break;
                         case EVENT_INTRO_CAST_FREEZE:
                             Talk(SAY_LK_INTRO_3);
-                            DoCastAOE(SPELL_ICE_LOCK, false);
+                            if (Unit* Tirion = me->GetMap()->GetCreature(instance->GetData64(DATA_HIGHLORD_TIRION_FORDRING)))
+                                DoCast(Tirion, SPELL_ICE_LOCK, false);
                             events.ScheduleEvent(EVENT_FINISH_INTRO, 1000, 0, PHASE_INTRO);
                             break;
                         case EVENT_FINISH_INTRO:
