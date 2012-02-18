@@ -6770,11 +6770,6 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
             }
             switch (dummySpell->Id)
             {
-                // Item - Paladin T10 Holy 2P Bonus
-                case 70755:
-                    if(procSpell->Id == 31842)
-                        triggered_spell_id = 71166;
-                    break;
                 // Heart of the Crusader
                 case 20335: // rank 1
                     triggered_spell_id = 21183;

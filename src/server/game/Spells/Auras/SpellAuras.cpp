@@ -1589,16 +1589,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     else
                         target->SetReducedThreatPercent(0,0);
                     break;
-               /* case 31842: // Divine Illumination
-                    // Item - Paladin T10 Holy 2P Bonus
-                    if (target->HasAura(70755))
-                    {
-                        if (apply)
-                            target->CastSpell(target, 71166, true);
-                        else
-                            target->RemoveAurasDueToSpell(71166);
-                    }
-                    break;*/
             }
             break;
         case SPELLFAMILY_DRUID:
@@ -1687,10 +1677,20 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                     if (apply)
                     {
                         if ((GetSpellInfo()->Id == 31821 && target->HasAura(19746, GetCasterGUID())) || (GetSpellInfo()->Id == 19746 && target->HasAura(31821)))
-                            target->CastSpell(target,64364,true);
+                            target->CastSpell(target, 64364, true);
                     }
                     else
                         target->RemoveAurasDueToSpell(64364, GetCasterGUID());
+                    break;
+                case 31842: // Divine Illumination
+                    // Item - Paladin T10 Holy 2P Bonus
+                    if (target->HasAura(70755))
+                    {
+                        if (apply)
+                            target->CastSpell(target, 71166, true);
+                        else
+                            target->RemoveAurasDueToSpell(71166);
+                    }
                     break;
             }
             if (GetSpellInfo()->GetSpellSpecific() == SPELL_SPECIFIC_AURA)
