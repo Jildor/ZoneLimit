@@ -566,28 +566,32 @@ uint32 ArenaTeam::GetPoints(uint32 memberRating)
 
 uint32 ArenaTeam::GetAverageMMR(Group* group) const
 {
-   if (!group)
+    if (!group)
         return 0;
 
-   uint32 matchMakerRating = 0;
-   uint32 playerDivider = 0;
-   for (MemberList::const_iterator itr = Members.begin(); itr != Members.end(); ++itr)		
-   {
+    uint32 matchMakerRating = 0;
+    uint32 playerDivider = 0;
+    for (MemberList::const_iterator itr = Members.begin(); itr != Members.end(); ++itr)
+    {
         // Skip if player is not online
         if (!ObjectAccessor::FindPlayer(itr->Guid))
-                continue;
-				
-        // Skip if player is not member of group
-        if (!group->IsMember(itr->Guid))				 
-                continue;
+            continue;
 
+        // Skip if player is not member of group
+        if (!group->IsMember(itr->Guid))
+            continue;
+
+        matchMakerRating += itr->MatchMakerRating;
+        ++playerDivider;
     }
-	
+
     // x/0 = crash
     if (playerDivider == 0)
         playerDivider = 1;
 
-    return Stats.Rating;
+    matchMakerRating /= playerDivider;
+
+    return matchMakerRating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
