@@ -36,17 +36,18 @@ enum BattlegroundDSObjects
 {
     BG_DS_OBJECT_TYPE_DOOR_1    = 192642,
     BG_DS_OBJECT_TYPE_DOOR_2    = 192643,
-    BG_DS_OBJECT_TYPE_WATER_1   = 194395,
-    BG_DS_OBJECT_TYPE_WATER_2   = 191877,
+    BG_DS_OBJECT_TYPE_WATER_1   = 194395, // LoS checker
+    BG_DS_OBJECT_TYPE_WATER_2   = 191877, // Visual
     BG_DS_OBJECT_TYPE_BUFF_1    = 184663,
     BG_DS_OBJECT_TYPE_BUFF_2    = 184664
 };
 
 enum BattlegroundDSData
 { // These values are NOT blizzlike... need the correct data!
-    BG_DS_WATERFALL_TIMER_MIN                    = 30000,
+    BG_DS_WATERFALL_TIMER_MIN                    = 35000,
     BG_DS_WATERFALL_TIMER_MAX                    = 60000,
     BG_DS_WATERFALL_DURATION                     = 10000,
+    BG_DS_WATERFALL_RADIUS                       = 4,
 };
 
 class BattlegroundDSScore : public BattlegroundScore
@@ -76,14 +77,11 @@ class BattlegroundDS : public Battleground
         void HandleKillPlayer(Player* player, Player* killer);
         bool HandlePlayerUnderMap(Player* player);
     private:
-        uint32 m_waterTimer;
-        bool m_waterfallActive;
-
         virtual void PostUpdateImpl(uint32 diff);
-    protected:
-        bool isWaterFallActive() { return m_waterfallActive; };
-        void setWaterFallActive(bool active) { m_waterfallActive = active; };
-        void setWaterFallTimer(uint32 timer) { m_waterTimer = timer; };
-        uint32 getWaterFallTimer() { return m_waterTimer; };
+        uint8 m_waterFallStatus;
+        uint32 m_waterFall;
+        uint32 m_teleport;
+        uint32 m_knockback;
+        uint32 m_dynamicLOSid;
 };
 #endif
