@@ -438,9 +438,8 @@ class boss_professor_putricide : public CreatureScript
                         me->AttackStop();
                         if (!IsHeroic())
                         {
-                            SpellInfo const* spell = sSpellMgr->GetSpellInfo(SPELL_TEAR_GAS);
                             DoCast(me, SPELL_TEAR_GAS);
-                            events.ScheduleEvent(EVENT_TEAR_GAS, sSpellMgr->GetSpellForDifficultyFromSpell(spell, me)->CalcCastTime() + 2500);
+                            events.ScheduleEvent(EVENT_TEAR_GAS, 2500);
                         }
                         else
                         {
@@ -575,8 +574,6 @@ class boss_professor_putricide : public CreatureScript
                             events.ScheduleEvent(EVENT_UNSTABLE_EXPERIMENT, urand(35000, 40000));
                             break;
                         case EVENT_TEAR_GAS:
-                            me->RemoveAurasDueToSpell(71615);
-                            me->RemoveAurasDueToSpell(71618);
                             me->GetMotionMaster()->MovePoint(POINT_TABLE, tablePos);
                             break;
                         case EVENT_RESUME_ATTACK:
