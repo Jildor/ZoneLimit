@@ -718,6 +718,12 @@ LootItem* Loot::LootItemInSlot(uint32 lootSlot, Player* player, QuestItem* *qite
         }
     }
 
+    // If the player has pending bind on a instance, bind him to the instance
+    // when he loot something. This prevents people from looting itens between the pending bind time window
+    // without generating a raid lockout id.
+    if (player->HasPendingBind())
+        player->BindToInstance();
+
     if (is_looted)
         return NULL;
 
