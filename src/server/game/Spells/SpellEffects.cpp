@@ -3268,6 +3268,8 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
     if (dispelMask & (1 << DISPEL_DISEASE) && unitTarget->HasAura(50536))
         dispelMask &= ~(1 << DISPEL_DISEASE);
 
+    int32 totalspells = 0;
+
     Unit::AuraMap const& auras = unitTarget->GetOwnedAuras();
     for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
     {
@@ -3296,12 +3298,19 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
             bool dispel_charges = aura->GetSpellInfo()->AttributesEx7 & SPELL_ATTR7_DISPEL_CHARGES;
             uint8 charges = dispel_charges ? aura->GetCharges() : aura->GetStackAmount();
             if (charges > 0)
+            {
                 dispel_list.push_back(std::make_pair(aura, charges));
+                totalspells += charges;
+            }
         }
     }
 
     if (dispel_list.empty())
         return;
+
+    // don't allow dispeling more times than buff count
+    if (damage > totalspells)
+        damage = totalspells;
 
     // Ok if exist some buffs for dispel try dispel it
     uint32 failCount = 0;
