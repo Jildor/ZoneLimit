@@ -323,15 +323,12 @@ public:
             switch (caster->GetMapId())
             {
                 case 617: // Dalaran Sewers
-                    // casting on center of arena
-                    if (caster->GetDistance2d(1291.56f, 790.837f) <= 5.0f)
-                        return SPELL_FAILED_NOT_HERE;
-                    // casting on starting pipes
-                    if (caster->GetPositionZ() > 13.0f)
+                    if (caster->GetDistance2d(1291.56f, 790.837f) <= 5.0f || // casting on center of arena
+                        caster->GetPositionZ() > 13.0f) // casting on starting pipes
                         return SPELL_FAILED_NOT_HERE;
                     break;
                 case 618: // Ring of Valor
-                    if(caster->GetDistance2d(763.632385f, -306.162384f) < 1.5f || // casting over a small pilar
+                    if (caster->GetDistance2d(763.632385f, -306.162384f) < 1.5f || // casting over a small pilar
                         caster->GetDistance2d(763.611145f, -261.856750f) < 1.5f ||
                         caster->GetDistance2d(723.644287f, -284.493256f) < 4.0f || // casting over a big pilar
                         caster->GetDistance2d(802.211609f, -284.493256f) < 4.0f ||
