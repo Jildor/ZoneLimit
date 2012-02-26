@@ -325,6 +325,7 @@ public:
                 case 617: // Dalaran Sewers
                     // casting on center of arena
                     if (caster->GetDistance2d(1291.56f, 790.837f) <= 5.0f)
+                        return SPELL_FAILED_NOT_HERE;
                     // casting on starting pipes
                     if (caster->GetPositionZ() > 13.0f)
                         return SPELL_FAILED_NOT_HERE;
