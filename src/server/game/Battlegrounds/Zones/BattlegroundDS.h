@@ -47,7 +47,7 @@ enum BattlegroundDSData
     BG_DS_WATERFALL_TIMER_MIN                    = 35000,
     BG_DS_WATERFALL_TIMER_MAX                    = 60000,
     BG_DS_WATERFALL_DURATION                     = 10000,
-    BG_DS_WATERFALL_RADIUS                       = 4,
+    BG_DS_WATERFALL_RADIUS                       = 5,
 };
 
 class BattlegroundDSScore : public BattlegroundScore
