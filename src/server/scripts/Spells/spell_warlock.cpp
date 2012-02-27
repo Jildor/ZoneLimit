@@ -323,7 +323,7 @@ public:
             switch (caster->GetMapId())
             {
                 case 617: // Dalaran Sewers
-                    if (caster->GetDistance2d(1291.56f, 790.837f) <= 5.0f || // casting on center of arena
+                    if (caster->GetDistance2d(1291.56f, 790.837f) <= 6.0f || // casting on center of arena
                         caster->GetPositionZ() > 13.0f) // casting on starting pipes
                         return SPELL_FAILED_NOT_HERE;
                     break;
