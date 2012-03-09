@@ -7138,7 +7138,6 @@ void Spell::EffectTitanGrip(SpellEffIndex /*effIndex*/)
     {
         Player* player = m_caster->ToPlayer();
         player->SetCanTitanGrip(true);
-
         if (player->HasTwoHandWeaponInOneHand() && !player->HasAura(49152))
             player->CastSpell(player, 49152, true);
     }
