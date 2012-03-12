@@ -424,8 +424,8 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                         if (!unitTarget->HasAura(27825))
                             return;
                         break;
-                    case 38441: // Cataclysmic Bolt
-                    case 66316: // Spinning Pain Spike
+                    // Cataclysmic Bolt
+                    case 38441:
                     {
                         damage = unitTarget->CountPctFromMaxHealth(50);
                         break;
