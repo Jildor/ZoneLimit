@@ -433,7 +433,7 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                     // Spinning Pain Spike
                     case 66316:
                     {
-                        damage = unitTarget->CountPctFromMaxHealth(100);
+                        damage = unitTarget->CountPctFromMaxHealth(50);
                         break;
                     }
                     case 20625: // Ritual of Doom Sacrifice
