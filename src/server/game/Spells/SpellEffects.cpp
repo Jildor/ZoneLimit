@@ -430,6 +430,12 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                         damage = unitTarget->CountPctFromMaxHealth(50);
                         break;
                     }
+                    // Spinning Pain Spike
+                    case 66316:
+                    {
+                        damage = unitTarget->CountPctFromMaxHealth(100);
+                        break;
+                    }
                     case 20625: // Ritual of Doom Sacrifice
                     case 29142: // Eyesore Blaster
                     case 35139: // Throw Boom's Doom
@@ -437,7 +443,6 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                     case 55269: // Deathly Stare
                     case 56578: // Rapid-Fire Harpoon
                     case 62775: // Tympanic Tantrum
-                    case 66316: // Spinning Pain Spike
                     {
                         damage = unitTarget->CountPctFromMaxHealth(damage);
                         break;
