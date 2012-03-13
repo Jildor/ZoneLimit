@@ -662,12 +662,12 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won 
 
     // TODO: Replace this hack with using the confidence factor (limiting the factor to 2.0f)
     // if it's loss and it's not calculation of MMR
-    if(!won && !calculateMatchMakerRating){
-        if(ownRating < 1000){ // team rating shouldn't decrease if it's already bellow 1000
+    if(!won)
+    {
+        if(ownRating < 1000) // team rating shouldn't decrease if it's already bellow 1000
             mod = 0;
-        }else if(ownRating <= 1300){
+        else if(ownRating <= 1300)
             mod /= 2;
-        }
     }
 /* Comentado para cambiar sistema de arenas
     else
