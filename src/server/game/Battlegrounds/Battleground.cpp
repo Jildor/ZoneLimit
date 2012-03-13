@@ -741,8 +741,8 @@ void Battleground::EndBattleground(uint32 winner)
                 loser_matchmaker_rating = GetArenaMatchmakerRating(GetOtherTeam(winner));
                 winner_team_rating = winner_arena_team->GetRating();
                 winner_matchmaker_rating = GetArenaMatchmakerRating(winner);
-                winner_matchmaker_change = winner_arena_team->WonAgainst(winner_matchmaker_rating, loser_matchmaker_rating, winner_change);
-                loser_matchmaker_change = loser_arena_team->LostAgainst(loser_matchmaker_rating, winner_matchmaker_rating, loser_change);
+                winner_matchmaker_change = winner_arena_team->WonAgainst(winner_team_rating, loser_team_rating, winner_change);
+                loser_matchmaker_change = loser_arena_team->LostAgainst(loser_team_rating, winner_team_rating, loser_change);
                 sLog->outArena("--- Winner: old rating: %u, rating gain: %d, old MMR: %u, MMR gain: %d --- Loser: old rating: %u, rating loss: %d, old MMR: %u, MMR loss: %d ---", winner_team_rating, winner_change, winner_matchmaker_rating,
                     winner_matchmaker_change, loser_team_rating, loser_change, loser_matchmaker_rating, loser_matchmaker_change);
                 SetArenaMatchmakerRating(winner, winner_matchmaker_rating + winner_matchmaker_change);

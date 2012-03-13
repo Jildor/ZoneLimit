@@ -581,17 +581,23 @@ uint32 ArenaTeam::GetAverageMMR(Group* group) const
         if (!group->IsMember(itr->Guid))
             continue;
 
+/* comentado para usar rating system
         matchMakerRating += itr->MatchMakerRating;
         ++playerDivider;
+*/
     }
 
     // x/0 = crash
     if (playerDivider == 0)
         playerDivider = 1;
 
+/* comentado para usar rating system
     matchMakerRating /= playerDivider;
 
     return matchMakerRating;
+*/
+// Puesto stats rating
+    return Stats.Rating;
 }
 
 float ArenaTeam::GetChanceAgainst(uint32 ownRating, uint32 opponentRating)
@@ -634,6 +640,7 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won 
     float chance = GetChanceAgainst(ownRating, opponentRating);
     float won_mod = (won) ? 1.0f : 0.0f;
 
+/* Comentado para cambiar sistema de arenas
     // Calculate the rating modification
     float mod;
 
@@ -647,6 +654,25 @@ int32 ArenaTeam::GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won 
     }
     else
         mod = 24.0f * (won_mod - chance);
+*/
+
+    // Mejora sistema de arenas
+    // Calculate the rating modification
+    float mod = 32.0f * (won_mod - chance); // correct value of K is 32 says wowwiki
+
+    // TODO: Replace this hack with using the confidence factor (limiting the factor to 2.0f)
+    // if it's loss and it's not calculation of MMR
+    if(!won && !calculateMatchMakerRating){
+        if(ownRating < 1000){ // team rating shouldn't decrease if it's already bellow 1000
+            mod = 0;
+        }else if(ownRating <= 1300){
+            mod /= 2;
+        }
+    }
+/* Comentado para cambiar sistema de arenas
+    else
+        mod = 24.0f * (won_mod - chance);
+*/
 
     return (int32)ceil(mod);
 }
