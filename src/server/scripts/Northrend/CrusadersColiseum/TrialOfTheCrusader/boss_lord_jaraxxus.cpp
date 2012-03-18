@@ -543,12 +543,16 @@ class spell_spinning_pain_spike : public SpellScriptLoader
 
             void HandleScript(SpellEffIndex /*eff*/)
             {
+
+                if (Unit* unitTarget = GetHitUnit())
+                {
                     int32 bp = 0;
                     if (unitTarget->isAlive())
                     {
                         bp = int32(unitTarget->CountPctFromMaxHealth(50));
                         unitTarget->CastCustomSpell(unitTarget, SPELL_SPINNING_PAIN_SPIKE, &bp, NULL, NULL, false);
                     }
+                }
             }
             void Register()
             {
