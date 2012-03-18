@@ -527,42 +527,6 @@ public:
 
 };
 
-class spell_spinning_pain_spike : public SpellScriptLoader
-{
-    enum Spells
-    {
-        SPELL_SPINNING_PAIN_SPIKE = 66316,
-    };
-
-    public:
-        spell_spinning_pain_spike() : SpellScriptLoader("spell_spinning_pain_spike") {}
-
-        class spell_spinning_pain_spike_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_spinning_pain_spike_SpellScript);
-
-            void HandleScript(SpellEffIndex /*eff*/)
-            {
-                Unit* caster = GetCaster();
-                if (Unit* unitTarget = GetHitUnit())
-                {
-                    int32 bp = 0;
-                    bp = int32(unitTarget->CountPctFromMaxHealth(50));
-                    caster->CastCustomSpell(unitTarget, SPELL_SPINNING_PAIN_SPIKE, &bp, NULL, NULL, false);
-                }
-            }
-            void Register()
-            {
-                OnEffectHitTarget += SpellEffectFn(spell_spinning_pain_spike_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
-            }
-        };
-
-        SpellScript* GetSpellScript() const
-        {
-            return new spell_spinning_pain_spike_SpellScript();
-        }
-};
-
 void AddSC_boss_jaraxxus()
 {
     new boss_jaraxxus();
@@ -571,5 +535,4 @@ void AddSC_boss_jaraxxus()
     new mob_fel_infernal();
     new mob_nether_portal();
     new mob_mistress_of_pain();
-    new spell_spinning_pain_spike();
 }

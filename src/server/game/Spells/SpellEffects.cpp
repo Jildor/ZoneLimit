@@ -425,6 +425,7 @@ void Spell::EffectSchoolDMG(SpellEffIndex effIndex)
                             return;
                         break;
                     case 38441: // Cataclysmic Bolt
+                    case 66316: // Spinning Pain Spike
                     {
                         damage = unitTarget->CountPctFromMaxHealth(50);
                         break;
