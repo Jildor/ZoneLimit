@@ -543,7 +543,7 @@ class spell_spinning_pain_spike : public SpellScriptLoader
 
             void HandleScript(SpellEffIndex /*eff*/)
             {
-                if (Unit* unitTarget = GetHitUnit()
+                if (Unit* unitTarget = GetHitUnit())
                 {
                     if (unitTarget->isAlive())
                     {
