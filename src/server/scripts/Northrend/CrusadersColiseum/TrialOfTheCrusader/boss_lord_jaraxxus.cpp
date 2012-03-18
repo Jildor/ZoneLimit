@@ -547,11 +547,7 @@ class spell_spinning_pain_spike : public SpellScriptLoader
                 if (Unit* unitTarget = GetHitUnit())
                 {
                     int32 bp = 0;
-                    if (unitTarget->isAlive())
-                    {
-                        bp = int32(unitTarget->CountPctFromMaxHealth(50));
-                        unitTarget->CastCustomSpell(unitTarget, SPELL_SPINNING_PAIN_SPIKE, &bp, NULL, NULL, false);
-                    }
+                    bp = int32(unitTarget->CountPctFromMaxHealth(50));
                 }
             }
             void Register()
