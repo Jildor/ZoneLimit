@@ -543,7 +543,8 @@ class spell_spinning_pain_spike : public SpellScriptLoader
 
             void HandleScript(SpellEffIndex /*eff*/)
             {
-                if (unitTarget && unitTarget->isAlive())
+                Unit* unitTarget = GetHitUnit()
+                if (unitTarget->isAlive())
                 {
                     int32 bp = 0;
                     bp = int32(unitTarget->CountPctFromMaxHealth(50));
@@ -551,7 +552,7 @@ class spell_spinning_pain_spike : public SpellScriptLoader
             }
             void Register()
             {
-                OnEffectHitTarget += SpellEffectFn(spell_spinning_pain_spike_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
+                OnEffectHitTarget += SpellEffectFn(spell_spinning_pain_spike_SpellScript::HandleScript, EFFECT_1, SPELL_EFFECT_SCHOOL_DAMAGE);
             }
         };
 
