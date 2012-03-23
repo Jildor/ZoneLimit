@@ -112,7 +112,7 @@ public:
                 case BOSS_KING_YMIRON:        
                     uiKingYmiron = creature->GetGUID();        
                     creature->SetReactState(REACT_PASSIVE);
-                    creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
                     break;
                 case MOB_FRENZIED_WORGEN:     uiFrenziedWorgen = creature->GetGUID();    break;
                 case MOB_RAVENOUS_FURBOLG:    uiRavenousFurbolg = creature->GetGUID();   break;
@@ -263,7 +263,7 @@ public:
             if ((GetData(DATA_SVALA_SORROWGRAVE_EVENT) == DONE) && (GetData(DATA_GORTOK_PALEHOOF_EVENT) == DONE) && (GetData(DATA_SKADI_THE_RUTHLESS_EVENT) == DONE)) {
                 if(Creature* pYmiron = instance->GetCreature(uiKingYmiron)){
                     pYmiron->SetReactState(REACT_AGGRESSIVE);
-                    pYmiron->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                    pYmiron->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
                 }
             }
         }
