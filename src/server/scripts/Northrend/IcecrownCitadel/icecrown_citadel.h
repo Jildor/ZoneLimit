@@ -255,6 +255,7 @@ enum CreaturesIds
     NPC_ICY_BLAST                               = 38223,
     NPC_FROST_BOMB                              = 37186,
     NPC_ICE_TOMB                                = 36980,
+    NPC_TRIGGER                                 = 38667,
 
     // The Lich King
     NPC_THE_LICH_KING                           = 36597,
@@ -412,6 +413,7 @@ enum SharedActions
     // Sindragosa
     ACTION_START_FROSTWYRM      = -368530,
     ACTION_TRIGGER_ASPHYXIATION = -368531,
+    ACTION_BOMB_LANDED          = -368532,
 
     // The Lich King
     ACTION_RESTORE_LIGHT        = -72262,
