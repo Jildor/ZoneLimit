@@ -6027,10 +6027,6 @@ void Spell::EffectSummonObject(SpellEffIndex effIndex)
 
     GameObject* pGameObj = new GameObject;
 
-    WorldObject* target = focusObject;
-    if (!target)
-        target = m_caster;
-
     float x, y, z;
     // If dest location if present
     if (m_targets.HasDst())
