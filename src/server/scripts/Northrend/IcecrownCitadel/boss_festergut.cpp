@@ -222,7 +222,7 @@ class boss_festergut : public CreatureScript
                             Talk(EMOTE_GAS_SPORE);
                             me->CastCustomSpell(SPELL_GAS_SPORE, SPELLVALUE_MAX_TARGETS, RAID_MODE<int32>(2, 3, 2, 3), me);
                             // testing
-                            if (player->HasAura(SPELL_GAS_SPORE)
+                            if (player->HasAura(SPELL_GAS_SPORE))
                                 player->CastSpell(player, 72144, true);
                             events.ScheduleEvent(EVENT_GAS_SPORE, urand(40000, 45000));
                             events.RescheduleEvent(EVENT_VILE_GAS, urand(28000, 35000));
