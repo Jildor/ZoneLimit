@@ -183,8 +183,8 @@ class boss_rotface : public CreatureScript
                             {
                                 DoSummon(NPC_OOZE_SPRAY_STALKER, *target, 8000, TEMPSUMMON_TIMED_DESPAWN);
                                 Talk(EMOTE_SLIME_SPRAY);
+                                DoCast(target, 72145);
                                 DoCast(me, SPELL_SLIME_SPRAY);
-                                DoCastVictim(72145);
                             }
                             events.ScheduleEvent(EVENT_SLIME_SPRAY, 20000);
                             break;
