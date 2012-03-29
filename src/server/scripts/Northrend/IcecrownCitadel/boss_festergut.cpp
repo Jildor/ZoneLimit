@@ -162,14 +162,6 @@ class boss_festergut : public CreatureScript
             {
                 if (spell->Id == PUNGENT_BLIGHT_HELPER)
                     target->RemoveAurasDueToSpell(INOCULATED_HELPER);
-                // testing
-                if (Player* player = target->ToPlayer())
-                {
-                    if (player->HasAura(SPELL_GAS_SPORE))
-                    {
-                        player->CastSpell(player, 72144, true);
-                    }
-                }
             }
 
             void UpdateAI(uint32 const diff)
