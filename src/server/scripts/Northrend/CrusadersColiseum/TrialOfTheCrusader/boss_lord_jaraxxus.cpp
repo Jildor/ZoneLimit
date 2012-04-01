@@ -542,6 +542,7 @@ class spell_spinning_pain_spike : public SpellScriptLoader
                 if (!target)
                     return;
 
+                if (target->isAlive())
                     SetHitDamage(target->GetMaxHealth()*0.5f);
             }
             void Register()
