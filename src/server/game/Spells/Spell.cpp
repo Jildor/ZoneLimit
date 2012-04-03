@@ -770,6 +770,8 @@ void Spell::SelectSpellTargets()
             if (speed > 0.0f)
                 m_delayMoment = (uint64)floor(m_targets.GetDist2d() / speed * 1000.0f);
         }
+        else if (m_spellInfo->Id == 69846)     // Hack fix, for Sindragosa's Frost Bomb
+            m_delayMoment = 5200;
         else if (m_spellInfo->Speed > 0.0f)
         {
             float dist = m_caster->GetDistance(*m_targets.GetDst());
