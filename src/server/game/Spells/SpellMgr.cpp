@@ -3428,6 +3428,7 @@ void SpellMgr::LoadDbcDataCorrections()
             case 71412: // Green Ooze Summon (target selection already handled in putricide's script)
             case 71415: // Orange Ooze Summon (target selection already handled in putricide's script)
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
+                break;
             // THIS IS HERE BECAUSE COOLDOWN ON CREATURE PROCS IS NOT IMPLEMENTED
             case 71604: // Mutated Strength (Professor Putricide)
             case 72673: // Mutated Strength (Professor Putricide)
