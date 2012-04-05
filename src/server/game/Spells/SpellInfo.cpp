@@ -2272,7 +2272,7 @@ bool SpellInfo::_IsPositiveEffect(uint8 effIndex, bool deep) const
             switch (Id)
             {
                 case 34700: // Allergic Reaction
-				case 34709: // Shadow Sight
+                case 34709: // Shadow Sight
                 case 61987: // Avenging Wrath Marker
                 case 61988: // Divine Shield exclude aura
                 case 62532: // Conservator's Grip
