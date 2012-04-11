@@ -279,6 +279,10 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
         return;
     }
 
+    // temp fix exploit eat/drink in mount
+    if (mover->IsSitState() && movementInfo.flags & MOVEMENTFLAG_MASK_MOVING | MOVEMENTFLAG_MASK_TURNING)
+        mover->SetStandState(UNIT_STAND_STATE_STAND);
+
     /* handle special cases */
     if (movementInfo.flags & MOVEMENTFLAG_ONTRANSPORT)
     {
