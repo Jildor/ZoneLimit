@@ -388,7 +388,7 @@ class spell_pal_righteous_defense : public SpellScriptLoader
             {
                 if (Unit* caster = GetCaster())
                     if (Unit* targetUnit = GetHitUnit())
-                        caster->CastSpell(targetUnit, SPELL_RIGHTEOUS_DEFENCE_EFFECT_1, true);
+                        caster->CastSpell(targetUnit, PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1, true);
             }
 
             void Register()
