@@ -43,6 +43,7 @@ enum PaladinSpells
     SPELL_DIVINE_STORM_HEAL                      = 54172,
 
     PALADIN_SPELL_RIGHTEOUS_DEFENSE              = 31790
+    PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1             = 31790,
 };
 
 // 31850 - Ardent Defender
@@ -387,7 +388,7 @@ class spell_pal_righteous_defense : public SpellScriptLoader
             {
                 if (Unit* caster = GetCaster())
                     if (Unit* targetUnit = GetHitUnit())
-                        caster->CastSpell(targetUnit, PALADIN_SPELL_RIGHTEOUS_DEFENSE, true);
+                        caster->CastSpell(targetUnit, SPELL_RIGHTEOUS_DEFENCE_EFFECT_1, true);
             }
 
             void Register()
