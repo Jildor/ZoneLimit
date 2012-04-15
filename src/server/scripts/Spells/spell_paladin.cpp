@@ -42,8 +42,8 @@ enum PaladinSpells
     SPELL_DIVINE_STORM_DUMMY                     = 54171,
     SPELL_DIVINE_STORM_HEAL                      = 54172,
 
-    PALADIN_SPELL_RIGHTEOUS_DEFENSE              = 31790
-    PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1             = 31790,
+    PALADIN_SPELL_RIGHTEOUS_DEFENSE              = 31789,
+    PALADIN_SPELL_RIGHTEOUS_DEFENCE_EFFECT_1     = 31790,
 };
 
 // 31850 - Ardent Defender
