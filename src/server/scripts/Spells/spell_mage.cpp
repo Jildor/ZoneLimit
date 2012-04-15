@@ -36,7 +36,6 @@ enum MageSpells
     SPELL_MAGE_SUMMON_WATER_ELEMENTAL_PERMANENT  = 70908,
     SPELL_MAGE_SUMMON_WATER_ELEMENTAL_TEMPORARY  = 70907,
     SPELL_MAGE_GLYPH_OF_BLAST_WAVE               = 62126,
-    SPELL_MAGE_ARCANE_BLAST                      = 36032,
 };
 
 class spell_mage_blast_wave : public SpellScriptLoader
@@ -329,41 +328,6 @@ public:
     }
 };
 
-class spell_mage_arcane_blast : public SpellScriptLoader
-{
-    public:
-        spell_mage_arcane_blast() : SpellScriptLoader("spell_mage_arcane_blast") { }
-
-        class spell_mage_arcane_blast_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_mage_arcane_blast_SpellScript);
-
-            bool Validate(SpellInfo const* /*spellEntry*/)
-            {
-                if (!sSpellMgr->GetSpellInfo(SPELL_MAGE_ARCANE_BLAST))
-                    return false;
-                return true;
-            }
-
-            void HandleSpellEffectTriggerSpell(SpellEffIndex /*effIndex*/)
-            {
-                if (Unit* caster = GetCaster())
-                    if (Unit* targetUnit = GetHitUnit())
-                        caster->CastSpell(targetUnit, SPELL_MAGE_ARCANE_BLAST, true);
-            }
-
-            void Register()
-            {
-                OnEffectHitTarget += SpellEffectFn(spell_mage_arcane_blast_SpellScript::HandleSpellEffectTriggerSpell, EFFECT_1, SPELL_EFFECT_TRIGGER_SPELL);
-            }
-        };
-
-        SpellScript* GetSpellScript() const
-        {
-            return new spell_mage_arcane_blast_SpellScript();
-        }
-};
-
 void AddSC_mage_spell_scripts()
 {
     new spell_mage_blast_wave;
@@ -373,5 +337,4 @@ void AddSC_mage_spell_scripts()
     new spell_mage_incanters_absorbtion_manashield();
     new spell_mage_polymorph_cast_visual;
     new spell_mage_summon_water_elemental;
-    new spell_mage_arcane_blast();
 }
