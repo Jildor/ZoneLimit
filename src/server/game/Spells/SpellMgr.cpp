@@ -3590,6 +3590,10 @@ void SpellMgr::LoadDbcDataCorrections()
             case 40166: // Introspection
             case 40167: // Introspection
                 spellInfo->Attributes |= SPELL_ATTR0_NEGATIVE_1;
+                break;
+            case 36032: // Arcane Blast - buff
+                spellInfo->speed = 80;
+                break;
             default:
                 break;
         }
