@@ -665,7 +665,7 @@ public:
         void MoveInLineOfSight(Unit* who)
         {
 
-            Unit *who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
+            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             AttackStart(who);
         }
 
