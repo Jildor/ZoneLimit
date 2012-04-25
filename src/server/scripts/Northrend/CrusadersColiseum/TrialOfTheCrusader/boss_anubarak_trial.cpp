@@ -675,7 +675,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_uiTargetGUID = who->GetGUID();
             DoCast(who, SPELL_MARK);
             me->SetSpeed(MOVE_RUN, 0.5f);
