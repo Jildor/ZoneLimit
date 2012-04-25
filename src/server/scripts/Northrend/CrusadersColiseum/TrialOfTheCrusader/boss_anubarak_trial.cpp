@@ -680,7 +680,7 @@ public:
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
-            me->AddThreat(who, 100.0f);
+            me->AddThreat(who, 10000000.0f);
             me->TauntApply(who);
         }
 
