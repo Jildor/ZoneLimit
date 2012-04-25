@@ -649,7 +649,7 @@ public:
         {
             m_instance = (InstanceScript*)creature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -681,6 +681,7 @@ public:
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
             me->TauntApply(who);
+            me->AddThreat(who, 1.0f);
         }
 
         void DamageTaken(Unit* /*who*/, uint32& uiDamage)
