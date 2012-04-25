@@ -649,7 +649,7 @@ public:
         {
             m_instance = (InstanceScript*)creature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK, true);
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -675,7 +675,6 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             m_uiTargetGUID = who->GetGUID();
             DoCast(who, SPELL_MARK);
             me->SetSpeed(MOVE_RUN, 0.5f);
