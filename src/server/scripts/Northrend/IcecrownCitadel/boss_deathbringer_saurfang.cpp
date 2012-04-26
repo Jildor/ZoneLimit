@@ -358,7 +358,10 @@ class boss_deathbringer_saurfang : public CreatureScript
                     summon->AI()->AttackStart(target);
 
                 if (IsHeroic())
+                {
                     summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
+                    summon->AI()->DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
+                }
 
                 summon->AI()->DoCast(summon, SPELL_BLOOD_LINK_BEAST, true);
                 summon->AI()->DoCast(summon, SPELL_RESISTANT_SKIN, true);
