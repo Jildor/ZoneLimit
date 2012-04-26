@@ -174,6 +174,8 @@ enum EventTypes
     EVENT_OUTRO_HORDE_6         = 49,
     EVENT_OUTRO_HORDE_7         = 50,
     EVENT_OUTRO_HORDE_8         = 51,
+
+    EVENT_SCENT_OF_BLOOD        = 52,
 };
 
 enum Phases
@@ -359,8 +361,13 @@ class boss_deathbringer_saurfang : public CreatureScript
 
                 if (IsHeroic())
                 {
-                    summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
-                    DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
+                    events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
+
+                    if (events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
+                    {
+                        summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
+                        DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
+                    }
                 }
 
                 summon->AI()->DoCast(summon, SPELL_BLOOD_LINK_BEAST, true);
