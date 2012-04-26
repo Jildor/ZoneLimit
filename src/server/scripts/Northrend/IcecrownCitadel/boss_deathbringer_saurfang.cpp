@@ -356,16 +356,14 @@ class boss_deathbringer_saurfang : public CreatureScript
 
             void JustSummoned(Creature* summon)
             {
-                // events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000, 0, PHASE_COMBAT);
-                uiScentOfBlood = 5*IN_MILLISECONDS;
+                events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000, 0, PHASE_COMBAT);
 
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
                     summon->AI()->AttackStart(target);
 
                 if (IsHeroic())
                 {
-                    // if (events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
-                    if (uiScentOfBlood <= diff)
+                    if (events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
                     {
                         summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
                         DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
@@ -481,6 +479,8 @@ class boss_deathbringer_saurfang : public CreatureScript
                         case EVENT_BERSERK:
                             DoCast(me, SPELL_BERSERK);
                             Talk(SAY_BERSERK);
+                            break;
+                        case EVENT_SCENT_OF_BLOOD:
                             break;
                         default:
                             break;
