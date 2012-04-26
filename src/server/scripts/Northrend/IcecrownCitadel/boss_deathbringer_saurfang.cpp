@@ -354,14 +354,14 @@ class boss_deathbringer_saurfang : public CreatureScript
 
             void JustSummoned(Creature* summon)
             {
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                    summon->AI()->AttackStart(target);
+
                 if (IsHeroic())
                 {
                     summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
-                    summon->AI()->DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
+                    DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
                 }
-
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
-                    summon->AI()->AttackStart(target);
 
                 summon->AI()->DoCast(summon, SPELL_BLOOD_LINK_BEAST, true);
                 summon->AI()->DoCast(summon, SPELL_RESISTANT_SKIN, true);
