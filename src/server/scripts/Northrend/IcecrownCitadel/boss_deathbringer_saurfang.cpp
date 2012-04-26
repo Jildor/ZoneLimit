@@ -356,13 +356,13 @@ class boss_deathbringer_saurfang : public CreatureScript
 
             void JustSummoned(Creature* summon)
             {
+                events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
+
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
                     summon->AI()->AttackStart(target);
 
                 if (IsHeroic())
                 {
-                    events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
-
                     if (events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
                     {
                         summon->AI()->DoCast(summon, SPELL_SCENT_OF_BLOOD);
