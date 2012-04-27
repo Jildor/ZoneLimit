@@ -592,7 +592,7 @@ class npc_blood_beast : public CreatureScript
                     }
                 }
 
-                DoMeleeAttackIfReady()
+                DoMeleeAttackIfReady();
             }
 
         private:
