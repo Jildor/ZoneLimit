@@ -562,12 +562,12 @@ class npc_blood_beast : public CreatureScript
         {
             npc_blood_beastAI(Creature* creature) : ScriptedAI(creature)
             {
-                instance = creature->GetInstanceScript();
+                _instance = me->GetInstanceScript();
             }
 
             void Reset()
             {
-                events.reset();
+                _events.Reset();
                 events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
             }
 
