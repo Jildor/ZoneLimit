@@ -568,13 +568,13 @@ class npc_blood_beast : public CreatureScript
             void Reset()
             {
                 _events.Reset();
-                events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
+                _events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
             }
 
             void EnterCombat(Unit* who)
             {
                 DoZoneInCombat();
-                events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
+                _events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
 
                 DoCast(me, SPELL_BLOOD_LINK_BEAST, true);
                 DoCast(me, SPELL_RESISTANT_SKIN, true);
@@ -582,7 +582,7 @@ class npc_blood_beast : public CreatureScript
 
             void UpdateAI(const uint32 diff)
             {
-                events.Update(diff);
+                _events.Update(diff);
 
                 if (IsHeroic())
                 {
