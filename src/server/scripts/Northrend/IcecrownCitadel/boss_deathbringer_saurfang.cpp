@@ -577,7 +577,6 @@ class npc_blood_beast : public CreatureScript
 
                 DoCast(me, SPELL_BLOOD_LINK_BEAST, true);
                 DoCast(me, SPELL_RESISTANT_SKIN, true);
-                DoZoneInCombat();
             }
 
             void UpdateAI(const uint32 diff)
