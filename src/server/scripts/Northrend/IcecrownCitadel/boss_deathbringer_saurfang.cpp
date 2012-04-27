@@ -570,7 +570,7 @@ class npc_blood_beast : public CreatureScript
             void EnterCombat(Unit* who)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
-                    me->AttackStart(target);
+                    AttackStart(target);
 
                 _events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
 
