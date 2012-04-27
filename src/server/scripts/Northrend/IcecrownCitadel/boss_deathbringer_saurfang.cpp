@@ -356,7 +356,11 @@ class boss_deathbringer_saurfang : public CreatureScript
 
             void JustSummoned(Creature* summon)
             {
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                    summon->AI()->AttackStart(target);
+
                 summons.Summon(summon);
+                DoZoneInCombat(summon);
             }
 
             void SummonedCreatureDespawn(Creature* summon)
@@ -569,10 +573,6 @@ class npc_blood_beast : public CreatureScript
 
             void EnterCombat(Unit* who)
             {
-                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0.0f, true);
-                if (target)
-                    AttackStart(target);
-
                 _events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 5000);
 
                 DoCast(me, SPELL_BLOOD_LINK_BEAST, true);
