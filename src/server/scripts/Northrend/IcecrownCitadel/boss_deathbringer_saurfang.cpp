@@ -591,6 +591,8 @@ class npc_blood_beast : public CreatureScript
                         DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
                     }
                 }
+
+                DoMeleeAttackIfReady()
             }
 
         private:
