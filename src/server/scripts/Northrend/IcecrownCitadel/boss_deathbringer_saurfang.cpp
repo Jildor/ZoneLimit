@@ -586,7 +586,7 @@ class npc_blood_beast : public CreatureScript
 
                 if (IsHeroic())
                 {
-                    if (events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
+                    if (_events.ExecuteEvent() == EVENT_SCENT_OF_BLOOD)
                     {
                         DoCast(me, SPELL_SCENT_OF_BLOOD);
                         DoAddAuraToAllHostilePlayers(SPELL_SCENT_OF_BLOOD);
