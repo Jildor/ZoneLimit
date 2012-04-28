@@ -399,9 +399,9 @@ class boss_lady_deathwhisper : public CreatureScript
 
                 summon->AI()->AttackStart(target);                                      // CAN be NULL
                 if (summon->GetEntry() == NPC_REANIMATED_FANATIC)
-                    summon->AI()->DoCast(summon, SPELL_FANATIC_S_DETERMINATION, true);
+                    summon->AI()->DoCast(summon, SPELL_FANATIC_S_DETERMINATION);
                 else if (summon->GetEntry() == NPC_REANIMATED_ADHERENT)
-                    summon->AI()->DoCast(summon, SPELL_ADHERENT_S_DETERMINATION, true);
+                    summon->AI()->DoCast(summon, SPELL_ADHERENT_S_DETERMINATION);
             }
 
             void UpdateAI(uint32 const diff)
