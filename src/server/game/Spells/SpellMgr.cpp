@@ -3208,6 +3208,9 @@ void SpellMgr::LoadDbcDataCorrections()
             case 55689: // Glyph of Shadow (to prevent glyph aura loss)
                 spellInfo->AttributesEx2 |= SPELL_ATTR2_NOT_NEED_SHAPESHIFT;
                 break;
+            case 70897: // Dark Martyrdom
+                spellInfo->AttributesEx2 |= SPELL_ATTR2_CAN_TARGET_DEAD;
+                break;
             case 64904: // Hymn of Hope
                 spellInfo->EffectApplyAuraName[EFFECT_1] = SPELL_AURA_MOD_INCREASE_ENERGY_PERCENT;
                 break;
