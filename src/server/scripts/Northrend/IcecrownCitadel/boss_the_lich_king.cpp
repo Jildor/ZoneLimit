@@ -1533,6 +1533,12 @@ class npc_valkyr_shadowguard : public CreatureScript
                 switch (id)
                 {
                     case POINT_DROP_PLAYER:
+                        me->GetPosition(&_current);
+                        if (_current.GetExactDist(&_dropPoint) != 0)
+                        {
+                            _events.ScheduleEvent(EVENT_MOVE_TO_DROP_POS, 0);
+                            break;
+                        }
                         DoCastAOE(SPELL_EJECT_ALL_PASSENGERS);
                         me->DespawnOrUnsummon(1000);
                         break;
@@ -1552,7 +1558,6 @@ class npc_valkyr_shadowguard : public CreatureScript
                                 DoCast(target, SPELL_VALKYR_CARRY);
                                 _dropPoint.Relocate(triggers.front());
                                 _events.ScheduleEvent(EVENT_MOVE_TO_DROP_POS, 1500);
-
                             }
                         }
                         else
@@ -1608,6 +1613,7 @@ class npc_valkyr_shadowguard : public CreatureScript
         private:
             EventMap _events;
             Position _dropPoint;
+            Position _current;
             uint64 _grabbedPlayer;
             InstanceScript* _instance;
         };
