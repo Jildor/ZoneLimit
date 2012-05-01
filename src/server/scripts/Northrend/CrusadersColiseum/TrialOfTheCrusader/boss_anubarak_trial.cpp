@@ -670,9 +670,7 @@ public:
         {
             who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             AttackStart(who);
-
-            if (who->HasAura(SPELL_MARK))
-                me->AddThreat(who, 10000000.0f);
+            me->AddThreat(who, 10000000.0f);
         }
 
         void EnterCombat(Unit* who)
