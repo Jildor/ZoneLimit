@@ -669,12 +669,10 @@ public:
         void MoveInLineOfSight(Unit* who)
         {
             who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
+            AttackStart(who);
 
             if (who->HasAura(SPELL_MARK))
-            {
-                AttackStart(who);
                 me->AddThreat(who, 10000000.0f);
-            }
         }
 
         void EnterCombat(Unit* who)
