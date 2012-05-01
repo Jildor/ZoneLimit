@@ -665,18 +665,15 @@ public:
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
             m_uiTargetGUID = 0;
         }
-/*
+
         void MoveInLineOfSight(Unit* who)
         {
             who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
-            me->TauntApply(who);
-            me->AddThreat(who, 10000000.0f);
-            AttackStart(who);
-        } */
+        }
 
         void EnterCombat(Unit* who)
         {
-            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true, 0);
+            m_uiTargetGUID = who->GetGUID();
             DoCast(who, SPELL_MARK);
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
