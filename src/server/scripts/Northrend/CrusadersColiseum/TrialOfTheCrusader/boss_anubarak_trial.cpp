@@ -684,10 +684,10 @@ public:
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
 
             who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
+            AttackStart(who);
 
             if (who->HasAura(SPELL_MARK))
             {
-                AttackStart(who);
                 me->AddThreat(who, 10000000.0f);
                 me->TauntApply(who);
             }
