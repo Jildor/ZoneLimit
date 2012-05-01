@@ -680,6 +680,10 @@ public:
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
+
+            if (!who || !who->isAlive() || !who->HasAura(SPELL_MARK))
+            return;
+
             AttackStart(who);
             me->AddThreat(who, 10000000.0f);
             me->TauntApply(who);
