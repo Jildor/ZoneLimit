@@ -668,8 +668,8 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             m_uiTargetGUID = who->GetGUID();
+            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             DoCast(who, SPELL_MARK);
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
