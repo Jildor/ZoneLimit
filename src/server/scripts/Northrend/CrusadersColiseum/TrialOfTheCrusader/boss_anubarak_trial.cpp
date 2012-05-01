@@ -226,7 +226,7 @@ public:
 
         void JustSummoned(Creature* summoned)
         {
-            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0, true);
+            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0, true);
             switch (summoned->GetEntry())
             {
                 case NPC_BURROW:
@@ -666,13 +666,6 @@ public:
             m_uiTargetGUID = 0;
         }
 
-        void MoveInLineOfSight(Unit* who)
-        {
-            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
-            AttackStart(who);
-            me->AddThreat(who, 10000000.0f);
-        }
-
         void EnterCombat(Unit* who)
         {
             m_uiTargetGUID = who->GetGUID();
@@ -680,7 +673,9 @@ public:
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
+            AttackStart(who);
             me->TauntApply(who);
+            me->AddThreat(who, 10000000.0f);
         }
 
         void DamageTaken(Unit* /*who*/, uint32& uiDamage)
