@@ -681,13 +681,11 @@ public:
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
 
-            if (who || who->isAlive() || who->HasAura(SPELL_MARK))
-            {
-                AttackStart(who);
-                me->AddThreat(who, 10000000.0f);
-                me->TauntApply(who);
-            }
+            if (!who->HasAura(SPELL_MARK))
+                return;
 
+            me->AddThreat(who, 10000000.0f);
+            me->TauntApply(who);
         }
 
         void DamageTaken(Unit* /*who*/, uint32& uiDamage)
