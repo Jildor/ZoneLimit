@@ -666,12 +666,14 @@ public:
             m_uiTargetGUID = 0;
         }
 
+/*
         void MoveInLineOfSight(Unit* who)
         {
 
             who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             AttackStart(who);
         }
+*/
 
         void EnterCombat(Unit* who)
         {
@@ -681,11 +683,14 @@ public:
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
 
-            if (!who->HasAura(SPELL_MARK))
-                return;
+            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
 
-            me->AddThreat(who, 10000000.0f);
-            me->TauntApply(who);
+            if (who->HasAura(SPELL_MARK))
+            {
+                AttackStart(who);
+                me->AddThreat(who, 10000000.0f);
+                me->TauntApply(who);
+            }
         }
 
         void DamageTaken(Unit* /*who*/, uint32& uiDamage)
