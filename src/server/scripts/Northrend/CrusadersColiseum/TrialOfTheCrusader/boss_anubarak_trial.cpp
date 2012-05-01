@@ -681,6 +681,9 @@ public:
             me->SetSpeed(MOVE_RUN, 0.5f);
             m_uiSpeed = 0;
             m_uiIncreaseSpeedTimer = 1*IN_MILLISECONDS;
+            me->TauntApply(who);
+            me->AddThreat(who, 10000000.0f);
+            AttackStart(who);
         }
 
         void DamageTaken(Unit* /*who*/, uint32& uiDamage)
