@@ -226,7 +226,7 @@ public:
 
         void JustSummoned(Creature* summoned)
         {
-            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0, true);
+            Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0, true);
             switch (summoned->GetEntry())
             {
                 case NPC_BURROW:
@@ -668,6 +668,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
+            who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             m_uiTargetGUID = who->GetGUID();
             DoCast(who, SPELL_MARK);
             me->SetSpeed(MOVE_RUN, 0.5f);
