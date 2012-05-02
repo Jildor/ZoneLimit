@@ -1519,6 +1519,7 @@ class npc_valkyr_shadowguard : public CreatureScript
                 DoZoneInCombat();
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_LIFE_SIPHON, 2000);
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             }
 
             void AttackStart(Unit* /*target*/)
