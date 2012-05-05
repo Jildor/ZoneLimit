@@ -1575,7 +1575,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 }
                 break;
             case SPELLFAMILY_HUNTER:
-                // Wyvern Sting
+                /* // Wyvern Sting
                 // If implemented through spell_linked_spell it can't proc from breaking by damage
                 if (removeMode != AURA_REMOVE_BY_DEATH &&
                     GetSpellInfo()->SpellFamilyFlags[1] & 0x1000 && caster)
@@ -1585,6 +1585,12 @@ void Aura::HandleAuraSpecificMods(AuraApplication const* aurApp, Unit* caster, b
                 }
                 // Glyph of Freezing Trap
                 else if (GetSpellInfo()->SpellFamilyFlags[0] & 0x00000008)
+                    if (caster && caster->HasAura(56845))
+                        target->CastSpell(target, 61394, true);
+                break; */
+            case SPELLFAMILY_HUNTER:
+                // Glyph of Freezing Trap
+                if (GetSpellInfo()->SpellFamilyFlags[0] & 0x00000008)
                     if (caster && caster->HasAura(56845))
                         target->CastSpell(target, 61394, true);
                 break;
