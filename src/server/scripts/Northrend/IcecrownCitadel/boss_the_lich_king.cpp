@@ -1640,7 +1640,7 @@ class npc_strangulate_vehicle : public CreatureScript
             void IsSummonedBy(Unit* summoner)
             {
                 me->SetFacing(0.0f, summoner);
-                DoCast(summoner, SPELL_HARVEST_SOUL_VEHICLE);
+                // DoCast(summoner, SPELL_HARVEST_SOUL_VEHICLE);
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_MOVE_TO_LICH_KING, 2000);
                 _events.ScheduleEvent(EVENT_TELEPORT, 6000);
