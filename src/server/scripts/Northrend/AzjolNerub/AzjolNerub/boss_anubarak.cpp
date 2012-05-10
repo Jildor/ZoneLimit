@@ -333,6 +333,7 @@ public:
                 } else PoundTimer -= diff;
 
                 DoMeleeAttackIfReady();
+                EnterEvadeIfOutOfCombatArea(diff);
                 break;
             }
         }
