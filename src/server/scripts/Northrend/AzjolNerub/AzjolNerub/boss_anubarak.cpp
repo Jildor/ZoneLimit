@@ -176,7 +176,7 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (!UpdateVictim() || !CheckInRoom())
+            if (!UpdateVictim())
                 return;
 
             if (DelayTimer && DelayTimer > 5000)
@@ -333,6 +333,7 @@ public:
                 } else PoundTimer -= diff;
 
                 DoMeleeAttackIfReady();
+                EnterEvadeIfOutOfCombatArea(diff);
                 break;
             }
         }
