@@ -176,7 +176,7 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (!UpdateVictim())
+            if (!UpdateVictim() || !CheckInRoom())
                 return;
 
             if (DelayTimer && DelayTimer > 5000)
