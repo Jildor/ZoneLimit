@@ -2982,6 +2982,9 @@ void SpellMgr::LoadDbcDataCorrections()
 
         switch (spellInfo->Id)
         {
+            case 23881: // Bloodthirst
+                spellInfo->EffectImplicitTargetA[1] = 1;
+                break;
             case 40244: case 40245: // Simon Game Visual
             case 40246: case 40247: // Simon Game Visual
             case 42835: // Spout
