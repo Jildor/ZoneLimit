@@ -1317,6 +1317,9 @@ class spell_gen_vehicle_scaling : public SpellScriptLoader
 
             void CalculateAmount(AuraEffect const* /*aurEff*/, int32& amount, bool& /*canBeRecalculated*/)
             {
+                if (!GetUnitOwner() || GetUnitOwner()->GetTypeId() == TYPEID_PLAYER)
+                    return;
+
                 Unit* caster = GetCaster();
                 if (!caster || !caster->ToPlayer())
                     return;
