@@ -382,7 +382,7 @@ class npc_bone_spike : public CreatureScript
             void IsSummonedBy(Unit* summoner)
             {
                 DoCast(summoner, SPELL_IMPALED);
-                // summoner->CastSpell(me, SPELL_RIDE_VEHICLE, true);
+                summoner->CastSpell(me, SPELL_RIDE_VEHICLE, true);
                 _events.ScheduleEvent(EVENT_FAIL_BONED, 8000);
                 _hasTrappedUnit = true;
             }
@@ -595,4 +595,8 @@ void AddSC_boss_lord_marrowgar()
     new spell_marrowgar_coldflame_damage();
     new spell_marrowgar_bone_spike_graveyard();
     new spell_marrowgar_bone_storm();
+
+    // Vehicle Hack
+    if (VehicleSeatEntry* vehSeat = const_cast<VehicleSeatEntry*>(sVehicleSeatStore.LookupEntry(6206)))
+        vehSeat->m_flags |= 0x400;
 }
