@@ -1259,8 +1259,10 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
         return FAKE_ERR_DIFF_CLASS;
 
+/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
     if (myTmpl->AllowableRace != otherTmpl->AllowableRace)
         return FAKE_ERR_DIFF_RACE;
+*/
 
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
