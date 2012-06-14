@@ -2691,8 +2691,8 @@ ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry)
 
 uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 {
-    FakeItemsContainer::const_iterator itr = _fakeItemsStore.find(itemGuid);
-    if (itr != _fakeItemsStore.end())
+    FakeItemsContainer::const_iterator itr = fakeItemsStore.find(itemGuid);
+    if (itr != fakeItemsStore.end())
         return itr->second;
 
     return 0;
@@ -2700,14 +2700,14 @@ uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 
 void ObjectMgr::SetFekeItem(uint32 itemGuid, uint32 fakeEntry)
 {
-    _fakeItemsStore[itemGuid] = fakeEntry;
+    fakeItemsStore[itemGuid] = fakeEntry;
 }
 
 void ObjectMgr::RemoveFakeItem(uint32 itemGuid)
 {
-    FakeItemsContainer::iterator itr = _fakeItemsStore.find(itemGuid);
-    if (itr != _fakeItemsStore.end())
-        _fakeItemsStore.erase(itr);
+    FakeItemsContainer::iterator itr = fakeItemsStore.find(itemGuid);
+    if (itr != fakeItemsStore.end())
+        fakeItemsStore.erase(itr);
 }
 
 void ObjectMgr::LoadItemSetNameLocales()
@@ -2837,11 +2837,11 @@ void ObjectMgr::LoadFakeItems()
         uint32 guid      = fields[0].GetUInt32();
         uint32 fakeEntry = fields[1].GetUInt32();
 
-        _fakeItemsStore[guid] = fakeEntry;
+        fakeItemsStore[guid] = fakeEntry;
     }
     while (result->NextRow());
 
-    sLog->outString(">> Loaded %u fake items.", _fakeItemsStore.size());
+    sLog->outString(">> Loaded %u fake items.", fakeItemsStore.size());
     sLog->outString();
 }
 
