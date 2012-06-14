@@ -66,7 +66,7 @@ class npc_transmogrify : public CreatureScript
             Item *displayItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, INVENTORY_SLOT_ITEM_START + 1);
             if (!trItem || !displayItem)
             {
-                handler.PSendSysMessage("Coloca el objeto en la primera y segunda ranura!");
+                handler.PSendSysMessage("Coloca el objeto en la primera y segunda casilla!");
                 return;
             }
 
