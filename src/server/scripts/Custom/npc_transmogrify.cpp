@@ -38,8 +38,8 @@ class npc_transmogrify : public CreatureScript
 
         bool OnGossipHello(Player* pPlayer, Creature* pCreature)
         {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "Make exchange!", GOSSIP_SENDER_MAIN, ACTION_TRANSMOGRIFY_ADD_DISPLAY);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "Make item clean.", GOSSIP_SENDER_MAIN, ACTION_TRANSMOGRIFY_REMOVE_DISPLAY);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "Hacer el cambio!", GOSSIP_SENDER_MAIN, ACTION_TRANSMOGRIFY_ADD_DISPLAY);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "Revertir el cambio.", GOSSIP_SENDER_MAIN, ACTION_TRANSMOGRIFY_REMOVE_DISPLAY);
             pPlayer->SEND_GOSSIP_MENU(51000, pCreature->GetGUID());
             return true;
         }
@@ -66,13 +66,13 @@ class npc_transmogrify : public CreatureScript
             Item *displayItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, INVENTORY_SLOT_ITEM_START + 1);
             if (!trItem || !displayItem)
             {
-                handler.PSendSysMessage("Put item in the first and second slot!");
+                handler.PSendSysMessage("Coloca el objeto en la primera y segunda ranura!");
                 return;
             }
 
             if (!player->HasEnoughMoney(PriceInGold))
             {
-                handler.PSendSysMessage("It costs %u gold!", PriceInGold);
+                handler.PSendSysMessage("Su precio es de %u de oro!", PriceInGold);
                 return;
             }
 
@@ -80,17 +80,17 @@ class npc_transmogrify : public CreatureScript
             switch (result)
             {
                 case FAKE_ERR_CANT_FIND_ITEM:
-                    handler.PSendSysMessage("Cant find item!");
+                    handler.PSendSysMessage("No se puede encontrar el objeto!");
                     break;
                 case FAKE_ERR_WRONG_QUALITY:
-                    handler.PSendSysMessage("Item has wrong quality!");
+                    handler.PSendSysMessage("El objeto tiene una calidad diferente!");
                     break;
                 case FAKE_ERR_DIFF_SLOTS:
-                    handler.PSendSysMessage("Items has different types!");
+                    handler.PSendSysMessage("Los objetos son de diferente tipo!");
                     break;
                 case FAKE_ERR_DIFF_CLASS:
                 case FAKE_ERR_DIFF_RACE:
-                    handler.PSendSysMessage("Items require different options!");
+                    handler.PSendSysMessage("Los objetos no son de la misma clase!");
                     break;
                 case FAKE_ERR_OK:
                 {
@@ -113,7 +113,7 @@ class npc_transmogrify : public CreatureScript
             Item *trItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, INVENTORY_SLOT_ITEM_START);
             if (!trItem)
             {
-                handler.PSendSysMessage("Put item in the first slot!");
+                handler.PSendSysMessage("Coloca el objeto en la primera casilla!");
                 return;
             }
 
