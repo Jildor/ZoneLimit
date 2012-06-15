@@ -1269,7 +1269,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     if (m_fakeDisplayEntry != iEntry)
     {
-        // sObjectMgr->SetFekeItem(GetGUIDLow(), iEntry);
+        sObjectMgr->SetFekeItem(GetGUIDLow(), iEntry);
 
         (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
                                 CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());

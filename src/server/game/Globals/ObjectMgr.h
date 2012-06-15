@@ -1331,7 +1331,7 @@ class ObjectMgr
         ItemTemplateContainer ItemTemplateStore;
         ItemLocaleMap mItemLocaleMap;
         ItemSetNameLocaleMap mItemSetNameLocaleMap;
-        FakeItemsContainer fakeItemsStore;
+        FakeItemsContainer _fakeItemsStore;
         QuestLocaleMap mQuestLocaleMap;
         NpcTextLocaleMap mNpcTextLocaleMap;
         PageTextLocaleMap mPageTextLocaleMap;
