@@ -653,7 +653,7 @@ class ObjectMgr
         }
 
         uint32 GetFakeItemEntry(uint32 itemGuid);
-        void SetFekeItem(uint32 itemGuid, uint32 fakeEntry);
+        void SetFakeItem(uint32 itemGuid, uint32 fakeEntry);
         void RemoveFakeItem(uint32 itemGuid);
 
         InstanceTemplate const* GetInstanceTemplate(uint32 mapID);
