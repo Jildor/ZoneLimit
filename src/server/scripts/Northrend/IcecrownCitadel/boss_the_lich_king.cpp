@@ -1511,7 +1511,7 @@ class npc_valkyr_shadowguard : public CreatureScript
                     if (fabs(ground_Z - z) < 0.1f)
                         return;
 
-                    me->GetMotionMaster()->MoveChase(player, 2.0f);
+                    me->GetMotionMaster()->MoveChase(target, 2.0f);
                 }
             }
 
