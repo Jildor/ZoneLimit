@@ -1494,6 +1494,14 @@ class npc_valkyr_shadowguard : public CreatureScript
             {
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_GRAB_PLAYER, 2500);
+                float x, y, z;
+                me->GetPosition(x, y, z);
+                // use larger distance for vmap height search than in most other cases
+                float ground_Z = me->GetMap()->GetHeight(x, y, z, true, MAX_FALL_DISTANCE);
+                if (fabs(ground_Z - z) < 0.1f)
+                    return;
+
+                me->GetMotionMaster()->MoveFall(ground_Z);
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
