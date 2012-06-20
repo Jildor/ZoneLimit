@@ -1502,15 +1502,17 @@ class npc_valkyr_shadowguard : public CreatureScript
                     return;
 
                 me->GetMotionMaster()->MoveFall(ground_Z);*/
-                Player* player = Unit::GetPlayer(*me, PlayerGUID);
-                float x, y, z;
-                me->GetPosition(x, y, z);
-                // use larger distance for vmap height search than in most other cases
-                float ground_Z = me->GetMap()->GetHeight(x, y, z);
-                if (fabs(ground_Z - z) < 0.1f)
-                    return;
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0.0f, true))
+                {
+                    float x, y, z;
+                    me->GetPosition(x, y, z);
+                    // use larger distance for vmap height search than in most other cases
+                    float ground_Z = me->GetMap()->GetHeight(x, y, z);
+                    if (fabs(ground_Z - z) < 0.1f)
+                        return;
 
-                me->GetMotionMaster()->MoveChase(player, 2.0f);
+                    me->GetMotionMaster()->MoveChase(player, 2.0f);
+                }
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
