@@ -1494,24 +1494,12 @@ class npc_valkyr_shadowguard : public CreatureScript
             {
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_GRAB_PLAYER, 2500);
-                /*float x, y, z;
-                me->GetPosition(x, y, z);
-                // use larger distance for vmap height search than in most other cases
-                float ground_Z = me->GetMap()->GetHeight(x, y, z, true, MAX_FALL_DISTANCE);
-                if (fabs(ground_Z - z) < 0.1f)
-                    return;
 
-                me->GetMotionMaster()->MoveFall(ground_Z);*/
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0.0f, true))
-                {
-                    float x, y, z;
-                    me->GetPosition(x, y, z);
-                    // use larger distance for vmap height search than in most other cases
-                    float ground_Z = me->GetMap()->GetHeight(x, y, z);
-                    if (fabs(ground_Z - z) < 0.1f)
-                        return;
-
-                    me->GetMotionMaster()->MoveChase(target, 2.0f);
+                float destX, destY, destZ;
+                me->GetPosition(destX, destY);
+                destZ = 1055.0f;    // approximation, gets more precise later
+                me->UpdateGroundPositionZ(destX, destY, destZ);
+                me->GetMotionMaster()->MovePoint(POINT_GROUND, destX, destY, destZ);
                 }
             }
 
