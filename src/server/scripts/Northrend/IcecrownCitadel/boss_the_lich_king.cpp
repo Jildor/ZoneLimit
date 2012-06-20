@@ -1500,7 +1500,6 @@ class npc_valkyr_shadowguard : public CreatureScript
                 destZ = 1055.0f;    // approximation, gets more precise later
                 me->UpdateGroundPositionZ(destX, destY, destZ);
                 me->GetMotionMaster()->MovePoint(POINT_GROUND, destX, destY, destZ);
-                }
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
