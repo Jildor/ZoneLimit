@@ -1494,14 +1494,14 @@ class npc_valkyr_shadowguard : public CreatureScript
             {
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_GRAB_PLAYER, 2500);
-                float x, y, z;
+                /*float x, y, z;
                 me->GetPosition(x, y, z);
                 // use larger distance for vmap height search than in most other cases
                 float ground_Z = me->GetMap()->GetHeight(x, y, z, true, MAX_FALL_DISTANCE);
                 if (fabs(ground_Z - z) < 0.1f)
                     return;
 
-                me->GetMotionMaster()->MoveFall(ground_Z);
+                me->GetMotionMaster()->MoveFall(ground_Z);*/
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
@@ -1601,6 +1601,15 @@ class npc_valkyr_shadowguard : public CreatureScript
                             {
                                 DoCastAOE(SPELL_VALKYR_TARGET_SEARCH);
                                 _events.ScheduleEvent(EVENT_GRAB_PLAYER, 2000);
+
+                                float x, y, z;
+                                me->GetPosition(x, y, z);
+                                // use larger distance for vmap height search than in most other cases
+                                float ground_Z = me->GetMap()->GetHeight(x, y, z);
+                                if (fabs(ground_Z - z) < 0.1f)
+                                    return;
+
+                                me->GetMotionMaster()->MoveChase(target, 2.0f);
                             }
                             break;
                         case EVENT_MOVE_TO_DROP_POS:
