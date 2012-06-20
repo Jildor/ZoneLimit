@@ -1502,6 +1502,14 @@ class npc_valkyr_shadowguard : public CreatureScript
                     return;
 
                 me->GetMotionMaster()->MoveFall(ground_Z);*/
+                            float x, y, z;
+                            me->GetPosition(x, y, z);
+                            // use larger distance for vmap height search than in most other cases
+                            float ground_Z = me->GetMap()->GetHeight(x, y, z);
+                            if (fabs(ground_Z - z) < 0.1f)
+                                return;
+
+                            me->GetMotionMaster()->MovePoint(0, me->GetPositionX, me->GetPositionY, 2.0f);
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
@@ -1554,15 +1562,6 @@ class npc_valkyr_shadowguard : public CreatureScript
                     case POINT_CHARGE:
                         if (Player* target = ObjectAccessor::GetPlayer(*me, _grabbedPlayer))
                         {
-                            float x, y, z;
-                            me->GetPosition(x, y, z);
-                            // use larger distance for vmap height search than in most other cases
-                            float ground_Z = me->GetMap()->GetHeight(x, y, z);
-                            if (fabs(ground_Z - z) < 0.1f)
-                                return;
-
-                            me->GetMotionMaster()->MoveChase(target, 2.0f);
-
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                             if (GameObject* platform = ObjectAccessor::GetGameObject(*me, _instance->GetData64(DATA_ARTHAS_PLATFORM)))
                             {
