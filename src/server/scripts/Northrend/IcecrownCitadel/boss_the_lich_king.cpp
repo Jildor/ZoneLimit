@@ -1498,7 +1498,7 @@ class npc_valkyr_shadowguard : public CreatureScript
                 float x, y, z;
                 me->GetPosition(x, y, z);
                 // use larger distance for vmap height search than in most other cases
-                float ground_Z = me->GetMap()->GetHeight(x, y, z, true, MAX_FALL_DISTANCE);
+                float ground_Z = me->GetMap()->GetHeight(x, y, z, true);
                 // if (fabs(ground_Z - z) < 0.1f)
                 //     return;
 
