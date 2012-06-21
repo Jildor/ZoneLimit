@@ -1499,8 +1499,8 @@ class npc_valkyr_shadowguard : public CreatureScript
                 me->GetPosition(x, y, z);
                 // use larger distance for vmap height search than in most other cases
                 float ground_Z = me->GetMap()->GetHeight(x, y, z, true, MAX_FALL_DISTANCE);
-                if (fabs(ground_Z - z) < 0.1f)
-                    return;
+                // if (fabs(ground_Z - z) < 0.1f)
+                //     return;
 
                 me->GetMotionMaster()->MoveFall(ground_Z + 5.0f);
                 me->SetSpeed(MOVE_FLIGHT, 0.242857f, true);
@@ -1561,7 +1561,7 @@ class npc_valkyr_shadowguard : public CreatureScript
                             {
                                 std::list<Creature*> triggers;
                                 GetCreatureListWithEntryInGrid(triggers, me, NPC_WORLD_TRIGGER, 150.0f);
-                                triggers.remove_if(HeightDifferenceCheck(platform, 1.0f, true));
+                                triggers.remove_if(HeightDifferenceCheck(platform, 5.0f, true));
                                 if (triggers.empty())
                                     return;
 
