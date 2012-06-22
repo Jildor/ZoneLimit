@@ -1554,7 +1554,7 @@ class spell_valanar_kinetic_bomb : public SpellScriptLoader
                     bomb->CastSpell(bomb, SPELL_KINETIC_BOMB_EXPLOSION, true);
                     bomb->RemoveAurasDueToSpell(SPELL_KINETIC_BOMB_VISUAL);
                     target->RemoveAura(GetAura());
-                    // bomb->AI()->DoAction(SPELL_KINETIC_BOMB_EXPLOSION);
+                    bomb->AI()->DoAction(SPELL_KINETIC_BOMB_EXPLOSION);
                 }
             }
 
