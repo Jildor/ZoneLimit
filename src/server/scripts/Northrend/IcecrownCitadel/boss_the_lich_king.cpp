@@ -1502,7 +1502,8 @@ class npc_valkyr_shadowguard : public CreatureScript
                 if (fabs(ground_Z - z) < 0.1f)
                     return;
 
-                me->GetMotionMaster()->MoveCharge(x, y, ground_Z + 3.0f, 1);
+                me->GetMotionMaster()->MoveCharge(x, y, ground_Z + 3.0f, 0.242857f);
+                me->SetSpeed(MOVE_FLIGHT, 0.242857f, true);
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
