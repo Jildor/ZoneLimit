@@ -1551,10 +1551,10 @@ class spell_valanar_kinetic_bomb : public SpellScriptLoader
 
                 if (Creature* bomb = target->FindNearestCreature(NPC_KINETIC_BOMB, 1.0f, true))
                 {
-                    // bomb->CastSpell(bomb, SPELL_KINETIC_BOMB_EXPLOSION, true);
+                    bomb->CastSpell(bomb, SPELL_KINETIC_BOMB_EXPLOSION, true);
                     bomb->RemoveAurasDueToSpell(SPELL_KINETIC_BOMB_VISUAL);
                     target->RemoveAura(GetAura());
-                    bomb->AI()->DoAction(SPELL_KINETIC_BOMB_EXPLOSION);
+                    // bomb->AI()->DoAction(SPELL_KINETIC_BOMB_EXPLOSION);
                 }
             }
 
