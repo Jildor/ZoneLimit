@@ -1,6 +1,12 @@
-DELETE FROM creature_template WHERE entry = '190001';
-INSERT INTO creature_template (entry, modelid1, name, subname, IconName, gossip_menu_id, minlevel, maxlevel, Health_mod, Mana_mod, Armor_mod, faction_A, faction_H, npcflag, speed_walk, speed_run, scale, rank, dmg_multiplier, unit_class, unit_flags, type, type_flags, InhabitType, RegenHealth, flags_extra, ScriptName) VALUES 
-('190001', '15998', "Maestro ilusionista", "Personalizador de objetos", 'Speak', '51000', 71, 71, 1.56, 1.56, 1.56, 35, 35, 3, 1, 1.14286, 1.25, 1, 1, 1, 2, 7, 138936390, 3, 1, 2, 'npc_transmogrify');
+DELETE FROM `creature_template` WHERE `entry`=190001;
+INSERT INTO `creature_template` (`entry`,`modelid1`,`name`,`subname`,`IconName`,`gossip_menu_id`,`minlevel`,`maxlevel`,`Health_mod`,`Mana_mod`,`Armor_mod`,`faction_A`,`faction_H`,`npcflag`,`speed_walk`,`speed_run`,`scale`,`rank`,`dmg_multiplier`,`unit_class`,`unit_flags`,`type`,`type_flags`,`InhabitType`,`RegenHealth`,`flags_extra`,`ScriptName`) VALUES 
+(190001,15998,"Maestro ilusionista","Personalizador de objetos",'Speak',51000,71,71,1.56,1.56,1.56,35,35,3,1,1.14286,1.25,1,1,1,2,7,138936390,3,1,2,'npc_transmogrify');
+
+DELETE FROM `creature` WHERE `id`=190001;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
+(268000,190001,571,1,128,0,0,5809.8,634.228,647.503,5.59998,300,0,0,6494,0,0,0,0,0),
+(268001,190001,37,1,1,0,0,1092.41,202.167,272.492,2.1181,300,0,0,6494,0,0,0,0,0),
+(268002,190001,37,1,1,0,0,41.4605,1156.46,367.178,4.84285,300,0,0,6494,0,0,0,0,0);
 
 DELETE FROM `gossip_menu` WHERE `entry`=51000;
 INSERT INTO `gossip_menu` VALUES (51000, 51000);
