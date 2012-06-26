@@ -796,6 +796,9 @@ class npc_mole_machine_trigger : public CreatureScript
             void JustSummoned(Creature* summoned)
             {
                 summoned->AI()->DoZoneInCombat();
+
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                    summoned->AI()->AttackStart(target);
             }
         };
 
