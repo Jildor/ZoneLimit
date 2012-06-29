@@ -467,8 +467,8 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
     SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, fields[9].GetUInt32());
     SetText(fields[10].GetString());
 
-    if (QueryResult result = CharacterDatabase.PQuery("SELECT fakeEntry FROM fake_items WHERE guid = %u", guid))
-        SetFakeDisplay((*result)[0].GetUInt32());
+    if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
+        SetFakeDisplay(fakeEntry);
 
     if (need_save)                                           // normal item changed state set not work at loading
     {
@@ -1284,6 +1284,7 @@ void Item::RemoveFakeDisplay()
     if (GetFakeDisplayEntry())
     {
         m_fakeDisplayEntry = 0;
+        sObjectMgr->RemoveFakeItem(GetGUIDLow());
         CharacterDatabase.PExecute("DELETE FROM fake_items WHERE guid = %u", GetGUIDLow());
     }
 }
