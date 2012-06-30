@@ -796,6 +796,9 @@ class npc_mole_machine_trigger : public CreatureScript
             void JustSummoned(Creature* summoned)
             {
                 summoned->AI()->DoZoneInCombat();
+
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                    summoned->AI()->AttackStart(target);
             }
         };
 
@@ -847,6 +850,11 @@ class npc_darkrune_watcher : public CreatureScript
                 LightTimer = urand(1000, 3000);
             }
 
+            void MoveInLineOfSight(Unit* who)
+            {
+                who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
+            }
+
             void UpdateAI(uint32 const Diff)
             {
                 if (!UpdateVictim())
@@ -893,6 +901,11 @@ class npc_darkrune_guardian : public CreatureScript
             {
                 StormTimer = urand(3000, 6000);
                 killedByBreath = false;
+            }
+
+            void MoveInLineOfSight(Unit* who)
+            {
+                who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             }
 
             uint32 GetData(uint32 type)
@@ -951,6 +964,11 @@ class npc_darkrune_sentinel : public CreatureScript
                 HeroicTimer = urand(4000, 8000);
                 WhirlTimer = urand(20000, 25000);
                 ShoutTimer = urand(15000, 30000);
+            }
+
+            void MoveInLineOfSight(Unit* who)
+            {
+                who = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0F, true, 0);
             }
 
             void UpdateAI(uint32 const Diff)
