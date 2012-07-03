@@ -1253,7 +1253,9 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
 
-    if (myTmpl->InventoryType != otherTmpl->InventoryType)
+    if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
+        continue;
+    else if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
 
     if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
