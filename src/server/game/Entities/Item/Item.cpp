@@ -1263,6 +1263,9 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                                     CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
             m_fakeDisplayEntry = iEntry;
         }
+
+    return FAKE_ERR_OK;
+
     }
     else if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
