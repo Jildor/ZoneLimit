@@ -1253,10 +1253,17 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
 
-    /* if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
-        return FAKE_ERR_OK;
+    if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
+        if (m_fakeDisplayEntry != iEntry)
+        {
+            sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
+
+            (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
+                                    CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
+            m_fakeDisplayEntry = iEntry;
+    }
     else if (myTmpl->InventoryType != otherTmpl->InventoryType)
-        return FAKE_ERR_DIFF_SLOTS; */
+        return FAKE_ERR_DIFF_SLOTS;
 
     if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
@@ -1272,7 +1279,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if (m_fakeDisplayEntry != iEntry || myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
+    if (m_fakeDisplayEntry != iEntry)
     {
         sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
 
