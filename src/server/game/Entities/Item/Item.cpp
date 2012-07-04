@@ -1253,6 +1253,22 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
 
+/* Comento esto, porque lo pongo mas abajo de otra forma
+    if (myTmpl->InventoryType != otherTmpl->InventoryType)
+        return FAKE_ERR_DIFF_SLOTS;
+*/
+
+    if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
+        return FAKE_ERR_DIFF_CLASS;
+
+/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
+    if (myTmpl->AllowableRace != otherTmpl->AllowableRace)
+        return FAKE_ERR_DIFF_RACE;
+*/
+
+    if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
+        return FAKE_ERR_WRONG_QUALITY;
+
     if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
     {
         if (m_fakeDisplayEntry != iEntry)
@@ -1269,20 +1285,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     }
     else if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
-
-    if (myTmpl->InventoryType != otherTmpl->InventoryType)
-        return FAKE_ERR_DIFF_SLOTS;
-
-    if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
-        return FAKE_ERR_DIFF_CLASS;
-
-/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
-    if (myTmpl->AllowableRace != otherTmpl->AllowableRace)
-        return FAKE_ERR_DIFF_RACE;
-*/
-
-    if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
-        return FAKE_ERR_WRONG_QUALITY;
 
     if (m_fakeDisplayEntry != iEntry)
     {
