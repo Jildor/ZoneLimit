@@ -1239,7 +1239,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-FakeResult Item::SetFakeDisplay(uint32 iEntry)
+FakeResult Item::SetFakeDisplay(uint32 iEntry, Player const* player) const
 {
     if (!iEntry)
     {
@@ -1269,42 +1269,46 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if ((myTmpl->AllowableClass | otherTmpl->AllowableClass) || (otherTmpl->AllowableClass | myTmpl->AllowableClass))
+    if(player->CanUseItem(Item, false) == EQUIP_ERR_OK)
     {
-        if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
-        {
-            if (m_fakeDisplayEntry != iEntry)
+    uint32 NClass = otherTmpl->Class;
+    uint32 OClass = myTmpl->Class;
+    uint32 NSubClass = otherTmpl->SubClass;
+    uint32 OSubClass = myTmpl->SubClass;
+    uint32 NEWinv = otherTmpl->InventoryType;
+    uint32 OLDinv = myTmpl->InventoryType;
+        if(NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
+            if(NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
             {
-                sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
+                if(NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
+                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)))
+                        if (m_fakeDisplayEntry != iEntry)
+                        {
+                            sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
 
-                (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
-                                        CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
-                m_fakeDisplayEntry = iEntry;
+                            (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
+                                                    CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
+                            m_fakeDisplayEntry = iEntry;
+                        }
+
+                    return FAKE_ERR_OK;
             }
+            else if(NClass == ITEM_CLASS_ARMOR)
+            {
+                if(NSubClass == OSubClass)
+                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_CHEST && OLDinv == INVTYPE_ROBE) || (NEWinv == INVTYPE_ROBE && OLDinv == INVTYPE_CHEST))
+                        if (m_fakeDisplayEntry != iEntry)
+                        {
+                            sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
 
-        return FAKE_ERR_OK;
+                            (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
+                                                    CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
+                            m_fakeDisplayEntry = iEntry;
+                        }
 
-        }
+                    return FAKE_ERR_OK;
+            }
     }
-    else if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
-        return FAKE_ERR_DIFF_CLASS;
-
-    if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
-    {
-        if (m_fakeDisplayEntry != iEntry)
-        {
-            sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
-
-            (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
-                                    CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
-            m_fakeDisplayEntry = iEntry;
-        }
-
-    return FAKE_ERR_OK;
-
-    }
-    else if (myTmpl->InventoryType != otherTmpl->InventoryType)
-        return FAKE_ERR_DIFF_SLOTS;
 
     if (m_fakeDisplayEntry != iEntry)
     {
