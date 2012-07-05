@@ -1279,6 +1279,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         uint32 NEWinv = otherTmpl->InventoryType;
         uint32 OLDinv = myTmpl->InventoryType;
         if(NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
+        {
             if(NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
             {
                 if(NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
@@ -1321,6 +1322,9 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
             }
             else
             return FAKE_ERR_DIFF_SLOTS;
+        }
+        else
+        return FAKE_ERR_DIFF_CLASS;
     }
     else
     return FAKE_ERR_DIFF_CLASS;
