@@ -1272,17 +1272,19 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     if(player->CanUseItem(myTmpl) == EQUIP_ERR_OK && player->CanUseItem(otherTmpl) == EQUIP_ERR_OK)
     {
-    uint32 NClass = myTmpl->Class;
-    uint32 OClass = otherTmpl->Class;
-    uint32 NSubClass = myTmpl->SubClass;
-    uint32 OSubClass = otherTmpl->SubClass;
-    uint32 NEWinv = myTmpl->InventoryType;
-    uint32 OLDinv = otherTmpl->InventoryType;
+        uint32 NClass = myTmpl->Class;
+        uint32 OClass = otherTmpl->Class;
+        uint32 NSubClass = myTmpl->SubClass;
+        uint32 OSubClass = otherTmpl->SubClass;
+        uint32 NEWinv = myTmpl->InventoryType;
+        uint32 OLDinv = otherTmpl->InventoryType;
         if(NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
             if(NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
             {
                 if(NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
+                {
                     if(NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)))
+                    {
                         if (m_fakeDisplayEntry != iEntry)
                         {
                             sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
@@ -1292,12 +1294,16 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                             m_fakeDisplayEntry = iEntry;
                         }
 
-                    return FAKE_ERR_OK;
+                        return FAKE_ERR_OK;
+                    }
+                }
             }
             else if(NClass == ITEM_CLASS_ARMOR)
             {
                 if(NSubClass == OSubClass)
+                {
                     if(NEWinv == OLDinv || (NEWinv == INVTYPE_CHEST && OLDinv == INVTYPE_ROBE) || (NEWinv == INVTYPE_ROBE && OLDinv == INVTYPE_CHEST))
+                    {
                         if (m_fakeDisplayEntry != iEntry)
                         {
                             sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
@@ -1306,8 +1312,9 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                                                     CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
                             m_fakeDisplayEntry = iEntry;
                         }
-
-                    return FAKE_ERR_OK;
+                        return FAKE_ERR_OK;
+                    }
+                }
             }
     }
     else
