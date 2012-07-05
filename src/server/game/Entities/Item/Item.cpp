@@ -1298,7 +1298,10 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                     }
                 }
             }
-            else if(NClass == ITEM_CLASS_ARMOR)
+            else
+            return FAKE_ERR_DIFF_SLOTS;
+
+            if(NClass == ITEM_CLASS_ARMOR)
             {
                 if(NSubClass == OSubClass)
                 {
@@ -1316,6 +1319,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                     }
                 }
             }
+            else
+            return FAKE_ERR_DIFF_SLOTS;
     }
     else
     return FAKE_ERR_DIFF_CLASS;
