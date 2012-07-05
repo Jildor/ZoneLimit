@@ -1249,7 +1249,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-    Player const* player = ObjectAccessor::FindPlayer(*itr);
+    Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
 
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
