@@ -1258,16 +1258,36 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         return FAKE_ERR_DIFF_SLOTS;
 */
 
+/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
     if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
         return FAKE_ERR_DIFF_CLASS;
 
-/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
     if (myTmpl->AllowableRace != otherTmpl->AllowableRace)
         return FAKE_ERR_DIFF_RACE;
 */
 
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
+
+    if (myTmpl->AllowableClass & getClassMask() | otherTmpl->AllowableClass & getClassMask())
+    {
+        if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
+        {
+            if (m_fakeDisplayEntry != iEntry)
+            {
+                sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
+
+                (!m_fakeDisplayEntry) ? CharacterDatabase.PExecute("INSERT INTO fake_items VALUES (%u, %u)", GetGUIDLow(), iEntry) :
+                                        CharacterDatabase.PExecute("UPDATE fake_items SET fakeEntry = %u WHERE guid = %u", iEntry, GetGUIDLow());
+                m_fakeDisplayEntry = iEntry;
+            }
+
+        return FAKE_ERR_OK;
+
+        }
+    }
+    else if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
+        return FAKE_ERR_DIFF_CLASS;
 
     if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
     {
