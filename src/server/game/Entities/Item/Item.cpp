@@ -1272,12 +1272,12 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     if(player->CanUseItem(myTmpl) == EQUIP_ERR_OK && player->CanUseItem(otherTmpl) == EQUIP_ERR_OK)
     {
-        uint32 NClass = myTmpl->Class;
-        uint32 OClass = otherTmpl->Class;
-        uint32 NSubClass = myTmpl->SubClass;
-        uint32 OSubClass = otherTmpl->SubClass;
-        uint32 NEWinv = myTmpl->InventoryType;
-        uint32 OLDinv = otherTmpl->InventoryType;
+        uint32 NClass = otherTmpl->Class;
+        uint32 OClass = myTmpl->Class;
+        uint32 NSubClass = otherTmpl->SubClass;
+        uint32 OSubClass = myTmpl->SubClass;
+        uint32 NEWinv = otherTmpl->InventoryType;
+        uint32 OLDinv = myTmpl->InventoryType;
         if(NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
             if(NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
             {
