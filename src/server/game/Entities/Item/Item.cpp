@@ -1321,11 +1321,12 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
             return FAKE_ERR_DIFF_SLOTS;
         }
         else
-        return FAKE_ERR_DIFF_CLASS;
+        return FAKE_ERR_DIFF_SLOTS;
     }
     else
     return FAKE_ERR_DIFF_CLASS;
 
+/*
     if (m_fakeDisplayEntry != iEntry)
     {
         sObjectMgr->SetFakeItem(GetGUIDLow(), iEntry);
@@ -1337,6 +1338,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     return FAKE_ERR_OK;
 }
+*/
 
 void Item::RemoveFakeDisplay()
 {
