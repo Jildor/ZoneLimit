@@ -1269,7 +1269,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if (myTmpl->AllowableClass & getClassMask() | otherTmpl->AllowableClass & getClassMask())
+    if (myTmpl->AllowableClass | otherTmpl->AllowableClass || otherTmpl->AllowableClass | myTmpl->AllowableClass)
     {
         if (myTmpl->InventoryType == INVTYPE_ROBE && otherTmpl->InventoryType == INVTYPE_CHEST || myTmpl->InventoryType == INVTYPE_CHEST && otherTmpl->InventoryType == INVTYPE_ROBE)
         {
