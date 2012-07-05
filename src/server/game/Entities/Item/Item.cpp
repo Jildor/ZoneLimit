@@ -1337,8 +1337,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     }
 
     return FAKE_ERR_OK;
-}
 */
+}
 
 void Item::RemoveFakeDisplay()
 {
