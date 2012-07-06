@@ -1297,7 +1297,11 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
                         return FAKE_ERR_OK;
                     }
+                    else
+                    return FAKE_ERR_DIFF_SLOTS;
                 }
+                else
+                return FAKE_ERR_DIFF_SLOTS;
             }
             else if(NClass == ITEM_CLASS_ARMOR)
             {
@@ -1315,7 +1319,11 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                         }
                         return FAKE_ERR_OK;
                     }
+                    else
+                    return FAKE_ERR_DIFF_SLOTS;
                 }
+                else
+                return FAKE_ERR_DIFF_SLOTS;
             }
             else
             return FAKE_ERR_DIFF_SLOTS;
