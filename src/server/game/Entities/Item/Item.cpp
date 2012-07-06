@@ -1248,7 +1248,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     }
 
     Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
-    Item* pItem = player->GetItemByPos(bag, slot);
+    Item* pItem = player->GetItemByPos();
     ItemTemplate const* myTmpl    = pItem->GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
     // Player const* player;
