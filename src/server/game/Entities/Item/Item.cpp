@@ -1242,7 +1242,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-FakeResult Item::SetFakeDisplay(uint32 iEntry)
+FakeResult Item::SetFakeDisplay(uint32 iEntry, Player* player, , bool not_loading)
 {
     if (!iEntry)
     {
@@ -1254,7 +1254,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-    Player const* player;
 
 
     if (!otherTmpl)
