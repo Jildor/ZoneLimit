@@ -1239,7 +1239,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-bool FakeResult Item::SetFakeDisplay(Player* player, uint32 iEntry)
+FakeResult Item::SetFakeDisplay(Player* player, uint32 iEntry)
 {
     if (!iEntry)
     {
