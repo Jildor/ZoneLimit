@@ -1275,7 +1275,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         return FAKE_ERR_WRONG_QUALITY;
 
     if (myTmpl->DisplayInfoID != otherTmpl->DisplayInfoID)
-    if(player->CanUseItem(otherTmpl) == EQUIP_ERR_OK)
+    if(player->CanEquipItem(otherTmpl) == EQUIP_ERR_OK)
     {
         uint32 NClass = myTmpl->Class;
         uint32 OClass = otherTmpl->Class;
