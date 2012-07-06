@@ -1247,8 +1247,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         return FAKE_ERR_OK;
     }
 
-    Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
-    Item* pItem = player->GetItemByPos();
+    Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
+    Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = pItem->GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
     // Player const* player;
