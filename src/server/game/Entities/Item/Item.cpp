@@ -1254,7 +1254,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-    Player* player = _player;
+    Player const* player;
 
 
     if (!otherTmpl)
