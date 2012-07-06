@@ -1257,9 +1257,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 /* Comento esto, porque lo pongo mas abajo de otra forma
     if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
-*/
 
-/* Comento esto, para que pueda ser de cualquier raza (asi hay mas opciones)
     if (myTmpl->AllowableClass != otherTmpl->AllowableClass)
         return FAKE_ERR_DIFF_CLASS;
 
