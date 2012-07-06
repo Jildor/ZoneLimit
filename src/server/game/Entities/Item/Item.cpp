@@ -1284,7 +1284,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
             {
                 if(NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
                 {
-                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)))
+                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)) || NEWinv == (INVTYPE_RANGED || INVTYPE_RANGEDRIGHT) && OLDinv == (INVTYPE_RANGED || INVTYPE_RANGEDRIGHT))
                     {
                         if (m_fakeDisplayEntry != iEntry)
                         {
