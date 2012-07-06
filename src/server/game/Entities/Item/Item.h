@@ -373,7 +373,7 @@ class Item : public Object
 
         uint32 GetScriptId() const { return GetTemplate()->ScriptId; }
 
-        FakeResult SetFakeDisplay(uint32 iEntry, Player* player, bool not_loading = true);
+        FakeResult SetFakeDisplay(uint32 iEntry);
         uint32 GetFakeDisplayEntry() { return m_fakeDisplayEntry; }
         void RemoveFakeDisplay();
     private:

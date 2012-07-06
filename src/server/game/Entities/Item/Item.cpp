@@ -1242,7 +1242,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-FakeResult Item::SetFakeDisplay(uint32 iEntry, Player* player, , bool not_loading)
+FakeResult Item::SetFakeDisplay(uint32 iEntry)
 {
     if (!iEntry)
     {
@@ -1250,7 +1250,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry, Player* player, , bool not_loadin
         return FAKE_ERR_OK;
     }
 
-    // Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
+    Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
     // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
@@ -1273,7 +1273,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry, Player* player, , bool not_loadin
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if(player->CanUseItem(otherTmpl, not_loading) == EQUIP_ERR_OK)
+    if(player->CanUseItem(otherTmpl, false) == EQUIP_ERR_OK)
     {
         uint32 NClass = myTmpl->Class;
         uint32 OClass = otherTmpl->Class;
