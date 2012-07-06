@@ -1247,7 +1247,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         return FAKE_ERR_OK;
     }
 
-    ItemTemplate const* myTmpl    = GetTemplate();
+    Item* pItem = pUser->GetUseableItemByPos(bagIndex, slot);
+    ItemTemplate const* myTmpl    = pItem->GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
     // Player const* player;
     Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
@@ -1269,7 +1270,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if(player->CanUseItem(myTmpl, not_loading) == EQUIP_ERR_OK)
+    if(player->CanUseItem(pItem) == EQUIP_ERR_OK)
     {
         uint32 NClass = myTmpl->Class;
         uint32 OClass = otherTmpl->Class;
