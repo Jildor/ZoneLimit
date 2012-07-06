@@ -1249,7 +1249,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
     // Item const* pItem             = player->GetItemByPos();
-    ItemTemplate const* myTmpl    = pItem->GetTemplate();
+    ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
     // Player const* player;
 
