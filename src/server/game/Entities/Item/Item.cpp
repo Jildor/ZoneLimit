@@ -26,6 +26,8 @@
 #include "SpellInfo.h"
 #include "ScriptMgr.h"
 #include "ConditionMgr.h"
+// Para transfigurar
+#include "Player.h"
 
 void AddItemsSetItem(Player* player, Item* item)
 {
