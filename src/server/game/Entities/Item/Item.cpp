@@ -1274,6 +1274,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
+    if (myTmpl->DisplayInfoID != otherTmpl->DisplayInfoID)
     if(player->CanUseItem(otherTmpl) == EQUIP_ERR_OK)
     {
         uint32 NClass = myTmpl->Class;
@@ -1335,8 +1336,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         else
         return FAKE_ERR_DIFF_CLASS;
     }
-    else if (myTmpl->DisplayInfoID == otherTmpl->DisplayInfoID)
-    return false;
     else
     return FAKE_ERR_CANT_EQUIP;
 
