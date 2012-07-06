@@ -28,6 +28,7 @@
 #include "ConditionMgr.h"
 // Para transfigurar
 #include "Player.h"
+#include "ObjectAccessor.h"
 
 void AddItemsSetItem(Player* player, Item* item)
 {
