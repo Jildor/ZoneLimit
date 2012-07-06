@@ -1329,10 +1329,10 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
             return FAKE_ERR_CANT_TRANS;
         }
         else
-        return FAKE_ERR_CANT_TRANS;
+        return FAKE_ERR_DIFF_CLASS;
     }
     else
-    return FAKE_ERR_DIFF_CLASS;
+    return FAKE_ERR_CANT_EQUIP;
 
 /*
     if (m_fakeDisplayEntry != iEntry)
