@@ -1239,7 +1239,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-FakeResult Item::SetFakeDisplay(uint32 iEntry)
+bool FakeResult Item::SetFakeDisplay(Player* player, uint32 iEntry)
 {
     if (!iEntry)
     {
@@ -1249,7 +1249,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-    Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
+    // Player const* player = ObjectAccessor::FindPlayer(GetOwnerGUID());
 
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
