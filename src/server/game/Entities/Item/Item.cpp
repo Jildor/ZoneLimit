@@ -1326,10 +1326,10 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                 return FAKE_ERR_DIFF_SLOTS;
             }
             else
-            return FAKE_ERR_DIFF_SLOTS;
+            return FAKE_ERR_CANT_TRANS;
         }
         else
-        return FAKE_ERR_DIFF_SLOTS;
+        return FAKE_ERR_CANT_TRANS;
     }
     else
     return FAKE_ERR_DIFF_CLASS;
