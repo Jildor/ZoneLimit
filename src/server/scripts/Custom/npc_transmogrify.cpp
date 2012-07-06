@@ -92,12 +92,6 @@ class npc_transmogrify : public CreatureScript
                 case FAKE_ERR_DIFF_RACE:
                     handler.PSendSysMessage("Los objetos no son de la misma clase!");
                     break;
-                case FAKE_ERR_CANT_TRANS:
-                    handler.PSendSysMessage("No es posible transfigurar estos objetos!");
-                    break;
-                case FAKE_ERR_CANT_EQUIP:
-                    handler.PSendSysMessage("No es posible transfigurar un objeto que no te puedes equipar!");
-                    break;
                 case FAKE_ERR_OK:
                 {
                     WorldPacket data;
