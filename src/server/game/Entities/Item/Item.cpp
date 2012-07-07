@@ -470,8 +470,10 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
     SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, fields[9].GetUInt32());
     SetText(fields[10].GetString());
 
-    if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
-        SetFakeDisplay(fakeEntry);
+//    if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
+//        SetFakeDisplay(fakeEntry);
+    if (QueryResult result = CharacterDatabase.PQuery("SELECT fakeEntry FROM fake_items WHERE guid = %u", guid))
+        SetFakeDisplay((*result)[0].GetUInt32());
 
     if (need_save)                                           // normal item changed state set not work at loading
     {
@@ -1242,8 +1244,6 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-    bool IsSuitable(Item* pItem, Item* OLD, Player* pPlayer)
-    {
 FakeResult Item::SetFakeDisplay(uint32 iEntry)
 {
 
@@ -1356,8 +1356,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     return FAKE_ERR_OK;
 */
 }
-    }
-
 
 void Item::RemoveFakeDisplay()
 {
