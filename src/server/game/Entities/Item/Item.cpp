@@ -1254,7 +1254,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-    Item const* pItem = otherTmpl;
 
 
     if (!otherTmpl)
@@ -1274,7 +1273,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if (player->CanUseItem(pItem, false) != EQUIP_ERR_OK)
+    if (player->CanUseItem(otherTmpl, bool not_loading = false) != EQUIP_ERR_OK)
         return FAKE_ERR_CANT_EQUIP;
 
     // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
