@@ -1244,6 +1244,8 @@ bool Item::CheckSoulboundTradeExpire()
 
 FakeResult Item::SetFakeDisplay(uint32 iEntry)
 {
+    bool IsSuitable(Item* pItem, Item* OLD, Player* pPlayer)
+    {
     if (!iEntry)
     {
         RemoveFakeDisplay();
@@ -1273,7 +1275,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if (player->CanUseItem(otherTmpl, bool not_loading = false) != EQUIP_ERR_OK)
+    if (player->CanUseItem(otherTmpl, false) != EQUIP_ERR_OK)
         return FAKE_ERR_CANT_EQUIP;
 
     // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
@@ -1352,7 +1354,9 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     return FAKE_ERR_OK;
 */
+    }
 }
+
 
 void Item::RemoveFakeDisplay()
 {
