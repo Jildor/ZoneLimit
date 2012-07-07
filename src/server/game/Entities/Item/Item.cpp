@@ -1242,10 +1242,11 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
-FakeResult Item::SetFakeDisplay(uint32 iEntry)
-{
     bool IsSuitable(Item* pItem, Item* OLD, Player* pPlayer)
     {
+FakeResult Item::SetFakeDisplay(uint32 iEntry)
+{
+
     if (!iEntry)
     {
         RemoveFakeDisplay();
@@ -1354,8 +1355,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     return FAKE_ERR_OK;
 */
-    }
 }
+    }
 
 
 void Item::RemoveFakeDisplay()
