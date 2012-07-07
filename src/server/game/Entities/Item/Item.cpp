@@ -26,9 +26,6 @@
 #include "SpellInfo.h"
 #include "ScriptMgr.h"
 #include "ConditionMgr.h"
-// Para transfigurar
-#include "Player.h"
-#include "ObjectAccessor.h"
 
 void AddItemsSetItem(Player* player, Item* item)
 {
@@ -470,10 +467,8 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
     SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, fields[9].GetUInt32());
     SetText(fields[10].GetString());
 
-//    if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
-//        SetFakeDisplay(fakeEntry);
-    if (QueryResult result = CharacterDatabase.PQuery("SELECT fakeEntry FROM fake_items WHERE guid = %u", guid))
-        SetFakeDisplay((*result)[0].GetUInt32());
+    if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
+        SetFakeDisplay(fakeEntry);
 
     if (need_save)                                           // normal item changed state set not work at loading
     {
@@ -1276,8 +1271,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    if (player->CanUseItem(otherTmpl) != EQUIP_ERR_OK)
-        return FAKE_ERR_CANT_EQUIP;
+//     if (player->CanUseItem(otherTmpl) != EQUIP_ERR_OK)
+//         return FAKE_ERR_CANT_EQUIP;
 
     // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
     // {
