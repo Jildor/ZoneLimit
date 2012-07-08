@@ -1272,7 +1272,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-    FakeResult res = CanUseItem(myTmpl);
+    FakeResult res = SetFakeDisplay(myTmpl);
     if (res != EQUIP_ERR_OK)
         return FAKE_ERR_CANT_EQUIP;
 
