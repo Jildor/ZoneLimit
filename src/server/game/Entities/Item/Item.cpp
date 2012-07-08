@@ -1254,11 +1254,11 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
 
-
+/*
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
 
-/* Comento esto, porque lo pongo mas abajo de otra forma
+ Comento esto, porque lo pongo mas abajo de otra forma
     if (myTmpl->InventoryType != otherTmpl->InventoryType)
         return FAKE_ERR_DIFF_SLOTS;
 
