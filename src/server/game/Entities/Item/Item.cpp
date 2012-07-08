@@ -1272,8 +1272,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-     if (player->CanUseItem() != EQUIP_ERR_OK)
-         return FAKE_ERR_CANT_EQUIP;
+//     if (player->CanUseItem(otherTmpl) != EQUIP_ERR_OK)
+//         return FAKE_ERR_CANT_EQUIP;
 
     // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
     // {
