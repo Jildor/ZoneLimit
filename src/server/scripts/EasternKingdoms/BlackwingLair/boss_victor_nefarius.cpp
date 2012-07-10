@@ -338,7 +338,7 @@ public:
                         DoCast(me, 33356);
 
                         //Make super invis
-                        // DoCast(me, 8149);
+                        DoCast(me, 8149);
 
                         //Teleport self to a hiding spot (this causes errors in the Trinity log but no real issues)
                         DoTeleportTo(HIDE_X, HIDE_Y, HIDE_Z);
