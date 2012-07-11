@@ -1249,7 +1249,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     }
 
 
-    Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
+    // Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
     // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
@@ -1277,6 +1277,11 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
 
     // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
     // {
+    if (Player* owner = GetOwner())
+    {
+        if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK)
+            return FAKE_ERR_CANT_EQUIP;
+    }
         uint32 NClass = myTmpl->Class;
         uint32 OClass = otherTmpl->Class;
         uint32 NSubClass = myTmpl->SubClass;
