@@ -1279,7 +1279,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     // {
     if (Player* owner = GetOwner())
     {
-        if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK && owner->CanUseItem(myTmpl) !=  EQUIP_ERR_OK)
+        if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK || owner->CanUseItem(myTmpl) !=  EQUIP_ERR_OK)
             return FAKE_ERR_CANT_EQUIP;
     }
         uint32 NClass = myTmpl->Class;
@@ -1288,13 +1288,13 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         uint32 OSubClass = otherTmpl->SubClass;
         uint32 NEWinv = myTmpl->InventoryType;
         uint32 OLDinv = otherTmpl->InventoryType;
-        if(NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
+        if (NClass == OClass) // not possibly the best structure here, but atleast I got my head around this
         {
-            if(NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
+            if (NClass == ITEM_CLASS_WEAPON && NSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE && OSubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
             {
-                if(NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
+                if (NSubClass == OSubClass || ((NSubClass == ITEM_SUBCLASS_WEAPON_BOW || NSubClass == ITEM_SUBCLASS_WEAPON_GUN || NSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW) && (OSubClass == ITEM_SUBCLASS_WEAPON_BOW || OSubClass == ITEM_SUBCLASS_WEAPON_GUN || OSubClass == ITEM_SUBCLASS_WEAPON_CROSSBOW)))
                 {
-                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)) || (NEWinv == INVTYPE_RANGED || INVTYPE_RANGEDRIGHT) && (OLDinv == INVTYPE_RANGED || INVTYPE_RANGEDRIGHT))
+                    if (NEWinv == OLDinv || (NEWinv == INVTYPE_WEAPON && (OLDinv == INVTYPE_WEAPONMAINHAND || OLDinv == INVTYPE_WEAPONOFFHAND)) || (NEWinv == INVTYPE_RANGED || INVTYPE_RANGEDRIGHT) && (OLDinv == INVTYPE_RANGED || INVTYPE_RANGEDRIGHT))
                     {
                         if (m_fakeDisplayEntry != iEntry)
                         {
@@ -1313,11 +1313,11 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
                 else
                 return FAKE_ERR_DIFF_SLOTS;
             }
-            else if(NClass == ITEM_CLASS_ARMOR)
+            else if (NClass == ITEM_CLASS_ARMOR)
             {
-                if(NSubClass == OSubClass)
+                if (NSubClass == OSubClass)
                 {
-                    if(NEWinv == OLDinv || (NEWinv == INVTYPE_CHEST && OLDinv == INVTYPE_ROBE) || (NEWinv == INVTYPE_ROBE && OLDinv == INVTYPE_CHEST))
+                    if (NEWinv == OLDinv || (NEWinv == INVTYPE_CHEST && OLDinv == INVTYPE_ROBE) || (NEWinv == INVTYPE_ROBE && OLDinv == INVTYPE_CHEST))
                     {
                         if (m_fakeDisplayEntry != iEntry)
                         {
