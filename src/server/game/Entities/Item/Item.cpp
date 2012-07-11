@@ -1279,7 +1279,7 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     // {
     if (Player* owner = GetOwner())
     {
-        if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK)
+        if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK && owner->CanUseItem(myTmpl) !=  EQUIP_ERR_OK)
             return FAKE_ERR_CANT_EQUIP;
     }
         uint32 NClass = myTmpl->Class;
