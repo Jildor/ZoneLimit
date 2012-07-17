@@ -2691,7 +2691,7 @@ ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry)
 
 uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 {
-    FakeItemsContainer::const_iterator itr = fakeItemsStore.find(itemGuid);
+    FakeItemsMap::const_iterator itr = fakeItemsStore.find(itemGuid);
     if (itr != fakeItemsStore.end())
         return itr->second;
 
@@ -2705,7 +2705,7 @@ void ObjectMgr::SetFakeItem(uint32 itemGuid, uint32 fakeEntry)
 
 void ObjectMgr::RemoveFakeItem(uint32 itemGuid)
 {
-    FakeItemsContainer::iterator itr = fakeItemsStore.find(itemGuid);
+    FakeItemsMap::iterator itr = fakeItemsStore.find(itemGuid);
     if (itr != fakeItemsStore.end())
         fakeItemsStore.erase(itr);
 }
