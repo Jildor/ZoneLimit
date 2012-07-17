@@ -501,6 +501,7 @@ void Item::DeleteFromDB(SQLTransaction& trans)
 /*static*/
 void Item::DeleteFromInventoryDB(SQLTransaction& trans, uint32 itemGuid)
 {
+    sObjectMgr->RemoveFakeItem(itemGuid);
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
     stmt->setUInt32(0, itemGuid);
     trans->Append(stmt);
@@ -508,6 +509,7 @@ void Item::DeleteFromInventoryDB(SQLTransaction& trans, uint32 itemGuid)
 
 void Item::DeleteFromInventoryDB(SQLTransaction& trans)
 {
+    RemoveFakeDisplay();
     DeleteFromInventoryDB(trans, GetGUIDLow());
 }
 
