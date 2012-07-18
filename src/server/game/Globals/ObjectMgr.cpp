@@ -2689,10 +2689,11 @@ ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry)
     return NULL;
 }
 
+// Transfigurar
 uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 {
-    FakeItemsMap::const_iterator itr = fakeItemsStore.find(itemGuid);
-    if (itr != fakeItemsStore.end())
+    FakeItemsContainer::const_iterator itr = _fakeItemsStore.find(itemGuid);
+    if (itr != _fakeItemsStore.end())
         return itr->second;
 
     return 0;
@@ -2700,15 +2701,14 @@ uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 
 void ObjectMgr::SetFakeItem(uint32 itemGuid, uint32 fakeEntry)
 {
-    fakeItemsStore[itemGuid] = fakeEntry;
+    _fakeItemsStore[itemGuid] = fakeEntry;
 }
 
 void ObjectMgr::RemoveFakeItem(uint32 itemGuid)
 {
-    FakeItemsMap::iterator itr = fakeItemsStore.find(itemGuid);
-    if (itr != fakeItemsStore.end())
-        fakeItemsStore.erase(itr);
-    CharacterDatabase.PExecute("DELETE FROM fake_items WHERE guid = %u", itemGuid);
+    FakeItemsContainer::iterator itr = _fakeItemsStore.find(itemGuid);
+    if (itr != _fakeItemsStore.end())
+        _fakeItemsStore.erase(itr);
 }
 
 void ObjectMgr::LoadItemSetNameLocales()
@@ -2820,6 +2820,7 @@ void ObjectMgr::LoadItemSetNames()
     sLog->outString();
 }
 
+// Transfigurar
 void ObjectMgr::LoadFakeItems()
 {
     sLog->outString("Deleting non-existing transmogrification entries...");
@@ -2841,7 +2842,7 @@ void ObjectMgr::LoadFakeItems()
         uint32 guid      = fields[0].GetUInt32();
         uint32 fakeEntry = fields[1].GetUInt32();
         if (GetItemTemplate(fakeEntry))
-            fakeItemsStore[guid] = fakeEntry;
+            _fakeItemsStore[guid] = fakeEntry;
         else
         {
             sLog->outErrorDb("Item entry (Entry: %u, GUID: %u) does not exist, deleting.", fakeEntry, guid);
@@ -2850,7 +2851,7 @@ void ObjectMgr::LoadFakeItems()
     }
     while (result->NextRow());
 
-    sLog->outString(">> Loaded %u fake items.", fakeItemsStore.size());
+    sLog->outString(">> Loaded %u fake items.", _fakeItemsStore.size());
     sLog->outString();
 }
 

@@ -253,7 +253,7 @@ Item::Item()
     m_paidMoney = 0;
     m_paidExtendedCost = 0;
 
-    m_fakeDisplayEntry = 0;
+    m_fakeDisplayEntry = 0; // Transfigurar
 }
 
 bool Item::Create(uint32 guidlow, uint32 itemid, Player const* owner)
@@ -467,6 +467,7 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
     SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, fields[9].GetUInt32());
     SetText(fields[10].GetString());
 
+    // Transfigurar
     if (uint32 fakeEntry = sObjectMgr->GetFakeItemEntry(guid))
         SetFakeDisplay(fakeEntry);
 
@@ -486,7 +487,7 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
 /*static*/
 void Item::DeleteFromDB(SQLTransaction& trans, uint32 itemGuid)
 {
-    sObjectMgr->RemoveFakeItem(itemGuid);
+    sObjectMgr->RemoveFakeItem(itemGuid); // Transfigurar
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
     stmt->setUInt32(0, itemGuid);
     trans->Append(stmt);
@@ -494,14 +495,13 @@ void Item::DeleteFromDB(SQLTransaction& trans, uint32 itemGuid)
 
 void Item::DeleteFromDB(SQLTransaction& trans)
 {
-    RemoveFakeDisplay();
+    RemoveFakeDisplay(); // Transfigurar
     DeleteFromDB(trans, GetGUIDLow());
 }
 
 /*static*/
 void Item::DeleteFromInventoryDB(SQLTransaction& trans, uint32 itemGuid)
 {
-    sObjectMgr->RemoveFakeItem(itemGuid);
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
     stmt->setUInt32(0, itemGuid);
     trans->Append(stmt);
@@ -509,7 +509,6 @@ void Item::DeleteFromInventoryDB(SQLTransaction& trans, uint32 itemGuid)
 
 void Item::DeleteFromInventoryDB(SQLTransaction& trans)
 {
-    RemoveFakeDisplay();
     DeleteFromInventoryDB(trans, GetGUIDLow());
 }
 
@@ -1241,6 +1240,7 @@ bool Item::CheckSoulboundTradeExpire()
     return false;
 }
 
+// Transfigurar
 FakeResult Item::SetFakeDisplay(uint32 iEntry)
 {
 
@@ -1250,12 +1250,8 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         return FAKE_ERR_OK;
     }
 
-
-    // Player const* player          = ObjectAccessor::FindPlayer(GetOwnerGUID());
-    // Item const* pItem             = player->GetItemByPos();
     ItemTemplate const* myTmpl    = GetTemplate();
     ItemTemplate const* otherTmpl = sObjectMgr->GetItemTemplate(iEntry);
-
 
     if (!otherTmpl)
         return FAKE_ERR_CANT_FIND_ITEM;
@@ -1274,11 +1270,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
     if (otherTmpl->Quality == ITEM_QUALITY_LEGENDARY || otherTmpl->Quality == ITEM_QUALITY_POOR)
         return FAKE_ERR_WRONG_QUALITY;
 
-//     if (player->CanUseItem(otherTmpl) != EQUIP_ERR_OK)
-//         return FAKE_ERR_CANT_EQUIP;
-
-    // if(player->CanUseItem(iEntry) == EQUIP_ERR_OK)
-    // {
     if (Player* owner = GetOwner())
     {
         if (owner->CanUseItem(otherTmpl) !=  EQUIP_ERR_OK || owner->CanUseItem(myTmpl) !=  EQUIP_ERR_OK)
@@ -1342,10 +1333,6 @@ FakeResult Item::SetFakeDisplay(uint32 iEntry)
         }
         else
         return FAKE_ERR_DIFF_CLASS;
-    // }
-    // else
-    // return FAKE_ERR_CANT_EQUIP;
-
 /*
     if (m_fakeDisplayEntry != iEntry)
     {
