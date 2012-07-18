@@ -2689,6 +2689,7 @@ ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry)
     return NULL;
 }
 
+// Transfigurar
 uint32 ObjectMgr::GetFakeItemEntry(uint32 itemGuid)
 {
     FakeItemsContainer::const_iterator itr = _fakeItemsStore.find(itemGuid);
@@ -2819,8 +2820,12 @@ void ObjectMgr::LoadItemSetNames()
     sLog->outString();
 }
 
+// Transfigurar
 void ObjectMgr::LoadFakeItems()
 {
+    sLog->outString("Deleting non-existing transmogrification entries...");
+    CharacterDatabase.Execute("DELETE FROM fake_items WHERE NOT EXISTS (SELECT 1 FROM item_instance WHERE item_instance.guid = fake_items.guid)");
+
     QueryResult result = CharacterDatabase.Query("SELECT `guid`, `fakeEntry` FROM `fake_items`");
 
     if (!result)
@@ -2836,8 +2841,13 @@ void ObjectMgr::LoadFakeItems()
 
         uint32 guid      = fields[0].GetUInt32();
         uint32 fakeEntry = fields[1].GetUInt32();
-
-        _fakeItemsStore[guid] = fakeEntry;
+        if (GetItemTemplate(fakeEntry))
+            _fakeItemsStore[guid] = fakeEntry;
+        else
+        {
+            sLog->outErrorDb("Item entry (Entry: %u, GUID: %u) does not exist, deleting.", fakeEntry, guid);
+            CharacterDatabase.PExecute("DELETE FROM fake_items WHERE guid = %u", guid);
+        }
     }
     while (result->NextRow());
 

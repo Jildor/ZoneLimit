@@ -1406,6 +1406,7 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Equipment templates...");
     sObjectMgr->LoadEquipmentTemplates();
 
+    // Transfigurar
     sLog->outString("Loading fake items...");
     sObjectMgr->LoadFakeItems();
 

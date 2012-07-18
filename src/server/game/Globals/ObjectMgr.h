@@ -411,7 +411,7 @@ typedef std::pair<QuestRelations::const_iterator, QuestRelations::const_iterator
 typedef std::multimap<uint32, ItemRequiredTarget> ItemRequiredTargetMap;
 typedef std::pair<ItemRequiredTargetMap::const_iterator, ItemRequiredTargetMap::const_iterator>  ItemRequiredTargetMapBounds;
 
-typedef std::map<uint32, uint32> FakeItemsContainer;
+typedef std::map<uint32, uint32> FakeItemsContainer; // Transfigurar
 
 struct PetLevelInfo
 {
@@ -652,6 +652,7 @@ class ObjectMgr
             return NULL;
         }
 
+        // Transfigurar
         uint32 GetFakeItemEntry(uint32 itemGuid);
         void SetFakeItem(uint32 itemGuid, uint32 fakeEntry);
         void RemoveFakeItem(uint32 itemGuid);
@@ -878,7 +879,7 @@ class ObjectMgr
         void LoadItemLocales();
         void LoadItemSetNames();
         void LoadItemSetNameLocales();
-        void LoadFakeItems();
+        void LoadFakeItems(); // Transfigurar
         void LoadQuestLocales();
         void LoadNpcTextLocales();
         void LoadPageTextLocales();
@@ -1331,7 +1332,7 @@ class ObjectMgr
         ItemTemplateContainer ItemTemplateStore;
         ItemLocaleMap mItemLocaleMap;
         ItemSetNameLocaleMap mItemSetNameLocaleMap;
-        FakeItemsContainer _fakeItemsStore;
+        FakeItemsContainer _fakeItemsStore; // Transfigurar
         QuestLocaleMap mQuestLocaleMap;
         NpcTextLocaleMap mNpcTextLocaleMap;
         PageTextLocaleMap mPageTextLocaleMap;

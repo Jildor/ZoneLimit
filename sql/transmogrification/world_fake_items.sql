@@ -4,7 +4,7 @@ INSERT INTO `creature_template` (`entry`,`modelid1`,`name`,`subname`,`IconName`,
 
 DELETE FROM `creature` WHERE `id`=190001;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
-(268000,190001,571,1,0,0,0,5809.8,634.228,647.503,5.59998,300,0,0,6494,0,0,0,0,0),
+(268000,190001,571,1,1,0,0,5809.8,634.228,647.503,5.59998,300,0,0,6494,0,0,0,0,0),
 (268001,190001,37,1,1,0,0,1092.41,202.167,272.492,2.1181,300,0,0,6494,0,0,0,0,0),
 (268002,190001,37,1,1,0,0,41.4605,1156.46,367.178,4.84285,300,0,0,6494,0,0,0,0,0);
 

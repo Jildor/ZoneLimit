@@ -25,7 +25,7 @@ void AddSC_example_gossip_codebox();
 void AddSC_example_misc();
 void AddSC_example_commandscript();
 
-// Transmogrify
+// Transfigurar
 void AddSC_transmogrify_script();
 
 // spells
