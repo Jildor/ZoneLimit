@@ -2705,9 +2705,11 @@ void ObjectMgr::SetFakeItem(uint32 itemGuid, uint32 fakeEntry)
 
 void ObjectMgr::RemoveFakeItem(uint32 itemGuid)
 {
-    FakeItemsMap::iterator itr = fakeItemsStore.find(itemGuid);
+    /*FakeItemsMap::iterator itr = fakeItemsStore.find(itemGuid);
     if (itr != fakeItemsStore.end())
-        fakeItemsStore.erase(itr);
+        fakeItemsStore.erase(itr);*/
+    sObjectMgr->fakeItemsStore.erase(itemGuid);
+    CharacterDatabase.PExecute("DELETE FROM custom_transmogrification WHERE GUID = %u", itemGuid);
 }
 
 void ObjectMgr::LoadItemSetNameLocales()
