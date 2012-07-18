@@ -2707,11 +2707,8 @@ void ObjectMgr::RemoveFakeItem(uint32 itemGuid)
 {
     FakeItemsMap::iterator itr = fakeItemsStore.find(itemGuid);
     if (itr != fakeItemsStore.end())
-    {
         fakeItemsStore.erase(itr);
-    /*sObjectMgr->fakeItemsStore.erase(itemGuid);*/
-    CharacterDatabase.PExecute("DELETE FROM fake_items WHERE guid = %u", itr);
-    }
+    CharacterDatabase.PExecute("DELETE FROM fake_items WHERE guid = %u", itemGuid);
 }
 
 void ObjectMgr::LoadItemSetNameLocales()
