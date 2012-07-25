@@ -2993,8 +2993,8 @@ void SpellMgr::LoadDbcDataCorrections()
             ///////////////////////////////////////////////////
             // Fix al sistema de delay
 
-            case 30283:	case 30413:	case 30414: // ShadowFury Warlock
-            case 47846:	case 47847:             // ShadowFury Warlock
+            case 30283: case 30413: case 30414: // ShadowFury Warlock
+            case 47846: case 47847:             // ShadowFury Warlock
             case 64044:                         // Psychic horror priest
                 spellInfo->speed = 0;
 
