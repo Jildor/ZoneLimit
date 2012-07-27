@@ -2997,10 +2997,12 @@ void SpellMgr::LoadDbcDataCorrections()
             case 47846: case 47847:             // ShadowFury Warlock
             case 64044:                         // Psychic horror priest
                 spellInfo->speed = 0;
-
                 break;
             case 48020:                         // teleport demonic circle warlock
                 spellInfo->speed = 43;
+                break;
+            case 6770:
+                spellInfo->speed = 6000;
                 break;
 
             ///////////////////////////////////////////////////
