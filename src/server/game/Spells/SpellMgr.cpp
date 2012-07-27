@@ -2697,7 +2697,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 case SPELL_AURA_MOD_FEAR:
                 case SPELL_AURA_MOD_STUN:
                 case SPELL_AURA_MOD_CONFUSE:
-                    if (spellInfo->Speed == 0 && !MECHANIC_FREEZE)	// A check for Caster is player or something is needed, seems like monsters spells arent delayed
+                    if(spellInfo->speed == 0 && spellInfo->Mechanic != MECHANIC_FREEZE)	// A check for Caster is player or something is needed, seems like monsters spells arent delayed
                         spellInfo->Speed = 3000;  // delay de spell, dont know the correct time but it seems fine
                         spellInfo->AttributesCu |= SPELL_ATTR0_CU_AURA_CC;
                         break;
