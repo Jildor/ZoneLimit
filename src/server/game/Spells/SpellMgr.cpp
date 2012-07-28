@@ -2698,7 +2698,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 case SPELL_AURA_MOD_STUN:
                 case SPELL_AURA_MOD_CONFUSE:
                     if(spellInfo->Speed == 0 && spellInfo->Mechanic != MECHANIC_FREEZE)	// A check for Caster is player or something is needed, seems like monsters spells arent delayed
-                        spellInfo->Speed = 3000;  // delay de spell, dont know the correct time but it seems fine
+                        spellInfo->Speed = 43;  // delay de spell, dont know the correct time but it seems fine
                         spellInfo->AttributesCu |= SPELL_ATTR0_CU_AURA_CC;
                         break;
                 case SPELL_AURA_PERIODIC_HEAL:
@@ -2744,7 +2744,7 @@ void SpellMgr::LoadSpellCustomAttr()
                     break;
                 case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
                 case SPELL_EFFECT_TELEPORT_UNITS:
-                    spellInfo->Speed = 3000;
+                    spellInfo->Speed = 43;
                     break;
                 case SPELL_EFFECT_PICKPOCKET:
                     spellInfo->AttributesCu |= SPELL_ATTR0_CU_PICKPOCKET;
@@ -3000,9 +3000,6 @@ void SpellMgr::LoadDbcDataCorrections()
                 break;
             case 48020:                         // teleport demonic circle warlock
                 spellInfo->speed = 43;
-                break;
-            case 6770:
-                spellInfo->speed = 6000;
                 break;
 
             ///////////////////////////////////////////////////
