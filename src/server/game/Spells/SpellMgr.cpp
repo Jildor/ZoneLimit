@@ -2689,7 +2689,7 @@ void SpellMgr::LoadSpellCustomAttr()
         {
             switch (spellInfo->Effects[j].ApplyAuraName)
             {
-                case SPELL_AURA_MOD_POSSESS:
+                /*case SPELL_AURA_MOD_POSSESS:
                 case SPELL_AURA_MOD_CHARM:
                 case SPELL_AURA_AOE_CHARM:
                     spellInfo->AttributesCu |= SPELL_ATTR0_CU_AURA_CC;
@@ -2700,7 +2700,15 @@ void SpellMgr::LoadSpellCustomAttr()
                     if(spellInfo->Speed == 0 && spellInfo->Mechanic != MECHANIC_FREEZE)	// A check for Caster is player or something is needed, seems like monsters spells arent delayed
                         spellInfo->Speed = 46;  // delay de spell, dont know the correct time but it seems fine
                         spellInfo->AttributesCu |= SPELL_ATTR0_CU_AURA_CC;
-                        break;
+                        break;*/
+                case SPELL_AURA_MOD_POSSESS:
+                case SPELL_AURA_MOD_CONFUSE:
+                case SPELL_AURA_MOD_CHARM:
+                case SPELL_AURA_AOE_CHARM:
+                case SPELL_AURA_MOD_FEAR:
+                case SPELL_AURA_MOD_STUN:
+                    spellInfo->AttributesCu |= SPELL_ATTR0_CU_AURA_CC;
+                    break;
                 case SPELL_AURA_PERIODIC_HEAL:
                 case SPELL_AURA_PERIODIC_DAMAGE:
                 case SPELL_AURA_PERIODIC_DAMAGE_PERCENT:
@@ -2742,10 +2750,10 @@ void SpellMgr::LoadSpellCustomAttr()
                 case SPELL_EFFECT_LEAP_BACK:
                     spellInfo->AttributesCu |= SPELL_ATTR0_CU_CHARGE;
                     break;
-                case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
+                /*case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
                 case SPELL_EFFECT_TELEPORT_UNITS:
                     spellInfo->Speed = 46;
-                    break;
+                    break;*/
                 case SPELL_EFFECT_PICKPOCKET:
                     spellInfo->AttributesCu |= SPELL_ATTR0_CU_PICKPOCKET;
                     break;
@@ -2990,7 +2998,7 @@ void SpellMgr::LoadDbcDataCorrections()
 
         switch (spellInfo->Id)
         {
-            ///////////////////////////////////////////////////
+            /*///////////////////////////////////////////////////
             // Fix al sistema de delay
 
             case 30283: case 30413: case 30414: // ShadowFury [Warlock]
@@ -3005,7 +3013,7 @@ void SpellMgr::LoadDbcDataCorrections()
                 spellInfo->speed = 100;
                 break;
 
-            ///////////////////////////////////////////////////
+            ///////////////////////////////////////////////////*/
 
             case 23881: // Bloodthirst
                 spellInfo->EffectImplicitTargetA[1] = 1;
