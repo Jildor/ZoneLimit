@@ -5639,6 +5639,13 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
         SPELL_AURA_MOD_DISARM,
         SPELL_AURA_MOD_POSSESS
     };
+
+    // CCD for spell with effect
+    SpellEffects effectWithCCD[] = {
+        SPELL_EFFECT_LEAP,                  //delay a los spell de teleport o salto como blink y shadow step
+        SPELL_EFFECT_TELEPORT_UNITS
+    };
+
     uint8 CCDArraySize = 6;
 
     const uint32 delayForInstantSpells = 200;
@@ -5669,7 +5676,7 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
     }
 
     for (uint8 i = 0; i < CCDArraySize; ++i)
-        if (_spell->HasAura(auraWithCCD[i]))
+        if (_spell->HasAura(auraWithCCD[i]) || _spell->HasEffect(effectWithCCD[i]))
             return delayForInstantSpells;
 
     return 0;
