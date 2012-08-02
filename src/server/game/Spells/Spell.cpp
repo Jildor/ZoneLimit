@@ -5638,7 +5638,7 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
         SPELL_AURA_MOD_SILENCE,
         SPELL_AURA_MOD_DISARM,
         SPELL_AURA_MOD_POSSESS
-    };
+    }
 
     // CCD for spell with effect
     SpellEffects effectWithCCD[] = {
