@@ -5642,14 +5642,6 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
 
     uint8 CCDAuraArraySize = 6;
 
-    // CCD for spell with effect
-    SpellEffects effectWithCCD[] = {
-        SPELL_EFFECT_LEAP,                  //delay a los spell de teleport o salto como blink y shadow step
-        SPELL_EFFECT_TELEPORT_UNITS
-    };
-
-    uint8 CCDEffectArraySize = 2;
-
     const uint32 delayForInstantSpells = 200;
 
     switch(_spell->SpellFamilyName)
@@ -5677,12 +5669,16 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
             break;
     }
 
+    switch (_spell->->Effects[j].Effect)
+    {
+            case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
+            case SPELL_EFFECT_TELEPORT_UNITS:
+                return delayForInstantSpells;
+            break;
+    }
+
     for (uint8 i = 0; i < CCDAuraArraySize; ++i)
         if (_spell->HasAura(auraWithCCD[i]))
-            return delayForInstantSpells;
-
-    for (uint8 i = 0; i < CCDEffectArraySize; ++i)
-        if (_spell->HasEffect(effectWithCCD[i]))
             return delayForInstantSpells;
 
     return 0;
