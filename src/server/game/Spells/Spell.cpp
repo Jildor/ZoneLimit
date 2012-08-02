@@ -5642,7 +5642,7 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
 
     uint8 CCDAuraArraySize = 6;
 
-    const uint32 delayForInstantSpells = 200;
+    const uint32 delayForInstantSpells = 46;
 
     switch(_spell->SpellFamilyName)
     {
@@ -5673,16 +5673,18 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
     {
         switch (_spell->Effects[i].Effect)
         {
-                case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
-                case SPELL_EFFECT_TELEPORT_UNITS:
-                    return delayForInstantSpells;
-                break;
+            //delay a los spell de teleport o salto como blink y shadow step
+            case SPELL_EFFECT_LEAP:
+            case SPELL_EFFECT_TELEPORT_UNITS:
+                return delayForInstantSpells;
+            break;
         }
     }
 
     for (uint8 i = 0; i < CCDAuraArraySize; ++i)
         if (_spell->HasAura(auraWithCCD[i]))
-            return delayForInstantSpells;
+            if(_spell->Speed == 0 && _spell->Mechanic != MECHANIC_FREEZE) // A check for Caster is player or something is needed, seems like monsters spells arent delayed
+                return delayForInstantSpells;
 
     return 0;
 }
