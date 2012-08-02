@@ -5669,7 +5669,7 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
             break;
     }
 
-    switch (_spell->->Effects[j].Effect)
+    switch (_spell->Effects[j].Effect)
     {
             case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
             case SPELL_EFFECT_TELEPORT_UNITS:
