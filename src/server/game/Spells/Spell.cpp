@@ -5638,7 +5638,9 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
         SPELL_AURA_MOD_SILENCE,
         SPELL_AURA_MOD_DISARM,
         SPELL_AURA_MOD_POSSESS
-    }
+    };
+
+    uint8 CCDAuraArraySize = 6;
 
     // CCD for spell with effect
     SpellEffects effectWithCCD[] = {
@@ -5646,7 +5648,7 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
         SPELL_EFFECT_TELEPORT_UNITS
     };
 
-    uint8 CCDArraySize = 6;
+    uint8 CCDEffectArraySize = 2;
 
     const uint32 delayForInstantSpells = 200;
 
@@ -5675,8 +5677,12 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
             break;
     }
 
-    for (uint8 i = 0; i < CCDArraySize; ++i)
-        if (_spell->HasAura(auraWithCCD[i]) || _spell->HasEffect(effectWithCCD[i]))
+    for (uint8 i = 0; i < CCDAuraArraySize; ++i)
+        if (_spell->HasAura(auraWithCCD[i]))
+            return delayForInstantSpells;
+
+    for (uint8 i = 0; i < CCDEffectArraySize; ++i)
+        if (_spell->HasEffect(effectWithCCD[i]))
             return delayForInstantSpells;
 
     return 0;
