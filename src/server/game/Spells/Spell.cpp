@@ -5669,12 +5669,15 @@ uint32 Spell::GetCCDelay(SpellInfo const* _spell)
             break;
     }
 
-    switch (_spell->Effects[j].Effect)
+    for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-            case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
-            case SPELL_EFFECT_TELEPORT_UNITS:
-                return delayForInstantSpells;
-            break;
+        switch (_spell->Effects[i].Effect)
+        {
+                case SPELL_EFFECT_LEAP:                  //delay a los spell de teleport o salto como blink y shadow step
+                case SPELL_EFFECT_TELEPORT_UNITS:
+                    return delayForInstantSpells;
+                break;
+        }
     }
 
     for (uint8 i = 0; i < CCDAuraArraySize; ++i)
