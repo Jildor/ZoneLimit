@@ -29,6 +29,7 @@ at_legion_teleporter            4560 Teleporter TO Invasion Point: Cataclysm
 at_stormwright_shelf            q12741
 at_last_rites                   q12019
 at_sholazar_waygate             q12548
+at_nats_landing     q11209
 at_bring_your_orphan_to         q910 q910 q1800 q1479 q1687 q1558 q10951 q10952
 EndContentData */
 
@@ -328,6 +329,41 @@ class AreaTrigger_at_bring_your_orphan_to : public AreaTriggerScript
         }
 };
 
+/*######
+## at_nats_landing
+######*/
+
+enum NatsLanding
+{
+    QUEST_NATS_BARGAIN = 11209,
+    SPELL_FISH_PASTE   = 42644,
+    NPC_LURKING_SHARK  = 23928
+};
+
+class AreaTrigger_at_nats_landing : public AreaTriggerScript
+{
+    public:
+        AreaTrigger_at_nats_landing() : AreaTriggerScript("at_nats_landing") { }
+
+        bool OnTrigger(Player* player, AreaTriggerEntry const* trigger)
+        {
+            if (!player->isAlive() || !player->HasAura(SPELL_FISH_PASTE))
+                return false;
+
+            if (player->GetQuestStatus(QUEST_NATS_BARGAIN) == QUEST_STATUS_INCOMPLETE)
+            {
+                if (!player->FindNearestCreature(NPC_LURKING_SHARK, 20.0f))
+                {
+                    if (Creature* shark = player->SummonCreature(NPC_LURKING_SHARK, -4246.243f, -3922.356f, -7.488f, 5.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 100000))
+                        shark->AI()->AttackStart(player);
+
+                    return false;
+                }
+            }
+            return true;
+        }
+};
+
 void AddSC_areatrigger_scripts()
 {
     new AreaTrigger_at_coilfang_waterfall();
@@ -336,5 +372,6 @@ void AddSC_areatrigger_scripts()
     new AreaTrigger_at_scent_larkorwi();
     new AreaTrigger_at_last_rites();
     new AreaTrigger_at_sholazar_waygate();
+    new AreaTrigger_at_nats_landing();
     new AreaTrigger_at_bring_your_orphan_to();
 }
