@@ -3425,6 +3425,9 @@ void SpellMgr::LoadDbcDataCorrections()
             case 71159: // Awaken Plagued Zombies
                 spellInfo->DurationIndex = 21;
                 break;
+            case 69508: // Slime Spray
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
+                break;
             case 71412: // Green Ooze Summon (target selection already handled in putricide's script)
             case 71415: // Orange Ooze Summon (target selection already handled in putricide's script)
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
