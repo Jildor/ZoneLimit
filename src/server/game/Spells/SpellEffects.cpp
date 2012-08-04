@@ -7057,18 +7057,6 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
             --count;
         }
     }
-    // Blood Tap
-    if (m_spellInfo->Id == 45529 && count > 0)
-    {
-        for (uint32 j = 0; j < MAX_RUNES && count > 0; ++j)
-        {
-            if (player->GetRuneCooldown(j) && player->GetCurrentRune(j) == RUNE_BLOOD)
-            {
-                player->SetRuneCooldown(j, 0);
-                --count;
-            }
-        }
-    }
     // Empower rune weapon
     if (m_spellInfo->Id == 47568)
     {
@@ -7082,7 +7070,6 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
                 player->SetRuneCooldown(i, 0);
         }
     }
-    player->ResyncRunes(MAX_RUNES);
 }
 
 void Spell::EffectCreateTamedPet(SpellEffIndex effIndex)
