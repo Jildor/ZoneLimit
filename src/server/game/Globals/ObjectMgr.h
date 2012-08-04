@@ -680,6 +680,7 @@ class ObjectMgr
                 return NULL;
             return info;
         }
+
         void GetPlayerLevelInfo(uint32 race, uint32 class_, uint8 level, PlayerLevelInfo* info) const;
 
         uint64 GetPlayerGUIDByName(std::string name) const;
@@ -697,11 +698,7 @@ class ObjectMgr
             QuestMap::const_iterator itr = mQuestTemplates.find(quest_id);
             return itr != mQuestTemplates.end() ? itr->second : NULL;
         }
-        Quest * GetQuestTemplate(uint32 quest_id)
-        {
-            QuestMap::const_iterator itr = mQuestTemplates.find(quest_id);
-            return itr != mQuestTemplates.end() ? itr->second : NULL;
-        }
+
         QuestMap const& GetQuestTemplates() const { return mQuestTemplates; }
 
         uint32 GetQuestForAreaTrigger(uint32 Trigger_ID) const
@@ -711,6 +708,7 @@ class ObjectMgr
                 return itr->second;
             return 0;
         }
+
         bool IsTavernAreaTrigger(uint32 Trigger_ID) const
         {
             return mTavernAreaTriggerSet.find(Trigger_ID) != mTavernAreaTriggerSet.end();
