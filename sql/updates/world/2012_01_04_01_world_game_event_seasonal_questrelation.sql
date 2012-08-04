@@ -1,3 +1,4 @@
+-- Editado por Gildor
 DROP TABLE IF EXISTS `game_event_seasonal_questrelation`;
 CREATE TABLE `game_event_seasonal_questrelation` (
   `quest` mediumint(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
@@ -6,6 +7,7 @@ CREATE TABLE `game_event_seasonal_questrelation` (
   KEY `idx_quest` (`quest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Player System';
 
+-- Cambio el event 52 de TC al 49 de ZLDB
 INSERT INTO `game_event_seasonal_questrelation` (`quest`,`event`) VALUES
 	(1657, 12),
 	(1658, 12),
@@ -41,16 +43,16 @@ INSERT INTO `game_event_seasonal_questrelation` (`quest`,`event`) VALUES
 	(8360, 12),
 	(8373, 12),
 	(8409, 12),
-	(8744, 52),
+	(8744, 49),
 	(8746, 2),
 	(8762, 2),
 	(8763, 2),
-	(8767, 52),
-	(8768, 52),
-	(8769, 52),
-	(8788, 52),
+	(8767, 49),
+	(8768, 49),
+	(8769, 49),
+	(8788, 49),
 	(8799, 2),
-	(8803, 52),
+	(8803, 49),
 	(8827, 2),
 	(8828, 2),
 	(8860, 6),
@@ -101,7 +103,7 @@ INSERT INTO `game_event_seasonal_questrelation` (`quest`,`event`) VALUES
 	(11440, 12),
 	(11449, 12),
 	(11450, 12),
-	(11528, 52),
+	(11528, 49),
 	(11558, 8),
 	(11580, 1),
 	(11581, 1),
@@ -322,7 +324,7 @@ INSERT INTO `game_event_seasonal_questrelation` (`quest`,`event`) VALUES
 	(12946, 12),
 	(12947, 12),
 	(12950, 12),
-	(13203, 52),
+	(13203, 49),
 	(13433, 12),
 	(13434, 12),
 	(13435, 12),
@@ -383,4 +385,4 @@ INSERT INTO `game_event_seasonal_questrelation` (`quest`,`event`) VALUES
 	(13500, 1),
 	(13501, 12),
 	(13548, 12),
-	(13966, 52);
+	(13966, 49);
