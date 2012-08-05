@@ -1707,13 +1707,6 @@ bool WorldObject::canSeeOrDetect(WorldObject const* obj, bool ignoreStealth, boo
             return false;
     }
 
-    if (obj->isType(TYPEMASK_GAMEOBJECT))
-        if (const Player * thisPlayer = ToPlayer())
-            if (Unit * owner = obj->ToGameObject()->GetOwner())
-                if (const Player * ownerPlayer =owner->ToPlayer())
-                    if (thisPlayer->IsGroupVisibleFor(ownerPlayer))
-                        return true;
-
     if (obj->IsInvisibleDueToDespawn())
         return false;
 
@@ -1811,18 +1804,11 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj) const
         // Level difference: 5 point / level, starting from level 1.
         // There may be spells for this and the starting points too, but
         //   not in the DBCs of the client.
-        detectionValue += int32(getLevelForTarget(this) - 1) * 5;
+        detectionValue += int32(getLevelForTarget(obj) - 1) * 5;
 
         // Apply modifiers
         detectionValue += m_stealthDetect.GetValue(StealthType(i));
-        if (i != STEALTH_TRAP)
-            detectionValue -= obj->m_stealth.GetValue(StealthType(i));
-        else
-        {
-            if (Unit * owner = obj->ToGameObject()->GetOwner())
-                detectionValue -= 5 + owner->getLevel() * 5;
-            else
-                detectionValue -= 300;
+        detectionValue -= obj->m_stealth.GetValue(StealthType(i));
         }
 
         // Calculate max distance
