@@ -16,8 +16,8 @@ INSERT INTO `gossip_menu` (`entry`, `text_id`) VALUES
 DELETE FROM `gossip_menu_option` WHERE `menu_id`=@GOSSIP_1;
 DELETE FROM `gossip_menu_option` WHERE `menu_id`=@GOSSIP_2;
 INSERT INTO `gossip_menu_option` VALUES
-(@GOSSIP_1, 0, 0, 'Retrieve Warsong Outfit.', 1, 1, 0, 0, 0, 0, ''),
-(@GOSSIP_2, 0, 0, 'Retrieve Warsong Outfit.', 1, 1, 0, 0, 0, 0, '');
+(@GOSSIP_1, 0, 0, 'Retrieve Warsong Outfit.', 1, 1, 0, 0, 0, 0, 0, ''),
+(@GOSSIP_2, 0, 0, 'Retrieve Warsong Outfit.', 1, 1, 0, 0, 0, 0, 0, '');
 
 -- Quito gossip_scripts
 DELETE FROM `gossip_scripts` WHERE `id`=@ENTRY_GUARD;
@@ -46,6 +46,8 @@ DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=15 AND `SourceGroup`=@G
 DELETE FROM `conditions` WHERE `SourceTypeOrReferenceId`=15 AND `SourceGroup`=@GOSSIP_2;
 INSERT INTO `conditions` VALUES
 (15, @GOSSIP_1, 0, 0, 9, @QUEST, 0, 0, 0, '', 'Only show gossip if player has quest Plan B'),
-(15, @GOSSIP_2, 0, 0, 9, @QUEST, 0, 0, 0, '', 'Only show gossip if player has quest Plan B'),
+(15, @GOSSIP_2, 0, 0, 9, @QUEST, 0, 0, 0, '', 'Only show gossip if player has quest Plan B');
+/* Comento estos porque creo que no sirven
 (15, @GOSSIP_1, 0, 0, 2, @ITEM, 10, 0, 0, '', 'Only show gossip if player has less then 10 outfits'),
 (15, @GOSSIP_2, 0, 0, 2, @ITEM, 10, 0, 0, '', 'Only show gossip if player has less then 10 outfits');
+*/
