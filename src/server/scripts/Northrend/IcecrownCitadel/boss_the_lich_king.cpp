@@ -509,7 +509,7 @@ class boss_the_lich_king : public CreatureScript
                 if (fabs(ground_Z - z) < 0.1f)
                     return;
 
-                me->GetMotionMaster()->MoveFall(ground_Z);
+                me->GetMotionMaster()->MoveFall();
             }
 
             void EnterCombat(Unit* target)
@@ -806,7 +806,7 @@ class boss_the_lich_king : public CreatureScript
                         events.ScheduleEvent(EVENT_INTRO_TALK_1, 9000, 0, PHASE_INTRO);
                         break;
                     case POINT_CENTER_1:
-                        me->SetFacing(0.0f);
+                        me->SetFacingTo(0.0f);
                         Talk(SAY_LK_REMORSELESS_WINTER);
                         SendMusicToPlayers(MUSIC_SPECIAL);
                         me->SetReactState(REACT_PASSIVE);
@@ -825,7 +825,7 @@ class boss_the_lich_king : public CreatureScript
                         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, false);
                         break;
                     case POINT_CENTER_2:
-                        me->SetFacing(0.0f);
+                        me->SetFacingTo(0.0f);
                         Talk(SAY_LK_REMORSELESS_WINTER);
                         SendMusicToPlayers(MUSIC_SPECIAL);
                         me->SetReactState(REACT_PASSIVE);
@@ -1058,14 +1058,14 @@ class boss_the_lich_king : public CreatureScript
                             break;
                         case EVENT_OUTRO_TALK_3:
                             if (Creature* tirion = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_HIGHLORD_TIRION_FORDRING)))
-                                me->SetFacing(0.0f, tirion);
+                                me->SetFacingToObject(tirion);
                             Talk(SAY_LK_OUTRO_3);
                             break;
                         case EVENT_OUTRO_MOVE_CENTER:
                             me->GetMotionMaster()->MovePoint(POINT_LK_OUTRO_1, CenterPosition);
                             break;
                         case EVENT_OUTRO_TALK_4:
-                            me->SetFacing(0.01745329f);
+                            me->SetFacingTo(0.01745329f);
                             Talk(SAY_LK_OUTRO_4);
                             break;
                         case EVENT_OUTRO_RAISE_DEAD:
@@ -1081,7 +1081,7 @@ class boss_the_lich_king : public CreatureScript
                         case EVENT_OUTRO_TALK_6:
                             Talk(SAY_LK_OUTRO_6);
                             if (Creature* tirion = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_HIGHLORD_TIRION_FORDRING)))
-                                tirion->SetFacing(0.0f, me);
+                                tirion->SetFacingToObject(me);
                             me->ClearUnitState(UNIT_STAT_CASTING);
                             DoCastAOE(SPELL_SUMMON_BROKEN_FROSTMOURNE_3);
                             SetEquipmentSlots(false, EQUIP_UNEQUIP);
@@ -1233,7 +1233,7 @@ class npc_tirion_fordring_tft : public CreatureScript
             void SpellHit(Unit* /*caster*/, SpellInfo const* spell)
             {
                 if (spell->Id == SPELL_ICE_LOCK)
-                    me->SetFacing(3.085098f);
+                    me->SetFacingTo(3.085098f);
                 else if (spell->Id == SPELL_BROKEN_FROSTMOURNE_KNOCK)
                     SetEquipmentSlots(true);    // remove glow on ashbringer
             }
@@ -1296,7 +1296,7 @@ class npc_tirion_fordring_tft : public CreatureScript
                             SetEquipmentSlots(false, EQUIP_ASHBRINGER_GLOWING);
                             if (Creature* lichKing = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_THE_LICH_KING)))
                             {
-                                me->SetFacing(0.0f, lichKing);
+                                me->SetFacingToObject(lichKing);
                                 lichKing->AI()->DoAction(ACTION_PLAY_MUSIC);
                             }
                             break;
@@ -1649,7 +1649,7 @@ class npc_strangulate_vehicle : public CreatureScript
 
             void IsSummonedBy(Unit* summoner)
             {
-                me->SetFacing(0.0f, summoner);
+                me->SetFacingToObject(summoner);
                 // DoCast(summoner, SPELL_HARVEST_SOUL_VEHICLE);
                 _events.Reset();
                 _events.ScheduleEvent(EVENT_MOVE_TO_LICH_KING, 2000);
@@ -1817,7 +1817,7 @@ class npc_terenas_menethil : public CreatureScript
                 _events.Reset();
                 _events.SetPhase(PHASE_OUTRO);
                 if (Creature* lichKing = ObjectAccessor::GetCreature(*me, _instance->GetData64(DATA_THE_LICH_KING)))
-                    me->SetFacing(0.0f, lichKing);
+                    me->SetFacingToObject(lichKing);
 
                 _events.ScheduleEvent(EVENT_OUTRO_TERENAS_TALK_1, 2000, 0, PHASE_OUTRO);
                 _events.ScheduleEvent(EVENT_OUTRO_TERENAS_TALK_2, 14000, 0, PHASE_OUTRO);
