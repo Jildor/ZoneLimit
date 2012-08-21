@@ -807,7 +807,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     // Proceed with guild/arena team creation
 
     // Delete charter item
-    _player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+    _player->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
 
     if (type == GUILD_CHARTER_TYPE)
     {

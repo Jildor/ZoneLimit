@@ -142,7 +142,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid
     CharmInfo* charmInfo = pet->GetCharmInfo();
     if (!charmInfo)
     {
-        sLog->outError("WorldSession::HandlePetAction(petGuid: " UI64FMTD ", tagGuid: " UI64FMTD ", spellId: %u, flag: %u): object (entry: %u TypeId: %u) is considered pet-like but doesn't have a charminfo!",
+        sLog->outError("WorldSession::HandlePetAction(petGuid: " UI64FMTD ", tagGuid: " UI64FMTD ", spellId: %u, flag: %u): object (entry: %u TypeId: %u) is considered pet-like but doesn't have a charminfo!", 
             guid1, guid2, spellid, flag, pet->GetGUIDLow(), pet->GetTypeId());
         return;
     }
@@ -168,7 +168,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid
                 case COMMAND_FOLLOW:                        //spellid=1792  //FOLLOW
                     pet->AttackStop();
                     pet->InterruptNonMeleeSpells(false);
-                    pet->GetMotionMaster()->MoveFollow(_player, PET_FOLLOW_DIST, pet->GetFollowAngle());
+                    pet->GetMotionMaster()->MoveFollow(_player,PET_FOLLOW_DIST,pet->GetFollowAngle());
                     charmInfo->SetCommandState(COMMAND_FOLLOW);
 
                     charmInfo->SetIsCommandAttack(false);
@@ -237,7 +237,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid
                             charmInfo->SetIsFollowing(false);
                             charmInfo->SetIsReturning(false);
 
-                            pet->Attack(TargetUnit, true);
+                            pet->Attack(TargetUnit,true);
                             pet->SendPetAIReaction(guid1);
                         }
                     }
@@ -287,7 +287,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid
             Unit* unit_target = NULL;
 
             if (guid2)
-                unit_target = ObjectAccessor::GetUnit(*_player, guid2);
+                unit_target = ObjectAccessor::GetUnit(*_player,guid2);
 
             // do not cast unknown spells
             SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellid);
@@ -379,7 +379,7 @@ void WorldSession::HandlePetActionHelper(Unit* pet, uint64 guid1, uint16 spellid
             else
             {
                 if (pet->isPossessed() || pet->IsVehicle())
-                    Spell::SendCastResult(GetPlayer(), spellInfo, 0, result);
+                    Spell::SendCastResult(GetPlayer(),spellInfo,0,result);
                 else
                     pet->SendPetCastFail(spellid, result);
 
@@ -410,7 +410,7 @@ void WorldSession::HandlePetNameQuery(WorldPacket & recv_data)
     recv_data >> petnumber;
     recv_data >> petguid;
 
-    SendPetNameQuery(petguid, petnumber);
+    SendPetNameQuery(petguid,petnumber);
 }
 
 void WorldSession::SendPetNameQuery(uint64 petguid, uint32 petnumber)
@@ -580,7 +580,7 @@ void WorldSession::HandlePetSetAction(WorldPacket & recv_data)
                 }
             }
 
-            charmInfo->SetActionBar(position[i], spell_id, ActiveStates(act_state));
+            charmInfo->SetActionBar(position[i],spell_id,ActiveStates(act_state));
         }
     }
 }
@@ -649,7 +649,7 @@ void WorldSession::HandlePetRename(WorldPacket & recv_data)
         for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
             CharacterDatabase.EscapeString(declinedname.name[i]);
         trans->PAppend("DELETE FROM character_pet_declinedname WHERE owner = '%u' AND id = '%u'", _player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
-        trans->PAppend("INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u', '%u', '%s', '%s', '%s', '%s', '%s')",
+        trans->PAppend("INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u','%u','%s','%s','%s','%s','%s')",
             pet->GetCharmInfo()->GetPetNumber(), _player->GetGUIDLow(), declinedname.name[0].c_str(), declinedname.name[1].c_str(), declinedname.name[2].c_str(), declinedname.name[3].c_str(), declinedname.name[4].c_str());
     }
 
@@ -702,11 +702,11 @@ void WorldSession::HandlePetSpellAutocastOpcode(WorldPacket& recvPacket)
     if (ObjectAccessor::FindPlayer(guid))
         return;
 
-    Creature* pet=ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, guid);
+    Creature* pet=ObjectAccessor::GetCreatureOrPetOrVehicle(*_player,guid);
 
     if (!pet || (pet != _player->GetGuardianPet() && pet != _player->GetCharm()))
     {
-        sLog->outError("HandlePetSpellAutocastOpcode.Pet %u isn't pet of player %s .", uint32(GUID_LOPART(guid)), GetPlayer()->GetName());
+        sLog->outError("HandlePetSpellAutocastOpcode.Pet %u isn't pet of player %s .", uint32(GUID_LOPART(guid)),GetPlayer()->GetName());
         return;
     }
 
@@ -751,7 +751,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
 
     if (!caster || (caster != _player->GetGuardianPet() && caster != _player->GetCharm()))
     {
-        sLog->outError("HandlePetCastSpellOpcode: Pet %u isn't pet of player %s .", uint32(GUID_LOPART(guid)), GetPlayer()->GetName());
+        sLog->outError("HandlePetCastSpellOpcode: Pet %u isn't pet of player %s .", uint32(GUID_LOPART(guid)),GetPlayer()->GetName());
         return;
     }
 
