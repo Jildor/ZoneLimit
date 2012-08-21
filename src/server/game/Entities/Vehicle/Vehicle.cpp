@@ -397,7 +397,6 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
     {
         if (!_me->SetCharmedBy(unit, CHARM_TYPE_VEHICLE))
             ASSERT(false);
-        unit->ToPlayer()->SetMover(this->GetBase());
     }
 
     if (_me->IsInWorld())
@@ -450,10 +449,7 @@ void Vehicle::RemovePassenger(Unit* unit)
 	unit->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, false);
 
     if (_me->GetTypeId() == TYPEID_UNIT && unit->GetTypeId() == TYPEID_PLAYER && seat->first == 0 && seat->second.SeatInfo->m_flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
-    {
         _me->RemoveCharmedBy(unit);
-        unit->ToPlayer()->SetMover(unit->ToPlayer());
-    }
 
     if (_me->IsInWorld())
     {
