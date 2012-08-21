@@ -649,7 +649,7 @@ class npc_spinestalker : public CreatureScript
 
             void MovementInform(uint32 type, uint32 point)
             {
-                if (type != POINT_MOTION_TYPE || point != POINT_FROSTWYRM_LAND)
+                if (type != EFFECT_MOTION_TYPE || point != POINT_FROSTWYRM_LAND)
                     return;
 
                 me->setActive(false);
@@ -774,7 +774,7 @@ class npc_rimefang : public CreatureScript
 
             void MovementInform(uint32 type, uint32 point)
             {
-                if (type != POINT_MOTION_TYPE || point != POINT_FROSTWYRM_LAND)
+                if (type != EFFECT_MOTION_TYPE || point != POINT_FROSTWYRM_LAND)
                     return;
 
                 me->setActive(false);
