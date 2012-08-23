@@ -279,7 +279,7 @@ public:
     bool IsEffect(SpellEffects effectName) const;
     bool IsAura() const;
     bool IsAura(AuraType aura) const;
-    bool IsTargetingArea() const;
+    bool IsArea() const;
     bool IsAreaAuraEffect() const;
     bool IsFarUnitTargetEffect() const;
     bool IsFarDestTargetEffect() const;
@@ -403,8 +403,7 @@ public:
     bool IsAbilityLearnedWithProfession() const;
     bool IsAbilityOfSkillType(uint32 skillType) const;
 
-    bool IsAffectingArea() const;
-    bool IsTargetingArea() const;
+    bool IsAOE() const;
     bool NeedsExplicitUnitTarget() const;
     bool NeedsToBeTriggeredByCaster() const;
 
