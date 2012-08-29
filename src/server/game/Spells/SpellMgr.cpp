@@ -3614,6 +3614,7 @@ void SpellMgr::LoadDbcDataCorrections()
                 spellInfo->Attributes |= SPELL_ATTR0_NEGATIVE_1;
                 break;
             case 36032: // Arcane Blast - buff
+            case 24259: // Spell Lock silence
                 spellInfo->speed = 80;
                 break;
             default:
