@@ -320,7 +320,7 @@ class spell_rog_deadly_poison : public SpellScriptLoader
 
             void HandleAfterHit()
             {
-                if (_stackAmount < 5)
+                if (_stackAmount < 6)
                     return;
 
                 Player* player = GetCaster()->ToPlayer();
